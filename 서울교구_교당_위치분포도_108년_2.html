@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원불교 서울교구 교당 위치 분포도 (108년)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f0f4f8; height:100vh; display:flex; flex-direction:column; }
+
+#header {
+  background:linear-gradient(135deg,#1b3f7b 0%,#2e6da4 100%);
+  color:#fff; padding:14px 20px;
+  display:flex; align-items:center; gap:14px;
+  flex-shrink:0; box-shadow:0 2px 10px rgba(0,0,0,.25);
+}
+#header .emblem { font-size:28px; line-height:1; }
+#header .title h1 { font-size:18px; font-weight:700; }
+#header .title p  { font-size:12px; opacity:.8; margin-top:2px; }
+#header .kpi { margin-left:auto; display:flex; gap:24px; }
+#header .kpi-item { text-align:center; }
+#header .kpi-num   { font-size:20px; font-weight:800; }
+#header .kpi-label { font-size:10px; opacity:.75; margin-top:1px; }
+
+#body { display:flex; flex:1; overflow:hidden; }
+
+#sidebar {
+  width:290px; flex-shrink:0;
+  background:#fff; display:flex; flex-direction:column;
+  border-right:1px solid #dce4ef;
+}
+#sb-top {
+  padding:12px; background:#f7f9fc;
+  border-bottom:1px solid #dce4ef; flex-shrink:0;
+}
+#sb-top h2 { font-size:12px; color:#555; margin-bottom:8px; font-weight:600; }
+#search {
+  width:100%; padding:6px 10px;
+  border:1.5px solid #d0d8e8; border-radius:6px;
+  font-size:13px; font-family:inherit; outline:none; margin-bottom:8px;
+}
+#search:focus { border-color:#2e6da4; }
+.chips { display:flex; flex-wrap:wrap; gap:5px; }
+.chip {
+  padding:3px 10px; border-radius:20px; font-size:11px; cursor:pointer;
+  border:1.5px solid #ccc; background:#fff; color:#555; font-family:inherit;
+  transition:all .15s;
+}
+.chip:hover { background:#e8f0fe; border-color:#4a80d4; }
+.chip.on { color:#fff !important; border-color:transparent !important; }
+
+#list { flex:1; overflow-y:auto; }
+.card {
+  padding:10px 13px; border-bottom:1px solid #f2f2f2;
+  cursor:pointer; transition:background .1s;
+}
+.card:hover { background:#f4f8ff; }
+.card.sel  { background:#e8f0fb; border-left:3px solid #1b3f7b; padding-left:10px; }
+.card-top  { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+.card-name { font-size:13px; font-weight:700; color:#1a1a2e; }
+.badge { font-size:10px; padding:1px 7px; border-radius:12px; color:#fff; white-space:nowrap; flex-shrink:0; }
+.card-bot  { display:flex; gap:8px; flex-wrap:wrap; }
+.tag  { font-size:10px; background:#f0f0f0; color:#666; padding:1px 6px; border-radius:4px; }
+.stat { font-size:10px; color:#999; }
+
+#map { flex:1; }
+
+.leaflet-popup-content-wrapper {
+  border-radius:10px !important;
+  box-shadow:0 4px 18px rgba(0,0,0,.18) !important;
+  min-width:210px;
+}
+.leaflet-popup-content { margin:12px 14px !important; }
+.pu-name  { font-size:15px; font-weight:800; color:#1a1a2e; margin-bottom:7px; }
+.pu-row   { font-size:12px; color:#555; margin:3px 0; display:flex; gap:6px; }
+.pu-lbl   { color:#aaa; width:54px; flex-shrink:0; }
+.pu-val   { color:#333; font-weight:600; }
+.pu-addr  { font-size:11px; color:#aaa; margin-top:7px; line-height:1.5; border-top:1px solid #eee; padding-top:6px; }
+
+.legend {
+  background:#fff; padding:10px 14px; border-radius:9px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12); font-size:11px;
+}
+.legend h4 { font-size:11px; color:#444; font-weight:700; margin-bottom:7px; }
+.li { display:flex; align-items:center; gap:7px; margin:4px 0; }
+.ld { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+.legend hr { margin:7px 0; border:none; border-top:1px solid #eee; }
+.legend .note { font-size:10px; color:#aaa; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="emblem">☸</div>
+  <div class="title">
+    <h1>원불교 서울교구 교당 위치 분포도</h1>
+    <p>원기 108년 기준 &nbsp;·&nbsp; 서울교구 전체 교당</p>
+  </div>
+  <div class="kpi">
+    <div class="kpi-item"><div class="kpi-num" id="kpi-count">—</div><div class="kpi-label">총 교당</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpi-members">—</div><div class="kpi-label">관리교도 합계</div></div>
+    <div class="kpi-item"><div class="kpi-num" id="kpi-attend">—</div><div class="kpi-label">법회출석 합계</div></div>
+  </div>
+</div>
+
+<div id="body">
+  <div id="sidebar">
+    <div id="sb-top">
+      <h2>교당 목록 &nbsp;<span id="cnt" style="background:#1b3f7b;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;"></span></h2>
+      <input id="search" placeholder="🔍 교당명 검색…" oninput="applyFilter()">
+      <div class="chips" id="chips"></div>
+    </div>
+    <div id="list"></div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<script>
+/* ── 데이터 (좌표 직접 내장 — 외부 지오코딩 API 없음) ── */
+const RAW = [
+  ["강남교당",   "강남지구",  "서울특별시 강남구 자곡로 204-19 (자곡동)",              "특급지",1473,21541,37.4604,127.1043],
+  ["역삼교당",   "강남지구",  "서울특별시 강남구 언주로85길 29 (역삼동)",              "2급지", 964, 5729, 37.4982,127.0479],
+  ["잠실교당",   "강남지구",  "서울특별시 송파구 백제고분로36길 34 (석촌동)",          "특급지",636, 3925, 37.5049,127.1062],
+  ["가락교당",   "강남지구",  "서울특별시 송파구 송파대로34가길 12",                   "특급지",486, 4833, 37.4966,127.1218],
+  ["강동교당",   "강남지구",  "서울특별시 강동구 명일로 269 (길동)",                   "1급지", 206, 6750, 37.5535,127.1470],
+  ["개포교당",   "강남지구",  "서울특별시 강남구 논현로 10 (개포동)",                  "3급지", 111, 758,  37.4833,127.0439],
+  ["은혜의집교당","서울교구직속", "서울특별시 동작구 현충로 75 (흑석동) 지하1층",          "6급지", 6,   0,    37.5113,126.9645],
+  ["신림교당",   "여의도지구","서울특별시 관악구 신림로64길 57 (신림동)",              "특급지",498, 7442, 37.4836,126.9290],
+  ["여의도교당", "여의도지구","서울특별시 영등포구 여의대방로 68길 15",                "특급지",780, 7461, 37.5227,126.9244],
+  ["한강교당",   "여의도지구","서울특별시 동작구 현충로 75 (흑석동) 원불교소태산기념관","2급지", 491, 5948, 37.5110,126.9640],
+  ["영등포교당", "여의도지구","서울특별시 영등포구 영등포로 22길 3-3",                 "3급지", 152, 1013, 37.5157,126.9073],
+  ["방배교당",   "여의도지구","서울특별시 서초구 동광로1길 8 (방배동)",                "3급지", 79,  1054, 37.4800,126.9943],
+  ["서초교당",   "여의도지구","서울특별시 서초구 바우뫼로 43길 31 (양재동)",           "2급지", 145, 1119, 37.4775,127.0415],
+  ["신길교당",   "여의도지구","서울특별시 영등포구 신길로15길 1",                      "2급지", 106, 1294, 37.5104,126.9158],
+  ["서울교당",   "서울지구",  "서울특별시 용산구 한강대로40가길 24 (한강로2가)",        "특급지",685, 6568, 37.5380,126.9706],
+  ["신촌교당",   "서울지구",  "서울특별시 서대문구 신촌로7길 46 (창천동)",              "특급지",302, 2000, 37.5493,126.9385],
+  ["일산교당",   "서울지구",  "경기도 고양시 일산서구 주화로 202 (대화동)",             "1급지", 406, 3304, 37.6720,126.7745],
+  ["화정교당",   "서울지구",  "경기도 고양시 덕양구 화신로260번길 57 (화정동)",         "1급지", 223, 2584, 37.6320,126.8318],
+  ["불광교당",   "서울지구",  "서울특별시 은평구 통일로 911 (갈현동) 4층",              "2급지", 359, 1809, 37.6135,126.9264],
+  ["홍제교당",   "서울지구",  "서울특별시 서대문구 홍제원6길 14-12 (홍제동)",           "2급지", 211, 1305, 37.5887,126.9518],
+  ["마포교당",   "서울지구",  "서울특별시 마포구 마포대로16길 20 (공덕동)",              "2급지", 158, 2044, 37.5449,126.9510],
+  ["원효교당",   "서울지구",  "서울특별시 용산구 원효로93길 18-5 (원효로1가)",          "3급지", 87,  689,  37.5385,126.9643],
+  ["은평교당",   "서울지구",  "서울특별시 은평구 은평로13길 16-1 (녹번동)",             "3급지", 81,  1189, 37.6012,126.9289],
+  ["연희교당",   "서울지구",  "서울특별시 서대문구 홍제천로 6길 21 (연희동)",            "4급지", 223, 810,  37.5663,126.9274],
+  ["파주교당",   "서울지구",  "경기도 파주시 파주읍 충현로 18",                         "4급지", 190, 501,  37.8265,126.7874],
+  ["서울이주민교당","서울지구","서울특별시 강서구 가로공원로84길 59 (화곡동)",          "6급지", 0,   0,    37.5493,126.8488],
+  ["원남교당",   "원남지구",  "서울특별시 종로구 창경궁로 22길 23",                     "특급지",576, 7630, 37.5800,126.9945],
+  ["중구교당",   "원남지구",  "서울특별시 중구 퇴계로44길 24 (필동2가)",                "2급지", 281, 4136, 37.5571,126.9939],
+  ["이문교당",   "원남지구",  "서울특별시 동대문구 이문로 154 (이문동)",                "2급지", 379, 2486, 37.5975,127.0569],
+  ["중곡교당",   "원남지구",  "서울특별시 광진구 긴고랑로14길 54 (중곡동)",              "2급지", 292, 2621, 37.5679,127.0877],
+  ["전농교당",   "원남지구",  "서울특별시 동대문구 사가정로15길 47 (전농동)",            "2급지", 205, 1724, 37.5754,127.0564],
+  ["구의교당",   "원남지구",  "서울특별시 광진구 아차산로63길 35 (구의동)",              "2급지", 150, 1032, 37.5436,127.0927],
+  ["유린교당",   "원남지구",  "서울특별시 중랑구 신내로10길 16 (신내동)",               "2급지", 246, 2156, 37.6057,127.1051],
+  ["태릉교당",   "원남지구",  "서울특별시 노원구 동일로180길 11-3 (공릉동)",             "4급지", 246, 1560, 37.6238,127.0765],
+  ["장충교당",   "원남지구",  "서울특별시 중구 동호로17길 13-4 (신당동)",               "1급지", 150, 2052, 37.5576,127.0092],
+  ["면목교당",   "원남지구",  "서울특별시 중랑구 면목로60길 29 (면목동)",               "4급지", 90,  611,  37.5755,127.0830],
+  ["종로교당",   "종로지구",  "서울특별시 종로구 삼일대로30길 14 (낙원동)",              "특급지",288, 2806, 37.5716,126.9909],
+  ["송천교당",   "종로지구",  "서울특별시 성북구 장위로4길 5 (장위동)",                 "특급지",595, 3379, 37.6053,127.0411],
+  ["돈암교당",   "종로지구",  "서울특별시 성북구 동소문로26길 32 (동선동3가)",          "특급지",363, 3164, 37.5940,127.0063],
+  ["안암교당",   "종로지구",  "서울특별시 성북구 안암로 27-7 (안암동)",                 "1급지", 248, 3937, 37.5867,127.0276],
+  ["정릉교당",   "종로지구",  "서울특별시 성북구 보국문로10길 3 (정릉동)",              "1급지", 155, 2032, 37.6108,127.0069],
+  ["도봉교당",   "종로지구",  "서울특별시 강북구 도봉로20가길 32 (미아동)",             "1급지", 95,  1238, 37.6289,127.0257],
+  ["사직교당",   "종로지구",  "서울특별시 종로구 자하문로13길 11",                      "3급지", 94,  807,  37.5795,126.9698],
+  ["방학교당",   "종로지구",  "서울특별시 도봉구 방학로3길 13 (방학동)",                "3급지", 285, 1549, 37.6572,127.0268],
+  ["상계교당",   "종로지구",  "서울특별시 노원구 한글비석로23길 27 (상계동)",            "2급지", 186, 1416, 37.6542,127.0617],
+  ["시민선방교당","서울교구직속", "서울특별시 종로구 북촌로 5길 29 (화동)",                 "",      43,  3649, 37.5813,126.9854],
+  ["의정부교당", "종로지구",  "경기도 의정부시 송산로1161번길 161 (용현동)",             "4급지", 199, 1505, 37.7382,127.0437],
+  ["전곡교당",   "종로지구",  "경기도 연천군 전곡읍 전은길 184-40",                     "4급지", 94,  1211, 38.0000,127.0800],
+  ["양주교당",   "종로지구",  "경기도 양주시 평화로1501번길 21-10 (덕계동)",             "6급지", 37,  644,  37.7854,127.0456],
+  ["동두천교당", "종로지구",  "경기도 동두천시 평화로2930번길 46 (상봉암동)",            "5급지", 156, 482,  37.9036,127.0607],
+  ["포천교당",   "종로지구",  "경기도 포천시 호국로 917번길 28 (선단동)",               "5급지", 43,  465,  37.9004,127.1999],
+  ["화곡교당",   "화곡지구",  "서울특별시 강서구 화곡로 34길 16",                       "특급지",525, 3990, 37.5441,126.8524],
+  ["목동교당",   "화곡지구",  "서울특별시 양천구 오목로46길 15 (신정동)",               "1급지", 394, 2439, 37.5258,126.8710],
+  ["개봉교당",   "화곡지구",  "서울특별시 구로구 개봉로16길 15 (개봉동)",               "1급지", 338, 2980, 37.4954,126.8595],
+  ["구로교당",   "화곡지구",  "서울특별시 구로구 가마산로20길 50 (구로동)",              "2급지", 198, 3807, 37.4938,126.8872],
+  ["공항교당",   "화곡지구",  "서울특별시 강서구 공항대로7다길 14 (공항동)",             "2급지", 322, 1291, 37.5627,126.8019],
+  ["금천교당",   "화곡지구",  "서울특별시 금천구 독산로 9 (시흥동)",                    "4급지", 107, 693,  37.4560,126.8999],
+  ["강화교당",   "화곡지구",  "인천광역시 강화군 강화읍 관청길 10번길 14",              "4급지", 102, 1607, 37.7472,126.4881],
+  ["김포교당",   "화곡지구",  "경기도 김포시 김포대로1129번길 60 (감정동)",             "5급지", 213, 1448, 37.6150,126.7157],
+  ["화랑대교당", "기타",      "서울특별시 노원구 화랑로 574 (육군사관학교)",             "6급지", 144, 29,   37.6200,127.0810],
+  ["열쇠교당",   "기타",      "경기도 연천군 청산면 청창로 719 (제5보병사단)",           "6급지", 954, 112,  38.0518,127.1543],
+  ["시민사회네트워크교당","기타","서울특별시 용산구 한강대로40가길 24 (한강로2가) 지하 2층","6급지",7,   251,  37.5375,126.9700],
+];
+
+const DATA = RAW.map(r => ({
+  name: r[0], district: r[1], address: r[2], grade: r[3],
+  members: r[4], attendance: r[5], lat: r[6], lng: r[7]
+}));
+
+const DC = {
+  '강남지구':    '#e63946',
+  '여의도지구':  '#7b2d8b',
+  '서울지구':    '#1d6fa4',
+  '원남지구':    '#e07b00',
+  '종로지구':    '#1a9460',
+  '화곡지구':    '#2a7e44',
+  '서울교구직속':'#c0392b',
+  '기타':        '#888',
+};
+
+/* KPI */
+document.getElementById('kpi-count').textContent   = DATA.length;
+document.getElementById('kpi-members').textContent = DATA.reduce((s,t)=>s+t.members,0).toLocaleString();
+document.getElementById('kpi-attend').textContent  = DATA.reduce((s,t)=>s+t.attendance,0).toLocaleString();
+
+/* 필터 칩 */
+const districts = ['전체', ...Object.keys(DC)];
+const chipsEl = document.getElementById('chips');
+let activeDistrict = '전체';
+
+districts.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'chip' + (d === '전체' ? ' on' : '');
+  btn.textContent = d;
+  if (d === '전체') { btn.style.cssText = 'background:#1b3f7b;color:#fff;border-color:#1b3f7b;'; }
+  btn.onclick = () => {
+    activeDistrict = d;
+    document.querySelectorAll('.chip').forEach(b => {
+      const name = b.textContent;
+      if (name === d) {
+        b.classList.add('on');
+        b.style.background = name === '전체' ? '#1b3f7b' : (DC[name] || '#888');
+        b.style.color = '#fff';
+        b.style.borderColor = 'transparent';
+      } else {
+        b.classList.remove('on');
+        b.style.background = '';
+        b.style.color = '';
+        b.style.borderColor = '';
+      }
+    });
+    applyFilter();
+  };
+  chipsEl.appendChild(btn);
+});
+
+/* 지도 */
+const map = L.map('map', { zoomControl:true }).setView([37.57, 127.00], 11);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+  maxZoom:19
+}).addTo(map);
+
+function markerSize(members) {
+  if (members > 800) return 16;
+  if (members > 400) return 13;
+  if (members > 150) return 10;
+  if (members > 50)  return 8;
+  return 6;
+}
+
+function makeIcon(t, hl) {
+  const c = DC[t.district] || '#888';
+  const r = markerSize(t.members);
+  const bw = hl ? '3px' : '2px';
+  const bc = hl ? '#fff' : 'rgba(255,255,255,.8)';
+  const sh = hl
+    ? `0 0 0 3px ${c},0 3px 10px rgba(0,0,0,.4)`
+    : '0 2px 6px rgba(0,0,0,.3)';
+  return L.divIcon({
+    className:'',
+    html:`<div style="width:${r*2}px;height:${r*2}px;background:${c};border:${bw} solid ${bc};border-radius:50%;box-shadow:${sh};"></div>`,
+    iconSize:[r*2,r*2], iconAnchor:[r,r], popupAnchor:[0,-r-4]
+  });
+}
+
+let markers = {}, selName = null;
+
+DATA.forEach(t => {
+  const mk = L.marker([t.lat, t.lng], { icon: makeIcon(t, false) });
+  const c  = DC[t.district] || '#888';
+  mk.bindPopup(`
+    <div>
+      <div class="pu-name">${t.name}</div>
+      ${t.district ? `<div class="pu-row"><span class="pu-lbl">지구</span><span class="pu-val" style="color:${c}">${t.district}</span></div>` : ''}
+      <div class="pu-row"><span class="pu-lbl">급지</span><span class="pu-val">${t.grade || '—'}</span></div>
+      <div class="pu-row"><span class="pu-lbl">관리교도</span><span class="pu-val">${t.members.toLocaleString()}명</span></div>
+      <div class="pu-row"><span class="pu-lbl">법회출석</span><span class="pu-val">${t.attendance.toLocaleString()}</span></div>
+      <div class="pu-addr">${t.address}</div>
+    </div>`, { maxWidth:260 });
+  mk.on('click', () => selectTemple(t.name, false));
+  mk.addTo(map);
+  markers[t.name] = mk;
+});
+
+function selectTemple(name, pan) {
+  if (selName && markers[selName]) {
+    const p = DATA.find(t => t.name === selName);
+    if (p) markers[selName].setIcon(makeIcon(p, false));
+  }
+  selName = name;
+  const t = DATA.find(d => d.name === name);
+  if (!t) return;
+  markers[name].setIcon(makeIcon(t, true));
+  if (pan !== false) {
+    map.setView([t.lat, t.lng], 15, { animate:true });
+    markers[name].openPopup();
+  }
+  renderList();
+  setTimeout(() => {
+    const el = document.querySelector('.card.sel');
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }, 60);
+}
+
+function applyFilter() {
+  const q = document.getElementById('search').value;
+  DATA.forEach(t => {
+    const mk = markers[t.name];
+    if (!mk) return;
+    const show = (activeDistrict === '전체' || t.district === activeDistrict) && t.name.includes(q);
+    if (show) { if (!map.hasLayer(mk)) mk.addTo(map); }
+    else      { if ( map.hasLayer(mk)) map.removeLayer(mk); }
+  });
+  renderList();
+}
+
+function renderList() {
+  const q = document.getElementById('search').value;
+  const filtered = DATA.filter(t =>
+    (activeDistrict === '전체' || t.district === activeDistrict) && t.name.includes(q)
+  );
+  document.getElementById('cnt').textContent = filtered.length;
+  document.getElementById('list').innerHTML = filtered.map(t => {
+    const c   = DC[t.district] || '#888';
+    const sel = t.name === selName;
+    return `<div class="card${sel?' sel':''}" onclick="selectTemple('${t.name}')">
+      <div class="card-top">
+        <span class="card-name">${t.name}</span>
+        ${t.district ? `<span class="badge" style="background:${c}">${t.district}</span>` : ''}
+      </div>
+      <div class="card-bot">
+        ${t.grade ? `<span class="tag">${t.grade}</span>` : ''}
+        <span class="stat">관리교도 ${t.members.toLocaleString()}명</span>
+        <span class="stat">출석 ${t.attendance.toLocaleString()}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* 레전드 */
+const legend = L.control({ position:'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div','legend');
+  div.innerHTML = '<h4>지구별 색상</h4>' +
+    Object.entries(DC).map(([k,v]) =>
+      `<div class="li"><div class="ld" style="background:${v}"></div><span>${k}</span></div>`
+    ).join('') +
+    '<hr><div class="note">● 원 크기 = 관리교도 수</div>';
+  return div;
+};
+legend.addTo(map);
+
+renderList();
+</script>
+</body>
+</html>
