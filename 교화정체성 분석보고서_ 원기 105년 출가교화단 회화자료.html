@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원불교 교화정체성 연구 — 현장 분석 보고서</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --bg:        #f6f3ed;
+  --bg2:       #edeadf;
+  --bg3:       #e2ddd0;
+  --bg4:       #ccc8b8;
+  --white:     #fdfcf9;
+  --ink:       #1a1710;
+  --ink2:      #363228;
+  --ink3:      #6e6858;
+  --ink4:      #a8a292;
+  --stone:     #4a4438;
+  --red:       #8c2e1a;
+  --red-l:     #f5e8e3;
+  --red-m:     #c04832;
+  --blue:      #1e3a5f;
+  --blue-l:    #e4ecf7;
+  --blue-m:    #2e5490;
+  --green:     #1c4232;
+  --green-l:   #e2f0e8;
+  --green-m:   #2a6248;
+  --gold:      #6a4a10;
+  --gold-l:    #f5edda;
+  --gold-m:    #9a6e20;
+  --serif: 'Noto Serif KR', Georgia, serif;
+  --sans:  'Noto Sans KR', 'Helvetica Neue', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.82;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════ 커버 ════ */
+.cover {
+  background: var(--white);
+  border-bottom: 1px solid var(--bg3);
+  padding: 5rem 0 4rem;
+}
+.cover-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+.cover-rule {
+  width: 40px;
+  height: 3px;
+  background: var(--red);
+  border-radius: 2px;
+  margin-bottom: 2rem;
+}
+.cover-kicker {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 1rem;
+}
+.cover-h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.28;
+  margin-bottom: 1.5rem;
+  letter-spacing: -.01em;
+}
+.cover-lede {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--ink2);
+  line-height: 1.82;
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+  border-left: 2px solid var(--bg3);
+  padding-left: 1.25rem;
+}
+.cover-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--bg3);
+}
+.cm { }
+.cm-l { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink4); margin-bottom: 3px; }
+.cm-v { font-size: 13px; color: var(--ink2); }
+
+/* ════ 목차 ════ */
+.toc {
+  background: var(--bg2);
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--bg3);
+}
+.toc-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0 3rem;
+  align-items: start;
+}
+.toc-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  padding-top: 4px;
+}
+.toc-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2rem;
+}
+.toc-a {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--bg3);
+  text-decoration: none;
+  color: var(--ink2);
+  font-size: 13px;
+  transition: color .18s;
+}
+.toc-a:hover { color: var(--red); }
+.toc-n { font-size: 10px; font-weight: 700; color: var(--red); min-width: 18px; }
+
+/* ════ 공통 레이아웃 ════ */
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+section {
+  padding: 4.5rem 0;
+  border-bottom: 1px solid var(--bg3);
+}
+section:last-of-type { border-bottom: none; }
+
+.sec-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: .75rem;
+}
+.sec-kicker::after { content: ''; flex: 1; height: 1px; background: var(--bg3); }
+
+.sec-h {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 1.25rem;
+}
+.sec-sub {
+  font-size: 14px;
+  color: var(--ink3);
+  line-height: 1.9;
+  margin-bottom: 2rem;
+  max-width: 640px;
+}
+
+/* prose */
+.prose {
+  font-size: 14.5px;
+  color: var(--ink2);
+  line-height: 1.9;
+}
+.prose p { margin-bottom: 1.1rem; }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { font-weight: 600; color: var(--ink); }
+
+/* ════ 수용도 시각화 ════ */
+.accept-block { margin: 2rem 0; }
+.accept-bar-wrap {
+  display: flex;
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: .875rem;
+}
+.ab-pos   { background: var(--green-m); }
+.ab-mix   { background: var(--blue-m);  }
+.ab-neg   { background: var(--red-m);   }
+.ab-na    { background: var(--bg4);     }
+.accept-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .625rem;
+  margin-bottom: .75rem;
+}
+.ai {
+  background: var(--white);
+  border: 1px solid var(--bg3);
+  border-radius: 7px;
+  padding: .875rem 1rem;
+  text-align: center;
+}
+.ai-n {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.ai-pct { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+.ai-l { font-size: 11.5px; color: var(--ink3); line-height: 1.35; }
+.c-g { color: var(--green-m); }
+.c-b { color: var(--blue-m);  }
+.c-r { color: var(--red-m);   }
+.c-s { color: var(--ink4);    }
+.accept-note {
+  font-size: 12.5px;
+  color: var(--ink3);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ════ 대주제 카드 ════ */
+.theme-set { display: flex; flex-direction: column; gap: .75rem; margin: 2rem 0; }
+.theme-card {
+  background: var(--white);
+  border: 1px solid var(--bg3);
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+.tc-left {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--bg3);
+}
+.tc-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.tc-name {
+  font-family: var(--serif);
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.tc-bars { display: flex; flex-direction: column; gap: 4px; }
+.tc-bar-row { display: flex; align-items: center; gap: 7px; }
+.tc-bar-track { flex: 1; height: 4px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+.tc-bar-fill { height: 100%; border-radius: 99px; }
+.tc-bar-l { font-size: 10.5px; color: var(--ink4); width: 44px; text-align: right; }
+.tc-bar-n { font-size: 10.5px; font-weight: 700; color: var(--ink3); width: 28px; }
+
+.tc-right { padding: 1.25rem 1.5rem; }
+.tc-headline {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+.tc-body { font-size: 12.5px; color: var(--ink3); line-height: 1.72; }
+
+.tc-red   .tc-num { color: var(--red); }
+.tc-blue  .tc-num { color: var(--blue); }
+.tc-green .tc-num { color: var(--green); }
+.tc-gold  .tc-num { color: var(--gold); }
+.tc-red   .tc-left { background: #fdf5f3; }
+.tc-blue  .tc-left { background: #f3f6fc; }
+.tc-green .tc-left { background: #f2f9f5; }
+.tc-gold  .tc-left { background: #fdf8ee; }
+
+/* ════ 악순환 다이어그램 ════ */
+.loop-frame {
+  background: var(--white);
+  border: 1px solid var(--bg3);
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin: 2rem 0;
+}
+.loop-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.loop-diagram {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr;
+  grid-template-rows: auto 48px auto;
+  align-items: center;
+  justify-items: center;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.ln {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 8px;
+  padding: .875rem 1.1rem;
+  text-align: center;
+  width: 100%;
+}
+.ln-tag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--ink4); margin-bottom: 3px; }
+.ln-text { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.loop-arrow-h {
+  font-size: 22px;
+  color: var(--bg4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loop-arrow-v {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 520px;
+  font-size: 22px;
+  color: var(--bg4);
+}
+.loop-arrow-v span { width: 33%; text-align: center; }
+.loop-caption {
+  font-size: 12.5px;
+  color: var(--ink3);
+  text-align: center;
+  margin-top: 1.5rem;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* ════ 핵심 발견 ════ */
+.finding-list { display: flex; flex-direction: column; gap: 0; margin: 2rem 0; }
+.finding {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--bg3);
+  align-items: start;
+}
+.finding:last-child { border-bottom: none; }
+.finding-num {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--bg3);
+  line-height: 1;
+  text-align: right;
+  padding-top: 4px;
+}
+.finding-body {}
+.finding-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: .625rem;
+}
+.finding-text {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.88;
+}
+.finding-text p { margin-bottom: .875rem; }
+.finding-text p:last-child { margin-bottom: 0; }
+.finding-quote {
+  margin-top: .875rem;
+  padding: .75rem 1rem;
+  background: var(--bg2);
+  border-radius: 5px;
+  font-size: 12.5px;
+  color: var(--ink3);
+  font-style: italic;
+  line-height: 1.65;
+}
+.finding-quote cite { font-style: normal; font-size: 11px; color: var(--ink4); margin-left: 6px; }
+
+/* ════ 구조 분석 패널 ════ */
+.struct-panel {
+  background: var(--blue-l);
+  border: 1px solid #c0cfe8;
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin: 2rem 0;
+}
+.sp-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--blue-m);
+  margin-bottom: .625rem;
+}
+.sp-question {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1.45;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #c0cfe8;
+}
+.sp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.sp-table th {
+  font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--blue-m); padding: 6px 10px 10px; text-align: left;
+  border-bottom: 1px solid #c0cfe8;
+}
+.sp-table th:first-child { color: #99aac8; }
+.sp-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #d4e0f0;
+  color: var(--ink2);
+  vertical-align: top;
+  line-height: 1.55;
+  font-size: 13px;
+}
+.sp-table tr:last-child td { border-bottom: none; }
+.sp-table td:first-child { color: var(--ink4); font-size: 12px; white-space: nowrap; }
+.sp-table td.hi { color: var(--blue); font-weight: 600; }
+
+/* ════ 긴장 축 ════ */
+.tension-block { margin: 2rem 0; }
+.tension-item {
+  display: grid;
+  grid-template-columns: 1fr 36px 1fr;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--bg3);
+}
+.ti-l { background: var(--blue-l);  color: var(--blue);  font-size: 13px; font-weight: 500; padding: 10px 14px; }
+.ti-m { background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--ink4); }
+.ti-r { background: var(--gold-l);  color: var(--gold);  font-size: 13px; font-weight: 500; padding: 10px 14px; text-align: right; }
+
+/* ════ 맥락별 현황 ════ */
+.context-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin: 2rem 0;
+}
+.ctx {
+  background: var(--white);
+  border: 1px solid var(--bg3);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+}
+.ctx-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 4px; margin-bottom: 8px;
+}
+.ct-r { background: var(--red-l);   color: var(--red); }
+.ct-b { background: var(--blue-l);  color: var(--blue); }
+.ct-g { background: var(--green-l); color: var(--green); }
+.ct-o { background: var(--gold-l);  color: var(--gold); }
+.ctx-desc { font-size: 12.5px; color: var(--ink2); line-height: 1.72; }
+
+/* ════ 제언 ════ */
+.rec-list { display: flex; flex-direction: column; gap: 1.25rem; margin: 2rem 0; }
+.rec {
+  display: grid;
+  grid-template-columns: 4px 1fr;
+  gap: 0 1.25rem;
+  align-items: stretch;
+}
+.rec-line { border-radius: 2px; }
+.rec.r-red   .rec-line { background: var(--red); }
+.rec.r-blue  .rec-line { background: var(--blue); }
+.rec.r-green .rec-line { background: var(--green); }
+.rec.r-gold  .rec-line { background: var(--gold); }
+.rec-body { }
+.rec-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.rec.r-red   .rec-label { color: var(--red); }
+.rec.r-blue  .rec-label { color: var(--blue); }
+.rec.r-green .rec-label { color: var(--green); }
+.rec.r-gold  .rec-label { color: var(--gold); }
+.rec-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 5px;
+}
+.rec-text { font-size: 13.5px; color: var(--ink2); line-height: 1.8; }
+.rec-items {
+  list-style: none;
+  margin-top: .625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.rec-items li {
+  font-size: 13px; color: var(--ink2);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--bg3);
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.rec-items li:last-child { border-bottom: none; }
+.rec-items li::before { content: '—'; font-size: 11px; color: var(--ink4); flex-shrink: 0; margin-top: 2px; }
+
+/* ════ 마무리 ════ */
+.closing {
+  background: var(--white);
+  border: 1px solid var(--bg3);
+  border-top: 3px solid var(--stone);
+  border-radius: 0 0 8px 8px;
+  padding: 2rem 2.5rem;
+  margin: 2rem 0;
+}
+.closing-text {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ink2);
+  line-height: 1.9;
+}
+.closing-text strong { color: var(--ink); font-weight: 700; }
+
+/* ════ 푸터 ════ */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--bg3);
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink4);
+  line-height: 1.9;
+}
+footer strong { color: var(--ink3); font-weight: 500; }
+
+/* ════ 반응형 ════ */
+@media (max-width: 680px) {
+  .page, .cover-inner, .toc-inner { padding: 0 1.5rem; }
+  .toc-inner { grid-template-columns: 1fr; gap: 1rem; }
+  .toc-links { grid-template-columns: 1fr; }
+  .accept-items { grid-template-columns: repeat(2, 1fr); }
+  .theme-card { grid-template-columns: 1fr; }
+  .tc-left { border-right: none; border-bottom: 1px solid var(--bg3); }
+  .context-grid { grid-template-columns: 1fr; }
+  .finding { grid-template-columns: 1fr; }
+  .finding-num { font-size: 1.5rem; text-align: left; }
+  .loop-diagram { grid-template-columns: 1fr; }
+  .loop-arrow-h { display: none; }
+  .tension-item { grid-template-columns: 1fr; }
+  .ti-r { text-align: left; }
+  .sp-table { font-size: 11.5px; }
+  .cover { padding: 3rem 0; }
+  .cover-meta { gap: 1rem 2rem; }
+}
+@media print {
+  body { font-size: 13px; }
+  section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ 커버 ════ -->
+<header class="cover">
+  <div class="cover-inner">
+    <div class="cover-rule"></div>
+    <div class="cover-kicker">원불교 교화구조개선 TF · 현장 분석 보고서</div>
+    <h1 class="cover-h1">
+      원불교 교화정체성,<br>현장은 무엇을 말하는가
+    </h1>
+    <p class="cover-lede">
+      원기 105년, 교단은 전국 출가교역자에게 물었다.
+      "교화단과 훈련으로 교화정체성을 확립하자는 방향,
+      어떻게 생각하십니까?"
+      56개 각단의 회화기록은 단순한 찬반이 아닌,
+      수십 년간 현장에 쌓인 경험과 고민을 담고 있다.
+      이 보고서는 그 목소리를 체계적으로 정리하고
+      앞으로 나아갈 방향을 제시한다.
+    </p>
+    <div class="cover-meta">
+      <div class="cm">
+        <div class="cm-l">분석 대상</div>
+        <div class="cm-v">출가교화단 회화기록 56개 각단</div>
+      </div>
+      <div class="cm">
+        <div class="cm-l">항단 범위</div>
+        <div class="cm-v">건항·감항·간항·진항·손항·이항·곤항·태항 (8개 항단)</div>
+      </div>
+      <div class="cm">
+        <div class="cm-l">조사 시점</div>
+        <div class="cm-v">원기 105년 3월·5월 출가교화단 단회</div>
+      </div>
+      <div class="cm">
+        <div class="cm-l">분석 방법</div>
+        <div class="cm-v">텍스트 코딩(60개 소주제 → 4개 대주제) + 구조 분석</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════ 목차 ════ -->
+<nav class="toc">
+  <div class="toc-inner">
+    <div class="toc-label">목차</div>
+    <div class="toc-links">
+      <a href="#s1" class="toc-a"><span class="toc-n">01</span>연구 배경과 문제의식</a>
+      <a href="#s2" class="toc-a"><span class="toc-n">02</span>방향에 대한 현장의 반응</a>
+      <a href="#s3" class="toc-a"><span class="toc-n">03</span>4가지 핵심 문제 영역</a>
+      <a href="#s4" class="toc-a"><span class="toc-n">04</span>왜 반복되는가 — 악순환 구조</a>
+      <a href="#s5" class="toc-a"><span class="toc-n">05</span>더 깊은 구조 — 6가지 긴장</a>
+      <a href="#s6" class="toc-a"><span class="toc-n">06</span>5가지 핵심 발견</a>
+      <a href="#s7" class="toc-a"><span class="toc-n">07</span>교당 유형별 현실</a>
+      <a href="#s8" class="toc-a"><span class="toc-n">08</span>나아갈 방향 — 제언</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ════ S1. 배경 ════ -->
+<section id="s1">
+  <div class="page">
+    <div class="sec-kicker">Section 01</div>
+    <h2 class="sec-h">연구 배경과 문제의식</h2>
+    <div class="prose">
+      <p>원불교는 교단 제3대 제3회 설계에서 교화의 주요 방향으로 <strong>"교화단과 훈련으로 교화정체성 확립"</strong>을 설정하고, 세 가지 세부 과제를 제시했다. 교화단 중심 교화, 정기·상시훈련 체제 정착, 교당내왕시 주의사항 중심 법회 운영이 그것이다.</p>
+      <p>그러나 교단 3대를 마무리하고 4대를 준비하는 시점에서, 이 방향이 실제 현장에서 얼마나 실현되었는지에 대한 점검이 필요했다. 실현되지 못했다면 그 원인이 어디에 있는가? 이념적 방향 설정의 문제인가, 철저한 실천이 따르지 못한 것인가, 아니면 다른 원인이 있는가?</p>
+      <p>이에 원기 105년, 전국 출가교화단 단원들이 단회를 통해 이 문제에 대한 의견을 나누었고, 그 기록을 수합하여 분석한 것이 이 보고서다. 142개 각단 중 56개 각단(39%)이 회화 기록을 제출했다.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S2. 수용도 ════ -->
+<section id="s2">
+  <div class="page">
+    <div class="sec-kicker">Section 02</div>
+    <h2 class="sec-h">방향에 대한 현장의 반응</h2>
+    <p class="sec-sub">
+      "교화단과 훈련으로 교화정체성을 확립하자"는 방향에 대해
+      현장 교역자들은 어떻게 반응했는가.
+    </p>
+
+    <div class="accept-block">
+      <div class="accept-items">
+        <div class="ai">
+          <div class="ai-n c-g">16</div>
+          <div class="ai-pct c-g">29%</div>
+          <div class="ai-l">긍정</div>
+        </div>
+        <div class="ai">
+          <div class="ai-n c-b">12</div>
+          <div class="ai-pct c-b">21%</div>
+          <div class="ai-l">긍정·부정 혼재</div>
+        </div>
+        <div class="ai">
+          <div class="ai-n c-r">9</div>
+          <div class="ai-pct c-r">16%</div>
+          <div class="ai-l">부정</div>
+        </div>
+        <div class="ai">
+          <div class="ai-n c-s">19</div>
+          <div class="ai-pct c-s">34%</div>
+          <div class="ai-l">긍부정 판단 없음</div>
+        </div>
+      </div>
+      <div class="accept-bar-wrap">
+        <div class="ab-pos" style="width:29%"></div>
+        <div class="ab-mix" style="width:21%"></div>
+        <div class="ab-neg" style="width:16%"></div>
+        <div class="ab-na"  style="width:34%"></div>
+      </div>
+      <p class="accept-note">
+        순수 긍정은 29%에 그쳤다. 판단 없음(34%)은 무관심이 아니라
+        현행 정책 프레임 자체에 동의하지 않거나 다른 언어로 문제를 이해하는
+        집단일 가능성이 있다는 점에서 주목할 필요가 있다.
+      </p>
+    </div>
+
+    <div class="prose">
+      <p>주목할 점은 방향에 반대하는 각단조차 대부분 "교화단과 훈련이 틀렸다"고 말하지 않는다는 것이다. 대다수는 방향 자체는 인정하면서, 그 방향이 실제 현장에서 작동하지 않는 이유를 다양하게 지적했다. 즉 이것은 이념의 문제가 아니라 <strong>실행 구조의 문제</strong>다.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S3. 대주제 ════ -->
+<section id="s3">
+  <div class="page">
+    <div class="sec-kicker">Section 03</div>
+    <h2 class="sec-h">4가지 핵심 문제 영역</h2>
+    <p class="sec-sub">
+      회화기록 전체를 분석한 결과, 현장의 문제 인식과 요구는
+      4개의 큰 영역으로 구조화된다.
+      각 영역은 문제와 그에 대응하는 해법 요구를 함께 담고 있다.
+    </p>
+
+    <div class="theme-set">
+
+      <div class="theme-card tc-red">
+        <div class="tc-left">
+          <div class="tc-num">영역 1 · 가장 광범위한 논의</div>
+          <div class="tc-name">획일화 vs<br>다양성 포용</div>
+          <div class="tc-bars">
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">획일화 비판</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:23%; background:var(--red-m);"></div></div>
+              <div class="tc-bar-n">33</div>
+            </div>
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">다양화 제안</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:77%; background:var(--green-m);"></div></div>
+              <div class="tc-bar-n">110</div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-headline">현장은 이미 다양한 해법을 모색하고 있다</div>
+          <div class="tc-body">총부 일괄 정책·단일 운영 모델에 대한 비판(33회)보다 소그룹 법회, 특성화단, 온라인 활용, 지역 맞춤형 운영 등 구체적 해법 제안(110회)이 3배 이상 많다. 현장은 불만을 토로하는 데 그치지 않고 스스로 답을 찾고 있다. 총부가 해야 할 일은 새 방법을 지시하는 것이 아니라 현장의 시도를 허용하고 성공 사례를 유통하는 것일 수 있다.</div>
+        </div>
+      </div>
+
+      <div class="theme-card tc-blue">
+        <div class="tc-left">
+          <div class="tc-num">영역 2 · 근본 질문</div>
+          <div class="tc-name">목적 상실 vs<br>공부 중심 회복</div>
+          <div class="tc-bars">
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">목적상실 지적</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:26%; background:var(--red-m);"></div></div>
+              <div class="tc-bar-n">7</div>
+            </div>
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">공부위주 요구</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:74%; background:var(--green-m);"></div></div>
+              <div class="tc-bar-n">20</div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-headline">수단이 목적을 압도하고 있다</div>
+          <div class="tc-body">교화단과 훈련은 인격 변화·성불을 위한 수단인데, 언제부턴가 교화단 운영 자체가 목적이 되었다는 지적이다. "교화단을 위한 교화"로 전도된 현실 속에서 교역자와 교도 모두 진짜 이유를 잊어가고 있다. 공부 중심 교화로의 회복 요구는 이 문제에 대한 현장의 응답이다.</div>
+        </div>
+      </div>
+
+      <div class="theme-card tc-green">
+        <div class="tc-left">
+          <div class="tc-num">영역 3 · 실행 도구 부재</div>
+          <div class="tc-name">방법론 부재 vs<br>연구·개발 요구</div>
+          <div class="tc-bars">
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">부재 지적</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:8%; background:var(--red-m);"></div></div>
+              <div class="tc-bar-n">2</div>
+            </div>
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">개발 요구</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:92%; background:var(--green-m);"></div></div>
+              <div class="tc-bar-n">24</div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-headline">방향은 있는데 도구가 없다</div>
+          <div class="tc-body">문답감정 실행 방법, 단장 지도 매뉴얼, 수준별 교재, 법회 식순 변경 가이드 등 구체적 실행 도구가 없다는 것이 핵심이다. 비판(2회)보다 개발 요구(24회)가 12배 많다는 것은 현장이 포기한 것이 아니라 도구를 달라고 요청하고 있다는 증거다.</div>
+        </div>
+      </div>
+
+      <div class="theme-card tc-gold">
+        <div class="tc-left">
+          <div class="tc-num">영역 4 · 핵심 병목</div>
+          <div class="tc-name">지도자 역량 부족 vs<br>교육훈련 강화</div>
+          <div class="tc-bars">
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">역량부족 지적</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:7%; background:var(--red-m);"></div></div>
+              <div class="tc-bar-n">3</div>
+            </div>
+            <div class="tc-bar-row">
+              <div class="tc-bar-l" style="font-size:10px;">교육훈련 요구</div>
+              <div class="tc-bar-track"><div class="tc-bar-fill" style="width:93%; background:var(--green-m);"></div></div>
+              <div class="tc-bar-n">43</div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-headline">단장·중앙을 키워달라는 절박한 요청</div>
+          <div class="tc-body">교화단 운영의 성패가 단장·중앙의 역량에 달려 있다는 것은 전 항단의 공통 인식이다. 그런데 역량 부족 비판(3회)보다 교육훈련 강화 요구(43회)가 14배 많다. 이것은 포기가 아니라 투자 요청이다. 단장을 제대로 키우면 교무가 직접 개입하지 않아도 현장이 자율적으로 굴러가는 구조가 가능하다.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S4. 악순환 ════ -->
+<section id="s4">
+  <div class="page">
+    <div class="sec-kicker">Section 04</div>
+    <h2 class="sec-h">왜 반복되는가 — 악순환 구조</h2>
+    <p class="sec-sub">
+      4개 문제 영역은 서로 독립적이지 않다.
+      이것들이 얽혀 악순환을 만들어내고 있으며,
+      그것이 수십 년간 "같은 이야기"가 반복되는 이유다.
+    </p>
+
+    <div class="loop-frame">
+      <div class="loop-title">교화단·훈련 침체의 악순환 구조</div>
+      <div class="loop-diagram">
+        <div class="ln">
+          <div class="ln-tag">영역 1</div>
+          <div class="ln-text">획일화<br>형식화</div>
+        </div>
+        <div class="loop-arrow-h">⟷</div>
+        <div class="ln">
+          <div class="ln-tag">영역 2</div>
+          <div class="ln-text">교화 목적<br>상실</div>
+        </div>
+        <div class="loop-arrow-v">
+          <span>↕</span>
+          <span></span>
+          <span>↕</span>
+        </div>
+        <div class="ln">
+          <div class="ln-tag">영역 4</div>
+          <div class="ln-text">지도자<br>역량 부족</div>
+        </div>
+        <div class="loop-arrow-h">⟷</div>
+        <div class="ln">
+          <div class="ln-tag">영역 3</div>
+          <div class="ln-text">방법론<br>부재</div>
+        </div>
+      </div>
+      <p class="loop-caption">
+        화살표는 상호 인과관계를 나타낸다.
+        어느 한 요소를 부분적으로 개선해도,<br>
+        나머지 세 요소가 그것을 원래 상태로 되돌리는 힘이 작동한다.
+      </p>
+    </div>
+
+    <div class="prose">
+      <p>이 악순환이 의미하는 것은 분명하다. <strong>부분 해결로는 전체가 바뀌지 않는다.</strong> 단장 교육만 강화해도, 목적상실 문제와 획일화 문제가 그대로라면 훈련받은 단장은 결국 기존 방식을 답습하게 된다. 법회 식순을 바꿔도, 교역자가 문답감정을 이끌 실행 도구가 없다면 형식만 바뀌고 내용은 그대로다.</p>
+      <p>이 악순환을 끊으려면 네 영역을 동시에, 그리고 연동하여 다루는 접근이 필요하다.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S5. 구조적 긴장 ════ -->
+<section id="s5">
+  <div class="page">
+    <div class="sec-kicker">Section 05</div>
+    <h2 class="sec-h">더 깊은 구조 — 6가지 긴장과 하나의 뿌리</h2>
+    <p class="sec-sub">
+      악순환이 수십 년째 끊기지 않는 데는 더 깊은 이유가 있다.
+      회화자료 전반을 관통하는 6가지 구조적 긴장이 있으며,
+      이 긴장들은 하나의 공통 뿌리로 수렴한다.
+    </p>
+
+    <div class="tension-block">
+      <div class="tension-item">
+        <div class="ti-l">총부 일괄 정책</div>
+        <div class="ti-m">VS</div>
+        <div class="ti-r">현장 맞춤 자율</div>
+      </div>
+      <div class="tension-item">
+        <div class="ti-l">출가 주도 교화</div>
+        <div class="ti-m">VS</div>
+        <div class="ti-r">재가 자발적 참여</div>
+      </div>
+      <div class="tension-item">
+        <div class="ti-l">설교 중심 법회</div>
+        <div class="ti-m">VS</div>
+        <div class="ti-r">문답감정 중심 법회</div>
+      </div>
+      <div class="tension-item">
+        <div class="ti-l">교화단 조직 중심</div>
+        <div class="ti-m">VS</div>
+        <div class="ti-r">개인 영성·수행 중심</div>
+      </div>
+      <div class="tension-item">
+        <div class="ti-l">정기훈련원 중심</div>
+        <div class="ti-m">VS</div>
+        <div class="ti-r">상시훈련 생활화</div>
+      </div>
+      <div class="tension-item">
+        <div class="ti-l">숫자(교세) 중심 교화</div>
+        <div class="ti-m">VS</div>
+        <div class="ti-r">질적 인격 변화 중심</div>
+      </div>
+    </div>
+
+    <div class="struct-panel">
+      <div class="sp-label">공통 뿌리 — 근본 물음</div>
+      <div class="sp-question">
+        "교화의 권위와 주도권이 어디에 있어야 하는가?"<br>
+        <span style="font-size:.9rem;font-weight:400;color:var(--blue-m);">이 물음에 답하지 않으면 6가지 긴장은 하나도 해소되지 않는다.</span>
+      </div>
+      <table class="sp-table">
+        <thead>
+          <tr>
+            <th>층위</th>
+            <th>현재 작동 방식</th>
+            <th>회화가 가리키는 방향</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>교단 정책</td>
+            <td>총부가 결정 → 현장은 실행</td>
+            <td class="hi">현장이 결정 → 총부는 지원</td>
+          </tr>
+          <tr>
+            <td>교화 주체</td>
+            <td>교무가 이끌고 교도는 따름</td>
+            <td class="hi">교도가 단의 주인 / 교무는 촉진자</td>
+          </tr>
+          <tr>
+            <td>법회 발화권</td>
+            <td>교무가 말하고 교도는 들음</td>
+            <td class="hi">교도가 말하고 교무가 들어줌</td>
+          </tr>
+          <tr>
+            <td>수행 공간</td>
+            <td>훈련원·법회가 공식 인정 공간</td>
+            <td class="hi">일상 전체가 수행 공간</td>
+          </tr>
+          <tr>
+            <td>교화 기준</td>
+            <td>출석 수·법위 수치가 기준</td>
+            <td class="hi">개인의 실질적 인격 변화가 기준</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>이 구조는 프랙탈처럼 복제된다. 총부가 현장 교무에게 하는 것을, 교무가 교도에게 그대로 반복하고, 단장이 단원에게 다시 반복한다. 따라서 어느 한 층위의 방향이 바뀌면 나머지도 연동하여 재정렬된다. 반대로 말하면, 한 층위만 바꾸어서는 구조 전체가 바뀌지 않는다.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S6. 핵심 발견 ════ -->
+<section id="s6">
+  <div class="page">
+    <div class="sec-kicker">Section 06</div>
+    <h2 class="sec-h">5가지 핵심 발견</h2>
+    <p class="sec-sub">
+      분석 전체를 통해 도출된 핵심 발견을 정리한다.
+      각 발견은 독립적이 아니라 서로 연결되어 있다.
+    </p>
+
+    <div class="finding-list">
+
+      <div class="finding">
+        <div class="finding-num">01</div>
+        <div class="finding-body">
+          <div class="finding-title">현장은 불평하는 것이 아니라 답을 찾고 있다</div>
+          <div class="finding-text">
+            <p>회화기록의 가장 중요한 발견은 이것이다. 모든 대주제에서 "문제 지적"보다 "해법 제안"이 압도적으로 많다. 획일화 영역에서 비판 33회 대 해법 제안 110회, 방법론 영역에서 비판 2회 대 개발 요구 24회, 지도자 영역에서 비판 3회 대 교육 요구 43회다.</p>
+            <p>현장은 포기하지 않았다. 이미 소그룹 법회, 특성화단, 온라인 활용, 합동 단회 등 다양한 시도를 하고 있다. 총부의 역할은 새로운 답을 제시하는 것이 아니라, 현장의 자체 시도를 공식적으로 허용하고 그 성공 사례를 교단 전체에 유통하는 것이어야 한다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-num">02</div>
+        <div class="finding-body">
+          <div class="finding-title">단장·중앙이 교화단 교화의 핵심 열쇠다</div>
+          <div class="finding-text">
+            <p>전 항단에 걸쳐 일관되게 나타나는 진단이 있다. 교화단 운영의 성패는 단장·중앙의 역량에 달려 있다는 것이다. 단장이 제대로 역할을 하면 교무가 매번 직접 개입하지 않아도 단이 자율적으로 운영된다. 단장이 준비되지 않으면 어떤 프로그램도 형식으로 전락한다.</p>
+            <p>지금까지 단장 교육은 일회성 연수에 그쳤다. 단장을 준교무에 준하는 수준으로 체계적으로 양성하는 장기 프로그램이 필요하다는 요구가 여러 각단에서 제기되었다.</p>
+          </div>
+          <div class="finding-quote">
+            "단장에게 권리·권한을 줘서 주도적으로 자신감 있게 진행할 수 있도록 해야 한다."
+            <cite>— 2-3-16각단</cite>
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-num">03</div>
+        <div class="finding-body">
+          <div class="finding-title">법회 형식이 바뀌지 않으면 교화단 교화는 불가능하다</div>
+          <div class="finding-text">
+            <p>교화단 법회를 별도로 진행하더라도, 전체 법회 문화가 설교 중심으로 고착되어 있는 한 교화단은 "추가 행사"로 인식되고 점점 형식화된다. 교도들이 교당에 오는 경험 자체가 "듣는 것"으로 굳어져 있기 때문이다.</p>
+            <p>교화단 교화의 핵심인 문답감정이 살아나려면 일반 법회 식순 안에 그 시간이 공식적으로 자리잡아야 한다. 이것은 작은 형식 변화가 아니라 법회의 주어를 교무에서 교도로 바꾸는 문화적 전환이다.</p>
+          </div>
+          <div class="finding-quote">
+            "현재 우리 교화의 중심은 교화단이 아니라 설교 아니었나?"
+            <cite>— 4-1-1각단</cite>
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-num">04</div>
+        <div class="finding-body">
+          <div class="finding-title">"또 같은 말"의 피로 — 환류 루프가 없다</div>
+          <div class="finding-text">
+            <p>여러 각단에서 이 이야기가 "몇십 년 전부터 나왔던 이야기"라는 반응이 나왔다. 이것은 교역자들의 무기력이나 저항이 아니다. 정책이 제시되고 의견이 수렴되지만, 그 결과가 어떻게 반영되었는지 현장에 다시 전달되지 않는 구조적 문제다.</p>
+            <p>정책 → 실행 → 평가 → 환류 루프가 작동하지 않으면 아무리 좋은 의견이 모여도 변화가 일어나지 않는다. 이번 회화 결과도 현장에 어떻게 반영될지 명확히 소통되지 않는다면 같은 피로가 반복된다.</p>
+          </div>
+          <div class="finding-quote">
+            "의견 수렴은 있지만, 경과보고나 결과에 대한 부분은 없고 진행 여부도 알 수 없다."
+            <cite>— 2-1-6각단</cite>
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-num">05</div>
+        <div class="finding-body">
+          <div class="finding-title">코로나는 위기이자 기회 — 소그룹 재편의 전환점</div>
+          <div class="finding-text">
+            <p>대규모 집회 중심 교화의 종언이 예고된다. 그런데 흥미롭게도 여러 각단은 이것을 단순한 위기로 보지 않는다. 소그룹 교화단이 오히려 대종사 본래 의도에 더 가깝다는 재해석이 등장하며, 온라인·오프라인을 결합한 소그룹 모델이 현실적 대안으로 제시된다.</p>
+            <p>소그룹 교화단은 획일화 문제를 자연스럽게 완화하고, 문답감정 중심 법회로의 전환을 용이하게 하며, 단장 역량의 편차 문제도 더 관리하기 쉬운 구조로 만든다. 여러 문제를 동시에 해결하는 방향이다.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S7. 교당 유형별 ════ -->
+<section id="s7">
+  <div class="page">
+    <div class="sec-kicker">Section 07</div>
+    <h2 class="sec-h">교당 유형별 현실 — 하나의 정책이 맞지 않는 이유</h2>
+    <p class="sec-sub">
+      "획일화 문제"는 추상적 비판이 아니다. 교당의 지역, 규모, 교도 구성에 따라
+      교화단 운영의 현실이 근본적으로 다르다.
+    </p>
+
+    <div class="context-grid">
+      <div class="ctx">
+        <div class="ctx-tag ct-r">농촌·소규모 교당</div>
+        <div class="ctx-desc">10인 1단 편성 자체가 불가능한 경우가 많다. 교도 고령화로 단 운영보다 기도·염불 중심이 현실적 대안이다. 합단 운영, 교무 직접 주관 합동법회 등이 이미 현장에서 시도되고 있다. 이론과 현실의 괴리가 가장 크다.</div>
+      </div>
+      <div class="ctx">
+        <div class="ctx-tag ct-b">중규모 도시 교당</div>
+        <div class="ctx-desc">단 편성은 가능하나 단장 역량 편차가 크다. 특성화단(환경, 직종, 연령별 등)이 성공 모델로 언급된다. 지속적인 단장 교육 없이는 친목 위주로 전락하는 경향이 있다.</div>
+      </div>
+      <div class="ctx">
+        <div class="ctx-tag ct-g">대형 교당·기관</div>
+        <div class="ctx-desc">조직은 있으나 행정 과부하로 교무가 교화에 전념하기 어렵다. 출가·재가 교화단이 분리되어 연계가 없고, 법회 중심 운영에서 단 중심으로의 전환에 내부 저항이 있다.</div>
+      </div>
+      <div class="ctx">
+        <div class="ctx-tag ct-o">해외 교당 (미주)</div>
+        <div class="ctx-desc">개인주의 문화와 한인 고령화의 이중 구조. 현지인 교화와 교민 교화는 근본적으로 다른 접근이 필요하다. 소수 핵심 학습자를 집중 양성하는 모델, 자치교헌 수준의 구조 재설계가 논의 중이다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ S8. 제언 ════ -->
+<section id="s8">
+  <div class="page">
+    <div class="sec-kicker">Section 08</div>
+    <h2 class="sec-h">나아갈 방향 — 4가지 제언</h2>
+    <p class="sec-sub">
+      분석 결과를 바탕으로 교단과 현장 교역자가 취해야 할
+      구체적 방향을 제안한다.
+    </p>
+
+    <div class="rec-list">
+
+      <div class="rec r-red">
+        <div class="rec-line"></div>
+        <div class="rec-body">
+          <div class="rec-label">제언 01 — 가장 시급</div>
+          <div class="rec-title">현장의 다양한 시도를 공식적으로 허용하고 유통하라</div>
+          <div class="rec-text">현장은 이미 다양한 해법을 실험하고 있다. 필요한 것은 새로운 지침이 아니라, 이 시도들을 교단이 공식적으로 인정하고 성공 사례를 수집·공유하는 구조다. 각 교당의 실험이 교단 전체의 학습이 될 수 있도록 유통 체계를 만들어야 한다.</div>
+          <ul class="rec-items">
+            <li>교당 자율 교화단 운영 모델 공식 허용 (급지·지역별 차등화)</li>
+            <li>현장 성공 사례 정기 수집 및 공유 플랫폼 운영</li>
+            <li>교당 자체 훈련을 정기훈련으로 인정하는 제도 마련</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec r-gold">
+        <div class="rec-line"></div>
+        <div class="rec-body">
+          <div class="rec-label">제언 02 — 핵심 투자</div>
+          <div class="rec-title">단장·중앙을 제대로 키우는 장기 양성 체계를 구축하라</div>
+          <div class="rec-text">일회성 연수로는 변화가 없다는 것이 현장의 일치된 경험이다. 단장이 문답감정을 이끌고 단원의 공부를 촉진할 수 있는 수준까지 키우려면 체계적이고 지속적인 교육 과정이 필요하다.</div>
+          <ul class="rec-items">
+            <li>단장·중앙 수준별 교재 개발 (입문 / 심화 분리)</li>
+            <li>단장 정기 교육 루틴화 (월 1회 이상, 지속성 보장)</li>
+            <li>교무 양성 과정에 교화단 실습 강화</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec r-blue">
+        <div class="rec-line"></div>
+        <div class="rec-body">
+          <div class="rec-label">제언 03 — 문화 전환</div>
+          <div class="rec-title">법회 식순을 바꾸어 교도가 말하는 법회를 만들어라</div>
+          <div class="rec-text">교화단 교화가 실현되려면 일반 법회 문화가 먼저 바뀌어야 한다. 교당내왕시 주의사항 시간을 법회 식순에 공식 편입하고, 문답감정이 예외적 행사가 아니라 법회의 정상적 일부가 되도록 해야 한다.</div>
+          <ul class="rec-items">
+            <li>법회 식순에 '교당내왕시 주의사항' 시간 공식 편입</li>
+            <li>단별 소그룹 주중 법회 실험 장려</li>
+            <li>문답감정 실행 가이드 및 사례집 개발</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec r-green">
+        <div class="rec-line"></div>
+        <div class="rec-body">
+          <div class="rec-label">제언 04 — 신뢰 회복</div>
+          <div class="rec-title">의견 수렴의 결과를 반드시 현장에 돌려주어라</div>
+          <div class="rec-text">이번 회화 결과가 어떻게 정책에 반영되는지, 무엇이 채택되고 무엇이 채택되지 않았는지 현장에 명확히 소통해야 한다. 이 단계를 빠뜨리면 현장의 피로와 불신이 더 깊어진다. 환류 없는 의견 수렴은 신뢰를 소진할 뿐이다.</div>
+          <ul class="rec-items">
+            <li>이번 회화 분석 결과 전체 교역자 공유</li>
+            <li>정책 반영 결과 공식 보고 의무화</li>
+            <li>교화 성과 지표 재정의 — 출석 수에서 실질 공부 향상으로</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="closing">
+      <div class="closing-text">
+        회화기록이 보여주는 것은 위기이기도 하고 가능성이기도 하다. 수십 년간 쌓인 경험, 현장에서 이미 시도되고 있는 다양한 해법, 그리고 더 나은 교화를 향한 절박한 요청이 이 기록 안에 있다. <strong>현장의 목소리에 귀를 기울이고, 현장의 시도에 권한을 부여하며, 현장의 성과를 교단 전체가 배우는 구조</strong>를 만드는 것 — 그것이 이 분석이 가리키는 방향이다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>원불교 교화정체성 회화자료 종합 분석 보고서</strong><br>
+  원기 105년 출가교화단 회화기록 56개 각단 (142개 중 39%) 기반<br>
+  건항·감항·간항·진항·손항·이항·곤항·태항 8개 항단 · 원불교 교화구조개선 TF
+</footer>
+
+</body>
+</html>
