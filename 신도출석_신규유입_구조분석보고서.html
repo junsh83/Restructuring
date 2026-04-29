@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신도 법회출석과 신규 교도 유입의 구조적 단절 — 서울교구 교화 경로 분석</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&display=swap');
+
+:root {
+  --navy:#0d1b2a; --ink:#1c2e3f; --slate:#2e4055; --steel:#4a6275;
+  --mist:#8aa0b0; --fog:#c4d4de; --paper:#f0ece6; --cream:#f7f4f0;
+  --teal:#0a6958; --teal-d:#074b3f; --teal-l:#d8ede8;
+  --amber:#a46c06; --amber-l:#fcefd0;
+  --red:#8b2e2c; --red-l:#f9e8e7;
+  --blue:#154880; --blue-l:#e1ecf7;
+  --gold:#b8960a; --gold-l:#fdf5d2;
+  --sans:'Noto Serif KR',serif;
+  --mono:'DM Mono',monospace;
+  --disp:'Fraunces',serif;
+  --r:8px; --rl:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:14px;line-height:1.85;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{background:var(--navy);padding:0 48px;display:flex;align-items:stretch;position:sticky;top:0;z-index:300;border-bottom:1px solid rgba(255,255,255,.06)}
+.nb{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--mist);padding:13px 20px 13px 0;border-right:1px solid rgba(255,255,255,.08);margin-right:4px;display:flex;align-items:center;white-space:nowrap;text-transform:uppercase}
+a.nl{font-size:12px;color:var(--mist);padding:13px 11px;text-decoration:none;display:flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+a.nl:hover,a.nl.on{color:#fff;border-bottom-color:#3cbfb0}
+
+/* HERO */
+.hero{background:var(--navy);color:#fff;padding:72px 56px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(10,105,88,.2) 0%,transparent 68%);pointer-events:none}
+.hero::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg,#3cbfb0 0%,transparent 55%)}
+.hero-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#3cbfb0;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:'';display:inline-block;width:32px;height:1px;background:#3cbfb0}
+.hero h1{font-family:var(--disp);font-size:clamp(26px,3.4vw,44px);font-weight:300;line-height:1.22;max-width:720px;margin-bottom:18px}
+.hero h1 strong{font-weight:700}
+.hero h1 em{font-style:italic;color:#a8d4cc}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.48);max-width:660px;line-height:1.85;margin-bottom:36px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:4px 14px;font-size:12px;color:rgba(255,255,255,.6)}
+.chip strong{color:#a8d4cc;font-weight:500}
+
+/* LAYOUT */
+.wrap{max-width:1100px;margin:0 auto;padding:52px 44px}
+.sec{margin-bottom:72px;scroll-margin-top:54px}
+.sec-hd{display:flex;align-items:baseline;gap:14px;margin-bottom:26px;padding-bottom:13px;border-bottom:1.5px solid var(--fog)}
+.sec-num{font-family:var(--mono);font-size:10px;color:var(--mist);letter-spacing:.1em}
+.sec-ttl{font-family:var(--disp);font-size:23px;font-weight:300;color:var(--navy)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--fog);border-radius:var(--rl);padding:22px 26px}
+.card-hd{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--fog)}
+.cn{font-size:12px;color:var(--mist);margin-top:10px;line-height:1.7}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--fog);border-radius:var(--rl);overflow:hidden;background:#fff;margin-bottom:44px}
+.kpi{padding:20px 18px;border-right:1px solid var(--fog)}.kpi:last-child{border-right:none}
+.kl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--steel);margin-bottom:8px;line-height:1.4}
+.kv{font-family:var(--disp);font-size:26px;line-height:1;margin-bottom:5px}
+.ks{font-size:11px;color:var(--mist);line-height:1.5}
+.vt{color:var(--teal)}.vr{color:var(--red)}.va{color:var(--amber)}.vb{color:var(--blue)}
+
+/* CALLOUT */
+.co{border-left:3px solid;border-radius:0 var(--r) var(--r) 0;padding:14px 18px;font-size:13px;line-height:1.8;margin:14px 0}
+.co b{display:block;font-size:10px;font-weight:500;letter-spacing:.08em;margin-bottom:6px;text-transform:uppercase}
+.co-t{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d)}
+.co-a{border-color:var(--amber);background:var(--amber-l);color:#6a4300}
+.co-r{border-color:var(--red);background:var(--red-l);color:#5c1d1b}
+.co-b{border-color:var(--blue);background:var(--blue-l);color:#0d2e56}
+.co-n{border-color:var(--fog);background:var(--paper);color:var(--slate)}
+.co-g{border-color:var(--gold);background:var(--gold-l);color:#5a4700}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);padding:9px 12px;background:var(--paper);border-bottom:2px solid var(--fog);text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--fog);vertical-align:middle;line-height:1.5}
+tr:last-child td{border-bottom:none}
+.tr-h{background:rgba(10,105,88,.05)}
+.tr-r{background:rgba(139,46,44,.04)}
+.tr-a{background:rgba(164,108,6,.04)}
+
+/* HBOX */
+.hbox{background:var(--navy);color:#fff;border-radius:var(--rl);padding:28px 32px;margin:20px 0}
+.hbox-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#3cbfb0;margin-bottom:10px}
+.hbox-body{font-size:14px;line-height:1.85;color:rgba(255,255,255,.75)}
+.hbox-body strong{color:#fff;font-weight:500}
+
+/* FINDINGS */
+.findings{display:flex;flex-direction:column;gap:0}
+.finding{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--fog)}
+.finding:last-child{border-bottom:none}
+.find-num{font-family:var(--disp);font-size:36px;font-weight:300;color:var(--fog);line-height:1;min-width:40px}
+.find-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:5px}
+.find-text{font-size:13px;color:var(--slate);line-height:1.8}
+
+/* PATH DIAGRAM */
+.path-diagram{display:flex;align-items:center;gap:0;background:#fff;border:1px solid var(--fog);border-radius:var(--rl);padding:24px 28px;margin:16px 0;flex-wrap:wrap}
+.path-node{background:var(--paper);border:1.5px solid var(--fog);border-radius:var(--r);padding:10px 16px;font-size:13px;font-weight:500;color:var(--ink);text-align:center;white-space:nowrap}
+.path-node.active{background:var(--teal-l);border-color:var(--teal);color:var(--teal-d)}
+.path-node.broken{background:var(--red-l);border-color:var(--red);color:var(--red)}
+.path-arrow{display:flex;flex-direction:column;align-items:center;padding:0 10px;flex:1;min-width:60px}
+.pa-line{height:2px;width:100%;border-radius:1px}
+.pa-r{font-size:11px;font-weight:500;margin-top:3px}
+.pa-p{font-size:10px;color:var(--mist)}
+
+/* CORR ROW */
+.corr-list{display:flex;flex-direction:column;gap:0}
+.corr-row{display:grid;grid-template-columns:160px 1fr 52px 52px;align-items:center;gap:10px;padding:7px 0;border-bottom:.5px solid var(--fog)}
+.corr-row:last-child{border-bottom:none}
+.corr-name{font-size:12px;color:var(--slate)}
+.corr-bg{height:8px;background:var(--fog);border-radius:4px;overflow:hidden}
+.corr-fill{height:8px;border-radius:4px}
+.corr-r{font-size:12px;font-weight:500;text-align:right}
+.corr-p{font-size:10px;text-align:right}
+.sig2{font-size:10px;font-weight:500;padding:1px 5px;border-radius:3px;background:#e1f5ee;color:#085041}
+.sig1{font-size:10px;font-weight:500;padding:1px 5px;border-radius:3px;background:var(--amber-l);color:#633806}
+.sig0{font-size:10px;color:var(--mist)}
+
+/* SECTION LABEL */
+.grp-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);padding:8px 0 4px;border-top:.5px solid var(--fog);margin-top:4px}
+.grp-label:first-child{border-top:none;padding-top:0}
+
+/* BADGE */
+.bdg{display:inline-block;padding:2px 8px;border-radius:10px;font-family:var(--mono);font-size:10px;font-weight:500}
+.bg{background:var(--teal-l);color:var(--teal-d)}
+.ba{background:var(--amber-l);color:var(--amber)}
+.br{background:var(--red-l);color:var(--red)}
+.bn{background:var(--paper);color:var(--mist)}
+
+footer{background:var(--navy);color:rgba(255,255,255,.35);padding:32px 56px;font-size:12px;line-height:1.9;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer strong{color:rgba(255,255,255,.6)}
+
+@media(max-width:760px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .g2,.g3{grid-template-columns:1fr}
+  .hero{padding:40px 22px 32px}.wrap{padding:30px 20px}
+  nav{padding:0 16px;overflow-x:auto}
+  .path-diagram{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nb">서울교구 교화경로 분석</div>
+  <a class="nl on" href="#s1">배경·문제</a>
+  <a class="nl" href="#s2">신도율 분포</a>
+  <a class="nl" href="#s3">교화력 역설</a>
+  <a class="nl" href="#s4">전환 단절</a>
+  <a class="nl" href="#s5">성장 구동</a>
+  <a class="nl" href="#s6">구조 진단</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">서울교구 교화구조개선 TF · 계량분석 보고서 II</div>
+  <h1>신도 출석은 있으나<br><strong>교도로 이어지지 않는다</strong></h1>
+  <p class="hero-sub">신도 법회출석과 신규 교도 유입 사이의 구조적 단절을 실증합니다. 신도율은 신규 교도 유입과 무관하고(r = −0.02), 교화 성장의 핵심은 신규 유입률(r = +0.68)입니다. 신도는 재료이나 전환 가공 공정이 없는 상태입니다.</p>
+  <div class="chips">
+    <div class="chip"><strong>분석 기간</strong> 원기97~108년 (12년)</div>
+    <div class="chip"><strong>분석 교당</strong> 서울교구 60개 (특수교당 제외)</div>
+    <div class="chip"><strong>데이터</strong> 교당단위 + 교도 개인단위</div>
+    <div class="chip"><strong>교도번호</strong> 출생연도 추정 활용</div>
+    <div class="chip"><strong>분석 단위</strong> 교당 수준 집계</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kl">신도율 vs 교화성장률</div>
+    <div class="kv" style="color:var(--mist)">r = +0.03</div>
+    <div class="ks">p = 0.834 · 완전 비유의<br>신도율 ↑ → 성장 연결 없음</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">신도율 vs 신규유입률</div>
+    <div class="kv" style="color:var(--mist)">r = −0.02</div>
+    <div class="ks">p = 0.896 · 완전 비유의<br>전환 경로 작동하지 않음</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">신규유입률 vs 교화성장</div>
+    <div class="kv vt">r = +0.68</div>
+    <div class="ks">p &lt; 0.001 · 강한 유의<br>성장의 핵심 구동 변수</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">1인당출석 vs 신도율</div>
+    <div class="kv vr">r = −0.48</div>
+    <div class="ks">p &lt; 0.001 · 유의<br>열심 교도 교당 ↔ 신도 부족</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">전체 교당 평균 이탈률</div>
+    <div class="kv va">33%</div>
+    <div class="ks">전반기 교도 3명 중 1명<br>후반기에 소멸</div>
+  </div>
+</div>
+
+<!-- S1 -->
+<section class="sec" id="s1">
+  <div class="sec-hd"><span class="sec-num">01</span><span class="sec-ttl">분석 배경 — 신도율이 왜 중요한가</span></div>
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-hd">연구 질문의 출발</div>
+      <p style="font-size:13px;color:var(--slate);line-height:1.85;margin-bottom:12px">서울교구의 교도 수는 12년간 지속적으로 감소했습니다. 이를 되돌리기 위해 신도 법회 참여 확대를 교화 전략으로 검토합니다. 이 전략이 작동하려면 신도 출석이 교도 입교로 이어지는 경로가 실제로 작동해야 합니다.</p>
+      <p style="font-size:13px;color:var(--slate);line-height:1.85">이 보고서는 그 경로가 실제로 작동하는지, 신도율이 높은 교당이 성장하는지를 데이터로 검증합니다.</p>
+      <div class="co co-b" style="margin-top:14px">
+        <b>핵심 질문</b>
+        신도율이 높은 교당은 이후 교화 성장률도 높은가? 신도 출석은 신규 교도 유입과 연결되어 있는가?
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd">분석 데이터 구조</div>
+      <div style="background:var(--paper);border-radius:var(--r);padding:14px 16px;font-family:var(--mono);font-size:12px;line-height:2.1;margin-bottom:12px">
+        <div style="color:var(--teal-d)">교당 데이터 (교당단위 집계)</div>
+        <div style="color:var(--mist);margin-left:10px">= 교도 출석 + <strong style="color:var(--amber)">신도</strong> 출석</div>
+        <div style="margin:6px 0;color:var(--fog)">────────────────────</div>
+        <div style="color:var(--blue)">교도 데이터 (개인단위 등록교당 기준)</div>
+        <div style="color:var(--mist);margin-left:10px">= 교도번호별 연간 법회출석수</div>
+        <div style="margin:6px 0;color:var(--fog)">────────────────────</div>
+        <div><strong style="color:var(--ink)">신도 출석 ≈ 교당데이터 − 교도데이터</strong></div>
+      </div>
+      <p class="cn">교구 내 타교당 이동은 합산 시 상쇄됨. 특수교당(화랑대·시민선방·은혜의집·열쇠·시민사회네트워크)과 집계이슈 교당(역삼·공릉), 강남교당은 별도 처리.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hd">분석 흐름 — 이 보고서가 답하는 질문들</div>
+    <table>
+      <thead><tr><th>섹션</th><th>질문</th><th>핵심 결과</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>02</td><td>신도율 분포와 예측 변수는?</td><td>1인당 출석이 유일한 유의 변수 (r = −0.48**)</td><td><span class="bdg ba">확인</span></td></tr>
+        <tr><td>03</td><td>1인당 출석 효과는 나이 때문인가?</td><td>나이 통제 후에도 r = −0.37** 유지; 나이는 독립 변수 아님</td><td><span class="bdg bg">구조적</span></td></tr>
+        <tr><td>04</td><td>신도율 → 교화 성장 연결되는가?</td><td>신도율 vs 성장률 r = +0.03; 신도율 vs 신규유입 r = −0.02</td><td><span class="bdg br">단절</span></td></tr>
+        <tr><td>05</td><td>교화 성장의 실제 구동 변수는?</td><td>신규유입률 r = +0.68**; 순증감률 r = +0.71**</td><td><span class="bdg bg">확인</span></td></tr>
+        <tr><td>06</td><td>전체 구조적 함의는?</td><td>전환 메커니즘 부재 — 신도는 재료, 가공 공정이 없음</td><td><span class="bdg ba">진단</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- S2 -->
+<section class="sec" id="s2">
+  <div class="sec-hd"><span class="sec-num">02</span><span class="sec-ttl">신도율의 분포와 예측 변수</span></div>
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-hd">교당별 신도율 분포 (60개 교당)</div>
+      <div style="height:200px;position:relative"><canvas id="shindo-dist"></canvas></div>
+      <p class="cn">전체 중앙값 6.3%. 74%의 교당이 0~10% 구간. 신도율 20%+ 교당은 반포·남서울·전곡 3개뿐. 음수 교당(강동·방학·원남)은 집계 구조 또는 교구 내 유출.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">교당 규모별 신도율 — 특수교당 제외 후</div>
+      <div style="height:200px;position:relative"><canvas id="size-shindo"></canvas></div>
+      <p class="cn">특수교당(신도율 88~96%) 제외 후, 규모-신도율 스피어만 상관 r = −0.25, p = 0.056으로 통계적 비유의. 규모보다 교당 고유 특성이 중요.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hd">신도율 예측 변수 — 스피어만 상관 (60개 교당)</div>
+    <div class="g2" style="margin-top:4px">
+      <div>
+        <div class="corr-list">
+          <div class="grp-label">유의한 변수</div>
+          <div class="corr-row">
+            <div class="corr-name">1인당 법회출석</div>
+            <div class="corr-bg"><div class="corr-fill" style="width:100%;background:var(--red)"></div></div>
+            <div class="corr-r vr">−0.48</div>
+            <div class="corr-p"><span class="sig2">**</span></div>
+          </div>
+          <div class="corr-row">
+            <div class="corr-name">교화단원 비율</div>
+            <div class="corr-bg"><div class="corr-fill" style="width:54%;background:var(--red)"></div></div>
+            <div class="corr-r vr">−0.26</div>
+            <div class="corr-p"><span class="sig1">*</span></div>
+          </div>
+          <div class="corr-row">
+            <div class="corr-name">교당 규모</div>
+            <div class="corr-bg"><div class="corr-fill" style="width:52%;background:var(--red)"></div></div>
+            <div class="corr-r vr">−0.25</div>
+            <div class="corr-p"><span class="sig0">p=.06</span></div>
+          </div>
+          <div class="grp-label">비유의 변수</div>
+          <div class="corr-row">
+            <div class="corr-name">청년·학생 비율</div>
+            <div class="corr-bg"><div class="corr-fill" style="width:12%;background:var(--mist)"></div></div>
+            <div class="corr-r" style="color:var(--mist)">−0.06</div>
+            <div class="corr-p"><span class="sig0">ns</span></div>
+          </div>
+          <div class="corr-row">
+            <div class="corr-name">관리교도 비율</div>
+            <div class="corr-bg"><div class="corr-fill" style="width:8%;background:var(--mist)"></div></div>
+            <div class="corr-r" style="color:var(--mist)">+0.04</div>
+            <div class="corr-p"><span class="sig0">ns</span></div>
+          </div>
+          <div class="corr-row">
+            <div class="corr-name">코로나 회복률</div>
+            <div class="corr-bg"><div class="corr-fill" style="width:2%;background:var(--mist)"></div></div>
+            <div class="corr-r" style="color:var(--mist)">+0.01</div>
+            <div class="corr-p"><span class="sig0">ns</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="hbox" style="margin-top:0">
+          <div class="hbox-eyebrow">핵심 해석</div>
+          <div class="hbox-body">
+            신도율을 통계적으로 예측하는 변수는 사실상 <strong>1인당 법회출석</strong> 하나입니다. 교도들이 더 열심히 나오는 교당일수록 신도가 적습니다. 나이, 청년 비율, 관리 체계 등은 신도율과 무관합니다.<br><br>
+            이는 역설적입니다. 교화에 열심인 교당이 오히려 외부와의 연결이 약한 구조를 가지고 있습니다.
+          </div>
+        </div>
+        <div class="co co-n" style="margin-top:0">
+          <b>측정 한계</b>
+          규모 변수는 p = 0.056으로 경계선상. 단순 규모보다 교당 입지, 교도 구성, 지역 특성이 신도율을 더 잘 설명할 것으로 추정되나 현 데이터에 없음.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S3 -->
+<section class="sec" id="s3">
+  <div class="sec-hd"><span class="sec-num">03</span><span class="sec-ttl">교화력 역설 — 열심히 나올수록 신도가 없다</span></div>
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-hd">나이·1인당출석·신도율 삼각 구조</div>
+      <div style="height:200px;position:relative"><canvas id="triangle-chart"></canvas></div>
+      <p class="cn">단순 상관: 나이→신도율 r = −0.20 (ns), 1인당출석→신도율 r = −0.48 (**). 나이→1인당출석 r = +0.37 (**). 나이는 1인당 출석을 거쳐 간접 효과만 가짐.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">나이 통제 후 부분상관</div>
+      <table>
+        <thead><tr><th>검증</th><th>r</th><th>p</th><th>해석</th></tr></thead>
+        <tbody>
+          <tr class="tr-h"><td>1인당출석 → 신도율<br><small>(나이 통제 후)</small></td><td style="color:var(--red);font-weight:600">−0.37</td><td>0.003</td><td>독립 효과 유지</td></tr>
+          <tr class="tr-r"><td>나이 → 신도율<br><small>(1인당출석 통제 후)</small></td><td style="color:var(--mist)">−0.03</td><td>0.843</td><td>효과 완전 소멸</td></tr>
+          <tr><td>젊은 교도(&lt;40세) 1인당출석 → 신도율</td><td style="color:var(--red);font-weight:600">−0.37</td><td>0.003</td><td>나이 무관 동일 패턴</td></tr>
+          <tr><td>고령 교도(50세+) 1인당출석 → 신도율</td><td style="color:var(--red);font-weight:600">−0.31</td><td>0.017</td><td>유의, 효과 유사</td></tr>
+        </tbody>
+      </table>
+      <div class="co co-t" style="margin-top:12px">
+        <b>결론</b>
+        나이가 1인당 출석을 설명하는 변수이기는 하나, 1인당 출석의 신도율 예측력은 나이와 무관하게 독립적으로 작동합니다. 젊은 교도도 자주 나올수록 신도가 적습니다. 연령이 아닌 <strong>출석 빈도 구조 자체</strong>가 문제입니다.
+      </div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-hd">두 가지 메커니즘 해석</div>
+      <div class="co co-b">
+        <b>행동 메커니즘 (개인 인과)</b>
+        교도가 법회를 자주 나오면서 사회적 네트워크가 교당 내부로 집중됨 → 비입교 지인과의 접점 감소 → 신도를 데려올 기회 소멸. 출석 빈도 증가가 신도 유인 감소의 원인.
+      </div>
+      <div class="co co-n">
+        <b>선택 메커니즘 (구성 효과)</b>
+        외부 연결망이 원래 없는 교도들이 모인 교당은 갈 곳이 없어 법회를 자주 나옴. 신도 부족과 잦은 출석이 모두 "외부 연결망 없는 교도 구성"이라는 제3의 원인에서 비롯됨. 출석이 신도율을 낮추는 것이 아니라, 둘 다 같은 원인의 결과.
+      </div>
+      <p class="cn" style="margin-top:8px">두 메커니즘은 처방이 다름. 행동 메커니즘이면 출석 방식 개선이 유효. 선택 메커니즘이면 교도 구성 자체의 변화가 필요. 현 데이터로는 구분 불가 — 개인 시계열 추적이 필요.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">1인당 출석의 예측 변수 — 교당 수준</div>
+      <div class="corr-list">
+        <div class="grp-label">나이 통제 후에도 독립 효과 유지</div>
+        <div class="corr-row">
+          <div class="corr-name">교당 규모</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:100%;background:var(--teal)"></div></div>
+          <div class="corr-r vt">+0.69</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="corr-row">
+          <div class="corr-name">교도 유지율</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:87%;background:var(--teal)"></div></div>
+          <div class="corr-r vt">+0.60</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="corr-row">
+          <div class="corr-name">교화단원 비율</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:74%;background:var(--teal)"></div></div>
+          <div class="corr-r vt">+0.51</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="grp-label">나이 통제 시 효과 약화</div>
+        <div class="corr-row">
+          <div class="corr-name">평균 나이</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:58%;background:var(--amber)"></div></div>
+          <div class="corr-r va">+0.40</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="corr-row">
+          <div class="corr-name">50세+ 비율</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:54%;background:var(--amber)"></div></div>
+          <div class="corr-r va">+0.37</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+      </div>
+      <p class="cn">큰 교당, 오래된 교도가 많은 교당, 교화단원 조직이 잘 된 교당이 1인당 출석이 높습니다. 잘 조직된 교당일수록 내부 응집력↑, 외부 확장성↓의 역설이 나타납니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S4 -->
+<section class="sec" id="s4">
+  <div class="sec-hd"><span class="sec-num">04</span><span class="sec-ttl">전환 경로의 단절 — 신도율과 성장의 무관계</span></div>
+
+  <div class="path-diagram">
+    <div class="path-node active">신도 출석↑<br><small style="font-size:11px;font-weight:300">신도율 높음</small></div>
+    <div class="path-arrow">
+      <div class="pa-line" style="background:var(--fog);border:1px dashed var(--red)"></div>
+      <div class="pa-r" style="color:var(--red)">r = −0.02 ns</div>
+      <div class="pa-p">전환 경로 단절</div>
+    </div>
+    <div class="path-node broken">신규 교도 유입↑<br><small style="font-size:11px;font-weight:300">입교 전환</small></div>
+    <div class="path-arrow">
+      <div class="pa-line" style="background:var(--teal)"></div>
+      <div class="pa-r" style="color:var(--teal)">r = +0.68**</div>
+      <div class="pa-p">강한 연결</div>
+    </div>
+    <div class="path-node active">교화 성장<br><small style="font-size:11px;font-weight:300">교도수 증가</small></div>
+  </div>
+
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-hd">신도율 vs 교화 성장률 (r = +0.03)</div>
+      <div style="height:195px;position:relative"><canvas id="shindo-growth"></canvas></div>
+      <p class="cn">어떤 지표로 측정해도 비유의. 교도수 성장 r = +0.03, 교당출석 성장 r = −0.13, 전체기간 신도율 기준 r = +0.01. 규모를 통제해도 동일.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">신도율 vs 신규 교도 유입률 (r = −0.02)</div>
+      <div style="height:195px;position:relative"><canvas id="shindo-new"></canvas></div>
+      <p class="cn">신도율 0% 교당도, 30% 교당도 신규 교도 유입률이 비슷(전반기 교도 대비 평균 39%). 규모 통제 후 r = −0.02로 변화 없음.</p>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card" style="border-top:3px solid var(--red)">
+      <div class="card-hd">신도율 → 성장: 비유의</div>
+      <div style="font-family:var(--disp);font-size:36px;font-weight:300;color:var(--mist);margin:8px 0">r = +0.03</div>
+      <p style="font-size:13px;color:var(--slate);line-height:1.75">신도율 높은 교당이 성장하지 않습니다. 신도율 20%+ 교당(반포·남서울·전곡)은 모두 교도수가 감소했습니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red)">
+      <div class="card-hd">신도율 → 신규유입: 비유의</div>
+      <div style="font-family:var(--disp);font-size:36px;font-weight:300;color:var(--mist);margin:8px 0">r = −0.02</div>
+      <p style="font-size:13px;color:var(--slate);line-height:1.75">신도가 많이 나와도 교도로 입교하는 숫자가 늘지 않습니다. 신도 출석과 교도 입교가 완전히 분리된 과정으로 작동하고 있습니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <div class="card-hd">신도율: 중요하나 불완전</div>
+      <div style="font-family:var(--disp);font-size:36px;font-weight:300;color:var(--amber);margin:8px 0">재료</div>
+      <p style="font-size:13px;color:var(--slate);line-height:1.75">신도율이 중요하지 않은 것이 아닙니다. 전환 메커니즘이 있다면 신도율은 핵심 선행 변수가 됩니다. 지금은 그 연결 고리가 없을 뿐입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S5 -->
+<section class="sec" id="s5">
+  <div class="sec-hd"><span class="sec-num">05</span><span class="sec-ttl">교화 성장의 실제 구동 변수</span></div>
+
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-hd">신규유입률 vs 교도수 성장률 (r = +0.68)</div>
+      <div style="height:195px;position:relative"><canvas id="new-growth"></canvas></div>
+      <p class="cn">이탈을 통제해도 부분상관 +0.66 유지. 성장 교당(1.0 이상, 녹색)은 대부분 신규유입률 40%+ 구간에 집중.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">성장 구동 변수 상관 요약</div>
+      <div class="corr-list" style="margin-top:6px">
+        <div class="corr-row">
+          <div class="corr-name">순증감률 (신규−이탈)</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:100%;background:var(--teal)"></div></div>
+          <div class="corr-r vt">+0.71</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="corr-row">
+          <div class="corr-name">신규 유입률</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:96%;background:var(--teal)"></div></div>
+          <div class="corr-r vt">+0.68</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="corr-row">
+          <div class="corr-name">유지율</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:54%;background:var(--blue)"></div></div>
+          <div class="corr-r vb">+0.38</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+        <div class="corr-row">
+          <div class="corr-name">이탈률</div>
+          <div class="corr-bg"><div class="corr-fill" style="width:54%;background:var(--red)"></div></div>
+          <div class="corr-r vr">−0.38</div>
+          <div class="corr-p"><span class="sig2">**</span></div>
+        </div>
+      </div>
+      <div class="co co-t" style="margin-top:12px">
+        <b>신규유입 vs 이탈 — 어느 쪽이 더 중요한가</b>
+        이탈 통제 후 신규유입 부분상관: r = +0.66 (유지됨)<br>
+        신규유입 통제 후 이탈 부분상관: r = −0.30 (약화됨)<br><br>
+        <strong>성장을 위해서는 이탈 방어보다 신규 유입 확대가 더 중요합니다.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="hbox">
+    <div class="hbox-eyebrow">핵심 관찰</div>
+    <div class="hbox-body">
+      성장하는 교당(55개 중 8개, 전반기 대비 교도수 증가)의 공통점은 신규유입률 50%+ 입니다. 중구교당(신규유입률 77.7%, 성장률 1.28배), 구로교당(63.1%, 1.22배), 김포교당(73.5%, 1.03배)이 대표적입니다. 반면 신도율은 이들 성장 교당과 비성장 교당 사이에 <strong>아무런 차이가 없습니다.</strong> 신규 교도는 신도 경로가 아닌 다른 경로 — 지인 소개, 외부 프로그램, 이사 전입 — 를 통해 유입되고 있을 가능성이 높습니다.
+    </div>
+  </div>
+</section>
+
+<!-- S6 -->
+<section class="sec" id="s6">
+  <div class="sec-hd"><span class="sec-num">06</span><span class="sec-ttl">구조 진단 및 함의</span></div>
+
+  <div class="findings" style="margin-bottom:28px">
+    <div class="finding">
+      <div class="find-num">01</div>
+      <div>
+        <div class="find-title">신도 출석과 교도 입교는 현재 완전히 분리된 과정이다</div>
+        <div class="find-text">신도율 vs 신규유입률 r = −0.02 (p = 0.896). 신도율이 0%이든 30%이든 신규 교도 유입률에 차이가 없습니다. 신도가 법회에 나오는 행위와 교도로 입교하는 결정 사이를 연결하는 공식적 경로나 유인 구조가 작동하지 않고 있습니다.</div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="find-num">02</div>
+      <div>
+        <div class="find-title">교화 성장의 핵심은 신규 유입이며, 신도 경로가 이를 담당하지 않고 있다</div>
+        <div class="find-text">신규유입률이 교도수 성장의 가장 강한 예측 변수(r = +0.68)입니다. 그러나 그 신규 유입이 신도 출석에서 비롯되지 않습니다. 현재 신규 교도 유입의 주된 경로가 무엇인지 — 지인 소개, 이사, 행사, 온라인 접촉 등 — 를 파악하는 것이 다음 과제입니다.</div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="find-num">03</div>
+      <div>
+        <div class="find-title">잘 조직된 교당일수록 내부 응집력과 외부 확장성이 상충한다</div>
+        <div class="find-text">규모가 크고 교화단원이 잘 조직된 교당이 1인당 출석도 높고 신도율도 낮습니다. 열심히 운영되는 교당이 역설적으로 신도 유입에 불리한 구조를 가지게 됩니다. 이 역설을 깨는 설계 — 교도의 외부 접촉을 보호하거나 제도화하는 방식 — 가 필요합니다.</div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="find-num">04</div>
+      <div>
+        <div class="find-title">이탈 방어도 중요하나 신규 유입 확대가 우선이다</div>
+        <div class="find-text">전반기 교도 33%가 후반기에 소멸합니다. 이탈률도 성장과 유의한 상관(r = −0.38)을 가집니다. 그러나 신규유입을 통제하면 이탈 효과는 약화(r = −0.30)되고, 이탈을 통제해도 신규유입 효과는 유지(r = +0.66)됩니다. 두 개입이 모두 필요하지만 신규 유입이 더 근본적인 레버입니다.</div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="find-num">05</div>
+      <div>
+        <div class="find-title">신도→교도 전환 경로 설계가 핵심 미완성 과제다</div>
+        <div class="find-text">신도율이 높아지더라도 전환 메커니즘이 없으면 교화 성장으로 이어지지 않습니다. 입교 단계를 명시화하는 제도(신도 등록 시스템, 입교 과정 안내, 정기적 접촉 구조)가 있다면 신도율은 즉시 성장의 선행 지표가 될 수 있습니다. 현재는 재료는 있고 가공 라인이 없는 상태입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd">후속 분석 제언</div>
+    <table>
+      <thead><tr><th>과제</th><th>방법</th><th>답할 수 있는 질문</th></tr></thead>
+      <tbody>
+        <tr class="tr-h"><td>신도→교도 전환 추적</td><td>개인 ID 수준 패널 분석<br>(신도 출석 후 교도 등록 여부)</td><td>신도가 실제로 교도로 전환되는가? 소요 기간은?</td></tr>
+        <tr><td>신규 유입 경로 파악</td><td>신규 교도번호의 특성 분석<br>(입교 연도·경로·연령)</td><td>현재 신규 교도는 어떤 경로로 오는가?</td></tr>
+        <tr class="tr-a"><td>행동 vs 선택 메커니즘</td><td>교도 개인 시계열 분석<br>(출석 변화 → 신도 유인 변화)</td><td>자주 나오는 교도가 실제로 신도를 덜 데려오는가?</td></tr>
+        <tr><td>이탈 교도 특성</td><td>이탈 교도 구성 분석<br>(연령·법회구분·직책)</td><td>누가 이탈하는가? 이탈을 막을 수 있는가?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="co co-g" style="margin-top:20px">
+    <b>분석 한계</b>
+    모든 분석은 교당 수준 집계 데이터입니다. 교당 내 개인 수준 인과관계를 직접 확인하지 못하며, 생태학적 오류(ecological fallacy) 가능성이 있습니다. 신도 출석은 교당−교도 데이터 차이로 측정하여 타교구 교도 순이동이 미세하게 포함됩니다. 교도번호 기반 나이 추정은 번호 체계 일관성에 의존합니다.
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.25)">서울교구 교화구조개선 TF — 신도 법회출석과 신규 교도 유입 구조 분석</div>
+    <div style="margin-top:6px"><strong>데이터:</strong> 교당단위 법회출석 원기97~108년 &nbsp;|&nbsp; <strong>교도단위:</strong> df_att_seoul_member 원기97~108년 &nbsp;|&nbsp; <strong>분석 교당:</strong> 서울교구 60개 (특수교당·강남·역삼·공릉 제외)</div>
+    <div style="margin-top:4px;font-size:11px;color:rgba(255,255,255,.22)">신규 유입 = 전반기(97~100) 미등장 → 후반기(101~108) 등장 교도번호 &nbsp;|&nbsp; 이탈 = 전반기 등장 → 후반기 미등장 교도번호</div>
+  </div>
+  <div style="text-align:right;font-size:11px">원기111년 4월<br>60개 교당 · 상관분석 · 부분상관</div>
+</footer>
+
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const tc = isDark ? '#8aa0b0' : '#2e4055';
+const gc = isDark ? 'rgba(255,255,255,.06)' : 'rgba(196,212,222,.5)';
+const base = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,font:{size:11},boxWidth:11,padding:10}}},
+  scales:{
+    x:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},
+    y:{ticks:{color:tc,font:{size:10}},grid:{color:gc}}
+  }
+};
+
+// ① 신도율 분포
+new Chart(document.getElementById('shindo-dist'),{type:'bar',
+  data:{labels:['음수\n(3개)','0~5%\n(22개)','5~10%\n(24개)','10~15%\n(8개)','15~20%\n(1개)','20%+\n(2개)'],
+    datasets:[{label:'교당 수',
+      data:[3,22,24,8,1,2],
+      backgroundColor:['rgba(139,46,44,.65)','rgba(29,158,117,.4)','rgba(29,158,117,.65)','rgba(55,138,221,.6)','rgba(186,117,23,.6)','rgba(186,117,23,.9)'],
+      borderRadius:4,borderSkipped:false}]},
+  options:{...base,plugins:{...base.plugins,legend:{display:false},
+    tooltip:{callbacks:{label:ctx=>`${ctx.parsed.y}개 교당`}}},
+    scales:{...base.scales,y:{...base.scales.y,max:28,ticks:{...base.scales.y.ticks,callback:v=>v+'개'}}}}});
+
+// ② 규모별 신도율
+new Chart(document.getElementById('size-shindo'),{type:'bar',
+  data:{labels:['~1천/년\n(8개)','1~2천/년\n(22개)','2~3천/년\n(12개)','3~5천/년\n(12개)','5천+/년\n(6개)'],
+    datasets:[
+      {label:'신도율 평균',data:[8.5,7.5,6.3,6.3,5.2],backgroundColor:'rgba(55,138,221,.6)',borderRadius:4,borderSkipped:false},
+      {label:'신도율 중앙값',data:[6.6,6.6,6.3,5.9,5.0],backgroundColor:'rgba(55,138,221,.2)',borderRadius:4,borderSkipped:false,borderColor:'rgba(55,138,221,.7)',borderWidth:1}
+    ]},
+  options:{...base,
+    plugins:{...base.plugins,tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}},
+    scales:{...base.scales,y:{...base.scales.y,max:12,ticks:{...base.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+// ③ 삼각 구조 (나이·1인당출석·신도율) — 레이더 대신 버블로 표현
+// 교당별 평균나이 vs 1인당출석, 신도율로 크기
+const triangleData = [
+  {age:42.1,att:56.9,sr:39.8},{age:36.0,att:45.8,sr:34.0},{age:24.9,att:120.9,sr:22.9},
+  {age:33.3,att:60.5,sr:28.4},{age:48.2,att:102.1,sr:13.5},{age:38.0,att:91.6,sr:13.5},
+  {age:43.6,att:137.5,sr:13.3},{age:43.4,att:122.1,sr:13.2},{age:36.5,att:87.5,sr:13.1},
+  {age:40.7,att:121.0,sr:12.6},{age:45.0,att:102.5,sr:12.6},{age:44.4,att:117.8,sr:12.3},
+  {age:36.7,att:103.8,sr:11.1},{age:38.9,att:119.2,sr:10.8},{age:45.5,att:140.5,sr:10.0},
+  {age:43.5,att:110.0,sr:8.8},{age:47.9,att:144.7,sr:8.5},{age:38.1,att:86.9,sr:8.4},
+  {age:39.8,att:73.2,sr:8.1},{age:41.7,att:133.0,sr:7.9},{age:42.7,att:109.0,sr:7.6},
+  {age:42.1,att:128.9,sr:7.3},{age:40.6,att:140.1,sr:4.1},{age:40.9,att:152.3,sr:0.4},
+  {age:43.3,att:176.0,sr:-0.3},{age:41.1,att:140.6,sr:-5.5},{age:41.1,att:170.5,sr:3.2},
+  {age:43.7,att:133.6,sr:6.4},{age:43.6,att:153.7,sr:5.4},{age:40.4,att:155.3,sr:5.0},
+];
+
+new Chart(document.getElementById('triangle-chart'),{type:'scatter',
+  data:{datasets:[
+    {label:'교당 (버블 크기=신도율)',
+      data:triangleData.map(d=>({x:d.age,y:d.att,r:Math.max(2,d.sr/3)})),
+      backgroundColor:triangleData.map(d=>d.sr>10?'rgba(226,75,74,.55)':'rgba(136,135,128,.35)'),
+      pointRadius:triangleData.map(d=>Math.max(3,d.sr/2.5)),
+    }
+  ]},
+  options:{...base,plugins:{...base.plugins,legend:{display:false},
+    tooltip:{callbacks:{label:ctx=>`나이 ${ctx.raw.x.toFixed(0)}세, 1인당 ${ctx.raw.y.toFixed(0)}회`}}},
+    scales:{
+      x:{title:{display:true,text:'교도 평균 나이(세)',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10}},grid:{color:gc},min:22,max:50},
+      y:{title:{display:true,text:'1인당 출석(회/년)',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10}},grid:{color:gc}}
+    }}});
+
+// ④ 신도율 vs 교화성장
+const growthData = [
+  {sr:36.5,gk:0.50},{sr:28.0,gk:0.60},{sr:22.9,gk:0.86},{sr:19.8,gk:0.61},
+  {sr:13.5,gk:0.98},{sr:13.5,gk:0.60},{sr:13.3,gk:0.77},{sr:13.2,gk:0.75},
+  {sr:13.1,gk:0.49},{sr:12.6,gk:0.65},{sr:12.6,gk:0.61},{sr:12.3,gk:0.76},
+  {sr:11.1,gk:0.81},{sr:10.8,gk:0.55},{sr:10.0,gk:0.58},{sr:8.9,gk:0.81},
+  {sr:8.8,gk:0.53},{sr:8.4,gk:0.74},{sr:8.1,gk:0.58},{sr:7.9,gk:0.55},
+  {sr:7.6,gk:0.43},{sr:7.3,gk:0.80},{sr:6.8,gk:0.64},{sr:6.4,gk:0.47},
+  {sr:6.3,gk:0.83},{sr:6.3,gk:0.83},{sr:6.2,gk:0.75},{sr:6.0,gk:0.43},
+  {sr:5.9,gk:1.22},{sr:5.9,gk:0.66},{sr:5.8,gk:0.72},{sr:5.4,gk:0.75},
+  {sr:5.4,gk:0.53},{sr:5.2,gk:0.40},{sr:5.1,gk:0.72},{sr:5.0,gk:0.83},
+  {sr:4.3,gk:0.48},{sr:4.1,gk:0.67},{sr:3.6,gk:0.79},{sr:3.6,gk:0.71},
+  {sr:3.6,gk:0.54},{sr:3.3,gk:1.28},{sr:3.2,gk:0.85},{sr:3.0,gk:0.59},
+  {sr:2.6,gk:0.67},{sr:2.3,gk:0.57},{sr:0.9,gk:0.57},{sr:0.3,gk:0.58},
+  {sr:-0.3,gk:0.79},{sr:-5.5,gk:0.99},
+];
+
+new Chart(document.getElementById('shindo-growth'),{type:'scatter',
+  data:{datasets:[{
+    data:growthData.map(d=>({x:d.sr,y:d.gk})),
+    backgroundColor:growthData.map(d=>d.gk>=1.0?'rgba(29,158,117,.7)':'rgba(136,135,128,.4)'),
+    pointRadius:4,pointHoverRadius:6
+  }]},
+  options:{...base,plugins:{...base.plugins,legend:{display:false}},
+    scales:{
+      x:{title:{display:true,text:'신도율(%)',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10}},grid:{color:gc}},
+      y:{title:{display:true,text:'교도수 성장률',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10},callback:v=>v.toFixed(1)+'x'},grid:{color:gc},min:0.35,max:1.35}
+    }}});
+
+// ⑤ 신도율 vs 신규유입
+const newData = [
+  {sr:36.5,nr:0.00},{sr:28.0,nr:0.00},{sr:22.9,nr:0.48},{sr:19.8,nr:0.44},
+  {sr:13.5,nr:0.70},{sr:13.5,nr:0.43},{sr:13.3,nr:0.41},{sr:13.2,nr:0.42},
+  {sr:13.1,nr:0.39},{sr:12.6,nr:0.38},{sr:12.6,nr:0.39},{sr:12.3,nr:0.36},
+  {sr:11.1,nr:0.78},{sr:10.8,nr:0.47},{sr:8.9,nr:0.63},{sr:8.8,nr:0.39},
+  {sr:8.4,nr:0.74},{sr:8.1,nr:0.41},{sr:7.9,nr:0.23},{sr:7.6,nr:0.22},
+  {sr:7.3,nr:0.40},{sr:6.8,nr:0.31},{sr:6.4,nr:0.19},{sr:6.3,nr:0.51},
+  {sr:6.3,nr:0.49},{sr:6.2,nr:0.47},{sr:6.0,nr:0.32},{sr:5.9,nr:0.63},
+  {sr:5.9,nr:0.37},{sr:5.8,nr:0.46},{sr:5.4,nr:0.48},{sr:5.4,nr:0.33},
+  {sr:5.1,nr:0.45},{sr:5.0,nr:0.43},{sr:4.3,nr:0.24},{sr:4.1,nr:0.44},
+  {sr:3.6,nr:0.36},{sr:3.6,nr:0.38},{sr:3.3,nr:0.78},{sr:3.2,nr:0.54},
+  {sr:2.6,nr:0.28},{sr:2.6,nr:0.45},{sr:2.3,nr:0.33},{sr:0.9,nr:0.33},
+  {sr:0.3,nr:0.24},{sr:0.1,nr:0.42},{sr:-0.3,nr:0.42},{sr:-0.6,nr:0.40},{sr:-5.5,nr:0.69},
+];
+
+new Chart(document.getElementById('shindo-new'),{type:'scatter',
+  data:{datasets:[{
+    data:newData.map(d=>({x:d.sr,y:d.nr})),
+    backgroundColor:'rgba(136,135,128,.4)',
+    pointRadius:4,pointHoverRadius:6
+  }]},
+  options:{...base,plugins:{...base.plugins,legend:{display:false}},
+    scales:{
+      x:{title:{display:true,text:'신도율(%)',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10}},grid:{color:gc}},
+      y:{title:{display:true,text:'신규 교도 유입률',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10},callback:v=>Math.round(v*100)+'%'},grid:{color:gc},min:0,max:0.85}
+    }}});
+
+// ⑥ 신규유입 vs 성장
+const newGrowthData = [
+  {nr:0.777,g:1.281},{nr:0.631,g:1.222},{nr:0.735,g:1.031},{nr:0.692,g:0.993},
+  {nr:0.701,g:0.982},{nr:0.482,g:0.863},{nr:0.404,g:0.857},{nr:0.544,g:0.845},
+  {nr:0.512,g:0.834},{nr:0.434,g:0.833},{nr:0.329,g:0.828},{nr:0.490,g:0.825},
+  {nr:0.778,g:0.807},{nr:0.631,g:0.806},{nr:0.396,g:0.801},{nr:0.424,g:0.792},
+  {nr:0.362,g:0.790},{nr:0.407,g:0.768},{nr:0.364,g:0.755},{nr:0.421,g:0.749},
+  {nr:0.470,g:0.747},{nr:0.482,g:0.745},{nr:0.354,g:0.741},{nr:0.445,g:0.721},
+  {nr:0.461,g:0.719},{nr:0.384,g:0.713},{nr:0.442,g:0.674},{nr:0.277,g:0.668},
+  {nr:0.367,g:0.663},{nr:0.380,g:0.650},{nr:0.306,g:0.638},{nr:0.452,g:0.638},
+  {nr:0.443,g:0.613},{nr:0.394,g:0.610},{nr:0.429,g:0.603},{nr:0.204,g:0.592},
+  {nr:0.408,g:0.583},{nr:0.145,g:0.580},{nr:0.236,g:0.580},{nr:0.333,g:0.572},
+  {nr:0.331,g:0.567},{nr:0.386,g:0.562},{nr:0.308,g:0.558},{nr:0.225,g:0.555},
+  {nr:0.466,g:0.552},{nr:0.441,g:0.535},{nr:0.329,g:0.530},{nr:0.387,g:0.527},
+  {nr:0.390,g:0.494},{nr:0.244,g:0.480},{nr:0.194,g:0.472},{nr:0.420,g:0.466},
+  {nr:0.219,g:0.430},{nr:0.316,g:0.426},{nr:0.216,g:0.399},
+];
+
+new Chart(document.getElementById('new-growth'),{type:'scatter',
+  data:{datasets:[{
+    data:newGrowthData.map(d=>({x:d.nr,y:d.g})),
+    backgroundColor:newGrowthData.map(d=>d.g>=1.0?'rgba(29,158,117,.75)':'rgba(136,135,128,.4)'),
+    pointRadius:4.5,pointHoverRadius:6
+  }]},
+  options:{...base,plugins:{...base.plugins,legend:{display:false},
+    tooltip:{callbacks:{label:ctx=>`신규유입률 ${Math.round(ctx.raw.x*100)}%, 성장률 ${ctx.raw.y.toFixed(2)}x`}}},
+    scales:{
+      x:{title:{display:true,text:'신규 교도 유입률',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10},callback:v=>Math.round(v*100)+'%'},grid:{color:gc}},
+      y:{title:{display:true,text:'교도수 성장률',color:tc,font:{size:10}},ticks:{color:tc,font:{size:10},callback:v=>v.toFixed(1)+'x'},grid:{color:gc},min:0.35,max:1.35}
+    }}});
+
+// nav 하이라이트
+const secs=document.querySelectorAll('.sec[id]');
+const nls=document.querySelectorAll('a.nl');
+secs.forEach(s=>new IntersectionObserver(e=>{e.forEach(ev=>{if(ev.isIntersecting){nls.forEach(n=>n.classList.remove('on'));const a=document.querySelector('a.nl[href="#'+ev.target.id+'"]');if(a)a.classList.add('on');}});},{threshold:.25,rootMargin:'-54px 0px 0px 0px'}).observe(s));
+</script>
+</body>
+</html>
