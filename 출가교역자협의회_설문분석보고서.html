@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교화구조개선 1차 설문 분석 — 출가교역자협의회 보고</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700;900&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f7f3ec;
+  --paper-2: #ede8de;
+  --paper-3: #e2dccf;
+  --ink: #1e1b16;
+  --ink-2: rgba(30,27,22,0.72);
+  --ink-3: rgba(30,27,22,0.48);
+  --rust: #9e3b1f;
+  --rust-light: #c45a38;
+  --rust-pale: rgba(158,59,31,0.1);
+  --gold: #a07828;
+  --gold-pale: rgba(160,120,40,0.12);
+  --moss: #3d5c30;
+  --moss-pale: rgba(61,92,48,0.1);
+  --indigo: #2c3f5a;
+  --indigo-pale: rgba(44,63,90,0.1);
+  --line: rgba(30,27,22,0.14);
+  --line-mid: rgba(30,27,22,0.25);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Serif KR', serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: -0.01em;
+}
+
+/* 종이 질감 레이어 */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.2  0 0 0 0.07 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+}
+
+.wrap { max-width: 820px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
+
+/* ───── COVER ───── */
+.cover {
+  padding: 80px 0 60px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 0;
+}
+.cover-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--rust);
+  margin-bottom: 30px;
+}
+.cover-badge-dot {
+  width: 28px; height: 28px;
+  background: var(--rust);
+  color: var(--paper);
+  display: grid; place-items: center;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700; font-size: 13px;
+  border-radius: 3px;
+}
+.cover h1 {
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  font-weight: 900; line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
+}
+.cover h1 em {
+  display: block; font-style: normal;
+  font-size: 0.42em; font-weight: 400;
+  color: var(--rust); letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.cover-lead {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px; color: var(--ink-2);
+  max-width: 640px; line-height: 1.9;
+  margin-bottom: 40px;
+}
+.cover-meta {
+  display: flex; gap: 0; flex-wrap: wrap;
+  border-top: 1px solid var(--line-mid);
+  border-bottom: 1px solid var(--line-mid);
+}
+.cover-meta-item {
+  padding: 14px 24px 14px 0;
+  margin-right: 24px;
+  border-right: 1px solid var(--line);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+}
+.cover-meta-item:last-child { border-right: none; }
+.cover-meta-item .lbl { font-size: 10px; letter-spacing: 0.12em; color: var(--ink-3); display: block; margin-bottom: 3px; }
+.cover-meta-item .val { font-weight: 500; color: var(--ink); }
+
+/* ───── SECTION ───── */
+section { padding: 60px 0 40px; border-bottom: 1px solid var(--line); }
+section:last-child { border-bottom: none; }
+
+.sec-label {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px; letter-spacing: 0.2em;
+  color: var(--rust); text-transform: uppercase;
+  display: block; margin-bottom: 12px;
+}
+h2 {
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.3; margin-bottom: 16px;
+}
+h3 {
+  font-size: 1.15rem; font-weight: 700;
+  margin: 36px 0 14px; color: var(--ink);
+}
+.sec-intro {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14.5px; color: var(--ink-2);
+  line-height: 1.9; margin-bottom: 32px;
+  max-width: 720px;
+}
+p { margin-bottom: 14px; }
+
+/* ───── 응답률 카드 ───── */
+.stat-row {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 12px;
+  margin: 24px 0;
+}
+.stat-card {
+  background: var(--paper); border: 1px solid var(--line-mid);
+  padding: 22px 20px; position: relative;
+}
+.stat-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.stat-card.c-rust::before { background: var(--rust); }
+.stat-card.c-gold::before { background: var(--gold); }
+.stat-card.c-moss::before { background: var(--moss); }
+.stat-card .tag {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ink-3); margin-bottom: 6px;
+}
+.stat-card .nm { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.stat-card .big {
+  font-size: 2.2rem; font-weight: 900; line-height: 1;
+  letter-spacing: -0.03em; margin-bottom: 4px;
+}
+.stat-card .sub {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px; color: var(--ink-3); line-height: 1.5;
+}
+.stat-bar { height: 5px; background: var(--paper-3); margin-top: 14px; position: relative; overflow: hidden; }
+.stat-bar .fill { position: absolute; top: 0; left: 0; bottom: 0; }
+.c-rust .fill { background: var(--rust); }
+.c-gold .fill { background: var(--gold); }
+.c-moss .fill { background: var(--moss); }
+
+.total-box {
+  background: var(--ink); color: var(--paper);
+  padding: 28px 32px; margin: 16px 0;
+  display: flex; align-items: center; gap: 32px;
+}
+.total-box .lbl { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; letter-spacing: 0.15em; color: rgba(247,243,236,0.6); margin-bottom: 6px; }
+.total-box .nm { font-size: 1.3rem; font-weight: 700; }
+.total-box .desc { font-family: 'Noto Sans KR', sans-serif; font-size: 13.5px; color: rgba(247,243,236,0.75); line-height: 1.75; flex: 1; }
+.total-box .big { font-size: 3rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; }
+.total-box .big small { font-size: 0.38em; color: rgba(247,243,236,0.55); margin-left: 6px; font-weight: 400; }
+
+/* ───── 코딩 수치 카드 ───── */
+.num-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin: 24px 0; }
+.num-item {
+  background: var(--paper); border: 1px solid var(--line);
+  padding: 18px 16px; text-align: center;
+}
+.num-item .big { font-size: 1.9rem; font-weight: 900; color: var(--rust); letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.num-item .lbl { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--ink-3); }
+
+/* ───── 합의 테이블 ───── */
+.agree-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+.agree-table th {
+  background: var(--ink); color: var(--paper);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11px; letter-spacing: 0.1em;
+  padding: 12px 14px; text-align: left; font-weight: 500;
+}
+.agree-table td { padding: 13px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.agree-table tr:hover td { background: var(--gold-pale); }
+.agree-table .rank { font-family: 'Noto Sans KR', sans-serif; font-weight: 700; color: var(--rust); font-size: 13px; }
+.agree-table .code { font-family: 'Noto Sans KR', monospace; font-size: 11px; font-weight: 700; color: var(--indigo); background: var(--indigo-pale); padding: 2px 6px; border-radius: 2px; }
+.agree-table .nm { font-weight: 500; }
+.agree-table .area { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--ink-3); display: block; margin-top: 2px; }
+.pbar { display: flex; align-items: center; gap: 8px; }
+.pbar-track { width: 80px; height: 6px; background: var(--paper-3); position: relative; overflow: hidden; flex-shrink: 0; }
+.pbar-fill { position: absolute; top: 0; left: 0; bottom: 0; background: var(--rust); }
+.pbar-num { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.pill {
+  display: inline-block; font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px; padding: 2px 7px; border-radius: 10px;
+  letter-spacing: 0.04em;
+}
+.pill-sol { background: var(--indigo-pale); color: var(--indigo); }
+.pill-def { background: rgba(94,42,63,0.12); color: #5e2a3f; }
+.pill-cri { background: var(--gold-pale); color: var(--gold); }
+.pill-tgt { background: var(--rust-pale); color: var(--rust); }
+
+/* ───── 이견 카드 ───── */
+.dissent-list { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+.dissent-item {
+  background: var(--paper); border: 1px solid var(--line);
+  padding: 22px 26px;
+}
+.dissent-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed var(--line-mid); }
+.dissent-head .num { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--rust); font-weight: 700; letter-spacing: 0.1em; }
+.dissent-head .title { font-size: 15px; font-weight: 700; }
+.dissent-body { font-family: 'Noto Sans KR', sans-serif; font-size: 13.5px; color: var(--ink-2); line-height: 1.85; }
+.dissent-body strong { color: var(--ink); font-weight: 500; }
+.dissent-r2 {
+  margin-top: 14px; padding: 10px 14px;
+  background: var(--indigo); color: rgba(247,243,236,0.85);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12.5px; line-height: 1.65;
+  border-radius: 2px;
+}
+.dissent-r2 strong { color: #d4b76a; font-size: 10px; letter-spacing: 0.1em; margin-right: 6px; }
+
+/* ───── 쟁점 카드 ───── */
+.issue-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 24px 0; }
+.issue-card {
+  background: var(--paper); border: 1px solid var(--line);
+  padding: 20px 22px;
+}
+.issue-card .num { font-family: 'Noto Sans KR', sans-serif; font-size: 10px; letter-spacing: 0.15em; color: var(--rust); margin-bottom: 6px; }
+.issue-card .title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.issue-card .desc { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--ink-2); line-height: 1.75; }
+.issue-card.wide { grid-column: 1 / -1; }
+
+/* ───── 타임라인 ───── */
+.timeline { position: relative; margin: 24px 0 0; padding-left: 28px; }
+.timeline::before { content: ""; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 1px; background: var(--rust); }
+.tl-item { position: relative; padding-bottom: 24px; padding-left: 20px; }
+.tl-item::before { content: ""; position: absolute; left: -22px; top: 7px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--rust); }
+.tl-when { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; font-weight: 700; color: var(--rust); letter-spacing: 0.06em; margin-bottom: 3px; }
+.tl-what { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+.tl-detail { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--ink-3); }
+
+/* ───── 콜아웃 ───── */
+.callout {
+  border-left: 3px solid var(--rust); background: var(--rust-pale);
+  padding: 16px 20px; margin: 20px 0;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 14px; line-height: 1.8;
+}
+.callout.moss { border-color: var(--moss); background: var(--moss-pale); }
+.callout.gold { border-color: var(--gold); background: var(--gold-pale); }
+.callout.indigo { border-color: var(--indigo); background: var(--indigo-pale); }
+.callout strong { font-weight: 700; color: var(--rust); }
+.callout.moss strong { color: var(--moss); }
+.callout.gold strong { color: var(--gold); }
+.callout.indigo strong { color: var(--indigo); }
+
+/* ───── 인용 ───── */
+.quote {
+  border-left: 4px solid var(--gold); background: var(--gold-pale);
+  padding: 14px 20px; margin: 20px 0;
+  font-size: 15px; color: var(--ink-2);
+  font-style: italic; line-height: 1.85;
+}
+.quote-from { display: block; text-align: right; font-style: normal; font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+
+/* ───── 차트 ───── */
+.chart-box { background: var(--paper); border: 1px solid var(--line); padding: 26px; margin: 24px 0; }
+.chart-box .chart-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.chart-box .chart-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--ink-3); margin-bottom: 20px; }
+.chart-wrap { position: relative; height: 340px; width: 100%; }
+.chart-wrap.sm { height: 220px; }
+.chart-wrap.lg { height: 460px; }
+
+/* ───── 결론 ───── */
+.concl-list { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+.concl-item {
+  display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: start;
+  background: var(--paper); border: 1px solid var(--line); padding: 22px 24px;
+}
+.concl-num {
+  width: 40px; height: 40px; background: var(--rust); color: var(--paper);
+  display: grid; place-items: center; font-size: 18px; font-weight: 900; border-radius: 3px;
+  flex-shrink: 0; margin-top: 2px;
+}
+.concl-content .title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.concl-content .desc { font-family: 'Noto Sans KR', sans-serif; font-size: 13.5px; color: var(--ink-2); line-height: 1.8; }
+
+/* ───── LEGEND ───── */
+.legend-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 20px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--ink-2); }
+.legend-sq { width: 12px; height: 12px; border-radius: 2px; }
+
+/* ───── FOOTER ───── */
+footer {
+  padding: 48px 0 56px; text-align: center;
+  border-top: 2px double var(--line-mid);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px; color: var(--ink-3); line-height: 2;
+  position: relative; z-index: 1;
+}
+
+/* ───── PRINT ───── */
+@media print {
+  body { background: white; font-size: 13px; }
+  body::before { display: none; }
+  .chart-wrap { height: 280px; }
+  .chart-wrap.lg { height: 380px; }
+  section { padding: 40px 0 28px; page-break-inside: avoid; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 18px; }
+  .stat-row, .num-grid, .issue-grid { grid-template-columns: 1fr 1fr; }
+  .total-box { flex-direction: column; gap: 14px; }
+  .concl-item { grid-template-columns: 36px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<header>
+  <div class="wrap">
+    <div class="cover">
+      <div class="cover-badge">
+        <span class="cover-badge-dot">圓</span>
+        원불교 서울교구 · 교화구조개선 연구 · 원기 111년
+      </div>
+      <h1>
+        <em>서울교구 교화구조개선 1차 설문 분석 — 출가교역자협의회 보고</em>
+        지금 현장에서<br>무엇이 들렸는가
+      </h1>
+      <p class="cover-lead">
+        원기 111년 5월, 서울교구 교무와 교도회장, 그리고 전문가 패널을 포함한
+        총 71명이 교화의 본질과 구조에 대해 자유롭게 답했습니다.
+        이 보고서는 그 응답에서 나온 합의 지점·이견 지점·앞으로의 과제를
+        현장 교무님들이 바로 이해하실 수 있도록 정리한 것입니다.
+      </p>
+      <div class="cover-meta">
+        <div class="cover-meta-item"><span class="lbl">조사 기간</span><span class="val">원기 111년 5월</span></div>
+        <div class="cover-meta-item"><span class="lbl">전체 대상</span><span class="val">201명</span></div>
+        <div class="cover-meta-item"><span class="lbl">실제 응답</span><span class="val">71명 (35.3%)</span></div>
+        <div class="cover-meta-item"><span class="lbl">분석 방식</span><span class="val">자유서술 → 코드 분류</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ 1. 조사 개요 ══ -->
+<section id="sec1">
+  <div class="wrap">
+    <span class="sec-label">SECTION 01</span>
+    <h2>이번 설문, 어떻게 진행됐나요</h2>
+    <p class="sec-intro">
+      이번 설문은 두 그룹을 합쳐 진행했습니다. 교화구조 전문가로 구성된
+      <strong>델파이패널(TF + 확대패널 56명)</strong>과,
+      교당에서 직접 교화하시는 <strong>현장패널(교무·교도회장 145명)</strong>입니다.
+      두 그룹을 합쳐 <strong>광역패널 201명</strong>이 이번 조사의 대상이 됩니다.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card c-rust">
+        <div class="tag">TF · 핵심 전문가</div>
+        <div class="nm">TF패널</div>
+        <div class="big">11<span style="font-size:1rem;font-weight:400;color:var(--ink-3);">명</span></div>
+        <div class="sub">11명 전원 응답<br>응답률 100%</div>
+        <div class="stat-bar"><div class="fill" style="width:100%"></div></div>
+      </div>
+      <div class="stat-card c-gold">
+        <div class="tag">확대 자문 패널</div>
+        <div class="nm">확대패널</div>
+        <div class="big">27<span style="font-size:1rem;font-weight:400;color:var(--ink-3);">명</span></div>
+        <div class="sub">45명 중 27명 응답<br>응답률 60.0%</div>
+        <div class="stat-bar"><div class="fill" style="width:60%"></div></div>
+      </div>
+      <div class="stat-card c-moss">
+        <div class="tag">교당 교무 · 교도회장</div>
+        <div class="nm">현장패널</div>
+        <div class="big">33<span style="font-size:1rem;font-weight:400;color:var(--ink-3);">명</span></div>
+        <div class="sub">145명 중 33명 응답<br>응답률 22.8%</div>
+        <div class="stat-bar"><div class="fill" style="width:22.8%"></div></div>
+      </div>
+    </div>
+
+    <div class="total-box">
+      <div><div class="lbl">전체 합산</div><div class="nm">광역패널 통합 응답</div></div>
+      <div class="desc">
+        두 패널을 합친 광역패널 응답률은 <strong style="color:#f7f3ec;">35.3%</strong>로,
+        델파이 연구에서 일반적으로 요구하는 30% 기준을 넘어섰습니다.
+        특히 전문가·TF패널에서 67.9%라는 매우 높은 응답률을 보여,
+        이번 분석 결과의 신뢰도를 뒷받침합니다.
+      </div>
+      <div class="big">71<small>/201</small></div>
+    </div>
+
+    <h3>응답자들이 답한 7가지 질문</h3>
+    <div class="callout indigo">
+      <strong>Q1.</strong> 교화란 무엇인가? 본질에 가까운 활동과 멀어진 활동은?<br>
+      <strong>Q2.</strong> 현재 교당·지구·교구 운영 중 10년 후 유지가 어려운 부분은?<br>
+      <strong>Q3.</strong> 출가교역자가 줄어드는 상황에서 바람직한 인력 운영 방안은?<br>
+      <strong>Q4.</strong> 출가교역자 파견 시 반드시 고려해야 할 요소는?<br>
+      <strong>Q5.</strong> 교무와 재가교도의 역할 경계를 어떻게 설정할 것인가?<br>
+      <strong>Q6.</strong> 법회 중심으로는 닿기 어려운 서울 시민은 누구이며, 어떻게 접근할 것인가?<br>
+      <strong>Q7.</strong> 앞의 질문에서 하지 못한 말이 있다면?
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2. 분석 방법 ══ -->
+<section id="sec2">
+  <div class="wrap">
+    <span class="sec-label">SECTION 02</span>
+    <h2>어떻게 분석했나요</h2>
+    <p class="sec-intro">
+      7개 문항에 대한 자유 서술 응답을 한 줄 한 줄 읽으며,
+      비슷한 내용끼리 묶어 <strong>코드(주제 꼬리표)</strong>를 붙였습니다.
+      한 응답자가 여러 주제를 말하면 모두 코드를 붙였고,
+      최종적으로 총 <strong>786건의 코드 매핑</strong>이 이루어졌습니다.
+    </p>
+
+    <div class="num-grid">
+      <div class="num-item"><div class="big">71</div><div class="lbl">응답자 수</div></div>
+      <div class="num-item"><div class="big">786</div><div class="lbl">코드 매핑 총 건수</div></div>
+      <div class="num-item"><div class="big">110<span style="font-size:1.2rem">+</span></div><div class="lbl">세부 코드 수</div></div>
+      <div class="num-item"><div class="big">11</div><div class="lbl">대주제 영역</div></div>
+    </div>
+
+    <div class="callout gold">
+      <strong>이렇게 보면 됩니다.</strong>
+      예를 들어 "마음공부가 교화의 본질"이라고 쓰신 분이 28명이라면,
+      71명 중 28명(39.4%)이 이 주제를 언급했다는 뜻입니다.
+      별다른 유도 없이 자유롭게 썼는데도 5명 중 2명이 같은 이야기를 했다면,
+      그것은 매우 강한 공감대가 형성된 것입니다.
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">11개 대주제 영역별 코드 매핑 건수</div>
+      <div class="chart-sub">응답자들이 가장 많이 이야기한 주제 순서 (총 786건)</div>
+      <div class="chart-wrap sm">
+        <canvas id="chartArea" role="img" aria-label="영역별 코드 매핑 건수 수평 막대 차트">교역자인력 137건, 교화본질 122건, 교화대상 100건, 콘텐츠프로그램 99건, 교당구조 86건, 교무재가역할 79건, 외부접점 48건, 메타자세 44건, 운영재정 44건, 파견기준 24건</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. 합의 지점 ══ -->
+<section id="sec3">
+  <div class="wrap">
+    <span class="sec-label">SECTION 03</span>
+    <h2>71명이 함께 말한 것 — 합의 11개 항목</h2>
+    <p class="sec-intro">
+      자유롭게 쓴 글에서 <strong>71명 중 15명 이상(20% 이상)</strong>이 같은 주제를 언급한 경우,
+      이를 <strong>합의 지점</strong>으로 봤습니다.
+      누가 시켜서 쓴 것이 아닌데도 5명 중 1명 이상이 같은 말을 했다는 것은
+      현장에서 그만큼 공감대가 크다는 의미입니다.
+      총 <strong>11개 항목</strong>이 합의 지점으로 확인됐습니다.
+    </p>
+
+    <div class="callout">
+      <strong>주목할 점.</strong>
+      합의 11개 중 <strong>6개가 "이렇게 바꿔야 한다"는 해법</strong>이었습니다.
+      현황 분석보다 변화 방향에 더 강한 공감대가 형성됐다는 뜻입니다.
+    </div>
+
+    <div class="legend-row">
+      <span class="legend-item"><span class="legend-sq" style="background:var(--rust)"></span>정의 — 교화가 무엇인지 규정하는 것</span>
+      <span class="legend-item"><span class="legend-sq" style="background:var(--indigo)"></span>해법 — 이렇게 바꿔야 한다</span>
+      <span class="legend-item"><span class="legend-sq" style="background:var(--gold)"></span>기준 — 파견·운영의 판단 기준</span>
+      <span class="legend-item"><span class="legend-sq" style="background:#7d4060"></span>대상 — 이 사람들에게 닿아야 한다</span>
+    </div>
+
+    <table class="agree-table">
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th style="width:52px">코드</th>
+          <th>주제 내용</th>
+          <th style="width:68px">유형</th>
+          <th>응답자 수 (71명 중)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank">1</span></td>
+          <td><span class="code">A2</span></td>
+          <td><span class="nm">마음공부·신앙수행</span><span class="area">교화의 본질</span></td>
+          <td><span class="pill pill-def">정의</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:79%"></div></div><span class="pbar-num">28명 · 39.4%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">2</span></td>
+          <td><span class="code">N3</span></td>
+          <td><span class="nm">교무-재가 수평 협업·동반자 관계</span><span class="area">교무-재가 역할</span></td>
+          <td><span class="pill pill-sol">해법</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:67.6%"></div></div><span class="pbar-num">24명 · 33.8%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">3</span></td>
+          <td><span class="code">A4</span></td>
+          <td><span class="nm">교법 전파·교세 확장</span><span class="area">교화의 본질</span></td>
+          <td><span class="pill pill-def">정의</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:64.8%"></div></div><span class="pbar-num">23명 · 32.4%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">4</span></td>
+          <td><span class="code">I1</span></td>
+          <td><span class="nm">출석교도수를 파견 기준으로</span><span class="area">교역자 파견 기준</span></td>
+          <td><span class="pill pill-cri">기준</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:56.4%"></div></div><span class="pbar-num">20명 · 28.2%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">4</span></td>
+          <td><span class="code">A5</span></td>
+          <td><span class="nm">공동체·은혜나눔·함께함</span><span class="area">교화의 본질</span></td>
+          <td><span class="pill pill-def">정의</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:56.4%"></div></div><span class="pbar-num">20명 · 28.2%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">6</span></td>
+          <td><span class="code">G1</span></td>
+          <td><span class="nm">재가교역자 양성·원무 확대</span><span class="area">교역자 인력</span></td>
+          <td><span class="pill pill-sol">해법</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:50.8%"></div></div><span class="pbar-num">18명 · 25.4%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">6</span></td>
+          <td><span class="code">Q1</span></td>
+          <td><span class="nm">청년·MZ·청소년이 핵심 대상</span><span class="area">교화 대상</span></td>
+          <td><span class="pill pill-tgt">대상</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:50.8%"></div></div><span class="pbar-num">18명 · 25.4%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">6</span></td>
+          <td><span class="code">N1</span></td>
+          <td><span class="nm">재가가 행정, 교무는 영적 지도에 집중</span><span class="area">교무-재가 역할</span></td>
+          <td><span class="pill pill-sol">해법</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:50.8%"></div></div><span class="pbar-num">18명 · 25.4%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">6</span></td>
+          <td><span class="code">F1</span></td>
+          <td><span class="nm">교당 통합·통폐합</span><span class="area">교당 구조·조직</span></td>
+          <td><span class="pill pill-sol">해법</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:50.8%"></div></div><span class="pbar-num">18명 · 25.4%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">10</span></td>
+          <td><span class="code">R1</span></td>
+          <td><span class="nm">명상·선·요가·영성 프로그램</span><span class="area">콘텐츠·프로그램</span></td>
+          <td><span class="pill pill-sol">해법</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:45%"></div></div><span class="pbar-num">16명 · 22.5%</span></div></td>
+        </tr>
+        <tr>
+          <td><span class="rank">11</span></td>
+          <td><span class="code">G2</span></td>
+          <td><span class="nm">교무 역량 강화·교육 투자</span><span class="area">교역자 인력</span></td>
+          <td><span class="pill pill-sol">해법</span></td>
+          <td><div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:42.2%"></div></div><span class="pbar-num">15명 · 21.1%</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chart-box">
+      <div class="chart-title">합의 11개 항목 — 응답률 한눈에 보기</div>
+      <div class="chart-sub">자유 서술에서 20% 이상이 자발적으로 언급한 항목</div>
+      <div class="chart-wrap">
+        <canvas id="chartConsensus" role="img" aria-label="합의 11개 항목 응답률 막대 차트">A2 39.4%, N3 33.8%, A4 32.4%, I1 28.2%, A5 28.2%, G1 25.4%, Q1 25.4%, N1 25.4%, F1 25.4%, R1 22.5%, G2 21.1%</canvas>
+      </div>
+    </div>
+
+    <div class="callout moss">
+      <strong>이것이 가장 주목됩니다.</strong>
+      합의 11개 항목 중 <strong>상위 3개가 모두 "교화의 본질"에 대한 것</strong>입니다.
+      마음공부(A2), 교법 전파(A4), 공동체와 은혜나눔(A5).
+      응답자들은 구조를 바꾸기 전에 먼저 "무엇을 위한 변화인가"를 분명히 하고 싶어 합니다.
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4. 이견 지점 ══ -->
+<section id="sec4">
+  <div class="wrap">
+    <span class="sec-label">SECTION 04</span>
+    <h2>방향은 같은데, 어디서 의견이 갈리나요 — 이견 5가지</h2>
+    <p class="sec-intro">
+      큰 방향에는 공감하지만, <strong>어느 정도로·어떤 방법으로·어떤 순서로</strong>
+      바꿀 것인지에서 의견이 나뉘는 지점이 5가지 확인됐습니다.
+      이 지점들은 다음 라운드에서 정량적으로 측정해야 할 핵심 쟁점입니다.
+    </p>
+
+    <div class="dissent-list">
+
+      <div class="dissent-item">
+        <div class="dissent-head">
+          <span class="num">이견 01</span>
+          <span class="title">변화를 얼마나 빠르고 과감하게 할 것인가</span>
+        </div>
+        <div class="dissent-body">
+          <strong>과감한 전환을 지지하는 입장 (다수):</strong> 지구·권역 단위 통합·거점화(13명, 34.2%), 과감한 통합·전면 재배치(2명) 등 구조적 체질 개선이 필요하다는 목소리.<br><br>
+          <strong>신중·점진을 주장하는 입장 (소수):</strong> 인위적 통폐합에 신중해야 한다(3명), 큰 위기가 아니라 자연스러운 변화다(2명), 제도·혁신 강박을 경계해야 한다(1명)는 목소리도 있습니다.
+        </div>
+        <div class="dissent-r2"><strong>다음 조사에서 확인할 것</strong> 변화 강도와 속도에 대한 동의 수준 — 자연스러운 변화 ↔ 즉각적인 구조 개혁</div>
+      </div>
+
+      <div class="dissent-item">
+        <div class="dissent-head">
+          <span class="num">이견 02</span>
+          <span class="title">재가교도의 위상 — 보조인가, 동반자인가, 주체인가</span>
+        </div>
+        <div class="dissent-body">
+          <strong>재가 위상 격상 (다수):</strong> 재가가 행정 맡고 교무는 영적 지도에 집중(18명, 44.7%), 수평적 동반자 관계(7명), "진짜 주인은 재가"(1명)라는 목소리가 강합니다.<br><br>
+          <strong>교무 중심 유지 (소수):</strong> 교무가 최종 결정권을 가져야 한다(5명), 재가는 보조이되 한계가 명확해야 한다(2명), 현행 유지(3명)라는 의견도 있습니다.
+        </div>
+        <div class="dissent-r2"><strong>다음 조사에서 확인할 것</strong> 재가 역할 확대 단계(보조 → 동반자 → 주체)에 대해 어디까지 동의하는지</div>
+      </div>
+
+      <div class="dissent-item">
+        <div class="dissent-head">
+          <span class="num">이견 03</span>
+          <span class="title">교무 파견 기준 — 숫자인가, 가능성인가</span>
+        </div>
+        <div class="dissent-body">
+          <strong>발전 가능성 등 정성 기준 강조:</strong> 교당의 발전 가능성·미래 잠재력(6명), 교무 역량(3명), 교무-교당 매칭(2명)을 더 중시해야 한다는 입장.<br><br>
+          <strong>출석교도수 등 정량 기준 강조:</strong> 출석교도수를 핵심 기준으로(3명), 교도수·재정·구성을 종합(2명)해야 한다는 입장.
+        </div>
+        <div class="dissent-r2"><strong>다음 조사에서 확인할 것</strong> 정량 기준(출석수·재정)과 정성 기준(가능성·역량)의 비중을 어떻게 나눌지</div>
+      </div>
+
+      <div class="dissent-item">
+        <div class="dissent-head">
+          <span class="num">이견 04</span>
+          <span class="title">새로운 사람에게 먼저 닿을 것인가, 내실부터 다질 것인가</span>
+        </div>
+        <div class="dissent-body">
+          <strong>외향 확장 (다수):</strong> 교당을 열고 문턱을 낮춰야 한다(10명, 26.3%), 명상·영성 프로그램으로 다가가야 한다(7명), 지역사회와 연계해야 한다(3명).<br><br>
+          <strong>내실 강화 (소수):</strong> 1인교무 구조에서는 외부 접근 자체가 불가능하다(3명), 콘텐츠와 역량 부재가 더 큰 문제다(3명), 기존 교도에 집중해야 한다(1명).
+        </div>
+        <div class="dissent-r2"><strong>다음 조사에서 확인할 것</strong> 외향 확장 vs 내실 강화 vs 병행 중 어디에 먼저 자원을 써야 하는지</div>
+      </div>
+
+      <div class="dissent-item">
+        <div class="dissent-head">
+          <span class="num">이견 05</span>
+          <span class="title">교당 통폐합 — 해야 한다 vs 신중해야 한다</span>
+        </div>
+        <div class="dissent-body">
+          <strong>구조개혁 지지:</strong> 교당 통합·통폐합(18명, 25.4%), 지구·권역 통합·거점화(11명, 15.5%), 교당 특성화·브랜딩(3명)을 지지하는 다수 의견.<br><br>
+          <strong>점진 또는 본질 회복:</strong> 현행 유지·자연스럽게(3명), 인위적 통폐합에 신중(3명), 인력 배치보다 본질이 더 중요하다(1명)는 소수 의견도 있습니다.
+        </div>
+        <div class="dissent-r2"><strong>다음 조사에서 확인할 것</strong> 구조개혁 vs 점진주의 vs 본질 회복 중 어느 입장인지 분포 확인</div>
+      </div>
+
+    </div>
+
+    <div class="callout indigo">
+      <strong>이견의 공통 구조.</strong>
+      5가지 이견 모두, <em>변화 방향 자체에는 대부분 동의합니다.</em>
+      갈리는 것은 "어느 정도로, 어떤 순서로, 누구를 위해 먼저"입니다.
+      다음 조사는 이 "어느 정도"를 숫자로 확인하는 과정입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ══ 5. 영역별 응답 분포 ══ -->
+<section id="sec5">
+  <div class="wrap">
+    <span class="sec-label">SECTION 05</span>
+    <h2>어떤 주제를 가장 많이 이야기했나요</h2>
+    <p class="sec-intro">
+      11개 대주제 영역 중 응답자들이 가장 많이 언급한 주제는
+      <strong>교역자 인력(137건)</strong>과 <strong>교화의 본질(122건)</strong>이었습니다.
+      이 두 주제가 현재 서울교구 교화를 논의할 때 가장 핵심 의제임을 보여줍니다.
+    </p>
+
+    <div class="chart-box">
+      <div class="chart-title">코드 유형별 분포 — 무엇을 주로 이야기했나</div>
+      <div class="chart-sub">전체 786건 중 유형별 비중</div>
+      <div class="chart-wrap sm">
+        <canvas id="chartType" role="img" aria-label="코드 유형별 분포 차트">해법 358건 45.5%, 진단부정 139건 17.7%, 정의 114건 14.5%, 기준 64건 8.1%, 대상 47건 6%, 메타 36건 4.6%, 긍정 27건 3.4%</canvas>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>해법이 45.5%(358건)로 가장 많습니다.</strong>
+      "지금이 문제다"라는 진단보다 "이렇게 하면 좋겠다"는 방안 제시에
+      응답자들의 에너지가 더 쏠렸습니다.
+      현장에서도, 전문가들 사이에서도 변화 의지가 그만큼 강하다는 의미입니다.
+    </div>
+
+    <h3>주제별 응답 주요 내용 요약</h3>
+
+    <div class="callout moss">
+      <strong>교화의 본질 (Q1, 122건)</strong><br>
+      마음공부·신앙수행(39.4%), 교법 전파·교세 확장(32.4%), 공동체·은혜나눔(28.2%) 순으로 교화의 본질을 정의했습니다.
+      "본질에서 멀어진 활동"으로는 법회 형식주의(18.4%), 폐쇄성·내부 친목(15.8%), 행사·이벤트 위주(13.2%)가 꼽혔습니다.
+    </div>
+
+    <div class="callout gold">
+      <strong>교화 구조의 지속가능성 (Q2, 137건)</strong><br>
+      10년 후 유지가 어렵다고 본 이유: 교당 영세화·소규모 분산(21.1%), 출가교무 감소(18.4%), 교도 고령화·자연감소(18.4%).
+      변화 방향으로는 지구·권역 통합·거점화(34.2%)가 압도적이었습니다.
+    </div>
+
+    <div class="callout indigo">
+      <strong>교무-재가 역할 (Q5, 79건)</strong><br>
+      "재가가 행정을 맡고 교무는 영적 지도에 집중"(N1, 44.7% — 델파이패널 기준)이
+      가장 강력한 해법으로 제시됐습니다.
+      수평적 협업·동반자 관계(N3, 33.8%)도 강한 공감을 얻었습니다.
+    </div>
+
+    <div class="callout">
+      <strong>서울 시민과의 접점 (Q6, 정보)</strong><br>
+      가장 많이 언급된 접근 방식: 교당 개방·시민선방·문턱 낮추기(26.3%),
+      명상·선·요가·영성 프로그램(18.4%).
+      닿기 어려운 대상 1위는 청년·MZ·청소년(26.3%), 이어 직장인·번아웃(15.8%).
+    </div>
+  </div>
+</section>
+
+<!-- ══ 6. 다음 조사 ══ -->
+<section id="sec6">
+  <div class="wrap">
+    <span class="sec-label">SECTION 06</span>
+    <h2>다음 조사(라운드2)에서 무엇을 확인하나요 — 7가지 핵심 쟁점</h2>
+    <p class="sec-intro">
+      1차 자유 서술 분석 결과를 바탕으로,
+      라운드2에서는 5점 척도 객관식 설문으로 각 항목에 대한
+      <strong>합의 강도를 정확하게 측정</strong>합니다.
+      아래 7가지 쟁점이 라운드2의 핵심입니다.
+    </p>
+
+    <div class="issue-grid">
+      <div class="issue-card">
+        <div class="num">쟁점 01</div>
+        <div class="title">교당 통폐합 — 어떤 조건에서</div>
+        <div class="desc">출석교도수, 재정, 지리적 거리 등 어떤 조건이 갖춰질 때 통폐합이 타당한지 기준을 정합니다.</div>
+      </div>
+      <div class="issue-card">
+        <div class="num">쟁점 02</div>
+        <div class="title">교당 통폐합 — 어떤 방법으로</div>
+        <div class="desc">행정 통합, 공동 운영, 완전 합병 중 어떤 형태를 먼저 시도해야 하는지 선호도를 확인합니다.</div>
+      </div>
+      <div class="issue-card">
+        <div class="num">쟁점 03</div>
+        <div class="title">거점·특성화 교당 모델</div>
+        <div class="desc">청소년 거점, 명상 거점, 문화 거점 등 기능별 특성화를 어떻게 설계할지 방향을 정합니다.</div>
+      </div>
+      <div class="issue-card">
+        <div class="num">쟁점 04</div>
+        <div class="title">교무 파견 기준 — 가중치</div>
+        <div class="desc">출석교도수·재정(정량) vs 발전가능성·교무역량(정성)의 비중을 얼마로 할지 정합니다.</div>
+      </div>
+      <div class="issue-card">
+        <div class="num">쟁점 05</div>
+        <div class="title">재가교도의 권한 범위</div>
+        <div class="desc">행정·재정에 그칠지, 교화·설법·의사결정까지 포함할지 역할 범위를 구체화합니다.</div>
+      </div>
+      <div class="issue-card">
+        <div class="num">쟁점 06</div>
+        <div class="title">시민 접점 vs 내실 강화</div>
+        <div class="desc">새로운 시민에게 먼저 다가갈지, 기존 교도와 콘텐츠 내실화에 먼저 집중할지 우선순위를 정합니다.</div>
+      </div>
+      <div class="issue-card wide">
+        <div class="num">쟁점 07</div>
+        <div class="title">재가교역자(원무·도무) 제도 확대</div>
+        <div class="desc">재가교역자 양성에 대한 공감대(25.4%)는 이미 확인됐습니다. 이제 양성 절차, 자격, 처우, 역할 범위 등 구체적인 제도 설계 방향을 확인해야 합니다. 라운드2에서 가장 중요한 정책 설계 과제입니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7. 결론 ══ -->
+<section id="sec7">
+  <div class="wrap">
+    <span class="sec-label">SECTION 07</span>
+    <h2>이번 분석에서 가장 중요한 것 — 5가지 결론</h2>
+
+    <div class="concl-list">
+
+      <div class="concl-item">
+        <div class="concl-num">1</div>
+        <div class="concl-content">
+          <div class="title">본질 회복과 구조 개혁은 함께 가야 합니다</div>
+          <div class="desc">
+            합의 11개 중 4개가 "교화의 본질"(마음공부·교법 전파·공동체)에 관한 것이고,
+            나머지 7개는 구조·인력·콘텐츠의 해법입니다.
+            응답자들은 본질을 회복하기 위해 구조를 바꿔야 한다고 봅니다.
+            본질 없는 구조 변화도, 구조 없는 본질 회복도 힘들다는 공감대가 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="concl-item">
+        <div class="concl-num">2</div>
+        <div class="concl-content">
+          <div class="title">재가교도의 위상 격상은 이미 광범위한 합의입니다</div>
+          <div class="desc">
+            수평적 협업·동반자 관계(33.8%), 재가 행정 이관·교무 영적 지도 집중(25.4%),
+            재가교역자 양성(25.4%)이 모두 합의권에 들어있습니다.
+            "재가는 보조"라는 시각(5명)은 소수입니다.
+            재가의 권한·책임 확대는 선택이 아니라 구조 개선의 전제가 되고 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="concl-item">
+        <div class="concl-num">3</div>
+        <div class="concl-content">
+          <div class="title">교당 통폐합 방향은 합의됐지만, 방법은 아직 열려있습니다</div>
+          <div class="desc">
+            교당 통폐합(25.4%)과 권역 단위 거점화(15.5%)의 방향성은 합의됐습니다.
+            그러나 "어떤 기준으로, 어떤 방식으로, 어느 속도로"에는 아직 의견이 다양합니다.
+            이 질문에 답하는 것이 라운드2의 가장 중요한 과제입니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="concl-item">
+        <div class="concl-num">4</div>
+        <div class="concl-content">
+          <div class="title">청년 세대 교화는 모두가 공감하지만, 방법에서 갈립니다</div>
+          <div class="desc">
+            청년·MZ·청소년(25.4%)이 핵심 교화 대상이라는 데는 강한 공감대가 있습니다.
+            명상·선·요가·영성 프로그램(22.5%)이 주요 접근법으로 부상했습니다.
+            그러나 "법회 자체를 바꿀 것인지"인지 "별도 프로그램을 추가할 것인지"는
+            아직 입장이 나뉩니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="concl-item">
+        <div class="concl-num">5</div>
+        <div class="concl-content">
+          <div class="title">교무 역량 강화와 처우 개선도 놓쳐선 안 됩니다</div>
+          <div class="desc">
+            교무 역량 강화·교육 투자(G2, 21.1%)가 합의권에 들어있습니다.
+            현장에서는 특히 "교무 한 사람의 역량과 소명의식이 교화의 가장 큰 변수"라는
+            목소리가 강합니다.
+            구조 변화와 함께 교무님들이 실제 교화에 집중할 수 있는 환경을 만드는 것이
+            동시에 이루어져야 합니다.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="quote">
+      어려울수록 기본적인 것에 충실합시다. 법회·예회 시간을 좀 더 엄숙하게 진행하고
+      설법과 진행의 수준을 높여야 할 것입니다.
+      <span class="quote-from">— 1차 설문 응답자 중에서</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 8. 향후 일정 ══ -->
+<section id="sec8">
+  <div class="wrap">
+    <span class="sec-label">SECTION 08</span>
+    <h2>앞으로의 일정</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-when">원기 111년 5월</div>
+        <div class="tl-what">1차 결과 보고</div>
+        <div class="tl-detail">TF 및 패널 공유, 출가교역자협의회 보고</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">원기 111년 5~6월</div>
+        <div class="tl-what">라운드2 설문 개발</div>
+        <div class="tl-detail">합의 11개 항목 + 쟁점 7개 기반 5점 척도 설문 설계</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">원기 111년 6~7월</div>
+        <div class="tl-what">라운드2 설문 시행</div>
+        <div class="tl-detail">광역패널 전체 대상으로 확대 — 각 항목에 대한 합의 강도 정량 측정</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">원기 111년 8월</div>
+        <div class="tl-what">라운드2 결과 분석 및 정책안 작성</div>
+        <div class="tl-detail">합의 항목 기반 정책 권고안 초안 도출</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">원기 111년 9~10월</div>
+        <div class="tl-what">현장 영향 사전 분석</div>
+        <div class="tl-detail">통폐합 영향 평가, 만족도 조사 등 실행 전 점검</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">원기 111년 11월</div>
+        <div class="tl-what">최종 권고안 납기 및 실행위원회 전환</div>
+        <div class="tl-detail">연구 단계 종료 → 정책 시행 단계로 이행</div>
+      </div>
+    </div>
+
+    <div class="callout gold" style="margin-top:32px;">
+      <strong>라운드2 참여를 부탁드립니다.</strong>
+      다음 조사는 "찬성이냐 반대냐"가 아닌 "어느 정도 동의하느냐"를 묻는 방식입니다.
+      현장 교무님들 한 분 한 분의 응답이 서울교구 교화 정책의 실제 근거가 됩니다.
+      더 많은 분들이 응답해 주실수록 결과가 현장을 더 정확하게 반영합니다.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div style="font-size:13px; font-weight:500; letter-spacing:0.1em; color:var(--ink-2); margin-bottom:6px;">원불교 서울교구 교화구조개선 연구 · 출가교역자협의회 보고용</div>
+    <div>원기 111년 5월 · 응답자 71명 · 코드 매핑 786건 · 1차 설문 분석 결과</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const IS_DARK = matchMedia('(prefers-color-scheme: dark)').matches;
+const TX = IS_DARK ? 'rgba(247,243,236,0.65)' : 'rgba(30,27,22,0.62)';
+const GR = IS_DARK ? 'rgba(247,243,236,0.1)' : 'rgba(30,27,22,0.08)';
+const RUST = '#9e3b1f';
+const GOLD = '#a07828';
+const MOSS = '#3d5c30';
+const INDIGO = '#2c3f5a';
+const MUTED = IS_DARK ? 'rgba(247,243,236,0.18)' : 'rgba(30,27,22,0.13)';
+
+const baseX = { ticks: { color: TX, font: { size: 12, family: "'Noto Sans KR', sans-serif" } }, grid: { color: GR } };
+const baseY = { ticks: { color: TX, font: { size: 11, family: "'Noto Sans KR', sans-serif" } }, grid: { color: GR }, beginAtZero: true };
+
+/* ─ 영역별 매핑 건수 ─ */
+new Chart(document.getElementById('chartArea'), {
+  type: 'bar',
+  data: {
+    labels: ['교역자 인력', '교화 본질', '교화 대상', '콘텐츠·프로그램', '교당 구조', '교무-재가 역할', '외부 접점', '운영·재정', '메타·자세', '파견 기준'],
+    datasets: [{
+      data: [137, 122, 100, 99, 86, 79, 48, 44, 44, 24],
+      backgroundColor: [RUST, '#5e2a3f', GOLD, INDIGO, MOSS, '#8b3a1e', '#5a7a45', '#7a6a40', '#888', MUTED],
+      borderRadius: 2, barPercentage: 0.72
+    }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => c.raw + '건 (' + (c.raw/786*100).toFixed(1) + '%)' } }
+    },
+    scales: {
+      x: { ...baseX, max: 160, ticks: { ...baseX.ticks, callback: v => v + '건' } },
+      y: { ticks: { color: TX, font: { size: 12, family: "'Noto Sans KR', sans-serif" } }, grid: { display: false } }
+    }
+  }
+});
+
+/* ─ 합의 11개 항목 ─ */
+const cLabels = ['A2\n마음공부', 'N3\n수평협업', 'A4\n교법전파', 'I1\n출석교도수', 'A5\n공동체', 'G1\n재가교역자', 'Q1\n청년MZ', 'N1\n재가행정', 'F1\n교당통합', 'R1\n명상선요가', 'G2\n교무역량강화'];
+const cData  = [39.4, 33.8, 32.4, 28.2, 28.2, 25.4, 25.4, 25.4, 25.4, 22.5, 21.1];
+const cColor = ['#5e2a3f','#2c3f5a',RUST,GOLD,'#5e2a3f',RUST,RUST,INDIGO,MOSS,MOSS,MOSS];
+
+new Chart(document.getElementById('chartConsensus'), {
+  type: 'bar',
+  data: {
+    labels: cLabels,
+    datasets: [{
+      data: cData, backgroundColor: cColor, borderRadius: 3, barPercentage: 0.68
+    }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => c.raw + '% (' + Math.round(c.raw*71/100) + '명)' } }
+    },
+    scales: {
+      x: { ...baseX, max: 50, ticks: { ...baseX.ticks, callback: v => v + '%' } },
+      y: { ticks: { color: TX, font: { size: 11, family: "'Noto Sans KR', sans-serif" } }, grid: { display: false } }
+    }
+  }
+});
+
+/* ─ 유형별 분포 ─ */
+const typeColors = ['정의', '해법', '진단(부정)', '기준', '대상', '메타'];
+new Chart(document.getElementById('chartType'), {
+  type: 'bar',
+  data: {
+    labels: ['해법', '진단(부정)', '정의', '기준', '대상(지목)', '메타', '진단(긍정)'],
+    datasets: [{
+      data: [358, 139, 114, 64, 47, 36, 27],
+      backgroundColor: [INDIGO, RUST, '#5e2a3f', GOLD, '#c45a38', '#888', MOSS],
+      borderRadius: 3, barPercentage: 0.7
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => c.raw + '건 (' + (c.raw/786*100).toFixed(1) + '%)' } }
+    },
+    scales: {
+      y: { ...baseY, max: 400, ticks: { ...baseY.ticks, callback: v => v + '건' } },
+      x: { ...baseX }
+    }
+  }
+});
+</script>
+</body>
+</html>
