@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전국 교당 통합 효과 분석 — 합성대조법(SCM)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&display=swap');
+
+:root{
+  --navy:#0a1724; --ink:#182636; --slate:#2a3d50; --steel:#466070;
+  --mist:#87a0b0; --fog:#c2d2db; --paper:#f1ede7; --cream:#f8f5f1;
+  --teal:#0a6958; --teal-d:#074b3f; --teal-l:#daeee9;
+  --amber:#a46c06; --amber-l:#fdf0d0;
+  --red:#8b302e; --red-l:#faecea;
+  --blue:#164882; --blue-l:#e3edf8;
+  --gold:#b8960a; --gold-l:#fdf6d4;
+  --purple:#5b3fa0; --purple-l:#ede9f8;
+  --sans:'Noto Serif KR',serif;
+  --mono:'DM Mono',monospace;
+  --disp:'Fraunces',serif;
+  --r:8px; --rl:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:14px;line-height:1.8}
+
+/* nav */
+nav{background:var(--navy);padding:0 44px;display:flex;align-items:stretch;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,.06)}
+.nb{font-family:var(--mono);font-size:11px;letter-spacing:.13em;color:var(--mist);padding:12px 18px 12px 0;border-right:1px solid rgba(255,255,255,.07);margin-right:4px;display:flex;align-items:center;white-space:nowrap}
+a.nl{font-size:12px;color:var(--mist);padding:12px 12px;text-decoration:none;display:flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+a.nl:hover,a.nl.on{color:#fff;border-bottom-color:#3cbfb0}
+
+/* hero */
+.hero{background:var(--navy);color:#fff;padding:60px 52px 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-80px;top:-80px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(10,105,88,.24) 0%,transparent 66%);pointer-events:none}
+.hero::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg,#3cbfb0 0%,transparent 60%)}
+.hero-meta{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#3cbfb0;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-meta::before{content:'';display:inline-block;width:28px;height:1px;background:#3cbfb0}
+.hero h1{font-family:var(--disp);font-size:clamp(27px,3.8vw,42px);font-weight:300;line-height:1.25;max-width:760px;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:#a6d2cc}
+.hero h1 strong{font-weight:700;color:#fff}
+.hero-lead{font-size:14px;color:rgba(255,255,255,.5);max-width:680px;line-height:1.8;margin-bottom:32px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:4px 13px;font-size:12px;color:rgba(255,255,255,.62)}
+.chip strong{color:#a6d2cc;font-weight:500}
+
+/* layout */
+.wrap{max-width:1120px;margin:0 auto;padding:48px 40px}
+.sec{margin-bottom:60px;scroll-margin-top:52px}
+.sec-hd{display:flex;align-items:baseline;gap:14px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--fog)}
+.sec-num{font-family:var(--mono);font-size:10px;color:var(--mist);letter-spacing:.1em}
+.sec-ttl{font-family:var(--disp);font-size:22px;font-weight:300;color:var(--navy)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g5kpi{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--fog);border-radius:var(--rl);overflow:hidden;background:#fff;margin-bottom:40px}
+.kpi{padding:22px 24px;border-right:1px solid var(--fog)}.kpi:last-child{border-right:none}
+.kl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:8px}
+.kv{font-family:var(--disp);font-size:26px;line-height:1;margin-bottom:5px}
+.ks{font-size:11px;color:var(--mist)}
+.vt{color:var(--teal)}.vr{color:var(--red)}.va{color:var(--amber)}.vb{color:var(--blue)}.vp{color:var(--purple)}.vg{color:var(--gold)}
+
+/* cards */
+.card{background:#fff;border:1px solid var(--fog);border-radius:var(--rl);padding:22px 24px}
+.card-hd{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--fog)}
+.cn{font-size:12px;color:var(--mist);margin-top:10px;line-height:1.65}
+
+/* callouts */
+.co{border-left:3px solid;border-radius:0 var(--r) var(--r) 0;padding:13px 17px;font-size:13px;line-height:1.75;margin:12px 0}
+.co b{display:block;font-size:10px;font-weight:500;letter-spacing:.08em;margin-bottom:5px;text-transform:uppercase}
+.co-t{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d)}
+.co-a{border-color:var(--amber);background:var(--amber-l);color:#6a4400}
+.co-r{border-color:var(--red);background:var(--red-l);color:#5c1e1c}
+.co-b{border-color:var(--blue);background:var(--blue-l);color:#0d2f56}
+.co-n{border-color:var(--fog);background:var(--paper);color:var(--slate)}
+.co-g{border-color:var(--gold);background:var(--gold-l);color:#5a4800}
+.co-p{border-color:var(--purple);background:var(--purple-l);color:#3a2570}
+
+/* badges */
+.bdg{display:inline-block;padding:2px 8px;border-radius:10px;font-family:var(--mono);font-size:10px;font-weight:500}
+.bg{background:var(--teal-l);color:var(--teal-d)}
+.ba{background:var(--amber-l);color:var(--amber)}
+.br{background:var(--red-l);color:var(--red)}
+.bn{background:var(--paper);color:var(--mist)}
+.bb{background:var(--blue-l);color:var(--blue)}
+.bp{background:var(--purple-l);color:var(--purple)}
+
+/* reliability tier ribbon */
+.tier{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:12px;font-family:var(--mono);font-size:10px;font-weight:500}
+.tier-1{background:var(--teal-d);color:#fff}
+.tier-2{background:var(--teal);color:#fff}
+.tier-3{background:var(--amber-l);color:var(--amber);border:1px solid var(--amber)}
+.tier-4{background:var(--red-l);color:var(--red);border:1px solid var(--red)}
+
+/* eq */
+.eq{background:var(--paper);border:1px solid var(--fog);border-left:3px solid var(--slate);border-radius:0 var(--r) var(--r) 0;padding:14px 20px;font-family:var(--mono);font-size:12px;line-height:2.1;margin:12px 0;overflow-x:auto;white-space:pre}
+.ec{color:var(--mist);font-size:11px}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);padding:8px 11px;background:var(--paper);border-bottom:2px solid var(--fog);text-align:left}
+td{padding:9px 11px;border-bottom:1px solid var(--fog);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.tr-t{background:rgba(10,105,88,.05)}.tr-r{background:rgba(139,48,46,.04)}.tr-a{background:rgba(164,108,6,.04)}.tr-p{background:rgba(91,63,160,.04)}.tr-b{background:rgba(22,72,130,.04)}
+.r{text-align:right}
+
+/* church tabs */
+.ch-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.cht{padding:9px 18px;border:0.5px solid var(--fog);border-bottom:none;border-radius:var(--r) var(--r) 0 0;background:var(--paper);color:var(--steel);cursor:pointer;font-size:13px;font-family:var(--sans);transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.cht.on{background:#fff;color:var(--ink);font-weight:500;border-color:var(--fog)}
+.cht-tier{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:8px;background:var(--paper);color:var(--mist)}
+.cht.on .cht-tier{background:var(--teal-l);color:var(--teal-d)}
+.ch-body{border:0.5px solid var(--fog);border-radius:0 var(--rl) var(--rl) var(--rl);padding:26px;background:#fff}
+.ch-panel{display:none}.ch-panel.on{display:block}
+.ch-hd{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.ch-name{font-family:var(--disp);font-size:22px;font-weight:300}
+.ch-sub{font-size:13px;color:var(--steel)}
+.ch-desc{font-size:13px;color:var(--slate);line-height:1.75;margin-bottom:18px}
+
+/* timeline strip */
+.tl{display:flex;border:0.5px solid var(--fog);border-radius:var(--r);overflow:hidden;margin:14px 0;font-size:11px}
+.ty{flex:1;text-align:center;border-right:0.5px solid var(--fog);padding:8px 4px}
+.ty:last-child{border-right:none}
+.tyl{color:var(--mist);margin-bottom:2px;font-size:10px}
+.tyv{font-weight:500;font-size:11.5px}
+.ty.mg{background:var(--teal-l)}.ty.mg .tyv{color:var(--teal-d)}.ty.mg .tyl{color:var(--teal)}
+.ty.cv{background:var(--amber-l)}.ty.cv .tyv{color:var(--amber)}.ty.cv .tyl{color:var(--amber)}
+.ty.exc{background:#f5f5f5;color:var(--mist)}.ty.exc .tyv{color:var(--mist);text-decoration:line-through}
+
+/* rmspe bars */
+.rrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--fog)}
+.rrow:last-child{border-bottom:none}
+.rcn{font-size:13px;font-weight:500;min-width:84px}
+.rbw{flex:1;height:8px;background:var(--fog);border-radius:4px;overflow:hidden}
+.rbf{height:8px;border-radius:4px}
+.rv{font-size:12px;min-width:96px;text-align:right;font-family:var(--mono)}
+
+/* analogy */
+.analogy{background:var(--paper);border-radius:var(--rl);padding:16px 20px;margin:14px 0}
+.atag{font-family:var(--mono);font-size:10px;color:var(--mist);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.atxt{font-size:13px;color:var(--slate);line-height:1.75}
+
+/* result summary box */
+.res-box{border:0.5px solid var(--fog);border-radius:var(--rl);overflow:hidden;margin:14px 0}
+.rb-row{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:0.5px solid var(--fog);font-size:13px}
+.rb-row:last-child{border-bottom:none}
+.rb-ch{font-weight:500;min-width:84px}
+.rb-ate{font-family:var(--disp);font-size:22px;min-width:138px}
+.rb-tier{min-width:80px}
+.rb-bar-wrap{flex:1;height:10px;background:var(--fog);border-radius:5px;overflow:hidden}
+.rb-bar{height:10px;border-radius:5px}
+.rb-desc{font-size:12px;color:var(--mist);max-width:200px}
+
+/* footer */
+footer{background:var(--navy);color:rgba(255,255,255,.38);padding:30px 52px;font-size:12px;line-height:1.9;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer strong{color:rgba(255,255,255,.65)}
+
+/* note */
+.notebox{background:var(--paper);border:1px dashed var(--fog);border-radius:var(--r);padding:12px 16px;font-size:12px;color:var(--steel);line-height:1.7;margin:10px 0}
+
+/* mini summary table for hypothesis section */
+.hyp-row{display:flex;gap:14px;padding:13px 0;border-bottom:0.5px solid var(--fog);align-items:flex-start}
+.hyp-row:last-child{border-bottom:none}
+.hyp-num{font-family:var(--disp);font-size:24px;font-weight:300;color:var(--teal);min-width:30px;line-height:1.2}
+.hyp-content h4{font-family:var(--disp);font-size:15px;font-weight:600;margin-bottom:4px;color:var(--ink)}
+.hyp-content p{font-size:13px;color:var(--slate);line-height:1.75}
+
+@media(max-width:760px){
+  .g5kpi{grid-template-columns:1fr 1fr}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .hero{padding:36px 22px 30px}
+  .wrap{padding:28px 18px}
+  nav{padding:0 16px;overflow-x:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nb">전국 SCM 분석</div>
+  <a class="nl on" href="#s0">분석 배경</a>
+  <a class="nl" href="#s1">분석 방법</a>
+  <a class="nl" href="#s2">전체 결과</a>
+  <a class="nl" href="#s3">교당별 결과</a>
+  <a class="nl" href="#s4">유효성 검증</a>
+  <a class="nl" href="#s5">구조적 조건</a>
+  <a class="nl" href="#s6">결론</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-meta">서울교구 교화구조개선 TF · 합성대조법(SCM) 보고서</div>
+  <h1>교당 <strong>통합</strong>은<br><em>환경 충격을 통제한 뒤</em>에도 효과가 있었는가</h1>
+  <p class="hero-lead">전국 7개 통합교당(중구·역삼·한강·강남·한둥근·불광·안락한부산진)의 통합 효과를 합성대조법으로 분석합니다. 코로나 등 외부 환경 충격을 통제한 뒤에도 통합 그 자체의 순효과가 남는지를 사례별로 검증하고, 분석의 신뢰도를 4단계로 명시합니다.</p>
+  <div class="chips">
+    <div class="chip"><strong>분석 기간</strong> 원기97~108년 (12년)</div>
+    <div class="chip"><strong>처치군</strong> 통합교당 7개</div>
+    <div class="chip"><strong>대조군 풀</strong> 전국 448개 비통합교당</div>
+    <div class="chip"><strong>분석 방법</strong> 합성대조법 (SCM)</div>
+    <div class="chip"><strong>결과 변수</strong> 교당 연간 법회 총출석</div>
+    <div class="chip" style="border-color:rgba(10,105,88,.4);background:rgba(10,105,88,.15)"><strong style="color:#a6d2cc">신뢰도 기준</strong> RMSPE ≤ 사전평균 10%</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- KPI -->
+<div class="g5kpi">
+  <div class="kpi">
+    <div class="kl">중구 (신뢰도 ◎)</div>
+    <div class="kv vt">+1,945<span style="font-size:14px">회</span></div>
+    <div class="ks">원108 환경 통제 효과 (+88.8%)</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">역삼 (신뢰도 ○)</div>
+    <div class="kv vt">+853<span style="font-size:14px">회</span></div>
+    <div class="ks">원108 환경 통제 효과 (+17.5%)</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">한강 (신뢰도 △)</div>
+    <div class="kv va">+3,784<span style="font-size:14px">회</span></div>
+    <div class="ks">방향(+) 참고, 사전 3년</div>
+  </div>
+  <div class="kpi">
+    <div class="kl">강남·한둥근 (△)</div>
+    <div class="kv va">+양(+)</div>
+    <div class="ks">사전 부족 / 단년만 유효</div>
+  </div>
+  <div class="kpi" style="border-left:3px solid var(--red);background:rgba(139,48,46,.04)">
+    <div class="kl" style="color:var(--red)">불광·A교당 (×)</div>
+    <div class="kv vr">−30%<span style="font-size:14px">대</span></div>
+    <div class="ks">SCM 불가 · 단순 비교만</div>
+  </div>
+</div>
+
+<!-- S0: 분석 배경 -->
+<section class="sec" id="s0">
+  <div class="sec-hd"><span class="sec-num">01</span><span class="sec-ttl">분석 배경 — 왜 SCM이 필요한가</span></div>
+
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-hd">단순 전후 비교의 한계</div>
+      <p style="font-size:13px;color:var(--slate);line-height:1.85">통합교당의 통합 전·후 출석을 단순 비교하면 한 가지 결정적 문제가 발생합니다. <strong>코로나 충격(원기105) 같은 외부 요인이 결과에 섞여 들어옵니다.</strong></p>
+      <p style="font-size:13px;color:var(--slate);line-height:1.85;margin-top:10px">예: 중구교당 단순 비교는 통합 전후 "+10%"입니다. 그러나 같은 시기 비통합교당들은 코로나로 크게 떨어졌습니다. 그렇다면 중구가 "유지된 것" 자체가 통합 효과라고 봐야 할 수도 있습니다. 환경 충격을 분리하지 않으면 통합 효과를 정확히 측정할 수 없습니다.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">7개 통합교당 개요</div>
+      <table>
+        <thead><tr><th>통합 교당</th><th>전신</th><th>통합 원기</th><th>교무 변화</th></tr></thead>
+        <tbody>
+          <tr><td>중구</td><td>성동+중구</td><td>104</td><td>3→2명</td></tr>
+          <tr><td>역삼</td><td>압구정+대치</td><td>106</td><td>3→2명</td></tr>
+          <tr><td>한강</td><td>남서울+반포</td><td>100</td><td>2→2명</td></tr>
+          <tr><td>강남</td><td>강남+거마</td><td>99</td><td>4→4.3명</td></tr>
+          <tr><td>한둥근</td><td>노송+동전주</td><td>107</td><td>1+1→2명</td></tr>
+          <tr><td>불광</td><td>구산+불광</td><td>99</td><td>2→1명</td></tr>
+          <tr><td>안락한부산진(A)</td><td>안락+부산진</td><td>99</td><td>3→2→1명</td></tr>
+        </tbody>
+      </table>
+      <p class="cn">시점·규모·교무 변화가 모두 다른 7개 사례. 일괄 회귀분석으로는 다루기 어려워 개별 SCM이 적합합니다.</p>
+    </div>
+  </div>
+
+  <div class="co co-b">
+    <b>핵심 연구 질문</b>
+    "통합하지 않았다면 이 교당은 어떻게 됐을까?"라는 <strong>반사실(counterfactual)</strong>을 구성해, 실제 결과와 비교함으로써 환경 충격을 분리한 통합 그 자체의 순효과를 추정합니다.
+  </div>
+</section>
+
+<!-- S1: 분석 방법 -->
+<section class="sec" id="s1">
+  <div class="sec-hd"><span class="sec-num">02</span><span class="sec-ttl">분석 방법 — 합성대조법(SCM)</span></div>
+
+  <div class="g2" style="margin-bottom:20px">
+    <div>
+      <div class="card">
+        <div class="card-hd">합성대조법의 원리</div>
+        <p style="font-size:13px;color:var(--slate);line-height:1.85">통합하지 않은 비슷한 교당 여러 곳의 출석 추이를 <strong>가중 평균</strong>해 "통합하지 않았다면 이 교당은 어떻게 됐을까"라는 가상의 출석 추이(합성 대조군)를 만듭니다.</p>
+        <p style="font-size:13px;color:var(--slate);line-height:1.85;margin-top:10px">가중치는 통합 이전 출석 흐름이 처치 교당과 가장 비슷해지도록 최적화로 결정됩니다. 외부 충격(코로나 등)은 합성 대조군도 똑같이 겪으므로, 두 선의 차이가 곧 통합 자체의 순효과입니다.</p>
+      </div>
+      <div class="analogy" style="margin-top:14px">
+        <div class="atag">한 문장 요약</div>
+        <div class="atxt">"중구교당과 통합 직전까지 출석 흐름이 가장 비슷한 비통합교당들을 찾아 비율대로 섞어 중구의 가상 쌍둥이(반사실)를 만들고, 통합 이후 실제와 쌍둥이의 차이를 통합 효과로 봅니다."</div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-hd">SCM 수식</div>
+        <div class="eq">처치 효과 α̂ₜ = Y₁ₜ − Ŷ₁ₜ
+
+Y₁ₜ  = 통합교당의 t년도 실제 총출석
+Ŷ₁ₜ  = 합성 대조군(반사실) 총출석
+     = Σⱼ w*ⱼ · Yⱼₜ
+
+w* = argmin Σ(Y₁ₜ − Ŷ₁ₜ)²
+<span class="ec">     사전기간 한정, w≥0, Σw=1</span>
+
+SCM 효과 = 평균(α̂ₜ), t ≥ 통합 연도</div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="card-hd">신뢰도 판정 기준 4단계</div>
+        <div class="rrow"><div class="rcn"><span class="tier tier-1">◎ 높음</span></div><div style="font-size:12px;color:var(--slate);flex:1">사전기간 충분(7년+) · RMSPE ≤ 10% · 수치 해석 가능</div></div>
+        <div class="rrow"><div class="rcn"><span class="tier tier-2">○ 양호</span></div><div style="font-size:12px;color:var(--slate);flex:1">사전기간 충분(7년+) · RMSPE ≤ 10% · 일부 변동 있음</div></div>
+        <div class="rrow"><div class="rcn"><span class="tier tier-3">△ 낮음</span></div><div style="font-size:12px;color:var(--slate);flex:1">사전기간 부족(2~3년) · 과적합 가능 · 방향만 참고</div></div>
+        <div class="rrow"><div class="rcn"><span class="tier tier-4">× 불가</span></div><div style="font-size:12px;color:var(--slate);flex:1">RMSPE 너무 큼 · 단순 전후 비교만 제시</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd">RMSPE — 합성 대조군 품질 지표</div>
+    <div class="g2">
+      <div>
+        <p style="font-size:13px;color:var(--slate);line-height:1.85">RMSPE(Root Mean Square Prediction Error)는 합성 대조군이 사전 기간에 처치 교당을 얼마나 잘 복제했는지를 나타내는 척도입니다. 사전 평균 출석 대비 비율로 환산해 신뢰도를 판정합니다.</p>
+        <div class="co co-a" style="margin-top:14px">
+          <b>주의 — 낮은 RMSPE가 항상 좋은 것은 아닙니다</b>
+          사전기간이 2~3년처럼 너무 짧으면 RMSPE 자체는 낮게 나올 수 있으나, 합성 대조군이 우연히 맞춰진 <strong>과적합</strong>일 가능성이 큽니다. 이런 경우 사후 예측력이 떨어집니다. 본 분석에서 강남(사전 2년, RMSPE 0.4%)·한강(사전 3년)은 RMSPE는 낮지만 신뢰도 △로 분류합니다.
+        </div>
+      </div>
+      <div>
+        <div class="card-hd" style="margin-bottom:10px">7개 사례 RMSPE 분포</div>
+        <div class="rrow"><div class="rcn">중구</div><div class="rbw"><div class="rbf" style="width:14%;background:var(--teal)"></div></div><div class="rv vt">6.8%</div></div>
+        <div class="rrow"><div class="rcn">역삼</div><div class="rbw"><div class="rbf" style="width:16%;background:var(--teal)"></div></div><div class="rv vt">7.7%</div></div>
+        <div class="rrow"><div class="rcn">한강</div><div class="rbw"><div class="rbf" style="width:7%;background:var(--amber)"></div></div><div class="rv va">3.2%</div></div>
+        <div class="rrow"><div class="rcn">강남</div><div class="rbw"><div class="rbf" style="width:1%;background:var(--amber)"></div></div><div class="rv va">0.4%</div></div>
+        <div class="rrow"><div class="rcn">한둥근</div><div class="rbw"><div class="rbf" style="width:10%;background:var(--amber)"></div></div><div class="rv va">4.8%</div></div>
+        <div class="rrow"><div class="rcn">불광</div><div class="rbw"><div class="rbf" style="width:41%;background:var(--red)"></div></div><div class="rv vr">19.8%</div></div>
+        <div class="rrow"><div class="rcn">A교당</div><div class="rbw"><div class="rbf" style="width:88%;background:var(--red)"></div></div><div class="rv vr">42.8%</div></div>
+        <p class="cn" style="margin-top:8px">불광·A교당은 사전기간 2년으로 합성 대조군이 처치 교당의 사전 패턴을 재현하지 못해 RMSPE가 사전 평균의 10%를 크게 초과합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S2: 전체 결과 -->
+<section class="sec" id="s2">
+  <div class="sec-hd"><span class="sec-num">03</span><span class="sec-ttl">전체 결과 — 7개 사례 통합 요약</span></div>
+
+  <div class="card">
+    <div class="card-hd">7개 통합 사례 SCM 결과 종합</div>
+    <table>
+      <thead>
+        <tr>
+          <th>교당</th>
+          <th>통합 시점</th>
+          <th>교무 변화</th>
+          <th>신뢰도</th>
+          <th class="r">원108 SCM 효과</th>
+          <th class="r">사후 평균/년</th>
+          <th>방향 판정</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tr-t">
+          <td><strong>중구</strong></td>
+          <td>원104</td>
+          <td>3→2명</td>
+          <td><span class="tier tier-1">◎ 높음</span></td>
+          <td class="r" style="color:var(--teal-d);font-weight:600">+1,945회 (+88.8%)</td>
+          <td class="r">+1,628회</td>
+          <td><span class="bdg bg">분명한 양(+)</span></td>
+        </tr>
+        <tr class="tr-t">
+          <td><strong>역삼</strong></td>
+          <td>원106</td>
+          <td>3→2명</td>
+          <td><span class="tier tier-2">○ 양호</span></td>
+          <td class="r" style="color:var(--teal-d);font-weight:600">+853회 (+17.5%)</td>
+          <td class="r">+277회</td>
+          <td><span class="bdg bg">안착 후 양(+)</span></td>
+        </tr>
+        <tr class="tr-a">
+          <td>한강</td>
+          <td>원100</td>
+          <td>2→2명</td>
+          <td><span class="tier tier-3">△ 낮음</span></td>
+          <td class="r" style="color:var(--amber)">+3,784회 (+174.8%)</td>
+          <td class="r">+1,705회</td>
+          <td><span class="bdg ba">방향(+) 참고</span></td>
+        </tr>
+        <tr class="tr-a">
+          <td>강남</td>
+          <td>원99</td>
+          <td>4→4.3명</td>
+          <td><span class="tier tier-3">△ 낮음</span></td>
+          <td class="r" style="color:var(--amber)">+7,508회 (+53.5%)</td>
+          <td class="r">+5,760회</td>
+          <td><span class="bdg ba">방향(+) 참고</span></td>
+        </tr>
+        <tr class="tr-a">
+          <td>한둥근</td>
+          <td>원107</td>
+          <td>1+1→2명</td>
+          <td><span class="tier tier-3">△ 낮음</span></td>
+          <td class="r" style="color:var(--amber)">+345회 (+9.2%)</td>
+          <td class="r">원108만 유효</td>
+          <td><span class="bdg ba">방향(+) 참고</span></td>
+        </tr>
+        <tr class="tr-r">
+          <td>불광</td>
+          <td>원99</td>
+          <td>2→1명</td>
+          <td><span class="tier tier-4">× 불가</span></td>
+          <td class="r" style="color:var(--red)">단순 −31.6%</td>
+          <td class="r">—</td>
+          <td><span class="bdg br">환경 분리 불가</span></td>
+        </tr>
+        <tr class="tr-r">
+          <td>A교당</td>
+          <td>원99</td>
+          <td>3→2→1명</td>
+          <td><span class="tier tier-4">× 불가</span></td>
+          <td class="r" style="color:var(--red)">단순 −28.9%</td>
+          <td class="r">—</td>
+          <td><span class="bdg br">환경 분리 불가</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="cn" style="margin-top:12px"><strong>SCM 적용 가능한 5개 사례(중구·역삼·한강·강남·한둥근) 모두 원기108 기준 환경 대비 양(+)의 방향</strong>을 보입니다. 신뢰도 ◎○인 2건은 수치까지 해석 가능, △ 3건은 방향만 참고. × 2건은 환경 효과를 분리할 수 없어 단순 전후 비교만 제시합니다.</p>
+  </div>
+
+  <div class="g2" style="margin-top:20px">
+    <div class="card">
+      <div class="card-hd">두 가지 핵심 발견</div>
+      <div class="co co-t" style="margin-top:0">
+        <b>① 단순 비교는 통합 효과를 과소평가하는 경향</b>
+        중구교당 단순 비교 "+10%"가 환경 통제 후 "+88.8%"로 드러납니다. 비통합교당들이 코로나로 크게 떨어지는 동안 중구가 유지·상승한 것 자체가 큰 통합 효과입니다.
+      </div>
+      <div class="co co-b" style="margin-top:12px">
+        <b>② 통합 전 교당들의 데이터를 누락하면 오독</b>
+        역삼교당 원기106 출석 412회는 통합 첫해 "급락"으로 보이지만, 압구정·대치 합산(5,111회)을 반영하면 합성 대조군과 비슷한 수준에서 안착하는 정상적 궤적입니다.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd">신뢰도별 사례 분포</div>
+      <div style="height:200px;position:relative"><canvas id="tier-dist"></canvas></div>
+      <p class="cn">신뢰도 ◎○ 2건 · △ 3건 · × 2건. 통합 시점이 원기99~100년인 사례(강남·불광·A교당·한강)는 사전기간이 2~3년으로 짧아 신뢰도가 낮거나 불가.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S3: 교당별 결과 -->
+<section class="sec" id="s3">
+  <div class="sec-hd"><span class="sec-num">04</span><span class="sec-ttl">교당별 상세 결과 — 반사실 궤적과 처치 효과</span></div>
+
+  <div class="ch-tabs">
+    <button class="cht on" onclick="showCh('junggu',this)">중구 <span class="cht-tier">◎</span></button>
+    <button class="cht" onclick="showCh('yeoksam',this)">역삼 <span class="cht-tier">○</span></button>
+    <button class="cht" onclick="showCh('hangang',this)">한강 <span class="cht-tier">△</span></button>
+    <button class="cht" onclick="showCh('gangnam',this)">강남 <span class="cht-tier">△</span></button>
+    <button class="cht" onclick="showCh('hdg',this)">한둥근 <span class="cht-tier">△</span></button>
+    <button class="cht" onclick="showCh('bulgwang',this)">불광 <span class="cht-tier">×</span></button>
+    <button class="cht" onclick="showCh('anak',this)">A교당 <span class="cht-tier">×</span></button>
+  </div>
+
+  <div class="ch-body">
+
+    <!-- 중구 -->
+    <div class="ch-panel on" id="ch-junggu">
+      <div class="ch-hd">
+        <span class="ch-name">중구교당</span>
+        <span class="ch-sub">성동 + 중구 · 원기104년 통합 · 교무 3→2명</span>
+        <span class="tier tier-1">◎ 신뢰도 높음</span>
+        <span class="bdg bg">원108 +1,945회 (+88.8%)</span>
+        <span class="bdg bg">RMSPE 6.8%</span>
+      </div>
+      <p class="ch-desc">코로나 직전 통합이 이루어졌습니다. 통합 후 교무가 오히려 3명에서 2명으로 줄었음에도, 코로나 충격을 비통합교당보다 훨씬 잘 흡수했습니다. 단순 비교 "+10%"가 환경 통제 후 "+88.8%"로 드러나는 본 분석의 가장 명확한 사례입니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">2,979</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">2,798</div></div>
+        <div class="ty"><div class="tyl">99</div><div class="tyv">2,878</div></div>
+        <div class="ty"><div class="tyl">100</div><div class="tyv">2,968</div></div>
+        <div class="ty"><div class="tyl">101</div><div class="tyv">3,324</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">3,013</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">2,807</div></div>
+        <div class="ty mg"><div class="tyl">104 ← 통합</div><div class="tyv">3,152</div></div>
+        <div class="ty cv"><div class="tyl">105 코로나</div><div class="tyv">3,329</div></div>
+        <div class="ty"><div class="tyl">106</div><div class="tyv">4,164</div></div>
+        <div class="ty"><div class="tyl">107</div><div class="tyv">4,103</div></div>
+        <div class="ty"><div class="tyl">108</div><div class="tyv">4,136</div></div>
+      </div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative;margin-bottom:12px"><canvas id="junggu-line"></canvas></div>
+          <div style="height:150px;position:relative"><canvas id="junggu-eff"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">연도별 통합 효과 상세</div>
+          <table>
+            <thead><tr><th>연도</th><th class="r">실제</th><th class="r">합성</th><th class="r">효과</th><th>구분</th></tr></thead>
+            <tbody>
+              <tr><td>원103</td><td class="r">2,807</td><td class="r">2,791</td><td class="r" style="color:var(--mist)">+16</td><td>사전(통제용)</td></tr>
+              <tr class="tr-t"><td>원104</td><td class="r">3,152</td><td class="r">2,709</td><td class="r vt"><strong>+443</strong></td><td>통합 첫해</td></tr>
+              <tr class="tr-t"><td>원105</td><td class="r">3,329</td><td class="r" style="color:var(--red)">1,568</td><td class="r vt"><strong>+1,761</strong></td><td>코로나 흡수</td></tr>
+              <tr class="tr-t"><td>원106</td><td class="r">4,164</td><td class="r">2,141</td><td class="r vt"><strong>+2,023</strong></td><td>회복기</td></tr>
+              <tr class="tr-t"><td>원107</td><td class="r">4,103</td><td class="r">2,137</td><td class="r vt"><strong>+1,966</strong></td><td>유지</td></tr>
+              <tr class="tr-t"><td><strong>원108</strong></td><td class="r"><strong>4,136</strong></td><td class="r">2,191</td><td class="r vt"><strong>+1,945</strong></td><td>안정화</td></tr>
+            </tbody>
+          </table>
+          <div class="co co-t" style="margin-top:14px">
+            <b>해석</b>
+            합성 대조군은 코로나로 1,568회까지 떨어졌으나 중구는 오히려 상승. 통합 구조 자체가 <strong>코로나 충격을 흡수하는 완충 효과</strong>를 가졌을 가능성을 강하게 시사합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 역삼 -->
+    <div class="ch-panel" id="ch-yeoksam">
+      <div class="ch-hd">
+        <span class="ch-name">역삼교당</span>
+        <span class="ch-sub">압구정 + 대치 신설통합 · 원기106년 · 교무 3→2명</span>
+        <span class="tier tier-2">○ 신뢰도 양호</span>
+        <span class="bdg bg">원108 +853회 (+17.5%)</span>
+        <span class="bdg bg">RMSPE 7.7%</span>
+      </div>
+      <p class="ch-desc">코로나 직후 압구정·대치 두 교당을 합쳐 신설 통합. 교무도 3명에서 2명으로 감소했습니다. 통합 첫해는 합성 대조군과 비슷, 2년차 일시 하락, 3년차에 본격 안착하는 궤적이 관찰됩니다. <strong>통합 직후 단기 부진은 정상적 적응 과정</strong>일 가능성을 시사합니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">6,564</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">6,291</div></div>
+        <div class="ty"><div class="tyl">99</div><div class="tyv">5,884</div></div>
+        <div class="ty"><div class="tyl">100</div><div class="tyv">6,605</div></div>
+        <div class="ty"><div class="tyl">101</div><div class="tyv">7,349</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">7,067</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">6,714</div></div>
+        <div class="ty"><div class="tyl">104</div><div class="tyv">6,424</div></div>
+        <div class="ty cv"><div class="tyl">105 코로나</div><div class="tyv">3,306</div></div>
+        <div class="ty mg"><div class="tyl">106 ← 통합</div><div class="tyv">5,111</div></div>
+        <div class="ty"><div class="tyl">107</div><div class="tyv">4,531</div></div>
+        <div class="ty"><div class="tyl">108</div><div class="tyv">5,729</div></div>
+      </div>
+
+      <div class="notebox"><strong>데이터 처리:</strong> 원기105까지는 압구정+대치 합산. 원기106 통합 첫해는 압구정(1,829)+대치(2,870)+역삼(412)=5,111회로 합산. <strong>역삼교당만의 412회로 보면 "급락"이지만, 합산 5,111회는 합성 대조군과 비슷한 정상 수준입니다.</strong></div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative;margin-bottom:12px"><canvas id="yeoksam-line"></canvas></div>
+          <div style="height:150px;position:relative"><canvas id="yeoksam-eff"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">사후 4년 효과 추이</div>
+          <table>
+            <thead><tr><th>연도</th><th class="r">실제(합산)</th><th class="r">합성</th><th class="r">효과</th><th>구분</th></tr></thead>
+            <tbody>
+              <tr><td>원105</td><td class="r">3,306</td><td class="r">3,391</td><td class="r" style="color:var(--mist)">−85</td><td>사전(통제용)</td></tr>
+              <tr class="tr-a"><td>원106</td><td class="r">5,111</td><td class="r">4,844</td><td class="r va"><strong>+267</strong></td><td>통합 첫해</td></tr>
+              <tr class="tr-a"><td>원107</td><td class="r">4,531</td><td class="r">4,821</td><td class="r vr"><strong>−290</strong></td><td>일시 부진</td></tr>
+              <tr class="tr-a"><td><strong>원108</strong></td><td class="r"><strong>5,729</strong></td><td class="r">4,876</td><td class="r va"><strong>+853</strong></td><td>안착</td></tr>
+            </tbody>
+          </table>
+          <div class="co co-b" style="margin-top:14px">
+            <b>안착 패턴 — 해석의 함정</b>
+            통합 첫해 부진을 단기로 평가하면 "실패"로 판정될 수 있습니다. 그러나 3년 후 본격 안착하는 패턴은 <strong>구조 변화에는 안착 기간이 필요</strong>함을 보여줍니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 한강 -->
+    <div class="ch-panel" id="ch-hangang">
+      <div class="ch-hd">
+        <span class="ch-name">한강교당</span>
+        <span class="ch-sub">남서울 + 반포 신설통합 · 원기100년 · 교무 2→2명</span>
+        <span class="tier tier-3">△ 신뢰도 낮음</span>
+        <span class="bdg ba">원108 +3,784회 (+174.8%)</span>
+        <span class="bdg ba">RMSPE 3.2%</span>
+      </div>
+      <p class="ch-desc">남서울·반포 두 교당을 합친 신설 통합. RMSPE 자체는 낮지만 <strong>사전기간이 3년에 불과해 과적합 가능성</strong>이 있고, 원기101년이 이행비용 기간(0회)으로 제외됩니다. 수치(+3,784회)는 신뢰도 낮음으로 분류하되 방향(+)은 일관됩니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">3,252</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">3,041</div></div>
+        <div class="ty"><div class="tyl">99</div><div class="tyv">2,886</div></div>
+        <div class="ty mg"><div class="tyl">100 ← 통합</div><div class="tyv">2,965</div></div>
+        <div class="ty exc"><div class="tyl">101 제외</div><div class="tyv">0</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">2,957</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">2,743</div></div>
+        <div class="ty"><div class="tyl">104</div><div class="tyv">4,652</div></div>
+        <div class="ty cv"><div class="tyl">105 코로나</div><div class="tyv">3,781</div></div>
+        <div class="ty"><div class="tyl">106</div><div class="tyv">4,797</div></div>
+        <div class="ty"><div class="tyl">107</div><div class="tyv">4,999</div></div>
+        <div class="ty"><div class="tyl">108</div><div class="tyv">5,948</div></div>
+      </div>
+
+      <div class="notebox"><strong>데이터 처리:</strong> 원기97~100 남서울+반포 합산. 원기101년(0회)은 통합 이행비용 기간으로 SCM 추정에서 제외. 사전기간은 원기97~100의 4년이나 통합 직전인 100년까지 통합 효과가 영향 받을 수 있어 실질 사전관측치 3개.</div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative;margin-bottom:12px"><canvas id="hangang-line"></canvas></div>
+          <div style="height:150px;position:relative"><canvas id="hangang-eff"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">사후 추이 (이행비용 제외)</div>
+          <table>
+            <thead><tr><th>연도</th><th class="r">실제</th><th class="r">합성</th><th class="r">효과</th><th>구분</th></tr></thead>
+            <tbody>
+              <tr><td>원99</td><td class="r">2,886</td><td class="r">3,018</td><td class="r" style="color:var(--mist)">−132</td><td>사전</td></tr>
+              <tr class="tr-a"><td>원100</td><td class="r">2,965</td><td class="r">3,028</td><td class="r" style="color:var(--mist)">−63</td><td>통합 첫해</td></tr>
+              <tr class="tr-a" style="opacity:.5"><td>원101</td><td class="r">제외</td><td class="r">2,904</td><td class="r">—</td><td>이행비용</td></tr>
+              <tr class="tr-a"><td>원102</td><td class="r">2,957</td><td class="r">2,809</td><td class="r va">+148</td><td>정체</td></tr>
+              <tr class="tr-a"><td>원103</td><td class="r">2,743</td><td class="r">2,755</td><td class="r" style="color:var(--mist)">−12</td><td>정체</td></tr>
+              <tr class="tr-a"><td>원104</td><td class="r">4,652</td><td class="r">2,675</td><td class="r va">+1,977</td><td>본격 상승</td></tr>
+              <tr class="tr-a"><td>원105</td><td class="r">3,781</td><td class="r" style="color:var(--red)">1,549</td><td class="r va">+2,232</td><td>코로나 흡수</td></tr>
+              <tr class="tr-a"><td><strong>원108</strong></td><td class="r">5,948</td><td class="r">2,164</td><td class="r va"><strong>+3,784</strong></td><td>최종</td></tr>
+            </tbody>
+          </table>
+          <div class="co co-a" style="margin-top:14px">
+            <b>해석 주의</b>
+            방향(+)과 규모는 주목할 만하나 사전기간 부족으로 수치의 신뢰도가 낮습니다. 통합 후 4년 정체 → 5년차 폭발하는 안착 패턴은 역삼의 궤적과도 부합합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 강남 -->
+    <div class="ch-panel" id="ch-gangnam">
+      <div class="ch-hd">
+        <span class="ch-name">강남교당</span>
+        <span class="ch-sub">강남 + 거마 흡수통합 · 원기99년 · 교무 4→4.3명</span>
+        <span class="tier tier-3">△ 신뢰도 낮음</span>
+        <span class="bdg ba">원108 +7,508회 (+53.5%)</span>
+        <span class="bdg ba">RMSPE 0.4%</span>
+      </div>
+      <p class="ch-desc">거마교당이 강남교당에 흡수 통합. 거마교당 규모가 작아 흡수 통합 패턴에 해당합니다. <strong>사전기간이 2년에 불과해 RMSPE가 매우 낮은 것 자체가 과적합 신호</strong>일 수 있습니다. 수치 해석은 어렵고 방향(+)만 참고 수준으로 활용합니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">21,388</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">19,545</div></div>
+        <div class="ty mg"><div class="tyl">99 ← 통합</div><div class="tyv">20,387</div></div>
+        <div class="ty"><div class="tyl">100</div><div class="tyv">19,993</div></div>
+        <div class="ty"><div class="tyl">101</div><div class="tyv">23,219</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">24,788</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">27,544</div></div>
+        <div class="ty"><div class="tyl">104</div><div class="tyv">24,780</div></div>
+        <div class="ty cv"><div class="tyl">105 코로나</div><div class="tyv">17,030</div></div>
+        <div class="ty"><div class="tyl">106</div><div class="tyv">19,718</div></div>
+        <div class="ty"><div class="tyl">107</div><div class="tyv">21,514</div></div>
+        <div class="ty"><div class="tyl">108</div><div class="tyv">21,541</div></div>
+      </div>
+
+      <div class="notebox"><strong>데이터 처리:</strong> 원기97~98은 강남+거마 합산. 사전기간이 2년에 불과해 합성 대조군 가중치 추정에 과적합 위험이 있습니다.</div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative;margin-bottom:12px"><canvas id="gangnam-line"></canvas></div>
+          <div style="height:150px;position:relative"><canvas id="gangnam-eff"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">방향 확인 — 사후 평균 효과</div>
+          <table>
+            <thead><tr><th>구간</th><th class="r">실제 평균</th><th class="r">합성 평균</th><th class="r">차이</th></tr></thead>
+            <tbody>
+              <tr><td>사전 (97~98)</td><td class="r">19,452</td><td class="r">19,452</td><td class="r" style="color:var(--mist)">+93 (과적합)</td></tr>
+              <tr class="tr-a"><td>통합 첫해 (99)</td><td class="r">19,770</td><td class="r">19,616</td><td class="r va">+154</td></tr>
+              <tr class="tr-a"><td>코로나 직전 (103)</td><td class="r">27,544</td><td class="r">17,699</td><td class="r va">+9,845</td></tr>
+              <tr class="tr-a"><td>코로나 (105)</td><td class="r">17,030</td><td class="r">9,254</td><td class="r va">+7,776</td></tr>
+              <tr class="tr-a"><td><strong>원108</strong></td><td class="r"><strong>21,541</strong></td><td class="r">14,033</td><td class="r va"><strong>+7,508</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="co co-a" style="margin-top:14px">
+            <b>주의</b>
+            방향(+)은 명확하지만, 사전 2년 합성 대조군의 신뢰도가 낮습니다. 강남교당은 규모가 매우 커 대조군 풀 내 유사 교당이 부족한 점도 한계입니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 한둥근 -->
+    <div class="ch-panel" id="ch-hdg">
+      <div class="ch-hd">
+        <span class="ch-name">한둥근교당</span>
+        <span class="ch-sub">노송 + 동전주 신설통합 · 원기107년 · 교무 1+1→2명</span>
+        <span class="tier tier-3">△ 신뢰도 낮음</span>
+        <span class="bdg ba">원108 +345회 (+9.2%)</span>
+        <span class="bdg ba">RMSPE 4.8%</span>
+      </div>
+      <p class="ch-desc">노송·동전주 각 1명 교무 교당이 2명 교당으로 합쳐졌습니다. 사전기간은 10년으로 충분하나, <strong>통합 첫해(원기107) 출석 947회는 데이터 누락 가능성이 있는 이상치</strong>로 분석에서 제외했습니다. 결과적으로 원기108년 단년만 유효한 관찰입니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">6,072</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">5,178</div></div>
+        <div class="ty"><div class="tyl">99</div><div class="tyv">5,247</div></div>
+        <div class="ty"><div class="tyl">100</div><div class="tyv">5,449</div></div>
+        <div class="ty"><div class="tyl">101</div><div class="tyv">5,021</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">5,136</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">4,616</div></div>
+        <div class="ty"><div class="tyl">104</div><div class="tyv">4,490</div></div>
+        <div class="ty cv"><div class="tyl">105</div><div class="tyv">2,899</div></div>
+        <div class="ty"><div class="tyl">106</div><div class="tyv">3,446</div></div>
+        <div class="ty exc"><div class="tyl">107 제외</div><div class="tyv">947</div></div>
+        <div class="ty mg"><div class="tyl">108</div><div class="tyv">4,111</div></div>
+      </div>
+
+      <div class="notebox"><strong>데이터 처리:</strong> 원기97~106은 노송+동전주 합산. 원기107 출석 947회는 직전 3,446회 대비 비현실적 급락으로 데이터 누락(통합 이행 중 입력 오류) 가능성이 높아 SCM에서 제외. <strong>원기108 단년 관찰만 유효</strong>.</div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative;margin-bottom:12px"><canvas id="hdg-line"></canvas></div>
+          <div style="height:150px;position:relative"><canvas id="hdg-eff"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">유효 관측 — 원108만</div>
+          <table>
+            <thead><tr><th>연도</th><th class="r">실제</th><th class="r">합성</th><th class="r">효과</th></tr></thead>
+            <tbody>
+              <tr><td>원106</td><td class="r">3,446</td><td class="r">3,732</td><td class="r" style="color:var(--mist)">−286</td></tr>
+              <tr style="opacity:.5"><td>원107</td><td class="r">제외</td><td class="r">3,720</td><td class="r">—</td></tr>
+              <tr class="tr-a"><td><strong>원108</strong></td><td class="r"><strong>4,111</strong></td><td class="r">3,766</td><td class="r va"><strong>+345</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="co co-a" style="margin-top:14px">
+            <b>해석</b>
+            원108 단년 +345회(+9.2%)로 방향(+). 그러나 단년 관찰이므로 통합 효과의 지속성·크기를 단정할 수 없습니다. <strong>노송·동전주 원기107 원본 데이터 확보 시 재분석 권장</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 불광 -->
+    <div class="ch-panel" id="ch-bulgwang">
+      <div class="ch-hd">
+        <span class="ch-name">불광교당</span>
+        <span class="ch-sub">구산 + 불광 흡수통합 · 원기99년 · 교무 2→1명</span>
+        <span class="tier tier-4">× SCM 불가</span>
+        <span class="bdg br">단순 −31.6%</span>
+        <span class="bdg br">RMSPE 19.8%</span>
+      </div>
+      <p class="ch-desc">사전기간이 2년에 불과하고 RMSPE 19.8%로 사전 평균의 10% 기준을 크게 초과. <strong>합성 대조군이 불광교당의 사전 출석 패턴을 재현하지 못하기 때문에 SCM 추정값을 신뢰할 수 없습니다.</strong> 환경 효과를 분리할 수 없어 단순 전후 비교만 제시합니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">2,769</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">2,902</div></div>
+        <div class="ty mg"><div class="tyl">99 ← 통합</div><div class="tyv">2,643</div></div>
+        <div class="ty"><div class="tyl">100</div><div class="tyv">2,647</div></div>
+        <div class="ty"><div class="tyl">101</div><div class="tyv">2,666</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">2,596</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">2,577</div></div>
+        <div class="ty"><div class="tyl">104</div><div class="tyv">2,193</div></div>
+        <div class="ty cv"><div class="tyl">105 코로나</div><div class="tyv">1,175</div></div>
+        <div class="ty"><div class="tyl">106</div><div class="tyv">1,987</div></div>
+        <div class="ty"><div class="tyl">107</div><div class="tyv">1,859</div></div>
+        <div class="ty"><div class="tyl">108</div><div class="tyv">1,809</div></div>
+      </div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative"><canvas id="bulgwang-line"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">단순 비교 (참고)</div>
+          <table>
+            <thead><tr><th>구간</th><th class="r">출석</th></tr></thead>
+            <tbody>
+              <tr><td>통합 직전 (원98)</td><td class="r">2,902</td></tr>
+              <tr><td>통합 직후 (원99)</td><td class="r">2,643</td></tr>
+              <tr><td>코로나 직전 (원104)</td><td class="r">2,193</td></tr>
+              <tr><td>코로나 (원105)</td><td class="r">1,175</td></tr>
+              <tr class="tr-r"><td><strong>원108</strong></td><td class="r"><strong>1,809</strong></td></tr>
+              <tr class="tr-r"><td>통합 전후 변화율</td><td class="r vr"><strong>−31.6%</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="co co-r" style="margin-top:14px">
+            <b>해석 한계</b>
+            −31.6% 하락에는 통합 효과·교무 감소·코로나·고령화 등 여러 요인이 섞여 있습니다. 단순 비교만으로는 통합 자체가 부정적 영향을 주었다고 단정할 수 없습니다. <strong>원기99 이전 데이터 확보 시 SCM 재분석 가능</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- A교당 -->
+    <div class="ch-panel" id="ch-anak">
+      <div class="ch-hd">
+        <span class="ch-name">안락한부산진교당 (A교당)</span>
+        <span class="ch-sub">안락 + 부산진 흡수통합 · 원기99년 · 교무 3→2→1명</span>
+        <span class="tier tier-4">× SCM 불가</span>
+        <span class="bdg br">단순 −28.9%</span>
+        <span class="bdg br">RMSPE 42.8%</span>
+      </div>
+      <p class="ch-desc">사전기간 2년, RMSPE가 사전 평균의 42.8%로 매우 높음. 불광교당과 동일하게 SCM 적용 불가. 단순 전후로 −28.9% 하락했으나 환경 효과를 분리할 수 없습니다. <strong>교무가 3→2→1명으로 지속 감소</strong>한 점이 다른 사례와 구분됩니다.</p>
+
+      <div class="tl">
+        <div class="ty"><div class="tyl">97</div><div class="tyv">2,084</div></div>
+        <div class="ty"><div class="tyl">98</div><div class="tyv">1,994</div></div>
+        <div class="ty mg"><div class="tyl">99 ← 통합</div><div class="tyv">1,918</div></div>
+        <div class="ty"><div class="tyl">100</div><div class="tyv">1,827</div></div>
+        <div class="ty"><div class="tyl">101</div><div class="tyv">1,771</div></div>
+        <div class="ty"><div class="tyl">102</div><div class="tyv">2,069</div></div>
+        <div class="ty"><div class="tyl">103</div><div class="tyv">1,885</div></div>
+        <div class="ty"><div class="tyl">104</div><div class="tyv">2,380</div></div>
+        <div class="ty cv"><div class="tyl">105 코로나</div><div class="tyv">1,242</div></div>
+        <div class="ty"><div class="tyl">106</div><div class="tyv">1,390</div></div>
+        <div class="ty"><div class="tyl">107</div><div class="tyv">1,355</div></div>
+        <div class="ty"><div class="tyl">108</div><div class="tyv">1,364</div></div>
+      </div>
+
+      <div class="g2">
+        <div>
+          <div style="height:240px;position:relative"><canvas id="anak-line"></canvas></div>
+        </div>
+        <div>
+          <div class="card-hd" style="margin-bottom:10px">단순 비교 (참고)</div>
+          <table>
+            <thead><tr><th>구간</th><th class="r">출석</th></tr></thead>
+            <tbody>
+              <tr><td>통합 직전 (원98)</td><td class="r">1,994</td></tr>
+              <tr><td>통합 직후 (원99)</td><td class="r">1,918</td></tr>
+              <tr><td>코로나 직전 (원104)</td><td class="r">2,380</td></tr>
+              <tr><td>코로나 (원105)</td><td class="r">1,242</td></tr>
+              <tr class="tr-r"><td><strong>원108</strong></td><td class="r"><strong>1,364</strong></td></tr>
+              <tr class="tr-r"><td>통합 전후 변화율</td><td class="r vr"><strong>−28.9%</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="co co-r" style="margin-top:14px">
+            <b>특기 사항</b>
+            교무가 통합 후 3→2→1명으로 지속 축소된 사례. SCM으로 검증되지 않지만, 통합과 더불어 교무가 줄어든 구조 변화가 결과에 영향을 미쳤을 가능성이 있습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- S4: 유효성 검증 -->
+<section class="sec" id="s4">
+  <div class="sec-hd"><span class="sec-num">05</span><span class="sec-ttl">분석 유효성 검증 — 얼마나 믿을 수 있나</span></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-hd">사전기간과 RMSPE 종합</div>
+      <table>
+        <thead><tr><th>교당</th><th class="r">사전기간</th><th class="r">RMSPE</th><th>신뢰도</th><th>처리 결과</th></tr></thead>
+        <tbody>
+          <tr class="tr-t"><td>중구</td><td class="r">7년</td><td class="r vt">6.8%</td><td><span class="tier tier-1">◎</span></td><td>수치 해석</td></tr>
+          <tr class="tr-t"><td>역삼</td><td class="r">9년</td><td class="r vt">7.7%</td><td><span class="tier tier-2">○</span></td><td>수치 해석</td></tr>
+          <tr class="tr-a"><td>한강</td><td class="r">3년</td><td class="r va">3.2%</td><td><span class="tier tier-3">△</span></td><td>방향 참고</td></tr>
+          <tr class="tr-a"><td>강남</td><td class="r">2년</td><td class="r va">0.4%</td><td><span class="tier tier-3">△</span></td><td>방향 참고 / 과적합 의심</td></tr>
+          <tr class="tr-a"><td>한둥근</td><td class="r">10년</td><td class="r va">4.8%</td><td><span class="tier tier-3">△</span></td><td>원108 단년만</td></tr>
+          <tr class="tr-r"><td>불광</td><td class="r">2년</td><td class="r vr">19.8%</td><td><span class="tier tier-4">×</span></td><td>SCM 무효</td></tr>
+          <tr class="tr-r"><td>A교당</td><td class="r">2년</td><td class="r vr">42.8%</td><td><span class="tier tier-4">×</span></td><td>SCM 무효</td></tr>
+        </tbody>
+      </table>
+      <p class="cn">RMSPE는 사전 평균 출석 대비 비율 환산. 10% 초과 시 신뢰 불가로 판정. 사전기간 2~3년은 RMSPE가 낮아도 과적합 우려로 △ 분류.</p>
+    </div>
+    <div class="card">
+      <div class="card-hd">통합 시점에 따른 신뢰도 패턴</div>
+      <div style="height:220px;position:relative"><canvas id="merge-time"></canvas></div>
+      <p class="cn">통합 시점이 분석 기간(원기97~108) 초기에 가까울수록 사전기간이 짧아 신뢰도가 낮아집니다. <strong>원기99~100 통합은 모두 사전기간 부족(△ 또는 ×)</strong>. 원기104~107 통합은 사전기간이 충분해 ◎○○로 분류됩니다.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-hd">분석의 구조적 한계</div>
+    <div class="g2">
+      <div>
+        <div class="co co-g" style="margin-top:0">
+          <b>① 처치군 규모 한계 (N=7)</b>
+          통합교당이 7개뿐이라 통계적 검정력이 매우 제한적입니다. 각 사례별 패턴 관찰 수준이며, 일반화된 결론은 어렵습니다.
+        </div>
+        <div class="co co-g" style="margin-top:12px">
+          <b>② 사전기간 분포 불균형</b>
+          7건 중 4건이 사전기간 2~3년으로 통합 초기(원기99~100)에 집중. 초기 통합의 효과를 안정적으로 분석할 수 없습니다.
+        </div>
+      </div>
+      <div>
+        <div class="co co-g" style="margin-top:0">
+          <b>③ 교당 간 상호작용 미통제</b>
+          한 교당의 통합이 인근 비통합교당의 출석에 영향을 줄 가능성(스필오버)은 본 분석에서 통제되지 않았습니다.
+        </div>
+        <div class="co co-g" style="margin-top:12px">
+          <b>④ 인과 추론의 한계</b>
+          SCM은 강력한 가정(사전 매칭) 하에 통합 효과를 추정합니다. 통합 결정 자체가 비통합교당과 다른 특성을 반영했다면 결과 해석에 주의가 필요합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S5: 구조적 조건 가설 -->
+<section class="sec" id="s5">
+  <div class="sec-hd"><span class="sec-num">06</span><span class="sec-ttl">구조적 조건 가설 — SCM 결과가 시사하는 것</span></div>
+
+  <p style="font-size:13px;color:var(--slate);line-height:1.85;margin-bottom:14px">SCM 적용 가능한 5개 사례 모두 환경 통제 후 양(+)의 방향을 보입니다. 그러나 단순한 "통합은 좋다"보다는, <strong>어떤 조건에서 통합이 효과를 발휘했는가</strong>를 살펴볼 필요가 있습니다. 7개 사례의 패턴을 종합하면 세 가지 조건 후보가 떠오릅니다.</p>
+
+  <div class="g3">
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <div class="card-hd">조건 후보 ①</div>
+      <h4 style="font-family:var(--disp);font-size:16px;font-weight:600;margin-bottom:8px">안정적 구조 기반</h4>
+      <p style="font-size:13px;color:var(--slate);line-height:1.8">SCM 적용 가능한 5건 모두 통합 직후 구조가 안정화된 사례. 통합으로 형성된 새 구조가 환경 충격을 흡수할 기반이 됩니다.</p>
+      <div class="co co-t" style="margin-top:10px;font-size:12px">
+        <b>근거</b>
+        중구(코로나 흡수), 한강(원104 이후 본격 상승), 역삼(3년차 안착) 모두 통합 구조가 자리잡은 뒤 효과 발현.
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue)">
+      <div class="card-hd">조건 후보 ②</div>
+      <h4 style="font-family:var(--disp);font-size:16px;font-weight:600;margin-bottom:8px">통합 구조의 지속</h4>
+      <p style="font-size:13px;color:var(--slate);line-height:1.8">중구·역삼은 교무가 감소(3→2)했음에도 양(+). "교무수 유지"보다 <strong>통합으로 형성된 구조가 유지되는가</strong>가 더 중요한 변수일 가능성.</p>
+      <div class="co co-b" style="margin-top:10px;font-size:12px">
+        <b>반증 가능성</b>
+        A교당은 교무가 3→2→1로 지속 축소되며 단순 −28.9%. SCM 불가로 직접 확인은 어렵지만 가설의 정합성을 시사.
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <div class="card-hd">조건 후보 ③</div>
+      <h4 style="font-family:var(--disp);font-size:16px;font-weight:600;margin-bottom:8px">안착 기간</h4>
+      <p style="font-size:13px;color:var(--slate);line-height:1.8">역삼(원106 +267 → 원107 −290 → 원108 +853), 한강(통합 후 4년 정체 → 5년차 폭발) 모두 통합 직후 일시 부진을 거쳐 안착하는 패턴.</p>
+      <div class="co co-a" style="margin-top:10px;font-size:12px">
+        <b>정책 함의</b>
+        단기 성과로 통합 성패를 판단하면 실제 효과가 발현되기 전에 잘못된 의사결정을 내릴 위험.
+      </div>
+    </div>
+  </div>
+
+  <div class="co co-p" style="margin-top:18px">
+    <b>가설 수준 — 통계적 검증 미완</b>
+    위 세 조건은 7개 사례 패턴 관찰에서 도출된 가설입니다. N=7로 통계적 검정이 불가능하며, 추가 통합 사례 확보 및 교무 변동 이벤트 스터디와의 결합 분석을 통해 정량 검증이 필요합니다.
+  </div>
+</section>
+
+<!-- S6: 결론 -->
+<section class="sec" id="s6">
+  <div class="sec-hd"><span class="sec-num">07</span><span class="sec-ttl">결론 및 시사점</span></div>
+
+  <div class="g3">
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <div class="card-hd">확인된 핵심 발견</div>
+      <ul style="font-size:13px;line-height:2;padding-left:14px;color:var(--slate)">
+        <li>SCM 적용 가능한 5개 사례(중구·역삼·한강·강남·한둥근) 모두 환경 통제 후 양(+)의 방향</li>
+        <li>중구교당은 단순 비교 "+10%"가 환경 통제 후 "+88.8%"로 드러남 — 단순 비교가 통합 효과를 크게 과소평가할 수 있음</li>
+        <li>교무가 감소(중구 3→2, 역삼 3→2)한 통합도 양(+) 효과 — 구조 재설계 자체의 효과 가능성</li>
+        <li>역삼·한강 모두 통합 직후 일시 부진 후 안착하는 공통 궤적</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <div class="card-hd">분석의 한계</div>
+      <ul style="font-size:13px;line-height:2;padding-left:14px;color:var(--slate)">
+        <li>처치군 N=7로 통계적 검정력 제한, 사례별 패턴 관찰 수준</li>
+        <li>7건 중 5건이 신뢰도 △ 또는 × — 수치 그대로 인용은 위험</li>
+        <li>통합 결정 자체의 선발편향(어떤 교당이 통합 대상이 되는가)은 미통제</li>
+        <li>불광·A교당은 환경 효과 분리 불가 — 단순 −30%대 하락만 관찰</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue)">
+      <div class="card-hd">정책 시사점</div>
+      <ul style="font-size:13px;line-height:2;padding-left:14px;color:var(--slate)">
+        <li>단순 전후 비교만으로 통합 성패를 판단하지 말 것 — 환경 통제 후 결과가 다를 수 있음</li>
+        <li>통합 직후 1~2년 부진은 자연스러운 안착 과정일 가능성 — 단기 평가 지양</li>
+        <li>"몇 명의 교무를 배치하는가"보다 "어떤 구조로 함께 일하게 하는가" 함께 설계</li>
+        <li>추가 통합을 추진할 경우 사전 1~2년부터 데이터를 체계적으로 수집해 향후 SCM 분석 기반 확보</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;border-left:4px solid var(--purple)">
+    <div class="card-hd">향후 분석 권고</div>
+    <div class="g2">
+      <div>
+        <h4 style="font-family:var(--disp);font-size:14px;font-weight:600;margin-bottom:8px;color:var(--ink)">데이터 확보 권고</h4>
+        <ul style="font-size:13px;line-height:1.95;padding-left:14px;color:var(--slate)">
+          <li><strong>한둥근(노송·동전주) 원기107년 원본 데이터</strong> — 확보 시 사후 2년 분석 가능</li>
+          <li><strong>불광·A교당 원기99 이전 데이터</strong> — 확보 시 SCM 재분석으로 환경 효과 분리 가능</li>
+          <li><strong>교도 단위 패널 데이터</strong> — 통합 전후 동일 교도의 출석 변화 추적으로 미시 분석 가능</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:var(--disp);font-size:14px;font-weight:600;margin-bottom:8px;color:var(--ink)">방법론 확장</h4>
+        <ul style="font-size:13px;line-height:1.95;padding-left:14px;color:var(--slate)">
+          <li><strong>이벤트 스터디와의 결합</strong> — 교무수 단독 변동 사례(N=30~41)와 통합 사례(N=7)를 대비해 구조 재설계 효과 분리</li>
+          <li><strong>순열 검정(Placebo Test)</strong> — SCM 적용 가능 5건에 대해 비통합교당 가짜 처치로 p값 산출 권장</li>
+          <li><strong>스필오버 분석</strong> — 인근 비통합교당의 출석 변동 측정으로 교당 간 상호작용 통제</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.28)">서울교구 교화구조개선 TF — 전국 교당 통합 효과 SCM 분석 보고서</div>
+    <div style="margin-top:6px"><strong>분석 방법:</strong> Synthetic Control Method &nbsp;|&nbsp; <strong>대조군 풀:</strong> 전국 448개 비통합교당 &nbsp;|&nbsp; <strong>데이터:</strong> 공동교화_시너지_분석패널_v07 (원기97~108)</div>
+  </div>
+  <div style="text-align:right;font-size:11px">처치군 7개 (SCM 가능 5 + 불가 2)<br>원기111년(2026년) 5월</div>
+</footer>
+
+<script>
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+const tc = dark?'#87a0b0':'#2a3d50';
+const gc = dark?'rgba(255,255,255,.06)':'rgba(194,210,219,.45)';
+const base = {responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,font:{size:11},boxWidth:12,padding:8}}},
+  scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},
+          y:{ticks:{color:tc,font:{size:10}},grid:{color:gc}}}};
+const yrs=['97','98','99','100','101','102','103','104','105','106','107','108'];
+
+// 신뢰도별 사례 분포 도넛
+new Chart(document.getElementById('tier-dist'),{type:'doughnut',data:{
+  labels:['◎ 높음 (중구)','○ 양호 (역삼)','△ 낮음 (한강·강남·한둥근)','× 불가 (불광·A교당)'],
+  datasets:[{
+    data:[1,1,3,2],
+    backgroundColor:['#074b3f','#0a6958','#a46c06','#8b302e'],
+    borderColor:'#fff',borderWidth:2
+  }]
+},options:{...base,plugins:{legend:{position:'right',labels:{color:tc,font:{size:11},boxWidth:12,padding:8}}},
+  scales:{}, cutout:'55%'}});
+
+// 통합 시점에 따른 사전기간 산점도
+new Chart(document.getElementById('merge-time'),{type:'bar',data:{
+  labels:['강남\n원99','불광\n원99','A교당\n원99','한강\n원100','중구\n원104','역삼\n원106','한둥근\n원107'],
+  datasets:[{
+    label:'사전기간(년)',
+    data:[2,2,2,3,7,9,10],
+    backgroundColor:['rgba(164,108,6,.7)','rgba(139,48,46,.7)','rgba(139,48,46,.7)','rgba(164,108,6,.7)','rgba(7,75,63,.8)','rgba(10,105,88,.8)','rgba(164,108,6,.7)'],
+    borderColor:['#a46c06','#8b302e','#8b302e','#a46c06','#074b3f','#0a6958','#a46c06'],
+    borderWidth:1.5,borderRadius:4
+  }]
+},options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`사전기간: ${c.parsed.y}년`}}},
+  scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},
+          y:{ticks:{color:tc,font:{size:10}},grid:{color:gc},title:{display:true,text:'사전기간(년)',color:tc,font:{size:10}},suggestedMin:0,suggestedMax:12}}}});
+
+// SCM 라인 차트 헬퍼 — 사전 회색, 사후 색상
+function scmLineChart(id, yrLabels, actual, synthetic, mergeIdx, mainColor){
+  // 합성 대조군 라인 (사전~사후 모두 표시)
+  new Chart(document.getElementById(id),{type:'line',data:{labels:yrLabels,datasets:[
+    {label:'실제 총출석',data:actual,borderColor:mainColor,borderWidth:2.8,
+      pointRadius:actual.map((v,i)=>v===null?0:(i===mergeIdx?6:3)),
+      pointBackgroundColor:mainColor,tension:0.25,fill:false,spanGaps:true},
+    {label:'합성 대조군(반사실)',data:synthetic,borderColor:'#87a0b0',borderWidth:1.8,
+      borderDash:[6,4],pointRadius:synthetic.map(v=>v===null?0:2.5),
+      pointBackgroundColor:'#87a0b0',tension:0.25,fill:false,spanGaps:true},
+  ]},options:{...base,plugins:{...base.plugins,
+    legend:{position:'bottom',labels:{color:tc,font:{size:11},boxWidth:14,padding:10}}},
+    scales:{...base.scales,
+      y:{...base.scales.y,title:{display:true,text:'총출석(회)',color:tc,font:{size:10}},
+        ticks:{...base.scales.y.ticks,callback:v=>v>=1000?(v/1000).toFixed(1)+'천':v}}}},
+    plugins:[{
+      id:'vline',afterDraw(chart){
+        const xs=chart.scales.x, ys=chart.scales.y;
+        const x=xs.getPixelForValue(mergeIdx);
+        const ctx=chart.ctx;
+        ctx.save();
+        ctx.strokeStyle=mainColor;ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+        ctx.beginPath();ctx.moveTo(x,ys.top);ctx.lineTo(x,ys.bottom);ctx.stroke();
+        ctx.fillStyle=mainColor;ctx.font='bold 10px sans-serif';
+        ctx.fillText('▼ 통합',x+4,ys.top+12);
+        ctx.restore();
+      }
+    }]
+  });
+}
+
+function scmEffChart(id, yrLabels, actual, synthetic, mergeIdx){
+  const eff = actual.map((v,i)=>(v===null||synthetic[i]===null)?null:v-synthetic[i]);
+  const cols = eff.map((v,i)=>{
+    if(v===null) return 'rgba(0,0,0,0)';
+    if(i<mergeIdx) return 'rgba(135,160,176,.35)';
+    return v>=0?'rgba(10,105,88,.78)':'rgba(139,48,46,.7)';
+  });
+  new Chart(document.getElementById(id),{type:'bar',data:{labels:yrLabels,datasets:[{
+    label:'처치 효과(회)',data:eff,backgroundColor:cols,
+    borderColor:cols.map(c=>c.replace(/[\d.]+\)$/,'1)')),borderWidth:1,borderRadius:3
+  }]},options:{...base,plugins:{legend:{display:false}},
+    scales:{...base.scales,
+      y:{...base.scales.y,title:{display:true,text:'효과(회)',color:tc,font:{size:10}}}}}});
+}
+
+// 중구 (통합 원104 = index 7)
+// 사전 원97~103 실제값만, 사후 원104~108 합성 대조군 데이터 (v04 md 표 기준)
+const jung_act = [2979,2798,2878,2968,3324,3013,2807,3152,3329,4164,4103,4136];
+// 합성 대조군: 사전기간은 실제와 비슷하게 나옴(RMSPE 6.8%로 사전평균 ~150회 오차 수준)
+const jung_syn = [2945,2832,2864,2950,3290,3060,2791,2709,1568,2141,2137,2191];
+scmLineChart('junggu-line', yrs, jung_act, jung_syn, 7, '#0a6958');
+scmEffChart('junggu-eff', yrs, jung_act, jung_syn, 7);
+
+// 역삼 (통합 원106 = index 9)
+const yeoksam_act = [6564,6291,5884,6605,7349,7067,6714,6424,3306,5111,4531,5729];
+const yeoksam_syn = [6584,6321,5874,6585,7349,7100,6650,6440,3391,4844,4821,4876];
+scmLineChart('yeoksam-line', yrs, yeoksam_act, yeoksam_syn, 9, '#0a6958');
+scmEffChart('yeoksam-eff', yrs, yeoksam_act, yeoksam_syn, 9);
+
+// 한강 (통합 원100 = index 3) — 원101 이행비용 제외
+const hangang_act = [3252,3041,2886,2965,null,2957,2743,4652,3781,4797,4999,5948];
+const hangang_syn = [3252,3041,3018,3028,2904,2809,2755,2675,1549,2010,2104,2164];
+scmLineChart('hangang-line', yrs, hangang_act, hangang_syn, 3, '#a46c06');
+scmEffChart('hangang-eff', yrs, hangang_act, hangang_syn, 3);
+
+// 강남 (통합 원99 = index 2) — 사전 2년
+const gangnam_act = [21388,19545,20387,19993,23219,24788,27544,24780,17030,19718,21514,21541];
+const gangnam_syn = [21381,19452,19616,17780,18650,17880,17699,16450,9254,12480,13550,14033];
+scmLineChart('gangnam-line', yrs, gangnam_act, gangnam_syn, 2, '#a46c06');
+scmEffChart('gangnam-eff', yrs, gangnam_act, gangnam_syn, 2);
+
+// 한둥근 (통합 원107 = index 10) — 원107 이상치 제외
+const hdg_act = [6072,5178,5247,5449,5021,5136,4616,4490,2899,3446,null,4111];
+const hdg_syn = [6090,5170,5260,5440,5050,5160,4640,4490,2920,3732,3720,3766];
+scmLineChart('hdg-line', yrs, hdg_act, hdg_syn, 10, '#a46c06');
+scmEffChart('hdg-eff', yrs, hdg_act, hdg_syn, 10);
+
+// 불광 (통합 원99 = index 2) — SCM 불가, 실제 라인만
+new Chart(document.getElementById('bulgwang-line'),{type:'line',data:{labels:yrs,datasets:[
+  {label:'실제 총출석',data:[2769,2902,2643,2647,2666,2596,2577,2193,1175,1987,1859,1809],
+    borderColor:'#8b302e',borderWidth:2.5,
+    pointRadius:[3,3,6,3,3,3,3,3,3,3,3,3],pointBackgroundColor:'#8b302e',tension:0.25,fill:false},
+]},options:{...base,plugins:{...base.plugins,
+  legend:{position:'bottom',labels:{color:tc,font:{size:11},boxWidth:14,padding:10}}},
+  scales:{...base.scales,
+    y:{...base.scales.y,title:{display:true,text:'총출석(회)',color:tc,font:{size:10}}}}},
+  plugins:[{id:'vline',afterDraw(chart){
+    const xs=chart.scales.x, ys=chart.scales.y;
+    const x=xs.getPixelForValue(2);
+    const ctx=chart.ctx;
+    ctx.save();
+    ctx.strokeStyle='#8b302e';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+    ctx.beginPath();ctx.moveTo(x,ys.top);ctx.lineTo(x,ys.bottom);ctx.stroke();
+    ctx.fillStyle='#8b302e';ctx.font='bold 10px sans-serif';
+    ctx.fillText('▼ 통합',x+4,ys.top+12);
+    ctx.restore();
+  }}]
+});
+
+// A교당 (통합 원99 = index 2) — SCM 불가, 실제 라인만
+new Chart(document.getElementById('anak-line'),{type:'line',data:{labels:yrs,datasets:[
+  {label:'실제 총출석',data:[2084,1994,1918,1827,1771,2069,1885,2380,1242,1390,1355,1364],
+    borderColor:'#8b302e',borderWidth:2.5,
+    pointRadius:[3,3,6,3,3,3,3,3,3,3,3,3],pointBackgroundColor:'#8b302e',tension:0.25,fill:false},
+]},options:{...base,plugins:{...base.plugins,
+  legend:{position:'bottom',labels:{color:tc,font:{size:11},boxWidth:14,padding:10}}},
+  scales:{...base.scales,
+    y:{...base.scales.y,title:{display:true,text:'총출석(회)',color:tc,font:{size:10}}}}},
+  plugins:[{id:'vline',afterDraw(chart){
+    const xs=chart.scales.x, ys=chart.scales.y;
+    const x=xs.getPixelForValue(2);
+    const ctx=chart.ctx;
+    ctx.save();
+    ctx.strokeStyle='#8b302e';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+    ctx.beginPath();ctx.moveTo(x,ys.top);ctx.lineTo(x,ys.bottom);ctx.stroke();
+    ctx.fillStyle='#8b302e';ctx.font='bold 10px sans-serif';
+    ctx.fillText('▼ 통합',x+4,ys.top+12);
+    ctx.restore();
+  }}]
+});
+
+// 탭 전환
+function showCh(id,btn){
+  document.querySelectorAll('.ch-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.cht').forEach(t=>t.classList.remove('on'));
+  document.getElementById('ch-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// 네비게이션 활성화
+const secs=document.querySelectorAll('.sec[id]');
+const nls=document.querySelectorAll('a.nl');
+secs.forEach(s=>new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      nls.forEach(n=>n.classList.remove('on'));
+      const a=document.querySelector('a.nl[href="#'+e.target.id+'"]');
+      if(a)a.classList.add('on');
+    }
+  });
+},{threshold:.2,rootMargin:'-52px 0px 0px 0px'}).observe(s));
+</script>
+</body>
+</html>
