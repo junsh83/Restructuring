@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교화구조진단 보고서</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700;900&family=Noto+Sans+KR:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --ink: #1a1814;
+  --ink2: rgba(26,24,20,.68);
+  --ink3: rgba(26,24,20,.40);
+  --paper: #f6f2ea;
+  --paper2: #ede8dc;
+  --paper3: #e3ddd0;
+  --rust: #9e3b1f;
+  --rust-l: rgba(158,59,31,.10);
+  --moss: #3a5a2c;
+  --moss-l: rgba(58,90,44,.10);
+  --gold: #a07520;
+  --gold-l: rgba(160,117,32,.12);
+  --teal: #1d6b58;
+  --teal-l: rgba(29,107,88,.10);
+  --indigo: #2c3f5a;
+  --line: rgba(26,24,20,.10);
+  --line-m: rgba(26,24,20,.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Serif KR', serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* grain */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .18;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0 0.15 0 0 0 0.08 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+
+/* ── COVER ── */
+.cover {
+  padding: 80px 0 64px;
+  border-bottom: 2px solid var(--ink);
+}
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before {
+  content: '圓';
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px;
+  background: var(--rust); color: var(--paper);
+  font-size: 12px; font-weight: 700; border-radius: 2px;
+}
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 900; line-height: 1.18; letter-spacing: -.03em;
+  margin-bottom: 10px;
+}
+h1 em {
+  display: block; font-style: normal; font-size: .37em;
+  font-weight: 400; color: var(--rust);
+  letter-spacing: .02em; margin-bottom: 10px;
+}
+.cover-sub {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; color: var(--ink2); line-height: 1.8;
+  max-width: 560px; margin: 24px 0 36px;
+}
+.meta-strip {
+  display: flex; flex-wrap: wrap;
+  border-top: 1px solid var(--line-m); padding-top: 20px; gap: 0;
+}
+.meta-item {
+  padding: 10px 20px 10px 0; margin-right: 20px;
+  border-right: 1px solid var(--line);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12px;
+}
+.meta-item:last-child { border-right: none; }
+.meta-label { font-size: 10px; letter-spacing: .1em; color: var(--ink3); display: block; margin-bottom: 3px; }
+.meta-val { font-weight: 500; }
+
+/* ── NAV ── */
+.toc {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--line);
+}
+.toc-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: .2em; color: var(--ink3);
+  margin-bottom: 14px;
+}
+.toc-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3px 32px;
+}
+.toc-link {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px; color: var(--ink2); text-decoration: none;
+  padding: 5px 0; border-bottom: 1px solid transparent;
+  transition: color .15s, border-color .15s;
+  display: flex; gap: 10px; align-items: baseline;
+}
+.toc-link:hover { color: var(--rust); border-color: var(--rust-l); }
+.toc-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink3); min-width: 24px; }
+
+/* ── SECTIONS ── */
+section { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+section:last-of-type { border-bottom: none; }
+
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: .2em; color: var(--rust);
+  display: block; margin-bottom: 12px;
+}
+h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700; letter-spacing: -.02em;
+  line-height: 1.28; margin-bottom: 18px;
+}
+h3 {
+  font-size: 1.05rem; font-weight: 700;
+  margin: 32px 0 10px; letter-spacing: -.01em;
+}
+.prose {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14.5px; color: var(--ink2);
+  line-height: 1.95; margin-bottom: 20px; max-width: 720px;
+}
+.prose strong { color: var(--ink); font-weight: 500; }
+
+/* ── CALLOUT ── */
+.callout {
+  border-left: 3px solid var(--rust);
+  background: var(--rust-l);
+  padding: 14px 18px; margin: 16px 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; line-height: 1.85; color: var(--ink);
+  border-radius: 0 4px 4px 0;
+}
+.callout.moss { border-color: var(--moss); background: var(--moss-l); }
+.callout.gold { border-color: var(--gold); background: var(--gold-l); }
+.callout.teal { border-color: var(--teal); background: var(--teal-l); }
+.callout strong { color: var(--rust); }
+.callout.moss strong { color: var(--moss); }
+.callout.gold strong { color: var(--gold); }
+.callout.teal strong { color: var(--teal); }
+
+/* ── KPI ROW ── */
+.kpi-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 24px 0; }
+.kpi {
+  background: var(--paper2);
+  border: 1px solid var(--line-m);
+  padding: 18px 16px; position: relative; overflow: hidden;
+}
+.kpi::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.kpi.rust::before { background: var(--rust); }
+.kpi.moss::before { background: var(--moss); }
+.kpi.gold::before { background: var(--gold); }
+.kpi.teal::before { background: var(--teal); }
+.kpi .k-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .12em; color: var(--ink3); margin-bottom: 8px; }
+.kpi .k-val { font-size: 2rem; font-weight: 900; line-height: 1; letter-spacing: -.03em; margin-bottom: 6px; }
+.kpi.rust .k-val { color: var(--rust); }
+.kpi.moss .k-val { color: var(--moss); }
+.kpi.gold .k-val { color: var(--gold); }
+.kpi.teal .k-val { color: var(--teal); }
+.kpi .k-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--ink3); line-height: 1.5; }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; margin: 20px 0; }
+table { width: 100%; border-collapse: collapse; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; }
+thead th { background: var(--ink); color: var(--paper); padding: 10px 14px; text-align: left; font-weight: 500; font-size: 12px; }
+thead th:not(:first-child) { text-align: center; }
+tbody td { padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--ink2); }
+tbody td:not(:first-child) { text-align: center; }
+tbody tr:hover td { background: var(--paper2); }
+tbody tr.hl td { background: var(--moss-l); font-weight: 500; color: var(--moss); }
+
+/* ── CHART BOX ── */
+.chart-box {
+  background: var(--paper);
+  border: 1px solid var(--line-m);
+  padding: 24px; margin: 24px 0;
+}
+.chart-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.chart-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--ink3); margin-bottom: 18px; }
+.chart-legend {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--ink2);
+  margin-bottom: 12px;
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 5px; }
+
+/* ── TWO-COL ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 20px 0; }
+.col-card {
+  border: 1px solid var(--line-m);
+  padding: 18px 20px;
+}
+.col-card .cc-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--ink); }
+.col-card .cc-item { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--ink2); padding: 5px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; }
+.col-card .cc-item:last-child { border-bottom: none; }
+.plus { color: var(--moss); font-weight: 500; }
+.minus { color: var(--rust); font-weight: 500; }
+
+/* ── APPENDIX ── */
+.appendix { background: var(--paper2); padding: 48px 0 40px; border-top: 2px double var(--line-m); }
+.appendix h2 { font-size: 1.2rem; margin-bottom: 12px; }
+.appendix h3 { font-size: 0.95rem; margin: 24px 0 8px; }
+.appendix .prose { font-size: 13.5px; }
+.appendix table { font-size: 12.5px; }
+.mono { font-family: 'DM Mono', monospace; font-size: 12px; background: var(--paper3); padding: 12px 16px; margin: 8px 0; line-height: 1.7; overflow-x: auto; }
+
+footer {
+  text-align: center;
+  padding: 40px 0 48px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px; color: var(--ink3); line-height: 2;
+  border-top: 1px solid var(--line); position: relative; z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  h1 { font-size: 2rem; }
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  .two-col, .toc-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+<div class="cover">
+  <div class="eyebrow">서울교구 교화구조개선 연구 · 위계적 선형모형 분석</div>
+  <h1>
+    <em>서울교구 교화구조진단 보고서</em>
+    데이터로 읽는<br>법회출석의 구조와 원인
+  </h1>
+  <p class="cover-sub">
+    원기 97~104년 서울교구 58개 교당의 8년간 실제 데이터를 분석했습니다.
+    어떤 교당에 사람이 많이 오는가, 그 차이는 어디서 오는가,
+    그리고 그 원인은 진짜 원인인가—수식 없이 결과와 의미를 설명합니다.
+  </p>
+  <div class="meta-strip">
+    <div class="meta-item"><span class="meta-label">작성</span><span class="meta-val">서울교구 교화구조개선 TF</span></div>
+    <div class="meta-item"><span class="meta-label">원기</span><span class="meta-val">111년</span></div>
+    <div class="meta-item"><span class="meta-label">분석 기간</span><span class="meta-val">원기 97~104년</span></div>
+    <div class="meta-item"><span class="meta-label">대상</span><span class="meta-val">서울교구 58개 교당</span></div>
+    <div class="meta-item"><span class="meta-label">분석 방법</span><span class="meta-val">위계적 선형모형 (HLM)</span></div>
+  </div>
+</div>
+</div>
+</header>
+
+<div class="wrap">
+<nav class="toc">
+  <div class="toc-title">목차</div>
+  <div class="toc-grid">
+    <a href="#s1" class="toc-link"><span class="toc-num">01</span>교당은 얼마나 다른가</a>
+    <a href="#s5" class="toc-link"><span class="toc-num">05</span>표준화점검 섹션별 분석</a>
+    <a href="#s2" class="toc-link"><span class="toc-num">02</span>무엇이 출석을 만드는가</a>
+    <a href="#s6" class="toc-link"><span class="toc-num">06</span>설문 결과와의 교차점</a>
+    <a href="#s3" class="toc-link"><span class="toc-num">03</span>교무가 먼저인가, 출석이 먼저인가</a>
+    <a href="#s7" class="toc-link"><span class="toc-num">07</span>교당별 결과</a>
+    <a href="#s4" class="toc-link"><span class="toc-num">04</span>돈이 있으면 출석이 늘까</a>
+    <a href="#s8" class="toc-link"><span class="toc-num">08</span>분석의 한계 · 맺음말</a>
+  </div>
+</nav>
+</div>
+
+<!-- S1 -->
+<div class="wrap">
+<section id="s1">
+  <span class="sec-label">SECTION 01</span>
+  <h2>교당은 얼마나 다른가</h2>
+
+  <p class="prose">서울교구 58개 교당의 연간 법회출석수는 교당에 따라 크게 다릅니다. 어떤 교당은 연간 수백 회, 어떤 교당은 수만 회에 이릅니다. 이 차이는 "사람이 많은 동네"와 "적은 동네"의 차이가 아닙니다.</p>
+
+  <div class="kpi-row">
+    <div class="kpi rust">
+      <div class="k-label">ICC (급내상관계수)</div>
+      <div class="k-val">95.5%</div>
+      <div class="k-sub">출석 분산의 95.5%가 교당 간 차이에서 기인</div>
+    </div>
+    <div class="kpi gold">
+      <div class="k-label">교당 내 연도 간 변동</div>
+      <div class="k-val">4.5%</div>
+      <div class="k-sub">같은 교당에서 해마다 달라지는 부분</div>
+    </div>
+    <div class="kpi moss">
+      <div class="k-label">8년간 시간 추세</div>
+      <div class="k-val">비유의</div>
+      <div class="k-sub">시간이 흐른다고 저절로 출석이 바뀌지 않음</div>
+    </div>
+  </div>
+
+  <p class="prose">출석 차이의 95.5%가 교당 고유 특성에서 비롯된다는 것은, 출석의 변동이 거의 전적으로 교당 자체의 특성—교무가 몇 명인지, 어떻게 운영하는지—에 달려 있다는 뜻입니다. 해가 바뀌어도 교당이 바뀌지 않으면 출석도 크게 바뀌지 않습니다. 그러므로 법회출석을 이해하려면 <strong>개별 교당을 들여다봐야</strong> 합니다.</p>
+
+  <div class="callout">
+    "서울교구 전체가 어땠다"는 평균값은 실상을 가립니다. 교당마다 전혀 다른 이야기가 있습니다. 8년간 서울교구 전체 출석은 통계적으로 유의미한 추세를 보이지 않았습니다. <strong>출석을 결정하는 것은 시간이 아니라 교당 안의 요인</strong>들입니다.
+  </div>
+</section>
+
+<!-- S2 -->
+<section id="s2">
+  <span class="sec-label">SECTION 02</span>
+  <h2>무엇이 출석을 만드는가</h2>
+  <p class="prose">분석 결과, 세 가지 요인이 출석을 결정한다는 것이 확인됐습니다.</p>
+
+  <h3>첫 번째 요인: 전무출신수 — 시너지 효과</h3>
+  <p class="prose">전무출신이 많은 교당일수록 출석이 많습니다. 그런데 데이터에서 발견된 것은 단순한 비례 관계가 아닙니다. <strong>교무가 늘어날수록 효과가 가속됩니다.</strong></p>
+
+  <div class="chart-box">
+    <div class="chart-title">전무출신수 시너지 효과 — 예측 연간 법회출석</div>
+    <div class="chart-sub">다른 조건 평균 고정 · HLM 추정값</div>
+    <div class="chart-legend">
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>예측 출석(꺾은선)</span>
+      <span><span class="legend-dot" style="background:rgba(29,158,117,0.25);border:1px solid #1D9E75;"></span>구간 증가분(막대)</span>
+    </div>
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+      <div style="background:var(--paper2);border:1px solid var(--line-m);padding:10px 14px;flex:1;min-width:120px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--ink3);margin-bottom:4px;">1→2명 증가</div>
+        <div style="font-size:1.4rem;font-weight:900;color:var(--ink2);">+176회</div>
+      </div>
+      <div style="background:#E1F5EE;border:1px solid #5DCAA5;padding:10px 14px;flex:1;min-width:120px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;color:#0F6E56;margin-bottom:4px;">2→3명 증가</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#085041;">+2,751회</div>
+      </div>
+      <div style="background:#085041;border:1px solid #1D9E75;padding:10px 14px;flex:1;min-width:120px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;color:#5DCAA5;margin-bottom:4px;">3→4명 증가</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#9FE1CB;">+5,325회</div>
+      </div>
+    </div>
+    <div style="position:relative;width:100%;height:300px;">
+      <canvas id="synergyChart" role="img" aria-label="전무출신수 시너지 효과. 1명 2853회, 2명 3029회, 3명 5780회, 4명 11105회.">
+        1명 2,853회 / 2명 3,029회 / 3명 5,780회 / 4명 11,105회
+      </canvas>
+    </div>
+    <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--ink3);text-align:right;margin-top:8px;">2→3명의 효과는 1→2명의 약 <strong>15배</strong></p>
+  </div>
+
+  <p class="prose">교무 1명이 모든 것을 감당해야 할 때와, 2~3명이 교화·행정·심방 역할을 나눌 수 있을 때는 교화의 질 자체가 달라집니다. 이 시너지는 반대 방향에서도 시사점을 줍니다. 교무 감소의 충격도 비선형일 수 있으며, 골든 크로스(원기 123년 예상) 이후의 영향을 단순한 숫자로만 예측하기 어려운 이유입니다.</p>
+
+  <h3>두 번째 요인: B2 일반행정·운영 역량</h3>
+  <p class="prose">교당표준화점검의 B2 섹션은 교무의 활동 집중도, 법회 운영, 교화단 운영, 신입교도 관리 등 25개 항목을 평가한 교당 운영 역량의 종합 지표입니다.</p>
+
+  <div class="callout moss">
+    분석 결과, <strong>B2 점수가 평균보다 1점(5점 만점) 높은 교당은 연간 출석이 4,416회 더 많습니다.</strong> 이것은 58개 교당의 출석 격차 중 가장 큰 단일 설명 요인입니다. 교당이 위치한 지역, 교도 수, 건물 크기가 아니라 교당 운영 역량의 차이가 출석 격차의 핵심입니다.
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">B2 점수와 법회출석 — 58개 교당 산점도</div>
+    <div class="chart-sub">교당 평균 B2 점수(5점 만점) vs 연간 평균 법회출석 · 마우스를 올리면 교당명 표시</div>
+    <div class="chart-legend">
+      <span><span class="legend-dot" style="background:rgba(29,158,117,0.55);border-radius:50%;"></span>일반 교당</span>
+      <span><span class="legend-dot" style="background:rgba(8,80,65,0.85);border-radius:50%;border:2px solid #1D9E75;"></span>주목 교당</span>
+      <span><span class="legend-dot" style="background:#D85A30;width:22px;height:3px;border-radius:2px;vertical-align:middle;"></span>추세선</span>
+    </div>
+    <div style="position:relative;width:100%;height:360px;">
+      <canvas id="scatterChart" role="img" aria-label="B2 점수와 출석 산점도. B2가 높을수록 출석이 많은 양의 상관.">
+        B2 점수가 높은 교당일수록 출석이 많습니다.
+      </canvas>
+    </div>
+    <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--ink3);text-align:right;margin-top:8px;">B2 점수 1점 차이 ≈ 연간 <strong>4,416회</strong> 출석 차이 (HLM 추정)</p>
+  </div>
+
+  <h3>세 번째 요인: B3 조직운영 — 교당 내 변화의 신호</h3>
+  <p class="prose">B3 섹션은 교화협의회 운영, 교도 의견 반영, 법회 교도 참여를 평가합니다. B3가 오른 해에 출석도 늘었습니다(+311회, 유의). 조직운영 수준을 높이면 비교적 빠르게 출석 변화가 나타납니다.</p>
+</section>
+
+<!-- S3 -->
+<section id="s3">
+  <span class="sec-label">SECTION 03</span>
+  <h2>교무가 늘어서 출석이 많은가,<br>출석이 많아서 교무가 오는가</h2>
+
+  <p class="prose">앞장에서 전무출신수가 많은 교당이 출석도 많다는 것을 확인했습니다. 그런데 여기서 반드시 따져봐야 할 질문이 있습니다.</p>
+
+  <div class="callout gold">
+    <strong>"교무가 배치되어서 출석이 늘어난 것인가, 아니면 출석이 이미 많아서 교단이 교무를 보낸 것인가?"</strong> — 만약 후자라면, 교무를 배치해도 출석이 늘지 않습니다. 먼저 출석을 늘려야 교무가 옵니다.
+  </div>
+
+  <p class="prose">이 질문에 답하기 위해 패널 데이터의 시간적 순서를 이용했습니다. 원인은 결과보다 먼저 일어납니다. 교무가 원인이라면 작년 교무 수가 올해 출석을 예측해야 합니다. 세 가지 통계 방법(Granger 인과성 검정, 교차지연 패널 모형, 고정효과 패널 모형)으로 동시에 검증했습니다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>방법</th><th>교무(작년)→출석(올해)</th><th>출석(작년)→교무(올해)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>교차지연 패널 모형</td><td>β=+0.086 (p&lt;.001 ***)</td><td>β=+0.074 (p=.001 **)</td></tr>
+        <tr class="hl"><td><strong>고정효과 패널 모형</strong></td><td><strong>β=+0.155 (p=.006 **)</strong></td><td>β=+0.049 (p=.154 ns)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="prose">가장 엄밀한 방법인 고정효과 모형에서 결정적 차이가 드러납니다. 교당 규모·역사·지역 특성을 완전히 제거한 뒤에도 교무→출석 방향은 유의하게 남고(p=.006), 출석→교무 역방향은 비유의가 됩니다(p=.154).</p>
+
+  <div class="callout teal">
+    교당 고유 특성을 통제한 뒤에도 <strong>교무 배치가 출석 증가에 선행하는 방향</strong>이 유의하게 나타납니다. 출석이 늘기를 기다렸다가 교무를 배치하는 것보다, 교무를 먼저 배치하는 것이 출석 성장에 더 유리한 조건을 만들 수 있습니다. 다만 이 결과는 57개 교당의 1년 시차 데이터에서 나온 것이므로 구조 설계의 참고 방향으로 활용하는 것이 적절합니다.
+  </div>
+</section>
+
+<!-- S4 -->
+<section id="s4">
+  <span class="sec-label">SECTION 04</span>
+  <h2>돈이 있으면 출석이 늘까</h2>
+
+  <p class="prose">교당 총자산과 출석의 상관관계는 꽤 높습니다. 그러나 전무출신수와 B2를 함께 고려하면 자산의 직접 효과는 사라집니다. 자산이 출석에 미치는 효과는 두 경로를 통해서만 작동합니다.</p>
+
+  <div class="two-col">
+    <div class="col-card">
+      <div class="cc-title">경로 1 — 교무를 통한 경로 (지배적)</div>
+      <div class="cc-item"><span>간접효과</span><span class="plus">+61.0회/억</span></div>
+      <div class="cc-item"><span>Bootstrap 95% CI</span><span>[+15.3, +121.5]</span></div>
+      <div class="cc-item"><span>유의</span><span class="plus">✔</span></div>
+      <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--ink3);margin-top:10px;line-height:1.6;">재정이 충분한 교당은 전무출신을 2~3명 유지 → 시너지 구간 진입 → 출석 급증</p>
+    </div>
+    <div class="col-card">
+      <div class="cc-title">경로 2 — 운영역량을 통한 경로 (독립적)</div>
+      <div class="cc-item"><span>간접효과</span><span class="plus">+16.8회/억</span></div>
+      <div class="cc-item"><span>Bootstrap 95% CI</span><span>[+6.9, +38.6]</span></div>
+      <div class="cc-item"><span>유의</span><span class="plus">✔</span></div>
+      <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--ink3);margin-top:10px;line-height:1.6;">재정 → B2(법회운영·교화단·교육) 역량 향상 → 출석 증가. 교무 수와 무관하게 독립 기여.</p>
+    </div>
+  </div>
+
+  <p class="prose">자산 자체보다, 그 자산이 교무 파견과 교당 운영에 어떻게 연결되느냐가 출석을 결정한다는 것이 데이터가 보여주는 구조입니다.</p>
+</section>
+
+<!-- S5 -->
+<section id="s5">
+  <span class="sec-label">SECTION 05</span>
+  <h2>교당 표준화점검 11개 섹션 전체 분석</h2>
+
+  <h3>교당 간 비교에서 유의미한 섹션</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>섹션</th><th>내용</th><th>유의 수준</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><strong>B2 일반행정·관리</strong></td><td>교무 활동, 법회운영, 교화단, 교육이수</td><td>★★★ 가장 강함</td></tr>
+        <tr><td>B4 교화서비스·프로그램</td><td>정기훈련, 상담, 신입교도 관리</td><td>★★</td></tr>
+        <tr><td>B3 조직운영</td><td>교화협의회, 의견반영, 교도 활용</td><td>★★</td></tr>
+        <tr><td>B5 전산행정·관리</td><td>교도정보, 법회관리</td><td>★</td></tr>
+        <tr><td>B1 교화정책·비전</td><td>장기계획, 비전</td><td>★</td></tr>
+        <tr><td>C1 지역사회 관계</td><td>봉사활동, 지역 연계</td><td>★</td></tr>
+        <tr><td>A3 시설 안전도</td><td>소화기, 방염, 보험</td><td>★</td></tr>
+        <tr><td>C2 홍보</td><td>원불교 알리기</td><td>★</td></tr>
+        <tr><td style="color:var(--ink3);">B6 회계관리</td><td style="color:var(--ink3);">운영보고서, 예산, 결산</td><td style="color:var(--ink3);">무관 (유일)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="prose">B6 회계관리는 11개 섹션 중 유일하게 출석과 무관합니다. 교당 운영의 내실(B2, B3, B4)이 중요하지, 재정 관리의 형식적 완결성은 출석과 별개입니다.</p>
+
+  <h3>교당 내 변화와 출석 — 1인 교무 체제의 구조적 딜레마</h3>
+  <p class="prose">같은 교당 안에서 특정 해에 어떤 섹션 점수가 오르면 출석도 늘었는지 확인했습니다. B3 조직운영이 오른 해에 출석도 늘었지만(+311회, 유의), <strong>C1 지역사회 관계와 B6 회계관리는 점수가 올라도 출석이 오히려 줄었습니다.</strong></p>
+
+  <div class="callout">
+    데이터에서 유추되는 가장 일관된 해석은, <strong>1인 교무 교당이 '내부 교화'와 '외부 확장' 사이에서 선택을 강요받는 구조</strong>에 있다는 것입니다. 1인 교무 체제에서 교무의 시간과 에너지는 제로섬입니다. 지역 봉사에 쓰는 시간은 심방과 법회 준비에서 빼앗아 온 시간입니다.<br><br>
+    이것은 의지나 역량의 문제가 아닙니다. <strong>구조의 문제</strong>입니다. 설문에서 현장 교무들이 "1인 구조에서는 외부 접근 자체가 불가능하다"고 비판한 것은, 구조적 어려움이 현장에서 광범위하게 감지되고 있다는 증거입니다.<br><br>
+    교무가 2인 이상이 되면 역할 분담이 가능해집니다. 데이터는 교무 2인 이상 체제가 이 구조적 제약을 완화하는 하나의 방향임을 시사합니다. 거점화는 그 방향과 부합하는 구조 전환이지만, 다른 접근 방식의 효과도 함께 검토될 필요가 있습니다.
+  </div>
+</section>
+
+<!-- S6 -->
+<section id="s6">
+  <span class="sec-label">SECTION 06</span>
+  <h2>설문 결과와 데이터의 교차점</h2>
+
+  <p class="prose">이번 분석은 교화구조개선 TF가 실시한 출재가 전문가 71명의 설문 결과와도 맞닿습니다.</p>
+
+  <div class="callout moss" style="margin-bottom:12px;">
+    <strong>설문 "지구·권역 통합 거점화(34% 합의)"</strong> → 데이터의 교무 시너지 효과와 직결됩니다. 교무를 3명 이상 확보하는 것이 단순 합산이 아닌 시너지를 낳는다는 것을 데이터가 보여줍니다. 거기에 더해, 교무가 출석보다 시간적으로 <strong>먼저</strong> 와야 한다는 인과관계 분석이 이를 뒷받침합니다.
+  </div>
+  <div class="callout moss" style="margin-bottom:12px;">
+    <strong>설문 "교무=영적 지도, 재가=행정(45% 합의)"</strong> → 데이터의 B2(교무 활동 집중도 포함)와 연결됩니다. 교무가 교화에 집중할 수 있는 구조가 갖춰질 때 출석도 늘어납니다.
+  </div>
+  <div class="callout moss">
+    <strong>설문 "1인 교무 구조에서는 외부 접근 불가(8% 비판)"</strong> → 데이터의 시너지 효과가 통계적으로 이를 지지합니다. 1명에서 2명이 될 때보다 2명에서 3명이 될 때 효과가 훨씬 크며, 1인 체제는 시너지 임계점 아래에 있습니다.
+  </div>
+</section>
+
+<!-- S7 -->
+<section id="s7">
+  <span class="sec-label">SECTION 07</span>
+  <h2>교당별 결과: 예측보다 잘 되는 교당, 못 되는 교당</h2>
+
+  <p class="prose">분석은 각 교당에 대해 "전무출신수·B2·B3를 고려했을 때 예측되는 출석"을 계산합니다. 실제 출석과 예측 출석의 차이가 그 교당의 고유한 힘입니다.</p>
+
+  <div class="two-col">
+    <div class="col-card">
+      <div class="cc-title">▲ 예측보다 출석이 많은 교당 (상위 5)</div>
+      <div class="cc-item"><span>강남교당</span><span class="plus">+9,567회</span></div>
+      <div class="cc-item"><span>가락교당</span><span class="plus">+2,251회</span></div>
+      <div class="cc-item"><span>신림교당</span><span class="plus">+1,809회</span></div>
+      <div class="cc-item"><span>송천교당</span><span class="plus">+1,696회</span></div>
+      <div class="cc-item"><span>전곡교당</span><span class="plus">+1,488회</span></div>
+      <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--ink3);margin-top:10px;line-height:1.6;">교무 수·점검 점수 이상의 무언가가 있는 교당. 교무 개인 역량, 교당의 역사, 지역 특성 등이 영향을 미칠 것입니다.</p>
+    </div>
+    <div class="col-card">
+      <div class="cc-title">▼ 예측보다 출석이 적은 교당 (하위 5)</div>
+      <div class="cc-item"><span>원남교당</span><span class="minus">−5,656회</span></div>
+      <div class="cc-item"><span>신촌교당</span><span class="minus">−2,098회</span></div>
+      <div class="cc-item"><span>잠실교당</span><span class="minus">−1,977회</span></div>
+      <div class="cc-item"><span>종로교당</span><span class="minus">−1,900회</span></div>
+      <div class="cc-item"><span>화곡교당</span><span class="minus">−1,808회</span></div>
+      <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--ink3);margin-top:10px;line-height:1.6;">구조적 투입 대비 출석이 낮습니다. 데이터가 설명하지 못하는 다른 요인이 있을 것이며, 교화 진단의 우선 대상이 될 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S8 -->
+<section id="s8">
+  <span class="sec-label">SECTION 08</span>
+  <h2>분석의 한계</h2>
+
+  <p class="prose"><strong>Granger 인과성의 한계:</strong> 교무→출석 방향이 지지됐으나, 진정한 인과관계를 100% 증명하지는 않습니다. 관찰되지 않은 제3의 요인이 영향을 줄 가능성을 완전히 배제하기 어렵습니다.</p>
+  <p class="prose"><strong>1년 시차의 한계:</strong> 교무 부임 후 출석 효과가 나타나기까지 실제로 얼마나 시간이 걸리는지 알 수 없습니다.</p>
+  <p class="prose"><strong>측정되지 않은 요인:</strong> 교무의 역량과 소명의식, 교당의 역사, 지역 인구 특성은 이 분석에 포함되지 않았습니다. 이것들이 중요하지 않다는 뜻이 아닙니다.</p>
+  <p class="prose"><strong>분석 기간의 한계와 장점:</strong> 교당표준화점검 자료는 원기 104년까지만 가용합니다. 다만 원기 105년(2020년) 이후 코로나19의 영향을 감안하면, 오히려 이 분석은 코로나 이전 <strong>전형적인 교화 환경</strong>에서 나타난 패턴을 온전히 담고 있습니다.</p>
+  <p class="prose"><strong>출석의 의미:</strong> 법회출석수는 교화의 성과를 측정하는 하나의 지표입니다. 출석이 많다고 교화가 깊다거나, 적다고 교화가 없다는 뜻은 아닙니다.</p>
+
+  <h2 style="margin-top:48px;">맺음말 — 데이터가 가리키는 네 가지 방향</h2>
+
+  <div class="callout moss" style="margin-bottom:12px;">
+    <strong>첫째, 교무 집중 배치의 효과는 비선형 패턴을 보입니다.</strong> 교무가 2명 이상인 교당에서 출석 증가 효과가 가속됩니다. 분산 배치보다 일부 교당에 2~3명을 집중하는 방식이 유리할 수 있다는 것이 데이터의 시사입니다.
+  </div>
+  <div class="callout teal" style="margin-bottom:12px;">
+    <strong>둘째, 교무 배치가 출석에 선행하는 방향이 더 강하게 지지됩니다.</strong> 교무→출석 방향이 유의하고 출석→교무 역방향은 비유의입니다. 교무 배치가 출석 성장의 조건이 될 수 있습니다.
+  </div>
+  <div class="callout gold" style="margin-bottom:12px;">
+    <strong>셋째, 교당 운영 역량(B2)이 출석 격차와 가장 강하게 연관됩니다.</strong> B2 점수 1점 차이와 연간 출석 4,416회 차이가 연관됩니다. B3 within 효과는 운영 역량이 출석을 이끄는 방향을 부분적으로 지지합니다.
+  </div>
+  <div class="callout" style="margin-bottom:0;">
+    <strong>넷째, 재정은 교무와 역량을 통해 간접적으로 출석과 연관됩니다.</strong> 총자산의 직접 효과는 사라지고, 교무와 B2를 통한 간접 경로만 Bootstrap 검증에서 유의하게 확인됐습니다. 자산 자체보다 그 자산이 어떻게 쓰이느냐가 중요합니다.
+  </div>
+</section>
+</div>
+
+<!-- APPENDIX -->
+<div class="appendix">
+<div class="wrap">
+  <h2>붙임 — 분석 방법 및 통계 세부사항</h2>
+
+  <h3>붙임 1. 위계적 선형모형(HLM)이란</h3>
+  <p class="prose">데이터는 2수준 구조입니다. 수준 1(Level-1): 교당-연도(N=398), 수준 2(Level-2): 교당(J=58). HLM은 교당 내 시변 요인(B3, 연도)과 교당 고유 특성(B2, 전무출신수)을 분리해 동시에 분석합니다. ICC=95.5%를 무시한 일반 회귀는 표준오차를 심각하게 과소 추정합니다.</p>
+
+  <h3>붙임 2. 데이터 구성</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>데이터</th><th>출처</th><th>기간</th></tr></thead>
+    <tbody>
+      <tr><td>연간 법회출석</td><td>법회출석서울교구97-110 시트1.csv</td><td>원기 97~104년</td></tr>
+      <tr><td>표준화점검 점수(11섹션)</td><td>교당표준화점검 원자료</td><td>3년 주기 (carry-forward)</td></tr>
+      <tr><td>교당 총자산</td><td>회계데이터_97-108_long.csv</td><td>원기 97~104년</td></tr>
+      <tr><td>전무출신수·관리교도수</td><td>표준화점검 기본정보</td><td>3년 주기 (carry-forward)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>붙임 3. 최종 모형(M4) 고정효과 계수</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>변수</th><th>β</th><th>SE</th><th>95% CI</th><th>p</th></tr></thead>
+    <tbody>
+      <tr><td>절편</td><td>+2,710</td><td>350</td><td>[+2,025, +3,395]</td><td>&lt;.001 ***</td></tr>
+      <tr><td>yr_c (연도)</td><td>−23.5</td><td>18.2</td><td>[−59, +12]</td><td>.196 ns</td></tr>
+      <tr><td>교무_c (선형)</td><td>+707</td><td>632</td><td>[−531, +1,945]</td><td>.263 ns</td></tr>
+      <tr class="hl"><td><strong>교무_c² (제곱, 시너지)</strong></td><td><strong>+1,287</strong></td><td>378</td><td>[+546, +2,029]</td><td><strong>.001 **</strong></td></tr>
+      <tr class="hl"><td><strong>B2_m_c (일반행정)</strong></td><td><strong>+4,416</strong></td><td>1,290</td><td>[+1,889, +6,944]</td><td><strong>.001 **</strong></td></tr>
+      <tr class="hl"><td><strong>B3_w (조직운영 within)</strong></td><td><strong>+311</strong></td><td>112</td><td>[+92, +530]</td><td><strong>.006 **</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="prose" style="font-size:12.5px;">ICC(설명 후) = 0.882 · Level-2 R² = 0.662 · 잔차 왜도 = 1.12</p>
+
+  <h3>붙임 4. 모형 비교표</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>모형</th><th>투입 변수</th><th>교당간분산</th><th>교당수준 설명력</th><th>LL</th></tr></thead>
+    <tbody>
+      <tr><td>M0 Null</td><td>절편만</td><td>10,533,117</td><td>—</td><td>−3,309.87</td></tr>
+      <tr><td>M1</td><td>+연도</td><td>10,532,159</td><td>0.0%</td><td>−3,303.26</td></tr>
+      <tr><td>M2</td><td>+교무(선형+제곱)</td><td>4,257,133</td><td>59.6%</td><td>−3,263.16</td></tr>
+      <tr><td>M3</td><td>+B2(교당평균)</td><td>3,553,051</td><td>66.3%</td><td>−3,249.66</td></tr>
+      <tr class="hl"><td><strong>M4 최종</strong></td><td><strong>+B3(within)</strong></td><td><strong>3,563,968</strong></td><td><strong>66.2%</strong></td><td><strong>−3,230.74</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>붙임 5. 인과관계 방향 검증 결과</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>방법</th><th>교무(t-1)→출석(t)</th><th>출석(t-1)→교무(t)</th></tr></thead>
+    <tbody>
+      <tr><td>교차지연 패널(CLPM)</td><td>β=+0.086 [+0.052,+0.120] p&lt;.001</td><td>β=+0.074 [+0.032,+0.116] p=.001</td></tr>
+      <tr class="hl"><td><strong>고정효과(FE)</strong></td><td><strong>β=+0.155  p=.006 **</strong></td><td>β=+0.049  p=.154 ns</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>붙임 6. 총자산 매개효과</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>경로</th><th>IE (회/억원)</th><th>95% CI</th><th>유의</th></tr></thead>
+    <tbody>
+      <tr><td>교무(선형+제곱) 경로</td><td>+61.0</td><td>[+15.3, +121.5]</td><td>유의 ✔</td></tr>
+      <tr><td>B2 운영역량 경로</td><td>+16.8</td><td>[+6.9, +38.6]</td><td>유의 ✔</td></tr>
+      <tr class="hl"><td>교무+B2 합계</td><td>+77.8</td><td>[+23.5, +143.2]</td><td>유의 ✔</td></tr>
+      <tr><td>직접효과 c''</td><td>−19.9</td><td>[−51.1, +11.3]</td><td>비유의 → 완전매개</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>붙임 7. 소프트웨어</h3>
+  <p class="prose">Python 3.12 statsmodels 0.14 MixedLM (REML) · 고정효과: OLS HC1 · Bootstrap: sklearn.utils.resample 5,000회 · 분석 기간: 원기 97~104년 · HLM N=398 / 인과검증 N=340</p>
+</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div style="font-size:13px;font-weight:500;color:var(--ink2);margin-bottom:6px;">원불교 서울교구 교화구조개선 TF · 원기 111년</div>
+    <div>원기 97~104년 · 58개 교당 · 398 관측치 · 위계적 선형모형(HLM) REML · Python statsmodels</div>
+  </div>
+</footer>
+
+<script>
+const ink3 = 'rgba(26,24,20,0.38)';
+const gridC = 'rgba(26,24,20,0.08)';
+
+new Chart(document.getElementById('synergyChart'), {
+  type: 'bar',
+  data: {
+    labels: ['1명','2명','3명','4명'],
+    datasets: [
+      {
+        type: 'line', label: '예측 출석',
+        data: [2853,3029,5780,11105],
+        borderColor: '#1D9E75', backgroundColor: 'transparent',
+        borderWidth: 2.5, pointBackgroundColor: '#1D9E75',
+        pointRadius: 6, tension: 0.35, yAxisID: 'y', order: 1
+      },
+      {
+        type: 'bar', label: '구간 증가분',
+        data: [null,176,2751,5325],
+        backgroundColor: ['transparent','rgba(93,202,165,0.22)','rgba(29,158,117,0.28)','rgba(8,80,65,0.32)'],
+        borderColor: ['transparent','#5DCAA5','#1D9E75','#085041'],
+        borderWidth: 1, yAxisID: 'y2', order: 2
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: ctx => `전무출신수 ${ctx[0].label}`,
+          label: ctx => {
+            if (ctx.dataset.type === 'line') return `예측 출석: ${ctx.parsed.y.toLocaleString()}회`;
+            if (ctx.parsed.y) return `증가분: +${ctx.parsed.y.toLocaleString()}회`;
+            return null;
+          }
+        },
+        filter: item => item.parsed.y !== null
+      }
+    },
+    scales: {
+      x: { ticks: { color: ink3, font:{size:12} }, grid: { display: false } },
+      y: { position:'left', min:0, max:13000,
+           ticks: { color:ink3, font:{size:11}, callback: v => v.toLocaleString() },
+           grid: { color: gridC },
+           title: { display:true, text:'예측 연간 출석(회)', color:ink3, font:{size:11} } },
+      y2: { position:'right', min:0, max:13000,
+            ticks: { color:ink3, font:{size:11}, callback: v => '+'+v.toLocaleString() },
+            grid: { display:false },
+            title: { display:true, text:'구간 증가분(회)', color:ink3, font:{size:11} } }
+    }
+  }
+});
+
+const raw = [
+  {x:3.583,y:7154,label:'가락교당'},{x:3.713,y:22367,label:'강남교당'},
+  {x:3.399,y:4392,label:'강동교당'},{x:2.979,y:1456,label:'강화교당'},
+  {x:3.562,y:3566,label:'개봉교당'},{x:2.956,y:1416,label:'개포교당'},
+  {x:3.054,y:2025,label:'공항교당'},{x:3.275,y:3647,label:'구로교당'},
+  {x:2.458,y:898,label:'구산교당'},{x:3.049,y:1972,label:'구의교당'},
+  {x:2.775,y:1414,label:'금천교당'},{x:2.771,y:1610,label:'김포교당'},
+  {x:3.251,y:3552,label:'대치교당'},{x:3.232,y:3509,label:'도봉교당'},
+  {x:3.375,y:5351,label:'돈암교당'},{x:2.420,y:550,label:'동두천교당'},
+  {x:3.187,y:2075,label:'마포교당'},{x:2.771,y:1208,label:'면목교당'},
+  {x:3.499,y:3731,label:'목동교당'},{x:3.070,y:2039,label:'방배교당'},
+  {x:3.016,y:2163,label:'방학교당'},{x:2.813,y:2341,label:'불광교당'},
+  {x:2.932,y:1018,label:'사직교당'},{x:3.053,y:2443,label:'상계교당'},
+  {x:3.596,y:7722,label:'서울교당'},{x:3.182,y:1685,label:'서초교당'},
+  {x:3.537,y:6445,label:'송천교당'},{x:3.036,y:2216,label:'신길교당'},
+  {x:3.663,y:9608,label:'신림교당'},{x:3.522,y:4849,label:'신촌교당'},
+  {x:3.587,y:5769,label:'안암교당'},{x:3.125,y:3097,label:'압구정교당'},
+  {x:3.031,y:671,label:'양주교당'},{x:3.564,y:8738,label:'여의도교당'},
+  {x:3.178,y:1484,label:'연희교당'},{x:3.063,y:1805,label:'영등포교당'},
+  {x:3.486,y:6596,label:'원남교당'},{x:2.962,y:1373,label:'원효교당'},
+  {x:3.386,y:3045,label:'유린교당'},{x:3.026,y:1513,label:'은평교당'},
+  {x:2.763,y:1181,label:'의정부교당'},{x:3.384,y:2843,label:'이문교당'},
+  {x:3.283,y:4806,label:'일산교당'},{x:3.375,y:5042,label:'잠실교당'},
+  {x:3.349,y:3523,label:'장충교당'},{x:2.878,y:2201,label:'전곡교당'},
+  {x:2.975,y:2491,label:'전농교당'},{x:3.567,y:3310,label:'정릉교당'},
+  {x:3.396,y:4492,label:'종로교당'},{x:3.360,y:3448,label:'중곡교당'},
+  {x:3.326,y:2991,label:'중구교당'},{x:2.597,y:1136,label:'태릉교당'},
+  {x:3.250,y:1324,label:'파주교당'},{x:2.917,y:1032,label:'포천교당'},
+  {x:3.273,y:4652,label:'한강교당'},{x:3.153,y:1968,label:'홍제교당'},
+  {x:3.517,y:5182,label:'화곡교당'},{x:3.308,y:4134,label:'화정교당'}
+];
+const hl = ['강남교당','신림교당','여의도교당','동두천교당','구산교당'];
+const xs = raw.map(d=>d.x), ys = raw.map(d=>d.y), n = xs.length;
+const mx = xs.reduce((a,b)=>a+b)/n, my = ys.reduce((a,b)=>a+b)/n;
+const slope = xs.reduce((s,x,i)=>s+(x-mx)*(ys[i]-my),0)/xs.reduce((s,x)=>s+(x-mx)**2,0);
+const icpt = my - slope*mx;
+
+new Chart(document.getElementById('scatterChart'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: '교당',
+        data: raw.filter(d=>!hl.includes(d.label)),
+        pointBackgroundColor: 'rgba(29,158,117,0.52)',
+        pointBorderColor: 'rgba(29,158,117,0.85)',
+        pointBorderWidth: 1, pointRadius: 5.5, pointHoverRadius: 8
+      },
+      {
+        label: '주목 교당',
+        data: raw.filter(d=>hl.includes(d.label)),
+        pointBackgroundColor: 'rgba(8,80,65,0.82)',
+        pointBorderColor: '#1D9E75', pointBorderWidth: 2,
+        pointRadius: 7, pointHoverRadius: 9
+      },
+      {
+        type: 'line', label: '추세선',
+        data: [{x:2.35,y:icpt+slope*2.35},{x:3.80,y:icpt+slope*3.80}],
+        borderColor: '#D85A30', borderWidth: 1.5, borderDash:[5,3],
+        pointRadius: 0, fill: false
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    layout: { padding: { top:20, right:20 } },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        filter: item => item.dataset.label !== '추세선',
+        callbacks: {
+          title: ctx => {
+            const ds = ctx[0].dataset.label === '주목 교당'
+              ? raw.filter(d=>hl.includes(d.label))
+              : raw.filter(d=>!hl.includes(d.label));
+            return ds[ctx[0].dataIndex]?.label || '';
+          },
+          label: ctx => [`B2 점수: ${ctx.parsed.x.toFixed(2)}점`,`평균 출석: ${Math.round(ctx.parsed.y).toLocaleString()}회/년`]
+        }
+      }
+    },
+    scales: {
+      x: { min:2.35, max:3.80,
+           title:{display:true,text:'B2 일반행정·운영 점수 (5점 만점)',color:ink3,font:{size:11}},
+           ticks:{color:ink3,font:{size:11},callback:v=>v.toFixed(1)}, grid:{color:gridC} },
+      y: { min:0,
+           title:{display:true,text:'연간 평균 법회출석 (회)',color:ink3,font:{size:11}},
+           ticks:{color:ink3,font:{size:11},callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}, grid:{color:gridC} }
+    }
+  }
+});
+</script>
+</body>
+</html>
