@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부모와 아이는 함께 온다</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C1C2E;--sub:#4A4A65;--muted:#8888A8;--rule:#E2E2EE;
+  --bg:#F7F7F3;--paper:#fff;
+  --blue:#2E5F8A;--red:#C0392B;--orange:#E07B2A;
+  --green:#3A7D44;--amber:#D4860A;--darkred:#8B0000;
+  --serif:'Noto Serif KR',serif;--sans:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.9;}
+.hero{background:linear-gradient(135deg,#1C1C2E 60%,#2E5F8A);color:#fff;padding:64px 0 52px;}
+.hero-inner{max-width:820px;margin:0 auto;padding:0 36px;}
+.tag{display:inline-block;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:12px;padding:4px 12px;border-radius:20px;margin-bottom:20px;letter-spacing:.06em;}
+.hero h1{font-family:var(--serif);font-size:2.1rem;font-weight:700;line-height:1.4;margin-bottom:16px;word-break:keep-all;}
+.hero h1 em{font-style:normal;color:#FFD580;}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.62);line-height:1.75;word-break:keep-all;max-width:600px;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:13px;padding:5px 15px;border-radius:20px;}
+nav{background:var(--paper);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:100;overflow-x:auto;}
+nav ul{max-width:820px;margin:0 auto;padding:0 36px;display:flex;list-style:none;}
+nav a{display:block;padding:13px 14px;font-size:12.5px;font-weight:500;color:var(--sub);text-decoration:none;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all .2s;}
+nav a:hover{color:var(--blue);border-color:var(--blue);}
+main{max-width:820px;margin:0 auto;padding:0 36px 80px;}
+section{margin-top:56px;}
+.sec-label{font-size:11.5px;font-weight:700;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;}
+h2{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--ink);padding-bottom:13px;border-bottom:2px solid var(--rule);margin-bottom:6px;word-break:keep-all;}
+.sec-intro{font-size:15px;color:var(--sub);margin:14px 0 22px;word-break:keep-all;line-height:1.85;}
+h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin:26px 0 9px;}
+p{color:var(--sub);margin-bottom:13px;word-break:keep-all;}
+.big-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0;}
+.bstat{background:var(--paper);border-radius:12px;border:1px solid var(--rule);padding:20px 14px;text-align:center;}
+.bstat-num{font-family:var(--serif);font-size:2rem;font-weight:700;display:block;margin-bottom:4px;line-height:1;}
+.bstat-num.red{color:var(--red);} .bstat-num.amber{color:var(--amber);} .bstat-num.blue{color:var(--blue);}
+.bstat-label{font-size:12px;color:var(--muted);line-height:1.5;}
+.chart-box{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:22px;margin:20px 0;}
+.chart-eyebrow{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;}
+.chart-box svg{width:100%;height:auto;display:block;}
+.chart-caption{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5;}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);}
+.legend-swatch{width:13px;height:13px;border-radius:3px;flex-shrink:0;}
+.hl{border-radius:10px;padding:18px 22px;margin:18px 0;}
+.hl.blue{background:#EBF3FA;border-left:4px solid var(--blue);}
+.hl.red{background:#FAEAEA;border-left:4px solid var(--red);}
+.hl.amber{background:#FDF3E0;border-left:4px solid var(--amber);}
+.hl.green{background:#E8F5EC;border-left:4px solid var(--green);}
+.hl-title{font-weight:700;font-size:14.5px;margin-bottom:6px;color:var(--ink);}
+.hl p{margin:0;font-size:14.5px;color:var(--sub);}
+.diagram-wrap{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:22px;margin:20px 0;}
+.diagram-guide{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
+.dg-item{background:var(--bg);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;}
+.dg-icon{font-size:18px;flex-shrink:0;}
+.dg-text{font-size:13px;color:var(--sub);line-height:1.55;}
+.dg-text strong{color:var(--ink);}
+.simple-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--paper);border-radius:10px;overflow:hidden;border:1px solid var(--rule);margin:18px 0;}
+.simple-table thead tr{background:var(--ink);color:#fff;}
+.simple-table th{padding:12px 14px;text-align:left;font-size:12.5px;font-weight:600;}
+.simple-table td{padding:11px 14px;border-bottom:1px solid var(--rule);color:var(--sub);vertical-align:middle;font-size:13.5px;}
+.simple-table tr:last-child td{border-bottom:none;}
+.strong-fwd{color:var(--blue);font-weight:700;}
+.weak-rev{color:var(--orange);}
+.very-strong{color:var(--darkred);font-weight:700;}
+.no-effect{color:#bbb;}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0;}
+.insight-card{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:18px;}
+.insight-icon{font-size:24px;margin-bottom:8px;}
+.insight-card h4{font-family:var(--serif);font-size:.98rem;font-weight:700;color:var(--ink);margin-bottom:7px;word-break:keep-all;}
+.insight-card p{font-size:13.5px;color:var(--sub);margin:0;line-height:1.7;}
+.cycle-wrap{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:28px 22px;margin:22px 0;}
+.summary-box{background:var(--ink);color:#fff;border-radius:14px;padding:32px 28px;margin:28px 0;}
+.summary-box h3{font-family:var(--serif);font-size:1.2rem;color:#FFD580;margin-bottom:16px;}
+.summary-list{list-style:none;display:flex;flex-direction:column;gap:13px;}
+.summary-list li{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;color:rgba(255,255,255,.82);line-height:1.7;}
+.summary-list li::before{content:'▶';color:#FFD580;font-size:10px;flex-shrink:0;margin-top:6px;}
+.limit-item{padding:13px 0;border-bottom:1px solid var(--rule);display:flex;gap:12px;align-items:flex-start;}
+.limit-item:last-child{border-bottom:none;}
+.limit-badge{background:#FDF3E0;color:var(--amber);border:1px solid #F5C96A;border-radius:5px;font-size:11px;font-weight:700;padding:2px 8px;white-space:nowrap;flex-shrink:0;margin-top:3px;}
+.limit-item p{margin:0;font-size:14px;color:var(--sub);}
+footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:26px;font-size:12px;margin-top:70px;letter-spacing:.04em;}
+@media(max-width:620px){
+  .hero h1{font-size:1.55rem;} .hero-inner,main{padding:0 20px;}
+  .big-stats{grid-template-columns:1fr 1fr;}
+  .insight-grid,.diagram-guide{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="tag">서울교구 교화구조개선 TF</span>
+    <h1>부모와 아이는<br><em>함께 온다</em></h1>
+    <p class="hero-desc">서울교구 교도 데이터(원기97–108)로 본 세대별 법회출석 변화와 부모–자녀 출석의 연동 구조. 어린이·청소년 출석 감소를 어디서부터 풀어야 할지 살펴봅니다.</p>
+    <div class="hero-pills">
+      <span class="pill">원기97–108 (2012–2023)</span>
+      <span class="pill">서울교구 일반교당 64개</span>
+      <span class="pill">교도 단위 출석 데이터</span>
+      <span class="pill">교당별 패널 분석</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <ul>
+    <li><a href="#overview">한눈에 보기</a></li>
+    <li><a href="#trend">세대별 변화</a></li>
+    <li><a href="#diagram">영향 관계도</a></li>
+    <li><a href="#cycle">닭과 달걀</a></li>
+    <li><a href="#findings">주요 발견</a></li>
+    <li><a href="#action">우리가 할 일</a></li>
+    <li><a href="#note">참고사항</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="overview">
+  <p class="sec-label">Overview</p>
+  <h2>핵심을 먼저 말씀드립니다</h2>
+  <p class="sec-intro">원기97(2012년)부터 108년(2023년)까지 12년간, 서울교구 어린이와 청소년 법회출석은 절반 이상 줄었습니다. 이 분석은 그 원인이 단순히 "아이들이 법회에 안 온다"는 문제가 아니라, <strong>부모세대(30–40대) 출석과 단단히 맞물려 함께 움직이는 구조적 현상</strong>임을 보여줍니다.</p>
+  <div class="big-stats">
+    <div class="bstat"><span class="bstat-num red">-63%</span><span class="bstat-label">어린이(초등)<br>12년간 감소</span></div>
+    <div class="bstat"><span class="bstat-num red">-76%</span><span class="bstat-label">청소년(중고등)<br>12년간 감소</span></div>
+    <div class="bstat"><span class="bstat-num amber">-37%</span><span class="bstat-label">40대 부모 출석<br>12년간 감소</span></div>
+    <div class="bstat"><span class="bstat-num blue">66%</span><span class="bstat-label">108년 기준<br>60대 이상 비율</span></div>
+  </div>
+  <div class="hl red">
+    <p class="hl-title">가장 중요한 발견</p>
+    <p>교당별 데이터를 보면, <strong>30–40대 부모 출석이 많은 교당일수록 어린이·청소년 출석도 많습니다.</strong> 두 세대는 같은 방향으로 함께 움직입니다. 부모 → 자녀 방향이 자녀 → 부모 방향보다 다소 강하지만, 둘은 서로를 끌어당기는 <strong>맞물린 관계</strong>로 보는 것이 정확합니다.</p>
+  </div>
+</section>
+
+<section id="trend">
+  <p class="sec-label">Attendance Trend</p>
+  <h2>12년간 세대별 출석은 어떻게 바뀌었나</h2>
+  <p class="sec-intro">서울교구 교도 한 명 한 명의 출석 기록을 생년 기준으로 연령대별로 나눈 것입니다. 신도(미입교 참여자)는 포함되지 않습니다.</p>
+  <div class="chart-box">
+    <p class="chart-eyebrow">그래프 1 — 연령대별 법회출석 변화 (출석 횟수 합계)</p>
+    <svg id="chart1" viewBox="0 0 760 380"></svg>
+    <div class="legend" id="legend1"></div>
+    <p class="chart-caption">막대 높이가 해당 연도 전체 출석 합계입니다. 원기105 코로나로 급감 후 회복 중이나 이전 수준을 회복하지 못하고 있습니다.</p>
+  </div>
+  <div class="chart-box">
+    <p class="chart-eyebrow">그래프 2 — 연령대 구성 비율 변화</p>
+    <svg id="chart2" viewBox="0 0 760 380"></svg>
+    <div class="legend" id="legend2"></div>
+    <p class="chart-caption">전체를 100%로 봤을 때 각 연령대가 차지하는 비중. 60대 이상이 원기97 약 47%에서 108년 약 66%로 늘었습니다.</p>
+  </div>
+  <div class="chart-box">
+    <p class="chart-eyebrow">그래프 3 — 부모세대와 자녀세대 출석 동반 감소</p>
+    <svg id="chart3" viewBox="0 0 760 380"></svg>
+    <div class="legend" id="legend3"></div>
+    <p class="chart-caption">어린이·청소년이 줄어드는 시기와 30–40대가 줄어드는 시기가 거의 일치합니다.</p>
+  </div>
+  <div class="hl amber">
+    <p class="hl-title">눈여겨볼 점</p>
+    <p>어린이·청소년이 줄어드는 시기와 30–40대가 줄어드는 시기가 거의 일치합니다. 우연이 아닐 수 있습니다. 다음 섹션에서 그 관계를 살펴봅니다.</p>
+  </div>
+</section>
+
+<section id="diagram">
+  <p class="sec-label">Relationship Diagram</p>
+  <h2>부모와 자녀 출석, 어떻게 맞물려 있나</h2>
+  <p class="sec-intro">64개 교당의 12년 데이터로, 어느 세대의 출석이 다른 세대의 출석과 얼마나 함께 움직이는지를 화살표로 나타낸 것입니다.</p>
+  <div class="diagram-guide">
+    <div class="dg-item"><span class="dg-icon">➡️</span><div class="dg-text"><strong>화살표 방향</strong><br>"올해 A가 많은 교당이 내년에 B도 많다"는 시간 순서 관계</div></div>
+    <div class="dg-item"><span class="dg-icon">📏</span><div class="dg-text"><strong>화살표 굵기</strong><br>굵을수록 함께 움직이는 정도가 강합니다</div></div>
+    <div class="dg-item"><span class="dg-icon">⭐</span><div class="dg-text"><strong>별 개수</strong><br>별 3개: 거의 확실 / 별 1개: 꽤 확실 / 회색: 뚜렷한 관계 없음</div></div>
+    <div class="dg-item"><span class="dg-icon">🎨</span><div class="dg-text"><strong>색깔</strong><br>파랑=부모→자녀 / 주황=자녀→부모 / 진빨강=세대 내 성장 연속</div></div>
+  </div>
+  <div class="diagram-wrap">
+    <p class="chart-eyebrow">관계도 — 부모 출석과 자녀 출석의 영향 관계</p>
+    <svg id="relsvg" viewBox="0 0 800 480"></svg>
+    <p class="chart-caption">B값은 한 세대 출석이 10% 많을 때 다른 세대 출석이 몇 % 더 많은지를 나타냅니다. 교당 단위 분석 결과입니다.</p>
+  </div>
+  <table class="simple-table">
+    <thead><tr><th>관계</th><th>부모→자녀 방향</th><th>자녀→부모 방향</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td><strong>40대 ↔ 어린이</strong></td><td class="strong-fwd">B=0.203 (별3)<br>강함</td><td class="weak-rev">B=0.102 (별3)<br>절반 수준</td><td>맞물림 (부모쪽 강)</td></tr>
+      <tr><td><strong>30대 ↔ 어린이</strong></td><td class="strong-fwd">B=0.137 (별3)<br>강함</td><td class="weak-rev">B=0.084 (별2)<br>다소 약함</td><td>맞물림 (부모쪽 강)</td></tr>
+      <tr><td><strong>40대 ↔ 청소년</strong></td><td class="strong-fwd">B=0.186 (별3)<br>강함</td><td class="weak-rev">B=0.093 (별3)<br>절반 수준</td><td>맞물림 (부모쪽 강)</td></tr>
+      <tr><td><strong>30대 ↔ 청소년</strong></td><td class="strong-fwd">B=0.141 (별3)<br>강함</td><td class="no-effect">뚜렷하지 않음</td><td>부모→청소년 우세</td></tr>
+      <tr><td><strong>50대 ↔ 청소년</strong></td><td class="strong-fwd">B=0.165 (별3)<br>강함</td><td class="no-effect">뚜렷하지 않음</td><td>50대 일방향</td></tr>
+      <tr><td><strong>어린이→청소년 (성장)</strong></td><td class="very-strong">B=0.232 (별3)<br>가장 강한 연결</td><td class="no-effect">뚜렷하지 않음</td><td>초등 때 붙잡아야</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="cycle">
+  <p class="sec-label">Causal Direction</p>
+  <h2>"부모가 먼저"일까, "청소년 법회가 먼저"일까</h2>
+  <p class="sec-intro">현장에서 중요한 질문이 제기되었습니다. 데이터는 "3040 부모가 많은 교당에 청소년도 많다"를 보여주지만, <strong>그 방향이 정말 부모에서 자녀로 흐르는 것일까요?</strong></p>
+  <h3>두 가지 해석이 모두 가능합니다</h3>
+  <p>지금까지는 이 관계를 <strong>"부모를 붙잡으면 아이도 온다"</strong>로 읽었습니다. 하지만 반대로 읽을 수도 있습니다. <strong>"청소년 법회가 잘 갖춰진 교당이라서, 아이 있는 30–40대 가정이 그 교당에 정착했다"</strong>는 것입니다. 이 경우 순서는 이렇게 됩니다.</p>
+  <div class="cycle-wrap">
+    <svg id="cyclesvg" viewBox="0 0 760 300"></svg>
+  </div>
+  <h3>현재 데이터로는 어느 쪽이 먼저인지 가릴 수 없습니다</h3>
+  <p>이유는 두 가지입니다. 첫째, <strong>청소년 법회 프로그램이 실제로 있었는지, 질이 어땠는지에 대한 기록이 없습니다.</strong> 출석 인원 숫자만 있습니다. 둘째, 통계 모형은 "부모가 데려와서"인지 "좋은 청소년 프로그램에 부모가 모여서"인지를 구분하지 못합니다. 데이터가 보여주는 것은 <strong>두 흐름이 합쳐진 결과</strong>입니다.</p>
+  <div class="hl blue">
+    <p class="hl-title">중요한 것은, 두 해석이 서로 배타적이지 않다는 점입니다</p>
+    <p>현실에서는 두 흐름이 동시에 작동할 가능성이 높습니다. 부모가 먼저 와서 아이를 데려오기도 하고(A경로), 청소년 프로그램이 좋아서 아이 있는 가정이 모이기도 합니다(B경로). 어느 쪽이 더 큰지는 교당별 사례 인터뷰나 설문 없이는 알기 어렵습니다.</p>
+  </div>
+  <h3>그래서 결론은 하나로 모입니다</h3>
+  <p>두 해석 어느 쪽을 택하든, 공통으로 도출되는 결론이 있습니다.</p>
+  <div class="hl green">
+    <p class="hl-title">🥚 닭과 달걀 — 둘 다 동시에 투자해야 합니다</p>
+    <p><strong>3040 유지와 청소년 프로그램은 닭과 달걀의 관계</strong>입니다. 30–40대만 공략해도 청소년 프로그램이 없으면 그들이 교당에 정착하지 않고, 청소년 프로그램만 만들어도 데려올 30–40대 교도가 없으면 아이가 올 수 없습니다. 한쪽만으로는 작동하지 않습니다.</p>
+  </div>
+</section>
+
+<section id="findings">
+  <p class="sec-label">Key Findings</p>
+  <h2>네 가지 중요한 발견</h2>
+  <div class="insight-grid">
+    <div class="insight-card"><div class="insight-icon">🔗</div><h4>첫째, 부모와 자녀는 맞물려 있습니다</h4><p>부모 출석과 자녀 출석은 같은 방향으로 함께 움직입니다. 부모→자녀 방향이 다소 강하지만, 둘은 서로를 끌어당기는 연동 관계입니다.</p></div>
+    <div class="insight-card"><div class="insight-icon">🎯</div><h4>둘째, 초등 시기가 분기점</h4><p>어린이 출석이 많았던 교당이 이후 청소년 출석도 많았습니다(가장 강한 연결). 초등 때 놓치면 중학교 이후에는 돌아오기 어렵습니다.</p></div>
+    <div class="insight-card"><div class="insight-icon">👵</div><h4>셋째, 50대도 청소년에 영향</h4><p>50대(조부모 또는 늦은 부모세대)의 출석도 청소년 출석과 함께 움직입니다. 다만 일방향에 가깝습니다.</p></div>
+    <div class="insight-card"><div class="insight-icon">🚦</div><h4>넷째, 청년 경계에서 달라짐</h4><p>중고등→청년 구간은 부모 영향이 약해집니다. 청년은 스스로의 선택과 또래 관계가 더 중요해지는 세대입니다.</p></div>
+  </div>
+  <div class="hl blue">
+    <p class="hl-title">왜 이런 일이 생겼을까요</p>
+    <p>지금은 종교를 선택하지 않는 것이 일반적인 시대입니다. 주말에는 학원과 과외가 먼저입니다. 이런 환경에서 아이가 법회에 오려면 부모의 적극적인 의지가, 부모가 정착하려면 아이가 즐겁게 다닐 청소년 법회가 함께 필요합니다.</p>
+  </div>
+</section>
+
+<section id="action">
+  <p class="sec-label">Implications</p>
+  <h2>이 분석이 말하는 것</h2>
+  <div class="summary-box">
+    <h3>교화 방향을 다시 생각해볼 지점들</h3>
+    <ul class="summary-list">
+      <li><strong>3040과 청소년은 분리해서 볼 수 없는 연동 구조</strong>입니다. 어느 한쪽만 공략하는 전략은 다른 한쪽이 받쳐주지 않으면 작동하지 않습니다.</li>
+      <li>어린이·청소년 프로그램과 <strong>30–40대 부모의 유지를 동시에</strong> 설계해야 합니다. 둘은 닭과 달걀의 관계입니다.</li>
+      <li><strong>초등 시기(7–12세)</strong>가 가장 중요한 전환점입니다. 이 시기에 법회와 멀어진 아이가 중학교 이후에 돌아오는 경우는 데이터에서 거의 보이지 않습니다.</li>
+      <li>청년(19–29세) 유입은 부모 경로와 다른 별도의 접근이 필요합니다. 이 세대는 부모보다 또래와 자신의 선택이 더 중요하게 작동합니다.</li>
+    </ul>
+  </div>
+  <div class="hl amber">
+    <p class="hl-title">진단 단계에서의 신중한 태도</p>
+    <p>지금은 "원인이 부모다" 또는 "원인이 청소년 프로그램이다"라고 단정하기보다, <strong>"3040과 청소년은 함께 가는 구조"</strong>로 이해하는 것이 데이터에 충실한 해석입니다. 어느 쪽이 더 결정적인지는 원남교당 같은 상위 사례에 대한 현장 인터뷰나 델파이 패널 의견이 더 직접적인 답을 줄 수 있습니다.</p>
+  </div>
+  <div class="hl green">
+    <p class="hl-title">함께 생각해볼 질문</p>
+    <p>우리 교당에서 30–40대 교도가 줄어든 것과 어린이·청소년이 줄어든 것, 어느 것이 먼저였나요? 그리고 둘 중 하나만 살아난다면 다른 하나도 따라올 수 있을까요? 이 질문에 대한 현장의 답이 분석을 완성합니다.</p>
+  </div>
+</section>
+
+<section id="note">
+  <p class="sec-label">Note</p>
+  <h2>이 분석을 읽으실 때 참고사항</h2>
+  <div style="background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:18px 22px;margin-top:14px;">
+    <div class="limit-item"><span class="limit-badge">교당 단위</span><p>개별 교도가 아닌 교당 전체의 패턴을 본 것입니다. 특정 40대 교도가 자기 자녀를 데려온다는 것을 직접 확인한 것은 아닙니다.</p></div>
+    <div class="limit-item"><span class="limit-badge">방향 한계</span><p>"부모가 먼저"인지 "청소년 법회가 먼저"인지는 현재 데이터로 가릴 수 없습니다. 청소년 프로그램 유무·질에 대한 기록이 없기 때문입니다.</p></div>
+    <div class="limit-item"><span class="limit-badge">교도만 포함</span><p>법회에 참석하는 신도(미입교 참여자)의 출석은 포함되어 있지 않습니다.</p></div>
+    <div class="limit-item"><span class="limit-badge">가족 확인 불가</span><p>현재 데이터에는 가족 관계 정보가 없어 실제 부모-자녀 쌍을 특정하여 분석하는 것은 불가능했습니다.</p></div>
+    <div class="limit-item"><span class="limit-badge">코로나 구간</span><p>원기105 코로나 시기에는 가족 단위로만 출석하는 경향이 강해졌고, 이 시기 데이터는 평상시와 다른 의미를 가질 수 있습니다.</p></div>
+  </div>
+</section>
+</main>
+
+<footer>서울교구 교화구조개선 TF &nbsp;·&nbsp; 연구조정 상산 전상현 교무</footer>
+
+<script>
+var NS='http://www.w3.org/2000/svg';
+function el(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+function txt(x,y,s,attrs){var t=el('text',attrs||{});t.setAttribute('x',x);t.setAttribute('y',y);t.textContent=s;return t;}
+var DATA={
+ years:[97,98,99,100,101,102,103,104,105,106,107,108],
+ '10대이하':[17923,17292,17972,17379,14803,13326,11798,10725,4595,5446,5592,6599],
+ '20대':[11321,9235,8585,10368,10226,8327,9308,8432,5842,5961,5620,5419],
+ '30대':[14329,11137,13841,14435,15746,10838,10449,9129,5486,6801,6364,5826],
+ '40대':[41375,30753,32404,29440,28468,23891,26002,24885,14192,24275,29281,25856],
+ '50대':[96499,92901,86179,94517,85706,99688,92039,58126,40493,67910,67627,61946],
+ '60대':[90512,115304,94843,112524,133513,124623,159608,150867,73411,112131,110873,103376],
+ '70대이상':[67288,73710,66016,74015,83534,112200,116358,107775,66381,92024,104198,103984],
+ '초등':[8004,7194,7699,7709,7259,6620,5952,5797,2245,2851,2970,3940],
+ '중고등':[7160,6983,7076,6646,4837,4191,3889,2980,1512,1848,1699,1706],
+ '청년':[12030,10214,9643,11527,11290,9128,9999,9088,6184,6101,5855,5692]
+};
+var AGES7=['10대이하','20대','30대','40대','50대','60대','70대이상'];
+var COL7=['#4E79A7','#59A14F','#F28E2B','#E15759','#76B7B2','#B07AA1','#9C755F'];
+var W=760,H=380,ML=64,MR=20,MT=24,MB=52;
+var PW=W-ML-MR, PH=H-MT-MB;
+var n=DATA.years.length, gap=PW/n, bw=gap*0.66;
+function xPos(i){return ML+gap*i+gap*0.17;}
+function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'k':''+v;}
+function buildLegend(id,names,cols){
+  var box=document.getElementById(id);
+  for(var i=0;i<names.length;i++){
+    var d=document.createElement('div');d.className='legend-item';
+    var sw=document.createElement('span');sw.className='legend-swatch';sw.style.background=cols[i];
+    var lb=document.createElement('span');lb.textContent=names[i];
+    d.appendChild(sw);d.appendChild(lb);box.appendChild(d);
+  }
+}
+(function(){
+  var svg=document.getElementById('chart1');
+  var totals=DATA.years.map(function(_,i){return AGES7.reduce(function(s,a){return s+DATA[a][i];},0);});
+  var maxT=Math.max.apply(null,totals);
+  var yMax=Math.ceil(maxT/100000)*100000;
+  for(var g=0;g<=5;g++){
+    var yv=yMax/5*g, yy=MT+PH-PH*(yv/yMax);
+    svg.appendChild(el('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,stroke:'#eee','stroke-width':1}));
+    svg.appendChild(txt(ML-8,yy+4,fmtK(yv),{'text-anchor':'end','font-size':11,fill:'#999'}));
+  }
+  var cx=xPos(8)+bw/2;
+  svg.appendChild(el('line',{x1:cx,y1:MT,x2:cx,y2:MT+PH,stroke:'#bbb','stroke-width':1,'stroke-dasharray':'4 3'}));
+  svg.appendChild(txt(cx+4,MT+12,'코로나',{'font-size':10,fill:'#999'}));
+  for(var i=0;i<n;i++){
+    var bottom=0;
+    for(var a=0;a<AGES7.length;a++){
+      var v=DATA[AGES7[a]][i];
+      var hh=PH*(v/yMax);
+      var yy=MT+PH-PH*(bottom/yMax)-hh;
+      svg.appendChild(el('rect',{x:xPos(i),y:yy,width:bw,height:Math.max(hh,0),fill:COL7[a]}));
+      bottom+=v;
+    }
+    var lx=xPos(i)+bw/2;
+    svg.appendChild(txt(lx,MT+PH+16,'원기'+DATA.years[i],{'text-anchor':'middle','font-size':10,fill:'#777',transform:'rotate(35 '+lx+' '+(MT+PH+16)+')'}));
+  }
+  buildLegend('legend1',AGES7,COL7);
+})();
+(function(){
+  var svg=document.getElementById('chart2');
+  for(var g=0;g<=5;g++){
+    var yv=20*g, yy=MT+PH-PH*(yv/100);
+    svg.appendChild(el('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,stroke:'#eee','stroke-width':1}));
+    svg.appendChild(txt(ML-8,yy+4,yv+'%',{'text-anchor':'end','font-size':11,fill:'#999'}));
+  }
+  var cx=xPos(8)+bw/2;
+  svg.appendChild(el('line',{x1:cx,y1:MT,x2:cx,y2:MT+PH,stroke:'#bbb','stroke-width':1,'stroke-dasharray':'4 3'}));
+  for(var i=0;i<n;i++){
+    var total=AGES7.reduce(function(s,a){return s+DATA[a][i];},0);
+    var bottom=0;
+    for(var a=0;a<AGES7.length;a++){
+      var pct=DATA[AGES7[a]][i]/total*100;
+      var hh=PH*(pct/100);
+      var yy=MT+PH-PH*(bottom/100)-hh;
+      svg.appendChild(el('rect',{x:xPos(i),y:yy,width:bw,height:Math.max(hh,0),fill:COL7[a]}));
+      if(pct>=7) svg.appendChild(txt(xPos(i)+bw/2,yy+hh/2+4,Math.round(pct)+'%',{'text-anchor':'middle','font-size':9.5,fill:'#fff','font-weight':'bold'}));
+      bottom+=pct;
+    }
+    var lx=xPos(i)+bw/2;
+    svg.appendChild(txt(lx,MT+PH+16,'원기'+DATA.years[i],{'text-anchor':'middle','font-size':10,fill:'#777',transform:'rotate(35 '+lx+' '+(MT+PH+16)+')'}));
+  }
+  buildLegend('legend2',AGES7,COL7);
+})();
+(function(){
+  var svg=document.getElementById('chart3');
+  var series=[['초등','#E15759'],['중고등','#F28E2B'],['청년','#59A14F'],['30대','#76B7B2'],['40대','#2E5F8A']];
+  var allMax=0;
+  series.forEach(function(s){allMax=Math.max(allMax,Math.max.apply(null,DATA[s[0]]));});
+  var yMax=Math.ceil(allMax/10000)*10000;
+  for(var g=0;g<=5;g++){
+    var yv=yMax/5*g, yy=MT+PH-PH*(yv/yMax);
+    svg.appendChild(el('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,stroke:'#eee','stroke-width':1}));
+    svg.appendChild(txt(ML-8,yy+4,fmtK(yv),{'text-anchor':'end','font-size':11,fill:'#999'}));
+  }
+  var step=PW/(n-1);
+  function lx(i){return ML+step*i;}
+  var cx=lx(8);
+  svg.appendChild(el('line',{x1:cx,y1:MT,x2:cx,y2:MT+PH,stroke:'#bbb','stroke-width':1,'stroke-dasharray':'4 3'}));
+  svg.appendChild(txt(cx+4,MT+12,'코로나',{'font-size':10,fill:'#999'}));
+  for(var i=0;i<n;i++){
+    svg.appendChild(txt(lx(i),MT+PH+16,'원기'+DATA.years[i],{'text-anchor':'middle','font-size':10,fill:'#777',transform:'rotate(35 '+lx(i)+' '+(MT+PH+16)+')'}));
+  }
+  series.forEach(function(s){
+    var name=s[0],col=s[1],pts='';
+    for(var i=0;i<n;i++){
+      var yy=MT+PH-PH*(DATA[name][i]/yMax);
+      pts+=lx(i)+','+yy+' ';
+      svg.appendChild(el('circle',{cx:lx(i),cy:yy,r:3.5,fill:col}));
+    }
+    svg.appendChild(el('polyline',{points:pts,fill:'none',stroke:col,'stroke-width':2.4}));
+  });
+  buildLegend('legend3',series.map(function(s){return s[0];}),series.map(function(s){return s[1];}));
+})();
+(function(){
+  var svg=document.getElementById('relsvg');
+  var defs=el('defs',{});
+  [['mb','#2E5F8A'],['mo','#E07B2A'],['mr','#8B0000'],['mg','#59A14F'],['mc','#bbb']].forEach(function(p){
+    var mk=el('marker',{id:p[0],markerWidth:8,markerHeight:6,refX:7,refY:3,orient:'auto'});
+    mk.appendChild(el('polygon',{points:'0 0,8 3,0 6',fill:p[1]}));
+    defs.appendChild(mk);
+  });
+  svg.appendChild(defs);
+  function bg(x,y,w,h,fill,label,tc){
+    svg.appendChild(el('rect',{x:x,y:y,width:w,height:h,rx:10,fill:fill,opacity:0.1}));
+    svg.appendChild(txt(x+w/2,y+h-8,label,{'text-anchor':'middle','font-size':12,'font-weight':600,fill:tc}));
+  }
+  bg(15,10,215,460,'#2E5F8A','부모 세대','#2E5F8A');
+  bg(570,10,215,460,'#C0392B','자녀 세대','#C0392B');
+  var nodes={
+    '30대':{x:125,y:95,r:52,color:'#4E79A7',label:['30대','부모']},
+    '40대':{x:125,y:240,r:58,color:'#2E5F8A',label:['40대','부모']},
+    '50대':{x:125,y:385,r:50,color:'#76B7B2',label:['50대']},
+    '어린이':{x:675,y:145,r:52,color:'#E15759',label:['어린이','(초등)']},
+    '청소년':{x:675,y:310,r:52,color:'#F28E2B',label:['청소년','(중고등)']},
+    '청년':{x:675,y:440,r:44,color:'#59A14F',label:['청년']}
+  };
+  function arrow(f,t,beta,sig,col,mid,ox1,oy1,ox2,oy2){
+    var fn=nodes[f],tn=nodes[t];
+    var dx=tn.x-fn.x,dy=tn.y-fn.y,d=Math.sqrt(dx*dx+dy*dy);
+    var ux=dx/d,uy=dy/d;
+    var sx=fn.x+fn.r*ux+(ox1||0),sy=fn.y+fn.r*uy+(oy1||0);
+    var ex=tn.x-tn.r*ux+(ox2||0),ey=tn.y-tn.r*uy+(oy2||0);
+    var lw=sig?1.8+beta*20:1.5,al=sig?1:0.22;
+    svg.appendChild(el('line',{x1:sx,y1:sy,x2:ex,y2:ey,stroke:col,'stroke-width':lw,opacity:al,'marker-end':'url(#'+(sig?mid:'mc')+')'}));
+    if(sig||beta>0.05){
+      var mx=(sx+ex)/2+(mid=='mr'?35:mid=='mc'?-35:0),my=(sy+ey)/2;
+      var stars=beta>=0.18?'★★★':beta>=0.10?'★★':'★';
+      var lbl='B='+beta.toFixed(2)+' '+(sig?stars:'');
+      var tw=lbl.length*6.2+10;
+      svg.appendChild(el('rect',{x:mx-tw/2,y:my-8.5,width:tw,height:17,rx:4,fill:'white',stroke:sig?col:'#ddd','stroke-width':1,opacity:0.93}));
+      svg.appendChild(txt(mx,my+4,lbl,{'text-anchor':'middle','font-size':10.5,'font-weight':sig?600:400,fill:sig?col:'#bbb'}));
+    }
+  }
+  arrow('40대','어린이',0.203,true,'#2E5F8A','mb',0,-16,0,-14);
+  arrow('어린이','40대',0.102,true,'#E07B2A','mo',0,14,0,12);
+  arrow('30대','어린이',0.137,true,'#4E79A7','mb',0,-12,0,-12);
+  arrow('어린이','30대',0.084,true,'#E07B2A','mo',0,12,0,12);
+  arrow('40대','청소년',0.186,true,'#2E5F8A','mb',0,14,0,-14);
+  arrow('청소년','40대',0.093,true,'#E07B2A','mo',0,-14,0,12);
+  arrow('30대','청소년',0.141,true,'#4E79A7','mb',-12,0,-10,0);
+  arrow('청소년','30대',0.057,false,'#bbb','mc',12,0,12,0);
+  arrow('50대','청소년',0.165,true,'#76B7B2','mb',0,-12,0,12);
+  arrow('청소년','50대',0.037,false,'#bbb','mc',0,12,0,-10);
+  arrow('어린이','청소년',0.232,true,'#8B0000','mr',20,0,20,0);
+  arrow('청소년','어린이',0.033,false,'#bbb','mc',-20,0,-20,0);
+  arrow('청소년','청년',0.053,false,'#bbb','mc',14,0,14,0);
+  arrow('청년','청소년',0.087,true,'#59A14F','mg',-14,0,-14,0);
+  for(var k in nodes){
+    var nn=nodes[k];
+    svg.appendChild(el('circle',{cx:nn.x,cy:nn.y,r:nn.r,fill:nn.color}));
+    for(var i=0;i<nn.label.length;i++){
+      svg.appendChild(txt(nn.x,nn.y+(i-(nn.label.length-1)/2)*18+5,nn.label[i],{'text-anchor':'middle','font-size':13,'font-weight':700,fill:'white'}));
+    }
+  }
+  var ld=[['#2E5F8A','부모→자녀 (강함)'],['#E07B2A','자녀→부모 (더 약함)'],['#8B0000','세대 성장 연속'],['#bbb','뚜렷하지 않음']];
+  ld.forEach(function(item,i){
+    var lx=30,ly=480-20-ld.length*22+i*22;
+    svg.appendChild(el('rect',{x:lx,y:ly-10,width:14,height:14,rx:3,fill:item[0]}));
+    svg.appendChild(txt(lx+20,ly+1,item[1],{'font-size':11.5,fill:'#555'}));
+  });
+})();
+(function(){
+  var svg=document.getElementById('cyclesvg');
+  var defs=el('defs',{});
+  var mk=el('marker',{id:'cyc',markerWidth:9,markerHeight:7,refX:7,refY:3.5,orient:'auto'});
+  mk.appendChild(el('polygon',{points:'0 0,9 3.5,0 7',fill:'#3A7D44'}));
+  defs.appendChild(mk);
+  svg.appendChild(defs);
+  var boxes=[
+    {x:130,y:80,w:170,h:62,t:['청소년 법회','(프로그램 인프라)'],c:'#C0392B'},
+    {x:460,y:80,w:170,h:62,t:['아이 있는 30–40대','가정이 정착'],c:'#2E5F8A'},
+    {x:460,y:200,w:170,h:62,t:['3040 부모','출석 증가'],c:'#E07B2A'},
+    {x:130,y:200,w:170,h:62,t:['청소년','출석 증가'],c:'#F28E2B'}
+  ];
+  boxes.forEach(function(b){
+    svg.appendChild(el('rect',{x:b.x,y:b.y,width:b.w,height:b.h,rx:10,fill:b.c,opacity:0.92}));
+    for(var i=0;i<b.t.length;i++){
+      svg.appendChild(txt(b.x+b.w/2,b.y+b.h/2+(i-(b.t.length-1)/2)*16+4,b.t[i],{'text-anchor':'middle','font-size':12.5,'font-weight':600,fill:'white'}));
+    }
+  });
+  function carrow(x1,y1,x2,y2){svg.appendChild(el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:'#3A7D44','stroke-width':2.5,'marker-end':'url(#cyc)'}));}
+  carrow(300,111,458,111);
+  carrow(545,144,545,198);
+  carrow(458,231,302,231);
+  carrow(215,198,215,144);
+  svg.appendChild(txt(380,72,'좋은 청소년 법회가 가정을 부르고…',{'text-anchor':'middle','font-size':11,fill:'#777'}));
+  svg.appendChild(txt(380,288,'…그 부모가 다시 청소년 법회를 키운다',{'text-anchor':'middle','font-size':11,fill:'#777'}));
+  svg.appendChild(txt(380,40,'순환 구조 — 어느 지점이 먼저인지 데이터로 가릴 수 없음',{'text-anchor':'middle','font-size':12.5,'font-weight':700,fill:'#1C1C2E'}));
+})();
+</script>
+</body>
+</html>
