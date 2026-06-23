@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교당 심층진단 순서 제안</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink0: #0f1923; --ink1: #2a3a4a; --ink2: #4a5e70; --ink3: #8099ad;
+  --bg: #f5f7f9; --bg1: #edf1f5; --white: #fff; --border: #dce4ec;
+  --g1: #7f1d1d; --g1m: #b91c1c; --g1l: #fef2f2; --g1b: #fca5a5;
+  --g2: #7c2d12; --g2m: #c2410c; --g2l: #fff7ed; --g2b: #fdba74;
+  --g3: #1e3a5f; --g3m: #2563eb; --g3l: #eff6ff; --g3b: #93c5fd;
+  --gx: #4a1d96; --gxm: #7c3aed; --gxl: #f5f3ff; --gxb: #c4b5fd;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--ink0); font-size: 14px; line-height: 1.7; }
+
+.page-header { background: var(--ink0); color: #fff; padding: 48px 0 40px; }
+.inner { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+.eye { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .15em; color: var(--ink3); text-transform: uppercase; margin-bottom: 12px; }
+.page-header h1 { font-size: 24px; font-weight: 700; letter-spacing: -.02em; line-height: 1.35; margin-bottom: 8px; }
+.page-header .sub { font-size: 13px; color: var(--ink3); line-height: 1.6; }
+.kpi-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+.kpi { display: flex; flex-direction: column; gap: 2px; }
+.kpi-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .1em; color: var(--ink3); text-transform: uppercase; }
+.kpi-val { font-size: 22px; font-weight: 700; color: #fff; }
+.kpi-val span { font-size: 12px; font-weight: 400; color: var(--ink3); margin-left: 3px; }
+
+section { padding: 44px 0; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-size: 19px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+.sec-desc { font-size: 13px; color: var(--ink2); margin-bottom: 24px; line-height: 1.7; }
+
+/* LOGIC BOX */
+.logic-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.logic-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.logic-num { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 700; color: var(--ink3); line-height: 1; margin-bottom: 8px; }
+.logic-title { font-size: 13px; font-weight: 700; color: var(--ink0); margin-bottom: 4px; }
+.logic-body { font-size: 12px; color: var(--ink2); line-height: 1.6; }
+
+/* TRACK */
+.track-wrap { display: grid; grid-template-columns: 3fr 1fr; gap: 16px; }
+.track-col { display: flex; flex-direction: column; gap: 12px; }
+.track-head { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 4px; }
+
+/* GROUP CARDS */
+.grp-block { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.grp-header { padding: 14px 18px 12px; display: flex; align-items: baseline; gap: 10px; }
+.grp-badge { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+.g1 .grp-badge { background: var(--g1l); color: var(--g1m); border: 1px solid var(--g1b); }
+.g2 .grp-badge { background: var(--g2l); color: var(--g2m); border: 1px solid var(--g2b); }
+.g3 .grp-badge { background: var(--g3l); color: var(--g3m); border: 1px solid var(--g3b); }
+.gx .grp-badge { background: var(--gxl); color: var(--gxm); border: 1px solid var(--gxb); }
+.grp-title { font-size: 14px; font-weight: 700; }
+.grp-sub { font-size: 12px; color: var(--ink2); }
+.grp-body { padding: 0 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+/* PARISH ROW */
+.parish-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); }
+.parish-rank { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 700; color: var(--ink3); min-width: 28px; line-height: 1; padding-top: 2px; }
+.g1 .parish-rank { color: var(--g1m); }
+.g2 .parish-rank { color: var(--g2m); }
+.g3 .parish-rank { color: var(--g3m); }
+.gx .parish-rank { color: var(--gxm); }
+.parish-info { flex: 1; min-width: 0; }
+.parish-name { font-size: 15px; font-weight: 700; color: var(--ink0); }
+.parish-jigu { font-size: 11px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; }
+.parish-metrics { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
+.metric-chip { font-size: 11px; font-family: 'IBM Plex Mono', monospace; padding: 2px 7px; border-radius: 4px; }
+.mc-att { background: #fef2f2; color: #991b1b; }
+.mc-trend { background: #ffedd5; color: #9a3412; }
+.mc-ib { background: #eff6ff; color: #1e40af; }
+.mc-recent-neg { background: #fef2f2; color: #991b1b; }
+.mc-recent-pos { background: #f0fdf4; color: #166534; }
+.parish-rationale { font-size: 12px; color: var(--ink2); line-height: 1.55; margin-top: 4px; }
+.score-dots { display: flex; gap: 3px; margin-top: 5px; }
+.sdot { width: 16px; height: 16px; border-radius: 3px; font-size: 9px; font-weight: 700; text-align: center; line-height: 16px; font-family: 'IBM Plex Mono', monospace; }
+.sdot-on { background: var(--ink0); color: #fff; }
+.sdot-off { background: var(--bg1); color: var(--ink3); }
+
+/* RADAR WRAPPER */
+.chart-box { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.chart-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.chart-sub { font-size: 11px; color: var(--ink3); margin-bottom: 14px; }
+
+/* RATIONALE TABLE */
+.rt-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 20px; }
+.rt-table thead tr { background: var(--ink0); color: #fff; }
+.rt-table th { padding: 9px 12px; font-weight: 500; font-size: 12px; text-align: left; }
+.rt-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--ink1); vertical-align: top; line-height: 1.55; }
+.rt-table tr:hover td { background: var(--bg1); }
+
+/* CALLOUT */
+.callout { background: var(--bg1); border-left: 3px solid var(--ink2); border-radius: 0 8px 8px 0; padding: 13px 16px; font-size: 13px; color: var(--ink1); margin-bottom: 16px; line-height: 1.7; }
+.callout strong { color: var(--ink0); }
+.callout.warn { border-color: var(--g2m); background: var(--g2l); }
+.callout.info { border-color: var(--g3m); background: var(--g3l); }
+.callout.purple { border-color: var(--gxm); background: var(--gxl); }
+
+/* STEP FLOW */
+.step-flow { display: flex; gap: 0; margin-bottom: 24px; }
+.step { flex: 1; background: var(--white); border: 1px solid var(--border); padding: 14px 16px; position: relative; }
+.step:not(:last-child)::after { content: '▶'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--ink3); z-index: 1; }
+.step:first-child { border-radius: 8px 0 0 8px; }
+.step:last-child { border-radius: 0 8px 8px 0; }
+.step-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink3); margin-bottom: 4px; }
+.step-label { font-size: 12px; font-weight: 700; color: var(--ink0); }
+.step-body { font-size: 11px; color: var(--ink2); margin-top: 3px; line-height: 1.5; }
+
+@media (max-width: 720px) {
+  .track-wrap { grid-template-columns: 1fr; }
+  .logic-grid { grid-template-columns: 1fr 1fr; }
+  .step-flow { flex-direction: column; }
+  .step:not(:last-child)::after { display: none; }
+  .step { border-radius: 8px !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="inner">
+    <div class="eye">서울교구 교화구조개선 TF · 원기 111년</div>
+    <h1>교당 심층진단 순서 제안</h1>
+    <div class="sub">선정 기준 점수 + 출석 위기도 + 지역 특성 3개 축 기반 · 도심 10개 / 외곽 3개 분리 트랙</div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-label">총 진단 대상</div><div class="kpi-val">13<span>개 교당</span></div></div>
+      <div class="kpi"><div class="kpi-label">1그룹 즉각</div><div class="kpi-val" style="color:#fca5a5">4<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">2그룹 단기</div><div class="kpi-val" style="color:#fdba74">3<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">3그룹 모니터</div><div class="kpi-val" style="color:#93c5fd">3<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">외곽 별도 트랙</div><div class="kpi-val" style="color:#c4b5fd">3<span>개</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S1: 순서 결정 논리 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 01</div>
+  <h2>순서 결정 3개 축</h2>
+  <p class="sec-desc">선정 점수만으로 순서를 정하면 구조적 위기도의 차이를 놓친다. 세 가지 기준을 계층적으로 적용한다.</p>
+
+  <div class="logic-grid">
+    <div class="logic-card">
+      <div class="logic-num">01</div>
+      <div class="logic-title">선정 점수 (1차 정렬)</div>
+      <div class="logic-body">4점 교당이 3점보다 먼저다. 4점은 인력·규모·추세·교화역량 4개 위기가 동시 충족된 상태로, 3점 교당과 구조적으로 다르다.</div>
+    </div>
+    <div class="logic-card">
+      <div class="logic-num">02</div>
+      <div class="logic-title">출석 절댓값 (2차 정렬)</div>
+      <div class="logic-body">동점 교당 중에서는 원기110 출석이 낮을수록 먼저 진단한다. 출석이 적을수록 교도 공동체 유지가 임박한 임계에 가깝다.</div>
+    </div>
+    <div class="logic-card">
+      <div class="logic-num">03</div>
+      <div class="logic-title">지역 특성 (트랙 분리)</div>
+      <div class="logic-body">동두천·양주·포천은 서울 외곽 교당으로 인구 구조와 접근성이 다르다. 도심과 동일 기준으로 줄 세우지 않고 별도 트랙으로 운영한다.</div>
+    </div>
+  </div>
+
+  <div class="step-flow">
+    <div class="step">
+      <div class="step-num">STEP 1</div>
+      <div class="step-label">지역 분리</div>
+      <div class="step-body">외곽 3개 분리<br>도심 10개 잔류</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 2</div>
+      <div class="step-label">점수 정렬</div>
+      <div class="step-body">4점 → 3점<br>순서 부여</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 3</div>
+      <div class="step-label">동점 내 정렬</div>
+      <div class="step-body">출석 낮을수록<br>→ 추세 급할수록</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 4</div>
+      <div class="step-label">그룹 할당</div>
+      <div class="step-body">도심 1·2·3그룹<br>외곽 별도 트랙</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- S2: 도심 트랙 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 02</div>
+  <h2>도심 교당 — 10개 순서</h2>
+  <p class="sec-desc">최근추세(원기109→110)는 보조 참고 정보. 최근 반등이 있더라도 14년 구조 추세가 주 판단 근거다.</p>
+
+  <div class="track-wrap">
+    <div class="track-col">
+
+      <!-- 1그룹 -->
+      <div class="grp-block g1">
+        <div class="grp-header">
+          <span class="grp-badge">1그룹 · 즉각 진단</span>
+          <span class="grp-title">구조 위기 가장 심각 — 4점, 출석 700회 이하</span>
+        </div>
+        <div class="grp-body">
+
+          <div class="parish-row">
+            <div class="parish-rank">1</div>
+            <div class="parish-info">
+              <div class="parish-name">사직교당</div>
+              <div class="parish-jigu">종로지구 · 3급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 493회</span>
+                <span class="metric-chip mc-trend">추세 −39%</span>
+                <span class="metric-chip mc-ib">12년 입교 39명</span>
+                <span class="metric-chip mc-recent-pos">최근 +7%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">4점 중 출석 최저 수준. 최근 소폭 반등(+7%)이 있으나 14년 추세 감소는 구조적. 종로지구 인접 교당과의 연계 가능성 탐색이 핵심 진단 과제.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">2</div>
+            <div class="parish-info">
+              <div class="parish-name">면목교당</div>
+              <div class="parish-jigu">원남지구 · 4급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 521회</span>
+                <span class="metric-chip mc-trend">추세 −68%</span>
+                <span class="metric-chip mc-ib">12년 입교 58명</span>
+                <span class="metric-chip mc-recent-neg">최근 −14%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">추세 감소율 −68%에 최근 추가 감소(-14%). 출석과 추세 모두 위기. 4급지로 재정 기반도 상대적으로 약해 자력 회복 여지가 좁다.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">3</div>
+            <div class="parish-info">
+              <div class="parish-name">원효교당</div>
+              <div class="parish-jigu">서울지구 · 3급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 663회</span>
+                <span class="metric-chip mc-trend">추세 −79%</span>
+                <span class="metric-chip mc-ib">12년 입교 43명</span>
+                <span class="metric-chip mc-recent-neg">최근 −5%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">14년 추세 감소율 −79%로 도심 교당 중 가장 가파름. 원기97 당시 2,062회에서 663회로 3분의 1 수준. 서울지구 내 인접 교당(연희·홍제)과 권역 구조 검토 가능.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">4</div>
+            <div class="parish-info">
+              <div class="parish-name">금천교당</div>
+              <div class="parish-jigu">화곡지구 · 4급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 689회</span>
+                <span class="metric-chip mc-trend">추세 −78%</span>
+                <span class="metric-chip mc-ib">12년 입교 37명</span>
+                <span class="metric-chip mc-recent-pos">최근 +3%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">12년 입교 37명으로 4점 교당 중 입교 역량 최저. 4급지로 인프라 기반도 제한적. 화곡지구 권역 내 김포·구로교당과 연계 가능성 탐색 필요.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2그룹 -->
+      <div class="grp-block g2">
+        <div class="grp-header">
+          <span class="grp-badge">2그룹 · 단기 진단</span>
+          <span class="grp-title">4점이나 출석 700~1,000회 구간 — 1그룹 완료 후 착수</span>
+        </div>
+        <div class="grp-body">
+
+          <div class="parish-row">
+            <div class="parish-rank">5</div>
+            <div class="parish-info">
+              <div class="parish-name">개포교당</div>
+              <div class="parish-jigu">강남지구 · 3급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 742회</span>
+                <span class="metric-chip mc-trend">추세 −56%</span>
+                <span class="metric-chip mc-ib">12년 입교 38명</span>
+                <span class="metric-chip mc-recent-neg">최근 −2%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">강남지구 유일 4점 교당. 강남교당·역삼교당 등 대형 교당 인접 지역으로, 권역 재편 시 흡수 방향 탐색이 핵심 과제.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">6</div>
+            <div class="parish-info">
+              <div class="parish-name">연희교당</div>
+              <div class="parish-jigu">서울지구 · 4급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 786회</span>
+                <span class="metric-chip mc-trend">추세 −66%</span>
+                <span class="metric-chip mc-ib">12년 입교 57명</span>
+                <span class="metric-chip mc-recent-neg">최근 −1%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">원효·홍제와 함께 서울지구 서북권 군집. 세 교당의 지리적 인접성을 고려한 권역 진단이 효율적이다.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">7</div>
+            <div class="parish-info">
+              <div class="parish-name">은평교당</div>
+              <div class="parish-jigu">서울지구 · 3급지 · 4점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 964회</span>
+                <span class="metric-chip mc-trend">추세 −38%</span>
+                <span class="metric-chip mc-ib">12년 입교 45명</span>
+                <span class="metric-chip mc-recent-neg">최근 −22%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">4점 교당 중 출석 최다(964회)이나 최근 1년 −22%로 악화 속도가 가장 빠르다. 추세 감소율(−38%)은 다른 4점보다 완만하지만 최근 가속이 주요 신호.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3그룹 -->
+      <div class="grp-block g3">
+        <div class="grp-header">
+          <span class="grp-badge">3그룹 · 모니터 후 진단</span>
+          <span class="grp-title">3점 도심 교당 — 데이터 모니터링 병행 후 진단 시점 결정</span>
+        </div>
+        <div class="grp-body">
+
+          <div class="parish-row">
+            <div class="parish-rank">8</div>
+            <div class="parish-info">
+              <div class="parish-name">영등포교당</div>
+              <div class="parish-jigu">여의도지구 · 3급지 · 3점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 742회</span>
+                <span class="metric-chip mc-trend">추세 −65%</span>
+                <span class="metric-chip mc-ib">12년 입교 100명</span>
+                <span class="metric-chip mc-recent-neg">최근 −15%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-off">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">입교합계 100명으로 D 기준 미해당 → 3점. 그러나 출석 742회, 추세 −65%, 최근 −15%로 지표는 4점 수준. 입교 역량이 남아 있는 만큼 지원 방향도 함께 탐색해야 한다.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">9</div>
+            <div class="parish-info">
+              <div class="parish-name">공항교당</div>
+              <div class="parish-jigu">화곡지구 · 2급지 · 3점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 869회</span>
+                <span class="metric-chip mc-trend">추세 −50%</span>
+                <span class="metric-chip mc-ib">12년 입교 111명</span>
+                <span class="metric-chip mc-recent-neg">최근 −9%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-off">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">2급지로 재정 기반은 상대적으로 양호(헌공금 14.5억). 입교 역량(111명)도 있어 구조 지원 시 회복 가능성이 있다. 화곡지구 내 권역 재편 논의와 연계.</div>
+            </div>
+          </div>
+
+          <div class="parish-row">
+            <div class="parish-rank">10</div>
+            <div class="parish-info">
+              <div class="parish-name">상계교당</div>
+              <div class="parish-jigu">종로지구 · 2급지 · 3점</div>
+              <div class="parish-metrics">
+                <span class="metric-chip mc-att">출석 1,729회</span>
+                <span class="metric-chip mc-trend">추세 −57%</span>
+                <span class="metric-chip mc-ib">12년 입교 61명</span>
+                <span class="metric-chip mc-recent-pos">최근 +8%</span>
+              </div>
+              <div class="score-dots">
+                <span class="sdot sdot-on">A</span><span class="sdot sdot-off">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+              </div>
+              <div class="parish-rationale">출석 1,729회로 3점 도심 교당 중 규모가 가장 크다. 최근 +8% 반등 중. 규모 측면에선 여유가 있으나 추세 감소(−57%)와 입교 부진(61명)은 장기 위험. 모니터링 우선.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 사이드: 레이더 차트 -->
+    <div>
+      <div class="track-head">각 그룹 평균 위기 프로필</div>
+      <div class="chart-box">
+        <div class="chart-title">그룹별 위기 레이더</div>
+        <div class="chart-sub">5개 축: 출석위기·추세·입교부진·최근악화·재정취약<br>(높을수록 위기)</div>
+        <div style="position:relative;height:260px;">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- S3: 외곽 트랙 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 03</div>
+  <h2>외곽 교당 — 별도 트랙 (3개)</h2>
+  <p class="sec-desc">동두천·양주·포천은 경기 북부 소재. 서울 도심과 인구 감소·접근성·교도 연령 구조가 다르다. 도심 교당과 동일 처방이 아닌 <strong>지역 소멸 대응형 진단</strong>이 필요하다.</p>
+
+  <div class="callout purple">
+    <strong>외곽 교당 진단의 핵심 질문은 다르다.</strong> 도심 교당이 "어느 교당과 어떻게 재편할 것인가"라면, 외곽 교당은 "이 지역에서 원불교 교화의 최소 거점을 어떻게 유지할 것인가"다.
+    인구 감소가 가속되는 지역에서는 물리적 통합보다 순교 체제·재가 자립 구조로의 전환이 현실적인 방향일 수 있다.
+  </div>
+
+  <div class="grp-block gx">
+    <div class="grp-header">
+      <span class="grp-badge">외곽 트랙 · 별도 운영</span>
+      <span class="grp-title">경기 북부 권역 통합 진단 — 3개 교당 동시 검토 권장</span>
+    </div>
+    <div class="grp-body">
+
+      <div class="parish-row">
+        <div class="parish-rank">①</div>
+        <div class="parish-info">
+          <div class="parish-name">포천교당</div>
+          <div class="parish-jigu">종로지구 · 5급지 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-att">출석 456회</span>
+            <span class="metric-chip mc-trend">추세 −71%</span>
+            <span class="metric-chip mc-ib">12년 입교 39명</span>
+            <span class="metric-chip mc-recent-pos">최근 +2%</span>
+          </div>
+          <div class="score-dots">
+            <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-on">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+          </div>
+          <div class="parish-rationale">외곽 3개 중 유일 4점. 출석 456회, 추세 −71%. 동두천·양주와 함께 경기 북부 권역 진단 시 우선 검토 기준점이 된다.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">②</div>
+        <div class="parish-info">
+          <div class="parish-name">동두천교당</div>
+          <div class="parish-jigu">종로지구 · 5급지 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-att">출석 450회</span>
+            <span class="metric-chip mc-trend">추세 −12%</span>
+            <span class="metric-chip mc-ib">12년 입교 33명</span>
+            <span class="metric-chip mc-recent-neg">최근 −22%</span>
+          </div>
+          <div class="score-dots">
+            <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-off">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+          </div>
+          <div class="parish-rationale">추세 회귀선은 완만(−12%)하나 기저 출석이 450회로 이미 매우 낮다. 최근 −22%의 추가 감소가 우려 신호. 교도 개인 데이터 추적이 필요하다.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">③</div>
+        <div class="parish-info">
+          <div class="parish-name">양주교당</div>
+          <div class="parish-jigu">종로지구 · 6급지 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-att">출석 763회</span>
+            <span class="metric-chip mc-trend">추세 −10%</span>
+            <span class="metric-chip mc-ib">12년 입교 26명</span>
+            <span class="metric-chip mc-recent-pos">최근 +25%</span>
+          </div>
+          <div class="score-dots">
+            <span class="sdot sdot-on">A</span><span class="sdot sdot-on">B</span><span class="sdot sdot-off">C</span><span class="sdot sdot-on">D</span><span class="sdot sdot-off">E</span>
+          </div>
+          <div class="parish-rationale">최근 +25%로 외곽 교당 중 유일하게 반등 중. 추세도 −10%로 가장 완만. 그러나 12년 입교 26명으로 입교 역량이 가장 낮다. 현 수준 유지 가능 여부를 우선 파악.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="callout info" style="margin-top:16px;">
+    <strong>3개 동시 진단 권장.</strong> 포천·동두천·양주는 모두 종로지구 소속이며 경기 북부 권역으로 묶인다. 개별 진단보다 <strong>권역 단위 동시 진단</strong>이 인력 효율과 비교 분석 면에서 유리하다. 동두천-양주 간 거리(약 18km), 포천-동두천 간 거리(약 25km)를 감안한 순교 체제 재편도 함께 검토할 수 있다.
+  </div>
+</div>
+</section>
+
+<!-- S4: 전체 로드맵 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 04</div>
+  <h2>심층진단 로드맵 제안</h2>
+  <p class="sec-desc">인력 제약을 감안해 동시 진단 교당 수를 2~3개로 제한. 지구 인접성 활용해 이동 효율 최적화.</p>
+
+  <div class="callout">
+    <strong>진단 내용.</strong> 각 교당 심층진단에는 ① 교도 개인 데이터 분석(유지율·연령·이탈 패턴), ② 재정 구조 분석(헌공금 의존도·지출 구조), ③ 현장 교무 면담, ④ 재가 조직 실태 파악, ⑤ 인접 교당과의 거리·접근성 조건 이 다섯 가지가 포함되어야 한다.
+  </div>
+
+  <table class="rt-table">
+    <thead>
+      <tr>
+        <th>차수</th>
+        <th>교당</th>
+        <th>지구</th>
+        <th>묶음 이유</th>
+        <th>주요 진단 초점</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2" style="font-weight:700;color:var(--g1m);vertical-align:top;padding-top:14px;">1차<br><span style="font-size:11px;color:var(--ink3);font-weight:400;">즉각</span></td>
+        <td><strong>사직교당 · 면목교당</strong></td>
+        <td>종로·원남</td>
+        <td>4점 최저 출석(493·521회). 두 지구 간 이동 가능 범위</td>
+        <td>교도 이탈 패턴, 인접 교당(종로·이문 등)과 연계 가능성</td>
+      </tr>
+      <tr>
+        <td><strong>원효교당 · 금천교당</strong></td>
+        <td>서울·화곡</td>
+        <td>4점 추세 최급감(−79%·−78%). 지구 인접</td>
+        <td>장기 이탈 구조 분석, 재가 자립 역량 파악</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="font-weight:700;color:var(--g2m);vertical-align:top;padding-top:14px;">2차<br><span style="font-size:11px;color:var(--ink3);font-weight:400;">단기</span></td>
+        <td><strong>개포교당</strong></td>
+        <td>강남</td>
+        <td>강남지구 유일 4점. 강남·역삼교당 권역 내 위치</td>
+        <td>강남·역삼 권역 재편 시 역할 분석, 교도 전입 이력</td>
+      </tr>
+      <tr>
+        <td><strong>연희교당 · 은평교당</strong></td>
+        <td>서울</td>
+        <td>서울지구 동일 권역. 원효교당 1차 진단 결과와 연계</td>
+        <td>서울지구 서북권 권역화 가능성, 은평 최근 감소 원인 파악</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="font-weight:700;color:var(--g3m);vertical-align:top;padding-top:14px;">3차<br><span style="font-size:11px;color:var(--ink3);font-weight:400;">모니터</span></td>
+        <td><strong>영등포교당 · 공항교당</strong></td>
+        <td>여의도·화곡</td>
+        <td>3점이나 출석·추세 지표는 4점 수준. 입교 여력 잔존</td>
+        <td>입교 역량 지속 여부 확인, 여의도·화곡 권역 연계</td>
+      </tr>
+      <tr>
+        <td><strong>상계교당</strong></td>
+        <td>종로</td>
+        <td>출석 1,729회로 여유. 최근 반등 중. 모니터 후 진단 시점 결정</td>
+        <td>추세 감소 원인(코로나 vs 구조) 분리, 입교 부진 원인 탐색</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--gxm);vertical-align:top;padding-top:14px;">별도<br><span style="font-size:11px;color:var(--ink3);font-weight:400;">외곽</span></td>
+        <td><strong>포천 · 동두천 · 양주</strong></td>
+        <td>종로</td>
+        <td>경기 북부 권역 동시 진단. 종로지구 소속 3개 묶음</td>
+        <td>지역 인구 구조 분석, 순교 체제 재편 가능성, 재가 자립 역량</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn" style="margin-top:20px;">
+    <strong>진단 결과는 처방 선택지로 연결된다.</strong> 심층진단이 끝난 교당은 라운드2·3에서 도출된 4개 시나리오(물리적 통합 / 행정·조직 변경 / 교당 자율+교구 지원 / 복합형) 중 어느 방향이 적절한지 결정하는 근거 자료가 된다.
+    진단 자체가 통폐합 결정이 아니라 <strong>처방 설계의 입력값</strong>임을 현장 교무님들과 공유하는 것이 중요하다.
+  </div>
+
+  <div style="margin-top:16px; font-size:12px; color:var(--ink3); font-family:'IBM Plex Mono',monospace; line-height:1.6;">
+    데이터 기준: 원기97~110 법회출석 / 원기97~108 교당데이터 · 재정데이터<br>
+    외곽 교당 정의: 동두천·양주·포천 (경기 북부, 서울 비소재)<br>
+    우선순위 정렬 기준: ① 선정 점수 ② 110년 출석 ③ 추세감소율 (보조: 최근추세)
+  </div>
+</div>
+</section>
+
+<script>
+// 레이더 차트 — 그룹별 평균 위기 프로필
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+
+// 정규화 기준값 (전체 교당 대비)
+// 출석위기: 낮을수록 높음 (1729→1, 450→5)
+// 추세: 음수일수록 높음
+// 입교부진: 낮을수록 높음
+// 최근악화: 음수일수록 높음
+// 재정취약: 낮을수록 높음 (헌공금 역수)
+
+const radarData = {
+  labels: ['출석 위기도', '추세 감소율', '입교 부진도', '최근 악화도', '재정 취약도'],
+  datasets: [
+    {
+      label: '1그룹 (사직·면목·원효·금천)',
+      data: [4.8, 4.5, 4.9, 3.2, 4.0],
+      borderColor: '#b91c1c', backgroundColor: 'rgba(185,28,28,0.12)',
+      borderWidth: 2, pointRadius: 3,
+    },
+    {
+      label: '2그룹 (개포·연희·은평)',
+      data: [3.8, 4.0, 4.5, 3.8, 3.8],
+      borderColor: '#c2410c', backgroundColor: 'rgba(194,65,12,0.12)',
+      borderWidth: 2, pointRadius: 3,
+    },
+    {
+      label: '3그룹 (영등포·공항·상계)',
+      data: [3.0, 3.8, 2.8, 3.5, 2.5],
+      borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)',
+      borderWidth: 2, pointRadius: 3,
+    },
+    {
+      label: '외곽 트랙 (포천·동두천·양주)',
+      data: [4.9, 2.5, 4.8, 2.8, 4.5],
+      borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.1)',
+      borderWidth: 2, pointRadius: 3, borderDash: [5,3],
+    },
+  ]
+};
+
+new Chart(radarCtx, {
+  type: 'radar',
+  data: radarData,
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    scales: {
+      r: {
+        min: 0, max: 5,
+        ticks: { display: false, stepSize: 1 },
+        grid: { color: '#dce4ec' },
+        pointLabels: {
+          font: { family: "'Noto Sans KR'", size: 11 },
+          color: '#4a5e70'
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          font: { family: "'Noto Sans KR'", size: 11 },
+          padding: 10, boxWidth: 12, usePointStyle: true
+        }
+      },
+      tooltip: {
+        titleFont: { family: "'Noto Sans KR'" },
+        bodyFont: { family: "'Noto Sans KR'" }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
