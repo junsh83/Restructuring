@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교당 재무상태 분석</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink0: #0f1923; --ink1: #2a3a4a; --ink2: #4a5e70; --ink3: #8099ad;
+  --bg: #f5f7f9; --bg1: #edf1f5; --white: #fff; --border: #dce4ec;
+  --r: #b91c1c; --rbg: #fef2f2; --rb: #fca5a5;
+  --o: #c2410c; --obg: #fff7ed; --ob: #fdba74;
+  --b: #1e40af; --bbg: #eff6ff; --bb: #93c5fd;
+  --g: #166534; --gbg: #f0fdf4; --gb: #86efac;
+  --p: #7c3aed; --pbg: #f5f3ff; --pb: #c4b5fd;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--ink0); font-size: 14px; line-height: 1.7; }
+
+.page-header { background: var(--ink0); color: #fff; padding: 48px 0 40px; }
+.inner { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+.eye { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .15em; color: var(--ink3); text-transform: uppercase; margin-bottom: 12px; }
+.page-header h1 { font-size: 25px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+.page-header .sub { font-size: 13px; color: var(--ink3); line-height: 1.6; }
+.kpi-row { display: flex; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
+.kpi { display: flex; flex-direction: column; gap: 2px; }
+.kpi-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .1em; color: var(--ink3); text-transform: uppercase; }
+.kpi-val { font-size: 22px; font-weight: 700; color: #fff; }
+.kpi-val span { font-size: 12px; font-weight: 400; color: var(--ink3); margin-left: 3px; }
+
+section { padding: 44px 0; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-size: 19px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+.sec-desc { font-size: 13px; color: var(--ink2); margin-bottom: 22px; line-height: 1.7; }
+
+/* 지표 카드 */
+.metric-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+.metric-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 14px; position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.m1::before { background: var(--r); } .m2::before { background: var(--o); }
+.m3::before { background: var(--b); } .m4::before { background: var(--g); }
+.metric-badge { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
+.m1 .metric-badge { background: var(--rbg); color: var(--r); }
+.m2 .metric-badge { background: var(--obg); color: var(--o); }
+.m3 .metric-badge { background: var(--bbg); color: var(--b); }
+.m4 .metric-badge { background: var(--gbg); color: var(--g); }
+.metric-name { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+.metric-formula { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink2); line-height: 1.5; margin-bottom: 4px; }
+.metric-note { font-size: 11px; color: var(--ink3); line-height: 1.4; }
+
+/* 콜아웃 */
+.callout { background: var(--bg1); border-left: 3px solid var(--ink2); border-radius: 0 8px 8px 0; padding: 13px 16px; font-size: 13px; color: var(--ink1); margin-bottom: 16px; line-height: 1.7; }
+.callout strong { color: var(--ink0); }
+.callout.warn { border-color: var(--o); background: var(--obg); }
+.callout.danger { border-color: var(--r); background: var(--rbg); }
+.callout.info { border-color: var(--b); background: var(--bbg); }
+
+/* 차트 */
+.chart-box { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.chart-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.chart-sub { font-size: 11px; color: var(--ink3); margin-bottom: 14px; }
+.chart-wrap { position: relative; height: 360px; }
+.chart-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* 테이블 */
+.tbl-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+thead tr { background: var(--ink0); color: #fff; }
+thead th { padding: 9px 10px; text-align: left; font-weight: 500; font-size: 11px; white-space: nowrap; }
+thead th.center { text-align: center; }
+tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+tbody tr:hover { background: var(--bg1); }
+td { padding: 8px 10px; color: var(--ink1); white-space: nowrap; }
+td.center { text-align: center; }
+.neg { color: var(--r); font-weight: 600; }
+.pos { color: var(--g); font-weight: 600; }
+.warn-text { color: var(--o); font-weight: 600; }
+
+.tier-pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.tier-r { background: var(--rbg); color: var(--r); }
+.tier-o { background: var(--obg); color: var(--o); }
+.tier-b { background: var(--bbg); color: var(--b); }
+.tier-g { background: var(--gbg); color: var(--g); }
+
+.filter-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.filter-bar label { font-size: 12px; color: var(--ink2); font-weight: 500; }
+select { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; background: var(--white); color: var(--ink0); cursor: pointer; }
+
+.row-hidden { display: none !important; }
+
+@media (max-width: 760px) {
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .chart-grid2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="inner">
+    <div class="eye">서울교구 교화구조개선 TF · 원기 111년</div>
+    <h1>교당 재무상태 분석 — 전체 56개 교당</h1>
+    <div class="sub">원기108~110년(3개년) 평균 기준 · 통합교당 단위 · 특별이익/손실 제외 통상 운영 기준</div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-label">분석 교당</div><div class="kpi-val">56<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">자립도 평균</div><div class="kpi-val">112.3<span>%</span></div></div>
+      <div class="kpi"><div class="kpi-label">자립도 100% 미만</div><div class="kpi-val" style="color:#fca5a5">23<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">운영차액 적자</div><div class="kpi-val" style="color:#fdba74">13<span>개</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: 지표 정의 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 01</div>
+  <h2>재무상태 4개 지표</h2>
+  <p class="sec-desc">단일 지표로는 재정 건전성을 판단할 수 없다. 자립도(흐름)·외부의존도(독립성)·운영차액률(추세)·유동성(비축)을 함께 본다. 모든 지표는 원기108~110년 평균이며, 부동산 매각 등 특별이익·손실은 제외한 통상 운영 기준이다.</p>
+
+  <div class="metric-grid">
+    <div class="metric-card m1">
+      <div class="metric-badge">01 · 자립도</div>
+      <div class="metric-name">헌공금 / 통상비용</div>
+      <div class="metric-formula">헌공금수입(연평균) ÷ 통상운영비용(연평균) × 100</div>
+      <div class="metric-note">100% 이상이면 헌공금만으로 운영비를 충당. 100% 미만이면 적자 구조로 보조금·예금에 의존.</div>
+    </div>
+    <div class="metric-card m2">
+      <div class="metric-badge">02 · 외부의존도</div>
+      <div class="metric-name">보조금 / 총수익</div>
+      <div class="metric-formula">전입및보조금수입 ÷ 통상총수익 × 100</div>
+      <div class="metric-note">교구 전입금 등 외부 지원이 수익의 몇 %인지. 높을수록 자체 교화력보다 외부 지원으로 유지.</div>
+    </div>
+    <div class="metric-card m3">
+      <div class="metric-badge">03 · 운영차액률</div>
+      <div class="metric-name">(수익−비용) / 수익</div>
+      <div class="metric-formula">통상운영차액 ÷ 통상총수익 × 100</div>
+      <div class="metric-note">당기 흑자/적자 비율. 음수가 지속되면 누적 결손이 쌓이는 구조.</div>
+    </div>
+    <div class="metric-card m4">
+      <div class="metric-badge">04 · 유동성비율</div>
+      <div class="metric-name">유동자산 / 통상비용</div>
+      <div class="metric-formula">유동자산(110년) ÷ 통상연간비용</div>
+      <div class="metric-note">현금·예금이 연간 비용의 몇 배인지. 1.0 미만이면 1년 치 비상금도 없는 상태.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>자산 규모가 아니라 현금 흐름을 본다.</strong> 토지·건물 같은 고정자산이 커도 유동성비율이 낮으면 당장 운영에 쓸 수 있는 자금은 빈약하다. 헌공금 합계만으로는 이런 차이를 구분할 수 없다.
+  </div>
+</div>
+</section>
+
+<!-- SECTION 2: 분포 산점도 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 02</div>
+  <h2>자립도 × 운영차액률 — 56개 교당 분포</h2>
+  <p class="sec-desc">X축: 자립도(%, 100 기준선) · Y축: 운영차액률(%, 0 기준선) · 점 크기: 헌공금 규모 · 색상: 위험 등급</p>
+  <div class="chart-box">
+    <div class="chart-wrap"><canvas id="scatterChart"></canvas></div>
+  </div>
+  <div class="callout danger">
+    <strong>좌하단(자립도&lt;100, 운영차액률&lt;0)이 이중 위험 구간.</strong> 헌공금으로 운영비를 못 대면서 동시에 적자가 나는 교당은 예금을 까먹는 구조다. 도봉·원효·면목교당이 이 구간에 위치한다.
+  </div>
+</div>
+</section>
+
+<!-- SECTION 3: 유동성 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 03</div>
+  <h2>유동성비율 — 비상금 비축 현황</h2>
+  <p class="sec-desc">유동자산이 연간 통상비용의 몇 배인지. 1.0 미만은 1년 치 운영비도 비축하지 못한 상태.</p>
+  <div class="chart-box">
+    <div class="chart-wrap" style="height:300px;"><canvas id="liquidityChart"></canvas></div>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 4: 전체 테이블 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 04</div>
+  <h2>56개 교당 재무지표 전체</h2>
+  <p class="sec-desc">자립도 낮은 순 정렬. 등급은 자립도+운영차액률 조합 기준.</p>
+
+  <div class="filter-bar">
+    <label>등급 필터</label>
+    <select id="tierFilter" onchange="filterTable()">
+      <option value="all">전체</option>
+      <option value="r">위험 (자립도&lt;90 & 적자)</option>
+      <option value="o">주의 (자립도&lt;100 또는 적자)</option>
+      <option value="b">양호</option>
+      <option value="g">우수 (자립도&gt;120 & 흑자)</option>
+    </select>
+    <label style="margin-left:8px;">지구</label>
+    <select id="jiguFilter" onchange="filterTable()">
+      <option value="all">전체</option>
+      <option value="서울지구">서울지구</option>
+      <option value="종로지구">종로지구</option>
+      <option value="원남지구">원남지구</option>
+      <option value="화곡지구">화곡지구</option>
+      <option value="강남지구">강남지구</option>
+      <option value="여의도지구">여의도지구</option>
+    </select>
+  </div>
+
+  <div class="tbl-scroll">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th>교당</th><th>지구</th><th class="center">교무수</th>
+          <th class="center">헌공금(연평균)</th>
+          <th class="center">자립도</th>
+          <th class="center">외부의존도</th>
+          <th class="center">운영차액률</th>
+          <th class="center">유동성비율</th>
+          <th class="center">교도1인당헌공금</th>
+          <th class="center">등급</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 5: 해석 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 05</div>
+  <h2>해석 시 유의사항</h2>
+  <div class="callout">
+    <strong>마포교당 자립도 447%는 이례적 고값.</strong> 표본 기간 중 대형 희사 또는 일시적 수입이 통상수익으로 분류된 결과일 가능성이 있다. 원자료 확인 후 해석할 필요가 있다.
+  </div>
+  <div class="callout warn">
+    <strong>도봉·원효·면목교당은 4개 지표 모두 위험권.</strong> 자립도 60~85%대, 운영차액률 음수, 유동성비율 1.0 미만이 겹친다. 심층진단 대상(앞선 선정 기준 4점·3점 교당)과도 다수 겹쳐 위기의 다차원성을 보여준다.
+  </div>
+  <div class="callout info">
+    <strong>외부의존도가 높다고 반드시 나쁜 것은 아니다.</strong> 종로·강화·개포교당처럼 외부의존도 20% 이상인 교당은 교구 지원을 받고 있다는 뜻이며, 이는 이미 구조적 지원이 작동하고 있다는 신호로도 읽을 수 있다.
+  </div>
+  <div class="callout">
+    <strong>자산(고정자산) 규모는 이번 분석에 포함하되 가중치를 두지 않았다.</strong> 토지·건물은 매각이 쉽지 않아 단기 재정 건전성과는 별개로 다뤄야 한다. 통합·매각 논의 시에는 별도 자산 실사가 필요하다.
+  </div>
+  <div style="margin-top:16px; font-size:12px; color:var(--ink3); font-family:'IBM Plex Mono',monospace; line-height:1.6;">
+    데이터: df_seoul_fin_cleaned_unique(원기97~108) + 서울교구_회계데이터_109_110(원기109~110) · 통합 교당: 역삼(압구정·대치), 한강(반포·남서울), 불광(구산), 강남(거마), 중구(성동) · 제외: 공릉·은혜의집·서울이주민·은덕문화원교당, 특수교당 4개 · 기준연도: 원기108~110 평균(특별이익·손실 제외)
+  </div>
+</div>
+</section>
+
+<script>
+const DATA = [{"교당": "가락교당", "지구": "강남지구", "교무수": 2, "헌공금": 278162696.0, "자립도": 107.7, "외부의존도": 3.1, "운영차액률": 16.8, "유동성비율": 1.6, "교도1인당헌공금": 572351.0, "관리교도수": 486, "출석": 4833}, {"교당": "강남교당", "지구": "강남지구", "교무수": 5, "헌공금": 990418004.0, "자립도": 123.4, "외부의존도": 0.2, "운영차액률": 21.0, "유동성비율": 0.78, "교도1인당헌공금": 672382.0, "관리교도수": 1473, "출석": 21541}, {"교당": "강동교당", "지구": "강남지구", "교무수": 2, "헌공금": 227694644.0, "자립도": 115.8, "외부의존도": 3.1, "운영차액률": 22.2, "유동성비율": 1.32, "교도1인당헌공금": 1105314.0, "관리교도수": 206, "출석": 6750}, {"교당": "김포교당", "지구": "화곡지구", "교무수": 1, "헌공금": 89864392.0, "자립도": 103.2, "외부의존도": 5.3, "운영차액률": 8.3, "유동성비율": 0.03, "교도1인당헌공금": 421899.0, "관리교도수": 213, "출석": 1448}, {"교당": "목동교당", "지구": "화곡지구", "교무수": 2, "헌공금": 179481184.0, "자립도": 100.3, "외부의존도": 3.6, "운영차액률": 15.6, "유동성비율": 0.35, "교도1인당헌공금": 455536.0, "관리교도수": 394, "출석": 2439}, {"교당": "강화교당", "지구": "화곡지구", "교무수": 1, "헌공금": 122115667.0, "자립도": 108.6, "외부의존도": 21.3, "운영차액률": 32.3, "유동성비율": 0.1, "교도1인당헌공금": 1197212.0, "관리교도수": 102, "출석": 1607}, {"교당": "개봉교당", "지구": "화곡지구", "교무수": 2, "헌공금": 157318000.0, "자립도": 111.4, "외부의존도": 0.2, "운영차액률": 16.3, "유동성비율": 2.19, "교도1인당헌공금": 465438.0, "관리교도수": 338, "출석": 2980}, {"교당": "개포교당", "지구": "강남지구", "교무수": 1, "헌공금": 53455000.0, "자립도": 74.0, "외부의존도": 22.9, "운영차액률": 0.8, "유동성비율": 0.11, "교도1인당헌공금": 481577.0, "관리교도수": 111, "출석": 758}, {"교당": "공항교당", "지구": "화곡지구", "교무수": 1, "헌공금": 122146460.0, "자립도": 100.8, "외부의존도": 6.3, "운영차액률": 7.6, "유동성비율": 0.07, "교도1인당헌공금": 379337.0, "관리교도수": 322, "출석": 1291}, {"교당": "구로교당", "지구": "화곡지구", "교무수": 2, "헌공금": 229538869.0, "자립도": 86.2, "외부의존도": 0.7, "운영차액률": -11.4, "유동성비율": 0.36, "교도1인당헌공금": 1159287.0, "관리교도수": 198, "출석": 3807}, {"교당": "구의교당", "지구": "원남지구", "교무수": 1, "헌공금": 92915487.0, "자립도": 116.9, "외부의존도": 0.2, "운영차액률": 18.7, "유동성비율": 2.17, "교도1인당헌공금": 619437.0, "관리교도수": 150, "출석": 1032}, {"교당": "한강교당", "지구": "여의도지구", "교무수": 2, "헌공금": 392365833.0, "자립도": 86.2, "외부의존도": 0.0, "운영차액률": 3.3, "유동성비율": 0.94, "교도1인당헌공금": 799116.0, "관리교도수": 491, "출석": 5948}, {"교당": "신길교당", "지구": "여의도지구", "교무수": 1, "헌공금": 88709400.0, "자립도": 126.4, "외부의존도": 0.0, "운영차액률": 22.5, "유동성비율": 1.81, "교도1인당헌공금": 836881.0, "관리교도수": 106, "출석": 1294}, {"교당": "역삼교당", "지구": "강남지구", "교무수": 2, "헌공금": 554835623.0, "자립도": 166.1, "외부의존도": 1.8, "운영차액률": 41.1, "유동성비율": 0.09, "교도1인당헌공금": 575556.0, "관리교도수": 964, "출석": 5729}, {"교당": "도봉교당", "지구": "종로지구", "교무수": 1, "헌공금": 82173136.0, "자립도": 43.6, "외부의존도": 0.9, "운영차액률": -67.7, "유동성비율": 0.1, "교도1인당헌공금": 864980.0, "관리교도수": 95, "출석": 1238}, {"교당": "돈암교당", "지구": "종로지구", "교무수": 2, "헌공금": 350150691.0, "자립도": 204.6, "외부의존도": 3.0, "운영차액률": 53.5, "유동성비율": 0.5, "교도1인당헌공금": 964602.0, "관리교도수": 363, "출석": 3164}, {"교당": "동두천교당", "지구": "종로지구", "교무수": 1, "헌공금": 53939801.0, "자립도": 92.2, "외부의존도": 9.0, "운영차액률": 1.4, "유동성비율": 0.14, "교도1인당헌공금": 345768.0, "관리교도수": 156, "출석": 482}, {"교당": "마포교당", "지구": "서울지구", "교무수": 1, "헌공금": 394439951.0, "자립도": 447.4, "외부의존도": 0.0, "운영차액률": 80.3, "유동성비율": 3.62, "교도1인당헌공금": 2496455.0, "관리교도수": 158, "출석": 2044}, {"교당": "면목교당", "지구": "원남지구", "교무수": 1, "헌공금": 36694334.0, "자립도": 84.2, "외부의존도": 0.0, "운영차액률": -17.1, "유동성비율": 0.91, "교도1인당헌공금": 407715.0, "관리교도수": 90, "출석": 611}, {"교당": "방배교당", "지구": "여의도지구", "교무수": 1, "헌공금": 86746900.0, "자립도": 90.8, "외부의존도": 0.0, "운영차액률": -2.3, "유동성비율": 0.02, "교도1인당헌공금": 1098062.0, "관리교도수": 79, "출석": 1054}, {"교당": "방학교당", "지구": "종로지구", "교무수": 1, "헌공금": 117267574.0, "자립도": 100.4, "외부의존도": 13.6, "운영차액률": 15.5, "유동성비율": 1.47, "교도1인당헌공금": 411465.0, "관리교도수": 285, "출석": 1549}, {"교당": "불광교당", "지구": "서울지구", "교무수": 1, "헌공금": 138621787.0, "자립도": 203.7, "외부의존도": 1.3, "운영차액률": 56.0, "유동성비율": 3.1, "교도1인당헌공금": 386133.0, "관리교도수": 359, "출석": 1809}, {"교당": "사직교당", "지구": "종로지구", "교무수": 1, "헌공금": 46039272.0, "자립도": 82.1, "외부의존도": 9.8, "운영차액률": 0.9, "유동성비율": 1.29, "교도1인당헌공금": 489779.0, "관리교도수": 94, "출석": 807}, {"교당": "상계교당", "지구": "종로지구", "교무수": 1, "헌공금": 79701318.0, "자립도": 92.8, "외부의존도": 2.0, "운영차액률": -5.4, "유동성비율": 0.76, "교도1인당헌공금": 428502.0, "관리교도수": 186, "출석": 1416}, {"교당": "서울교당", "지구": "서울지구", "교무수": 3, "헌공금": 482163838.0, "자립도": 92.1, "외부의존도": 1.0, "운영차액률": -4.9, "유동성비율": 0.39, "교도1인당헌공금": 703889.0, "관리교도수": 685, "출석": 6568}, {"교당": "서초교당", "지구": "여의도지구", "교무수": 1, "헌공금": 155658791.0, "자립도": 136.4, "외부의존도": 0.0, "운영차액률": 36.8, "유동성비율": 0.95, "교도1인당헌공금": 1073509.0, "관리교도수": 145, "출석": 1119}, {"교당": "중구교당", "지구": "원남지구", "교무수": 2, "헌공금": 303763308.0, "자립도": 102.2, "외부의존도": 0.9, "운영차액률": 6.9, "유동성비율": 0.06, "교도1인당헌공금": 1081008.0, "관리교도수": 281, "출석": 4136}, {"교당": "송천교당", "지구": "종로지구", "교무수": 2, "헌공금": 260898000.0, "자립도": 90.9, "외부의존도": 3.6, "운영차액률": -4.6, "유동성비율": 0.1, "교도1인당헌공금": 438484.0, "관리교도수": 595, "출석": 3379}, {"교당": "금천교당", "지구": "화곡지구", "교무수": 1, "헌공금": 66012000.0, "자립도": 92.7, "외부의존도": 0.2, "운영차액률": 1.7, "유동성비율": 0.48, "교도1인당헌공금": 616935.0, "관리교도수": 107, "출석": 693}, {"교당": "신림교당", "지구": "여의도지구", "교무수": 3, "헌공금": 380695681.0, "자립도": 93.5, "외부의존도": 8.0, "운영차액률": 6.0, "유동성비율": 0.41, "교도1인당헌공금": 764449.0, "관리교도수": 498, "출석": 7442}, {"교당": "신촌교당", "지구": "서울지구", "교무수": 2, "헌공금": 162926277.0, "자립도": 90.3, "외부의존도": 0.2, "운영차액률": -0.3, "유동성비율": 2.33, "교도1인당헌공금": 539491.0, "관리교도수": 302, "출석": 2000}, {"교당": "안암교당", "지구": "종로지구", "교무수": 2, "헌공금": 230362341.0, "자립도": 113.4, "외부의존도": 2.2, "운영차액률": 17.5, "유동성비율": 0.5, "교도1인당헌공금": 928880.0, "관리교도수": 248, "출석": 3937}, {"교당": "양주교당", "지구": "종로지구", "교무수": 1, "헌공금": 36863857.0, "자립도": 84.6, "외부의존도": 7.3, "운영차액률": -6.6, "유동성비율": 0.82, "교도1인당헌공금": 996320.0, "관리교도수": 37, "출석": 644}, {"교당": "여의도교당", "지구": "여의도지구", "교무수": 3, "헌공금": 574576062.0, "자립도": 181.7, "외부의존도": 3.3, "운영차액률": 56.8, "유동성비율": 0.73, "교도1인당헌공금": 736636.0, "관리교도수": 780, "출석": 7461}, {"교당": "연희교당", "지구": "서울지구", "교무수": 1, "헌공금": 82345667.0, "자립도": 90.6, "외부의존도": 0.0, "운영차액률": 7.6, "유동성비율": 0.43, "교도1인당헌공금": 369263.0, "관리교도수": 223, "출석": 810}, {"교당": "영등포교당", "지구": "여의도지구", "교무수": 1, "헌공금": 48904167.0, "자립도": 88.4, "외부의존도": 0.5, "운영차액률": 15.1, "유동성비율": 0.06, "교도1인당헌공금": 321738.0, "관리교도수": 152, "출석": 1013}, {"교당": "원남교당", "지구": "원남지구", "교무수": 3, "헌공금": 868801959.0, "자립도": 142.1, "외부의존도": 0.4, "운영차액률": 31.7, "유동성비율": 0.02, "교도1인당헌공금": 1508337.0, "관리교도수": 576, "출석": 7630}, {"교당": "원효교당", "지구": "서울지구", "교무수": 1, "헌공금": 59676514.0, "자립도": 64.0, "외부의존도": 0.0, "운영차액률": -48.7, "유동성비율": 0.36, "교도1인당헌공금": 685937.0, "관리교도수": 87, "출석": 689}, {"교당": "유린교당", "지구": "원남지구", "교무수": 2, "헌공금": 142011267.0, "자립도": 108.4, "외부의존도": 0.0, "운영차액률": 11.0, "유동성비율": 0.15, "교도1인당헌공금": 577282.0, "관리교도수": 246, "출석": 2156}, {"교당": "은평교당", "지구": "서울지구", "교무수": 1, "헌공금": 78246000.0, "자립도": 98.3, "외부의존도": 2.1, "운영차액률": 4.2, "유동성비율": 1.38, "교도1인당헌공금": 966000.0, "관리교도수": 81, "출석": 1189}, {"교당": "의정부교당", "지구": "종로지구", "교무수": 1, "헌공금": 108916643.0, "자립도": 110.6, "외부의존도": 0.9, "운영차액률": 12.2, "유동성비율": 0.76, "교도1인당헌공금": 547320.0, "관리교도수": 199, "출석": 1505}, {"교당": "이문교당", "지구": "원남지구", "교무수": 1, "헌공금": 172206387.0, "자립도": 110.9, "외부의존도": 0.7, "운영차액률": 12.7, "유동성비율": 0.49, "교도1인당헌공금": 454370.0, "관리교도수": 379, "출석": 2486}, {"교당": "잠실교당", "지구": "강남지구", "교무수": 2, "헌공금": 215834883.0, "자립도": 106.6, "외부의존도": 3.2, "운영차액률": 15.1, "유동성비율": 1.63, "교도1인당헌공금": 339363.0, "관리교도수": 636, "출석": 3925}, {"교당": "장충교당", "지구": "원남지구", "교무수": 1, "헌공금": 172356700.0, "자립도": 114.8, "외부의존도": 8.4, "운영차액률": 28.6, "유동성비율": 0.1, "교도1인당헌공금": 1149045.0, "관리교도수": 150, "출석": 2052}, {"교당": "전곡교당", "지구": "종로지구", "교무수": 1, "헌공금": 109920203.0, "자립도": 121.7, "외부의존도": 0.0, "운영차액률": 19.4, "유동성비율": 1.74, "교도1인당헌공금": 1169364.0, "관리교도수": 94, "출석": 1211}, {"교당": "전농교당", "지구": "원남지구", "교무수": 1, "헌공금": 88095677.0, "자립도": 125.4, "외부의존도": 0.0, "운영차액률": 22.6, "유동성비율": 0.3, "교도1인당헌공금": 429735.0, "관리교도수": 205, "출석": 1724}, {"교당": "정릉교당", "지구": "종로지구", "교무수": 1, "헌공금": 129977500.0, "자립도": 99.3, "외부의존도": 0.6, "운영차액률": 7.4, "유동성비율": 2.43, "교도1인당헌공금": 838565.0, "관리교도수": 155, "출석": 2032}, {"교당": "종로교당", "지구": "종로지구", "교무수": 2, "헌공금": 166884431.0, "자립도": 83.3, "외부의존도": 23.1, "운영차액률": 17.2, "유동성비율": 3.4, "교도1인당헌공금": 579460.0, "관리교도수": 288, "출석": 2806}, {"교당": "중곡교당", "지구": "원남지구", "교무수": 1, "헌공금": 195373927.0, "자립도": 102.0, "외부의존도": 0.2, "운영차액률": 2.7, "유동성비율": 0.47, "교도1인당헌공금": 669089.0, "관리교도수": 292, "출석": 2621}, {"교당": "태릉교당", "지구": "원남지구", "교무수": 1, "헌공금": 55624000.0, "자립도": 71.8, "외부의존도": 0.0, "운영차액률": -9.7, "유동성비율": 6.74, "교도1인당헌공금": 226114.0, "관리교도수": 246, "출석": 1560}, {"교당": "홍제교당", "지구": "서울지구", "교무수": 1, "헌공금": 78981033.0, "자립도": 86.4, "외부의존도": 0.0, "운영차액률": -8.4, "유동성비율": 1.05, "교도1인당헌공금": 374318.0, "관리교도수": 211, "출석": 1305}, {"교당": "화곡교당", "지구": "화곡지구", "교무수": 2, "헌공금": 245088345.0, "자립도": 108.2, "외부의존도": 0.3, "운영차액률": 15.9, "유동성비율": 2.51, "교도1인당헌공금": 466835.0, "관리교도수": 525, "출석": 3990}, {"교당": "화정교당", "지구": "서울지구", "교무수": 2, "헌공금": 232755120.0, "자립도": 99.6, "외부의존도": 2.7, "운영차액률": 3.7, "유동성비율": 0.81, "교도1인당헌공금": 1043745.0, "관리교도수": 223, "출석": 2584}, {"교당": "일산교당", "지구": "서울지구", "교무수": 2, "헌공금": 202691743.0, "자립도": 96.0, "외부의존도": 1.8, "운영차액률": 1.0, "유동성비율": 0.96, "교도1인당헌공금": 499241.0, "관리교도수": 406, "출석": 3304}, {"교당": "파주교당", "지구": "서울지구", "교무수": 1, "헌공금": 72534000.0, "자립도": 102.1, "외부의존도": 7.7, "운영차액률": 12.0, "유동성비율": 0.25, "교도1인당헌공금": 381758.0, "관리교도수": 190, "출석": 501}, {"교당": "포천교당", "지구": "종로지구", "교무수": 1, "헌공금": 75346333.0, "자립도": 113.3, "외부의존도": 3.1, "운영차액률": 14.6, "유동성비율": 0.13, "교도1인당헌공금": 1752240.0, "관리교도수": 43, "출석": 465}];
+
+function getTier(d) {
+  if (d.자립도 < 90 && d.운영차액률 < 0) return 'r';
+  if (d.자립도 < 100 || d.운영차액률 < 0) return 'o';
+  if (d.자립도 >= 120 && d.운영차액률 >= 0) return 'g';
+  return 'b';
+}
+const TIER_LABEL = { r: '위험', o: '주의', b: '양호', g: '우수' };
+const TIER_COLOR = { r: '#b91c1c', o: '#c2410c', b: '#1e40af', g: '#166534' };
+const TIER_BG = { r: 'rgba(185,28,28,0.15)', o: 'rgba(194,65,12,0.15)', b: 'rgba(30,64,175,0.1)', g: 'rgba(22,101,52,0.1)' };
+
+// ── SCATTER ──
+(function(){
+  const tiers = ['r','o','b','g'];
+  const datasets = tiers.map(t => {
+    const pts = DATA.filter(d => getTier(d) === t).map(d => ({
+      x: d.자립도, y: d.운영차액률, label: d.교당, hg: d.헌공금
+    }));
+    return {
+      label: `${TIER_LABEL[t]}`,
+      data: pts,
+      backgroundColor: TIER_BG[t],
+      borderColor: TIER_COLOR[t],
+      borderWidth: 1.5,
+      pointRadius: pts.map(p => Math.max(4, Math.min(14, Math.sqrt(p.hg)/700))),
+      pointHoverRadius: pts.map(p => Math.max(6, Math.min(16, Math.sqrt(p.hg)/700)+2)),
+    };
+  });
+
+  new Chart(document.getElementById('scatterChart').getContext('2d'), {
+    type: 'scatter',
+    data: { datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { family: "'Noto Sans KR'", size: 11 }, padding: 14, boxWidth: 10, usePointStyle: true } },
+        tooltip: {
+          callbacks: { label: ctx => `${ctx.raw.label} | 자립도: ${ctx.raw.x}% | 운영차액률: ${ctx.raw.y}%` },
+          titleFont: { family: "'Noto Sans KR'" }, bodyFont: { family: "'Noto Sans KR'" }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: '자립도 (%)', font: { family: "'Noto Sans KR'", size: 11 } },
+             grid: { color: '#edf1f5' }, ticks: { font: { family: "'IBM Plex Mono'", size: 10 } } },
+        y: { title: { display: true, text: '운영차액률 (%)', font: { family: "'Noto Sans KR'", size: 11 } },
+             grid: { color: '#edf1f5' }, ticks: { font: { family: "'IBM Plex Mono'", size: 10 } } }
+      }
+    }
+  });
+})();
+
+// ── LIQUIDITY BAR ──
+(function(){
+  const sorted = [...DATA].sort((a,b) => a.유동성비율 - b.유동성비율);
+  const colors = sorted.map(d => d.유동성비율 < 0.3 ? '#b91c1c' : d.유동성비율 < 1 ? '#c2410c' : '#166534');
+
+  new Chart(document.getElementById('liquidityChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: sorted.map(d => d.교당),
+      datasets: [{ label: '유동성비율', data: sorted.map(d => d.유동성비율), backgroundColor: colors, borderRadius: 2 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}배` }, titleFont:{family:"'Noto Sans KR'"}, bodyFont:{family:"'IBM Plex Mono'"} } },
+      scales: {
+        x: { ticks: { display: false } },
+        y: { title: { display: true, text: '유동자산 / 연간비용 (배)', font: { family: "'Noto Sans KR'", size: 11 } },
+             grid: { color: '#edf1f5' }, ticks: { font: { family: "'IBM Plex Mono'", size: 10 } } }
+      }
+    }
+  });
+})();
+
+// ── TABLE ──
+(function(){
+  const tbody = document.getElementById('tableBody');
+  const sorted = [...DATA].sort((a,b) => a.자립도 - b.자립도);
+  sorted.forEach(d => {
+    const tier = getTier(d);
+    const tr = document.createElement('tr');
+    tr.dataset.tier = tier;
+    tr.dataset.jigu = d.지구;
+    const fmt = n => n.toLocaleString();
+    const pctClass = v => v < 0 ? 'neg' : v >= 100 ? 'pos' : '';
+    tr.innerHTML = `
+      <td><strong>${d.교당}</strong></td>
+      <td>${d.지구.replace('지구','')}</td>
+      <td class="center">${d.교무수}인</td>
+      <td class="center">${(d.헌공금/10000).toFixed(0)}만</td>
+      <td class="center ${pctClass(d.자립도)}">${d.자립도.toFixed(1)}%</td>
+      <td class="center">${d.외부의존도.toFixed(1)}%</td>
+      <td class="center ${d.운영차액률<0?'neg':'pos'}">${d.운영차액률>0?'+':''}${d.운영차액률.toFixed(1)}%</td>
+      <td class="center ${d.유동성비율<0.3?'neg':d.유동성비율<1?'warn-text':'pos'}">${d.유동성비율.toFixed(2)}배</td>
+      <td class="center">${(d.교도1인당헌공금/10000).toFixed(0)}만</td>
+      <td class="center"><span class="tier-pill tier-${tier}">${TIER_LABEL[tier]}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+})();
+
+function filterTable() {
+  const tf = document.getElementById('tierFilter').value;
+  const jf = document.getElementById('jiguFilter').value;
+  document.querySelectorAll('#tableBody tr').forEach(tr => {
+    const tierOk = tf === 'all' || tr.dataset.tier === tf;
+    const jiguOk = jf === 'all' || tr.dataset.jigu === jf;
+    tr.classList.toggle('row-hidden', !(tierOk && jiguOk));
+  });
+}
+</script>
+</body>
+</html>
