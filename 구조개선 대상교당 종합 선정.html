@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 구조개선 대상교당 종합 선정</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink0: #0f1923; --ink1: #2a3a4a; --ink2: #4a5e70; --ink3: #8099ad;
+  --bg: #f5f7f9; --bg1: #edf1f5; --white: #fff; --border: #dce4ec;
+
+  --s: #7f1d1d; --sm: #b91c1c; --sl: #fef2f2; --sb: #fca5a5;
+  --a: #7c2d12; --am: #c2410c; --al: #fff7ed; --ab: #fdba74;
+  --b: #713f12; --bm: #a16207; --bl: #fffbeb; --bb: #fcd34d;
+  --c: #1e3a5f; --cm: #2563eb; --cl: #eff6ff; --cb: #93c5fd;
+  --d: #14532d; --dm: #166534; --dl: #f0fdf4; --db: #86efac;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--ink0); font-size: 14px; line-height: 1.7; }
+
+.page-header { background: var(--ink0); color: #fff; padding: 48px 0 40px; }
+.inner { max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+.eye { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .15em; color: var(--ink3); text-transform: uppercase; margin-bottom: 12px; }
+.page-header h1 { font-size: 25px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+.page-header .sub { font-size: 13px; color: var(--ink3); line-height: 1.6; }
+.kpi-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+.kpi { display: flex; flex-direction: column; gap: 2px; }
+.kpi-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .1em; color: var(--ink3); text-transform: uppercase; }
+.kpi-val { font-size: 22px; font-weight: 700; color: #fff; }
+.kpi-val span { font-size: 12px; font-weight: 400; color: var(--ink3); margin-left: 3px; }
+
+section { padding: 44px 0; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-size: 19px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+.sec-desc { font-size: 13px; color: var(--ink2); margin-bottom: 22px; line-height: 1.7; }
+
+/* 매트릭스 */
+.matrix-wrap { overflow-x: auto; margin-bottom: 20px; }
+.matrix { border-collapse: collapse; width: 100%; min-width: 640px; }
+.matrix th, .matrix td { border: 1px solid var(--border); padding: 14px; text-align: center; vertical-align: middle; }
+.matrix th { background: var(--ink0); color: #fff; font-size: 12px; font-weight: 500; }
+.matrix .corner { background: var(--bg1); }
+.matrix .axis-label { background: var(--bg1); font-size: 11px; font-weight: 700; color: var(--ink2); writing-mode: vertical-rl; text-orientation: mixed; }
+.mcell { font-size: 13px; font-weight: 700; padding: 10px; border-radius: 6px; }
+.mcell .n { font-size: 20px; display: block; }
+.mcell .l { font-size: 10px; font-weight: 500; display: block; margin-top: 2px; }
+.mc-s { background: var(--sl); color: var(--sm); border: 1px solid var(--sb); }
+.mc-a { background: var(--al); color: var(--am); border: 1px solid var(--ab); }
+.mc-b { background: var(--bl); color: var(--bm); border: 1px solid var(--bb); }
+.mc-c { background: var(--cl); color: var(--cm); border: 1px solid var(--cb); }
+.mc-d { background: var(--dl); color: var(--dm); border: 1px solid var(--db); }
+
+/* 등급 카드 */
+.tier-legend { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.tl-item { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid; }
+.tl-s { background: var(--sl); border-color: var(--sb); color: var(--sm); }
+.tl-a { background: var(--al); border-color: var(--ab); color: var(--am); }
+.tl-b { background: var(--bl); border-color: var(--bb); color: var(--bm); }
+.tl-c { background: var(--cl); border-color: var(--cb); color: var(--cm); }
+.tl-d { background: var(--dl); border-color: var(--db); color: var(--dm); }
+
+/* 그룹 블록 */
+.grp-block { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.grp-header { padding: 14px 18px 12px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.grp-badge { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.gs .grp-badge { background: var(--sl); color: var(--sm); border: 1px solid var(--sb); }
+.ga .grp-badge { background: var(--al); color: var(--am); border: 1px solid var(--ab); }
+.gb .grp-badge { background: var(--bl); color: var(--bm); border: 1px solid var(--bb); }
+.grp-title { font-size: 14px; font-weight: 700; }
+.grp-sub { font-size: 12px; color: var(--ink2); }
+.grp-body { padding: 0 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+.parish-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); }
+.parish-rank { font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700; color: var(--ink3); min-width: 26px; line-height: 1; padding-top: 2px; }
+.gs .parish-rank { color: var(--sm); } .ga .parish-rank { color: var(--am); } .gb .parish-rank { color: var(--bm); }
+.parish-info { flex: 1; min-width: 0; }
+.parish-name { font-size: 15px; font-weight: 700; color: var(--ink0); }
+.parish-jigu { font-size: 11px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; }
+.parish-metrics { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
+.metric-chip { font-size: 11px; font-family: 'IBM Plex Mono', monospace; padding: 2px 7px; border-radius: 4px; }
+.mc-score { background: #fef2f2; color: #991b1b; }
+.mc-fin-위험 { background: #fef2f2; color: #991b1b; }
+.mc-fin-주의 { background: #fff7ed; color: #9a3412; }
+.mc-fin-양호 { background: #eff6ff; color: #1e40af; }
+.mc-fin-우수 { background: #f0fdf4; color: #166534; }
+.parish-rationale { font-size: 12px; color: var(--ink2); line-height: 1.55; margin-top: 4px; }
+
+/* 콜아웃 */
+.callout { background: var(--bg1); border-left: 3px solid var(--ink2); border-radius: 0 8px 8px 0; padding: 13px 16px; font-size: 13px; color: var(--ink1); margin-bottom: 16px; line-height: 1.7; }
+.callout strong { color: var(--ink0); }
+.callout.danger { border-color: var(--sm); background: var(--sl); }
+.callout.warn { border-color: var(--am); background: var(--al); }
+.callout.info { border-color: var(--cm); background: var(--cl); }
+
+/* 차트 */
+.chart-box { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.chart-wrap { position: relative; height: 380px; }
+
+/* 테이블 */
+.tbl-scroll { overflow-x: auto; }
+table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table.data-table thead tr { background: var(--ink0); color: #fff; }
+table.data-table thead th { padding: 9px 10px; text-align: left; font-weight: 500; font-size: 11px; white-space: nowrap; }
+table.data-table thead th.center { text-align: center; }
+table.data-table tbody tr { border-bottom: 1px solid var(--border); }
+table.data-table tbody tr:hover { background: var(--bg1); }
+table.data-table td { padding: 8px 10px; color: var(--ink1); white-space: nowrap; }
+table.data-table td.center { text-align: center; }
+.tier-pill { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.tp-s { background: var(--sl); color: var(--sm); } .tp-a { background: var(--al); color: var(--am); }
+.tp-b { background: var(--bl); color: var(--bm); } .tp-c { background: var(--cl); color: var(--cm); }
+.tp-d { background: var(--dl); color: var(--dm); }
+
+.filter-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.filter-bar label { font-size: 12px; color: var(--ink2); font-weight: 500; }
+select { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; background: var(--white); color: var(--ink0); cursor: pointer; }
+.row-hidden { display: none !important; }
+
+@media (max-width: 760px) { .matrix { min-width: 540px; } }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="inner">
+    <div class="eye">서울교구 교화구조개선 TF · 원기 111년</div>
+    <h1>구조개선 대상교당 종합 선정</h1>
+    <div class="sub">교화구조 선정점수(5개 기준) × 재무상태 등급(4개 지표) 교차 분석 · 56개 교당</div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-label">S등급 복합위기</div><div class="kpi-val" style="color:#fca5a5">7<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">A등급 동반위기</div><div class="kpi-val" style="color:#fdba74">5<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">B등급 숨은위기</div><div class="kpi-val" style="color:#fcd34d">5<span>개</span></div></div>
+      <div class="kpi"><div class="kpi-label">D등급 안정</div><div class="kpi-val" style="color:#86efac">29<span>개</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: 종합 로직 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 01</div>
+  <h2>두 축의 교차 — 왜 종합해야 하는가</h2>
+  <p class="sec-desc">교화구조 선정점수(출석·교무·추세·입교)만 보면 재정이 받쳐주는 교당과 안 받쳐주는 교당이 같은 등급으로 묶인다. 재무상태만 보면 출석이 안정적인데 일시적 지출로 적자가 난 교당과 구조적으로 무너지는 교당이 같아진다. 두 축을 교차해야 처방이 달라지는 그룹을 구분할 수 있다.</p>
+
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <tr>
+        <td class="corner"></td>
+        <td class="corner"></td>
+        <th colspan="4">재무등급</th>
+      </tr>
+      <tr>
+        <td class="corner"></td>
+        <td class="corner" style="font-size:11px;color:var(--ink3);font-weight:700;">선정점수 ＼ 재무</td>
+        <th>위험</th><th>주의</th><th>양호</th><th>우수</th>
+      </tr>
+      <tr>
+        <th rowspan="2" style="background:var(--ink0);">4점</th>
+        <td class="axis-label" style="background:transparent;border:none;"></td>
+        <td><div class="mcell mc-s"><span class="n">S</span><span class="l">복합위기</span></div></td>
+        <td><div class="mcell mc-s"><span class="n">S</span><span class="l">복합위기</span></div></td>
+        <td colspan="2"><div class="mcell mc-a"><span class="n">A</span><span class="l">자력회복 가능</span></div></td>
+      </tr>
+      <tr><td style="display:none;"></td></tr>
+      <tr>
+        <th>3점</th>
+        <td></td>
+        <td><div class="mcell mc-a"><span class="n">A</span><span class="l">동반위기</span></div></td>
+        <td><div class="mcell mc-a"><span class="n">A</span><span class="l">동반위기</span></div></td>
+        <td><div class="mcell mc-b"><span class="n">B</span><span class="l">재무가 버팀목</span></div></td>
+        <td><div class="mcell mc-b"><span class="n">B</span><span class="l">재무가 버팀목</span></div></td>
+      </tr>
+      <tr>
+        <th>0~2점</th>
+        <td></td>
+        <td><div class="mcell mc-b"><span class="n">B</span><span class="l">숨은 위기</span></div></td>
+        <td><div class="mcell mc-c"><span class="n">C</span><span class="l">경미한 위험</span></div></td>
+        <td colspan="2"><div class="mcell mc-d"><span class="n">D</span><span class="l">안정</span></div></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>읽는 법.</strong> S등급(4점+재무 위험·주의)은 교화와 재정이 동시에 무너지는 교당으로 가장 시급하다. B등급 중 "숨은 위기"는 출석 지표만 보면 눈에 띄지 않지만 재무가 무너지고 있는 교당으로, 선정 기준만 적용했을 때는 빠지는 사각지대다.
+  </div>
+</div>
+</section>
+
+<!-- SECTION 2: 산점도 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 02</div>
+  <h2>선정점수 × 자립도 — 56개 교당 분포</h2>
+  <p class="sec-desc">X축: 자립도(%, 100 기준선) · Y축: 교화구조 선정점수(0~4) · 점 크기: 헌공금 규모 · 색상: 종합등급</p>
+  <div class="chart-box">
+    <div class="chart-wrap"><canvas id="scatterChart"></canvas></div>
+  </div>
+  <div class="callout warn">
+    <strong>좌상단(선정점수 높음 + 자립도 낮음)이 S등급 영역.</strong> 원효·면목교당처럼 운영차액률까지 음수인 교당은 교화 위기가 재정 악화로 이어지는 악순환 구조에 들어선 상태다.
+  </div>
+</div>
+</section>
+
+<!-- SECTION 3: S등급 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 03</div>
+  <h2>S등급 — 복합위기 (7개)</h2>
+  <p class="sec-desc">교화구조 4점 + 재무 위험·주의. 교화와 재정이 동시에 무너지는 최우선 진단 대상.</p>
+
+  <div class="grp-block gs">
+    <div class="grp-header">
+      <span class="grp-badge">S · 복합위기</span>
+      <span class="grp-title">자립도 낮은 순 정렬</span>
+    </div>
+    <div class="grp-body">
+
+      <div class="parish-row">
+        <div class="parish-rank">1</div>
+        <div class="parish-info">
+          <div class="parish-name">원효교당</div>
+          <div class="parish-jigu">서울지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −78.9%</span>
+            <span class="metric-chip mc-fin-위험">자립도 64.0%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −48.7%</span>
+          </div>
+          <div class="parish-rationale">7개 교당 중 자립도 최저(64%)이면서 운영차액률도 −48.7%로 적자. 출석·재무 모두 악순환에 진입한 상태. 최우선 심층진단 필요.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">2</div>
+        <div class="parish-info">
+          <div class="parish-name">개포교당</div>
+          <div class="parish-jigu">강남지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −55.9%</span>
+            <span class="metric-chip mc-fin-주의">자립도 74.0%</span>
+            <span class="metric-chip mc-fin-주의">유동성비율 0.11배</span>
+          </div>
+          <div class="parish-rationale">운영차액률은 근소한 흑자(+0.8%)이나 유동성비율 0.11배로 비상금이 거의 없음. 단기 충격에 매우 취약한 구조.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">3</div>
+        <div class="parish-info">
+          <div class="parish-name">사직교당</div>
+          <div class="parish-jigu">종로지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −39.4%</span>
+            <span class="metric-chip mc-fin-주의">자립도 82.1%</span>
+            <span class="metric-chip mc-fin-주의">운영차액률 +0.9%</span>
+          </div>
+          <div class="parish-rationale">근소한 흑자이나 자립도 82%로 헌공금이 통상비용에 못 미침. 외부의존도 9.8%로 일부 교구 지원에 의존 중.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">4</div>
+        <div class="parish-info">
+          <div class="parish-name">면목교당</div>
+          <div class="parish-jigu">원남지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −68.0%</span>
+            <span class="metric-chip mc-fin-위험">자립도 84.2%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −17.1%</span>
+          </div>
+          <div class="parish-rationale">자립도 84%에 운영차액률 −17.1% 적자. 4점 교당 중 두 번째로 재무 위험도가 높음.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">5</div>
+        <div class="parish-info">
+          <div class="parish-name">연희교당</div>
+          <div class="parish-jigu">서울지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −65.5%</span>
+            <span class="metric-chip mc-fin-주의">자립도 90.6%</span>
+            <span class="metric-chip mc-fin-주의">유동성비율 0.43배</span>
+          </div>
+          <div class="parish-rationale">운영차액률은 +7.6%로 양수이나 자립도 90.6%로 여전히 헌공금만으로는 부족. 유동성도 0.43배로 낮음.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">6</div>
+        <div class="parish-info">
+          <div class="parish-name">금천교당</div>
+          <div class="parish-jigu">화곡지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −78.0%</span>
+            <span class="metric-chip mc-fin-주의">자립도 92.7%</span>
+            <span class="metric-chip mc-fin-주의">유동성비율 0.48배</span>
+          </div>
+          <div class="parish-rationale">추세 감소율(−78%)이 7개 교당 중 두 번째로 가파름. 재무는 근소한 적정 수준이나 출석 위기가 압도적.</div>
+        </div>
+      </div>
+
+      <div class="parish-row">
+        <div class="parish-rank">7</div>
+        <div class="parish-info">
+          <div class="parish-name">은평교당</div>
+          <div class="parish-jigu">서울지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −38.0%</span>
+            <span class="metric-chip mc-fin-주의">자립도 98.3%</span>
+            <span class="metric-chip mc-fin-주의">운영차액률 +4.2%</span>
+          </div>
+          <div class="parish-rationale">S등급 중 재무는 가장 안정적(자립도 98.3%, 유동성 1.38배)이나 최근 1년 출석 추가 감소(−22%)가 우려 신호.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 4: A등급 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 04</div>
+  <h2>A등급 — 동반위기 & 자력회복 가능 (5개)</h2>
+  <p class="sec-desc">교화구조 3점이면서 재무도 약한 교당(동반위기) + 교화구조 4점이지만 재무는 양호한 교당(자력회복 가능성).</p>
+
+  <div class="grp-block ga">
+    <div class="grp-header">
+      <span class="grp-badge">A · 동반위기</span>
+      <span class="grp-title">교화구조 3점 + 재무 위험·주의</span>
+    </div>
+    <div class="grp-body">
+      <div class="parish-row">
+        <div class="parish-rank">1</div>
+        <div class="parish-info">
+          <div class="parish-name">양주교당</div>
+          <div class="parish-jigu">종로지구 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −9.6%</span>
+            <span class="metric-chip mc-fin-위험">자립도 84.6%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −6.6%</span>
+          </div>
+          <div class="parish-rationale">출석 추세는 완만하나 재무가 위험 등급. 외곽 권역 진단 시 재무 요인도 함께 봐야 함.</div>
+        </div>
+      </div>
+      <div class="parish-row">
+        <div class="parish-rank">2</div>
+        <div class="parish-info">
+          <div class="parish-name">영등포교당</div>
+          <div class="parish-jigu">여의도지구 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −64.8%</span>
+            <span class="metric-chip mc-fin-주의">자립도 88.4%</span>
+            <span class="metric-chip mc-fin-주의">유동성비율 0.06배</span>
+          </div>
+          <div class="parish-rationale">유동성비율 0.06배로 56개 교당 중 최저권. 입교 역량은 남아있으나(100명) 재무 완충력이 거의 없음.</div>
+        </div>
+      </div>
+      <div class="parish-row">
+        <div class="parish-rank">3</div>
+        <div class="parish-info">
+          <div class="parish-name">동두천교당</div>
+          <div class="parish-jigu">종로지구 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −12.4%</span>
+            <span class="metric-chip mc-fin-주의">자립도 92.2%</span>
+            <span class="metric-chip mc-fin-주의">유동성비율 0.14배</span>
+          </div>
+          <div class="parish-rationale">외곽 권역 동시진단 대상. 재무 유동성도 낮아 외곽 권역 재편 논의에서 재무 통합 효과도 검토 필요.</div>
+        </div>
+      </div>
+      <div class="parish-row">
+        <div class="parish-rank">4</div>
+        <div class="parish-info">
+          <div class="parish-name">상계교당</div>
+          <div class="parish-jigu">종로지구 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −56.8%</span>
+            <span class="metric-chip mc-fin-주의">자립도 92.8%</span>
+            <span class="metric-chip mc-fin-주의">운영차액률 −5.4%</span>
+          </div>
+          <div class="parish-rationale">출석 규모는 1,729회로 여유가 있어 보였으나 재무는 적자. 외형 규모와 재정 건전성이 다르다는 사례.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp-block ga" style="margin-top:4px;">
+    <div class="grp-header">
+      <span class="grp-badge" style="background:var(--cl);color:var(--cm);border-color:var(--cb);">A · 자력회복 가능성</span>
+      <span class="grp-title">교화구조 4점이지만 재무는 양호</span>
+    </div>
+    <div class="grp-body">
+      <div class="parish-row">
+        <div class="parish-rank">5</div>
+        <div class="parish-info">
+          <div class="parish-name">포천교당</div>
+          <div class="parish-jigu">종로지구 · 4점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −71.2%</span>
+            <span class="metric-chip mc-fin-양호">자립도 113.3%</span>
+            <span class="metric-chip mc-fin-양호">운영차액률 +14.6%</span>
+          </div>
+          <div class="parish-rationale">선정점수는 4점으로 최우선군이나 재무는 자립도 113%로 양호. 단, 유동성비율 0.13배로 비상금은 부족. 재무 압박보다 인구·교화력 자체가 핵심 문제로 보임.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <strong>포천교당이 시사하는 점.</strong> 재무가 양호한데도 출석이 무너지는 경우는 "돈이 없어서"가 아니라 "사람이 줄어서" 발생하는 위기다. 외곽 권역(포천·동두천·양주) 진단에서는 재무 지원보다 인구 구조·접근성 대응이 우선될 가능성이 높다.
+  </div>
+</div>
+</section>
+
+<!-- SECTION 5: B등급 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 05</div>
+  <h2>B등급 — 숨은 위기 & 재무가 버팀목 (5개)</h2>
+  <p class="sec-desc">교화구조 선정 기준에서는 드러나지 않지만 재무가 위험한 교당(숨은 위기) + 교화구조는 약하나 재무가 받쳐주는 교당(재무가 버팀목).</p>
+
+  <div class="grp-block gb">
+    <div class="grp-header">
+      <span class="grp-badge">B · 숨은 위기</span>
+      <span class="grp-title">선정점수는 낮지만(0~2점) 재무는 위험 등급</span>
+    </div>
+    <div class="grp-body">
+      <div class="parish-row">
+        <div class="parish-rank">1</div>
+        <div class="parish-info">
+          <div class="parish-name">도봉교당</div>
+          <div class="parish-jigu">종로지구 · 2점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">선정점수 2점</span>
+            <span class="metric-chip mc-fin-위험">자립도 43.6%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −67.7%</span>
+          </div>
+          <div class="parish-rationale">56개 교당 중 자립도·운영차액률 모두 최저. 다만 108년 건축물관리비 2.5억원 등 일시적 시설비가 3개년 평균을 왜곡했을 가능성이 있어, 정밀 진단 시 단일 항목 확인이 우선.</div>
+        </div>
+      </div>
+      <div class="parish-row">
+        <div class="parish-rank">2</div>
+        <div class="parish-info">
+          <div class="parish-name">구로교당</div>
+          <div class="parish-jigu">화곡지구 · 0점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">선정점수 0점</span>
+            <span class="metric-chip mc-fin-위험">자립도 86.2%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −11.4%</span>
+          </div>
+          <div class="parish-rationale">출석은 안정적(2,287회)이라 선정 기준에서 0점으로 분류됐으나 재무는 적자 지속. 출석만으로 위기를 판단하면 놓치는 대표 사례.</div>
+        </div>
+      </div>
+      <div class="parish-row">
+        <div class="parish-rank">3</div>
+        <div class="parish-info">
+          <div class="parish-name">홍제교당</div>
+          <div class="parish-jigu">서울지구 · 2점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">선정점수 2점</span>
+            <span class="metric-chip mc-fin-위험">자립도 86.4%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −8.4%</span>
+          </div>
+          <div class="parish-rationale">추세 감소율 −65%로 상당히 가파르지만 출석 1,000회 이상이라 B기준 미해당, 선정점수 2점. 재무까지 함께 보면 위험 신호가 뚜렷.</div>
+        </div>
+      </div>
+      <div class="parish-row">
+        <div class="parish-rank">4</div>
+        <div class="parish-info">
+          <div class="parish-name">태릉교당</div>
+          <div class="parish-jigu">원남지구 · 2점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">선정점수 2점</span>
+            <span class="metric-chip mc-fin-위험">자립도 71.8%</span>
+            <span class="metric-chip mc-fin-위험">운영차액률 −9.7%</span>
+          </div>
+          <div class="parish-rationale">출석 추세는 +55.9%로 오히려 증가 중이나 재무 자립도는 낮음. 유동성비율은 6.74배로 매우 높아 비축 자산은 충분 — 누적 적자를 자산으로 버티는 구조로 추정.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp-block gb" style="margin-top:4px;">
+    <div class="grp-header">
+      <span class="grp-badge" style="background:var(--cl);color:var(--cm);border-color:var(--cb);">B · 재무가 버팀목</span>
+      <span class="grp-title">교화구조 3점이나 재무는 양호</span>
+    </div>
+    <div class="grp-body">
+      <div class="parish-row">
+        <div class="parish-rank">5</div>
+        <div class="parish-info">
+          <div class="parish-name">공항교당</div>
+          <div class="parish-jigu">화곡지구 · 3점</div>
+          <div class="parish-metrics">
+            <span class="metric-chip mc-score">추세 −50.3%</span>
+            <span class="metric-chip mc-fin-양호">자립도 100.8%</span>
+            <span class="metric-chip mc-fin-양호">운영차액률 +7.6%</span>
+          </div>
+          <div class="parish-rationale">출석 추세는 위기 수준이나 재무는 안정적. 입교 역량(111명)도 있어 재무 여력을 활용한 교화 투자가 회복 전략이 될 수 있음.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 6: 전체 테이블 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 06</div>
+  <h2>56개 교당 종합 등급 전체</h2>
+  <p class="sec-desc">종합등급(S→A→B→C→D) 순 정렬.</p>
+
+  <div class="tier-legend">
+    <span class="tl-item tl-s">S 복합위기 (7)</span>
+    <span class="tl-item tl-a">A 동반위기/자력회복 (5)</span>
+    <span class="tl-item tl-b">B 숨은위기/버팀목 (5)</span>
+    <span class="tl-item tl-c">C 경미한 위험 (10)</span>
+    <span class="tl-item tl-d">D 안정 (29)</span>
+  </div>
+
+  <div class="filter-bar">
+    <label>등급 필터</label>
+    <select id="tierFilter" onchange="filterTable()">
+      <option value="all">전체</option>
+      <option value="S">S 복합위기</option>
+      <option value="A">A 동반위기/자력회복</option>
+      <option value="B">B 숨은위기/버팀목</option>
+      <option value="C">C 경미한 위험</option>
+      <option value="D">D 안정</option>
+    </select>
+  </div>
+
+  <div class="tbl-scroll">
+    <table class="data-table" id="mainTable">
+      <thead>
+        <tr>
+          <th>교당</th><th>지구</th>
+          <th class="center">선정점수</th>
+          <th class="center">자립도</th>
+          <th class="center">운영차액률</th>
+          <th class="center">유동성비율</th>
+          <th class="center">재무등급</th>
+          <th class="center">종합등급</th>
+          <th>설명</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 7: 유의사항 -->
+<section>
+<div class="inner">
+  <div class="eye">SECTION 07</div>
+  <h2>해석 시 유의사항</h2>
+  <div class="callout danger">
+    <strong>도봉교당 자립도 43.6%는 일시 요인 가능성.</strong> 108년 건축물관리비 2.5억원이 3개년 평균을 끌어내린 주효인으로 확인됐다. 110년 단일년도 기준으로는 자립도 94.8%까지 올라간다. 심층진단 시 단일 항목(시설 수선 vs 구조적 적자) 확인이 최우선.
+  </div>
+  <div class="callout warn">
+    <strong>단일년도 재무지표는 변동성이 크다.</strong> 110년만 보면 56개 중 28개 교당의 재무등급이 바뀐다. 이번 종합등급은 108~110년 3개년 평균을 사용해 일시적 변동의 영향을 줄였으나, 절대적인 수치보다 추세와 상대적 위치로 해석하는 것이 안전하다.
+  </div>
+  <div class="callout info">
+    <strong>출석 위기와 재무 위기는 다른 신호다.</strong> 포천교당처럼 재무가 건전한데 출석이 무너지는 경우는 인구·교화력 문제이고, 구로교당처럼 출석은 안정적인데 재무가 적자인 경우는 비용구조나 일시적 지출 문제다. 같은 처방으로 묶을 수 없다.
+  </div>
+  <div style="margin-top:16px; font-size:12px; color:var(--ink3); font-family:'IBM Plex Mono',monospace; line-height:1.6;">
+    데이터: 법회출석서울교구97~110 / 서울교구_교당데이터(97~108) / df_seoul_fin_cleaned_unique(97~108) + 서울교구_회계데이터_109_110 · 통합 교당: 역삼(압구정·대치), 한강(반포·남서울), 불광(구산), 강남(거마), 중구(성동) · 재무지표 기준연도: 원기108~110 평균(특별이익·손실 제외) · 선정점수 기준연도: 원기97~110(선형회귀)
+  </div>
+</div>
+</section>
+
+<script>
+const DATA = [{"교당": "원효교당", "지구": "서울지구", "선정점수": 4, "자립도": 64.0, "운영차액률": -48.7, "유동성비율": 0.36, "재무등급": "위험", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -78.9, "출석110": 663}, {"교당": "개포교당", "지구": "강남지구", "선정점수": 4, "자립도": 74.0, "운영차액률": 0.8, "유동성비율": 0.11, "재무등급": "주의", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -55.9, "출석110": 742}, {"교당": "사직교당", "지구": "종로지구", "선정점수": 4, "자립도": 82.1, "운영차액률": 0.9, "유동성비율": 1.29, "재무등급": "주의", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -39.4, "출석110": 493}, {"교당": "면목교당", "지구": "원남지구", "선정점수": 4, "자립도": 84.2, "운영차액률": -17.1, "유동성비율": 0.91, "재무등급": "위험", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -68.0, "출석110": 521}, {"교당": "연희교당", "지구": "서울지구", "선정점수": 4, "자립도": 90.6, "운영차액률": 7.6, "유동성비율": 0.43, "재무등급": "주의", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -65.5, "출석110": 786}, {"교당": "금천교당", "지구": "화곡지구", "선정점수": 4, "자립도": 92.7, "운영차액률": 1.7, "유동성비율": 0.48, "재무등급": "주의", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -78.0, "출석110": 689}, {"교당": "은평교당", "지구": "서울지구", "선정점수": 4, "자립도": 98.3, "운영차액률": 4.2, "유동성비율": 1.38, "재무등급": "주의", "종합등급": "S", "종합설명": "복합위기 - 최우선", "추세감소율": -38.0, "출석110": 964}, {"교당": "양주교당", "지구": "종로지구", "선정점수": 3, "자립도": 84.6, "운영차액률": -6.6, "유동성비율": 0.82, "재무등급": "위험", "종합등급": "A", "종합설명": "교화+재무 동반위기", "추세감소율": -9.6, "출석110": 763}, {"교당": "영등포교당", "지구": "여의도지구", "선정점수": 3, "자립도": 88.4, "운영차액률": 15.1, "유동성비율": 0.06, "재무등급": "주의", "종합등급": "A", "종합설명": "교화+재무 동반위기", "추세감소율": -64.8, "출석110": 742}, {"교당": "동두천교당", "지구": "종로지구", "선정점수": 3, "자립도": 92.2, "운영차액률": 1.4, "유동성비율": 0.14, "재무등급": "주의", "종합등급": "A", "종합설명": "교화+재무 동반위기", "추세감소율": -12.4, "출석110": 450}, {"교당": "상계교당", "지구": "종로지구", "선정점수": 3, "자립도": 92.8, "운영차액률": -5.4, "유동성비율": 0.76, "재무등급": "주의", "종합등급": "A", "종합설명": "교화+재무 동반위기", "추세감소율": -56.8, "출석110": 1729}, {"교당": "포천교당", "지구": "종로지구", "선정점수": 4, "자립도": 113.3, "운영차액률": 14.6, "유동성비율": 0.13, "재무등급": "양호", "종합등급": "A", "종합설명": "교화위기 단독 - 자력회복 가능성", "추세감소율": -71.2, "출석110": 456}, {"교당": "도봉교당", "지구": "종로지구", "선정점수": 2, "자립도": 43.6, "운영차액률": -67.7, "유동성비율": 0.1, "재무등급": "위험", "종합등급": "B", "종합설명": "재무위기 단독 - 숨은 위기", "추세감소율": -75.9, "출석110": 1358}, {"교당": "태릉교당", "지구": "원남지구", "선정점수": 2, "자립도": 71.8, "운영차액률": -9.7, "유동성비율": 6.74, "재무등급": "위험", "종합등급": "B", "종합설명": "재무위기 단독 - 숨은 위기", "추세감소율": 55.9, "출석110": 1650}, {"교당": "구로교당", "지구": "화곡지구", "선정점수": 0, "자립도": 86.2, "운영차액률": -11.4, "유동성비율": 0.36, "재무등급": "위험", "종합등급": "B", "종합설명": "재무위기 단독 - 숨은 위기", "추세감소율": 0.1, "출석110": 2287}, {"교당": "홍제교당", "지구": "서울지구", "선정점수": 2, "자립도": 86.4, "운영차액률": -8.4, "유동성비율": 1.05, "재무등급": "위험", "종합등급": "B", "종합설명": "재무위기 단독 - 숨은 위기", "추세감소율": -65.0, "출석110": 1186}, {"교당": "공항교당", "지구": "화곡지구", "선정점수": 3, "자립도": 100.8, "운영차액률": 7.6, "유동성비율": 0.07, "재무등급": "양호", "종합등급": "B", "종합설명": "교화위기, 재무는 버팀목", "추세감소율": -50.3, "출석110": 869}, {"교당": "종로교당", "지구": "종로지구", "선정점수": 1, "자립도": 83.3, "운영차액률": 17.2, "유동성비율": 3.4, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -62.1, "출석110": 2723}, {"교당": "한강교당", "지구": "여의도지구", "선정점수": 0, "자립도": 86.2, "운영차액률": 3.3, "유동성비율": 0.94, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": 143.0, "출석110": 5827}, {"교당": "신촌교당", "지구": "서울지구", "선정점수": 1, "자립도": 90.3, "운영차액률": -0.3, "유동성비율": 2.33, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -78.3, "출석110": 2536}, {"교당": "방배교당", "지구": "여의도지구", "선정점수": 2, "자립도": 90.8, "운영차액률": -2.3, "유동성비율": 0.02, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -81.8, "출석110": 1044}, {"교당": "송천교당", "지구": "종로지구", "선정점수": 1, "자립도": 90.9, "운영차액률": -4.6, "유동성비율": 0.1, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -63.8, "출석110": 2728}, {"교당": "서울교당", "지구": "서울지구", "선정점수": 0, "자립도": 92.1, "운영차액률": -4.9, "유동성비율": 0.39, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -21.8, "출석110": 5982}, {"교당": "신림교당", "지구": "여의도지구", "선정점수": 0, "자립도": 93.5, "운영차액률": 6.0, "유동성비율": 0.41, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -29.5, "출석110": 6228}, {"교당": "일산교당", "지구": "서울지구", "선정점수": 1, "자립도": 96.0, "운영차액률": 1.0, "유동성비율": 0.96, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -51.7, "출석110": 3103}, {"교당": "정릉교당", "지구": "종로지구", "선정점수": 2, "자립도": 99.3, "운영차액률": 7.4, "유동성비율": 2.43, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -54.5, "출석110": 2250}, {"교당": "화정교당", "지구": "서울지구", "선정점수": 1, "자립도": 99.6, "운영차액률": 3.7, "유동성비율": 0.81, "재무등급": "주의", "종합등급": "C", "종합설명": "경미한 위험", "추세감소율": -54.2, "출석110": 2355}, {"교당": "목동교당", "지구": "화곡지구", "선정점수": 1, "자립도": 100.3, "운영차액률": 15.6, "유동성비율": 0.35, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -37.9, "출석110": 2906}, {"교당": "방학교당", "지구": "종로지구", "선정점수": 1, "자립도": 100.4, "운영차액률": 15.5, "유동성비율": 1.47, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -30.6, "출석110": 1673}, {"교당": "중곡교당", "지구": "원남지구", "선정점수": 2, "자립도": 102.0, "운영차액률": 2.7, "유동성비율": 0.47, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -54.5, "출석110": 2464}, {"교당": "파주교당", "지구": "서울지구", "선정점수": 2, "자립도": 102.1, "운영차액률": 12.0, "유동성비율": 0.25, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -64.0, "출석110": 1078}, {"교당": "중구교당", "지구": "원남지구", "선정점수": 0, "자립도": 102.2, "운영차액률": 6.9, "유동성비율": 0.06, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": 3.2, "출석110": 4137}, {"교당": "김포교당", "지구": "화곡지구", "선정점수": 2, "자립도": 103.2, "운영차액률": 8.3, "유동성비율": 0.03, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -16.1, "출석110": 1584}, {"교당": "잠실교당", "지구": "강남지구", "선정점수": 1, "자립도": 106.6, "운영차액률": 15.1, "유동성비율": 1.63, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -38.2, "출석110": 3813}, {"교당": "가락교당", "지구": "강남지구", "선정점수": 1, "자립도": 107.7, "운영차액률": 16.8, "유동성비율": 1.6, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -48.3, "출석110": 4839}, {"교당": "화곡교당", "지구": "화곡지구", "선정점수": 1, "자립도": 108.2, "운영차액률": 15.9, "유동성비율": 2.51, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -35.5, "출석110": 4055}, {"교당": "유린교당", "지구": "원남지구", "선정점수": 1, "자립도": 108.4, "운영차액률": 11.0, "유동성비율": 0.15, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -35.0, "출석110": 1591}, {"교당": "강화교당", "지구": "화곡지구", "선정점수": 2, "자립도": 108.6, "운영차액률": 32.3, "유동성비율": 0.1, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -15.4, "출석110": 1395}, {"교당": "의정부교당", "지구": "종로지구", "선정점수": 1, "자립도": 110.6, "운영차액률": 12.2, "유동성비율": 0.76, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -15.9, "출석110": 1253}, {"교당": "이문교당", "지구": "원남지구", "선정점수": 1, "자립도": 110.9, "운영차액률": 12.7, "유동성비율": 0.49, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -32.4, "출석110": 2079}, {"교당": "개봉교당", "지구": "화곡지구", "선정점수": 0, "자립도": 111.4, "운영차액률": 16.3, "유동성비율": 2.19, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -26.2, "출석110": 2772}, {"교당": "안암교당", "지구": "종로지구", "선정점수": 1, "자립도": 113.4, "운영차액률": 17.5, "유동성비율": 0.5, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -42.7, "출석110": 3193}, {"교당": "장충교당", "지구": "원남지구", "선정점수": 2, "자립도": 114.8, "운영차액률": 28.6, "유동성비율": 0.1, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -62.1, "출석110": 1958}, {"교당": "강동교당", "지구": "강남지구", "선정점수": 0, "자립도": 115.8, "운영차액률": 22.2, "유동성비율": 1.32, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": 17.3, "출석110": 4291}, {"교당": "구의교당", "지구": "원남지구", "선정점수": 2, "자립도": 116.9, "운영차액률": 18.7, "유동성비율": 2.17, "재무등급": "양호", "종합등급": "D", "종합설명": "안정", "추세감소율": -54.1, "출석110": 1292}, {"교당": "전곡교당", "지구": "종로지구", "선정점수": 2, "자립도": 121.7, "운영차액률": 19.4, "유동성비율": 1.74, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -64.2, "출석110": 1408}, {"교당": "강남교당", "지구": "강남지구", "선정점수": 0, "자립도": 123.4, "운영차액률": 21.0, "유동성비율": 0.78, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -13.0, "출석110": 16400}, {"교당": "전농교당", "지구": "원남지구", "선정점수": 2, "자립도": 125.4, "운영차액률": 22.6, "유동성비율": 0.3, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -57.1, "출석110": 1468}, {"교당": "신길교당", "지구": "여의도지구", "선정점수": 2, "자립도": 126.4, "운영차액률": 22.5, "유동성비율": 1.81, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -61.7, "출석110": 1040}, {"교당": "서초교당", "지구": "여의도지구", "선정점수": 2, "자립도": 136.4, "운영차액률": 36.8, "유동성비율": 0.95, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -68.3, "출석110": 1252}, {"교당": "원남교당", "지구": "원남지구", "선정점수": 0, "자립도": 142.1, "운영차액률": 31.7, "유동성비율": 0.02, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": 6.5, "출석110": 7560}, {"교당": "역삼교당", "지구": "강남지구", "선정점수": 0, "자립도": 166.1, "운영차액률": 41.1, "유동성비율": 0.09, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -18.0, "출석110": 6476}, {"교당": "여의도교당", "지구": "여의도지구", "선정점수": 0, "자립도": 181.7, "운영차액률": 56.8, "유동성비율": 0.73, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -16.3, "출석110": 5812}, {"교당": "불광교당", "지구": "서울지구", "선정점수": 2, "자립도": 203.7, "운영차액률": 56.0, "유동성비율": 3.1, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -45.1, "출석110": 1833}, {"교당": "돈암교당", "지구": "종로지구", "선정점수": 1, "자립도": 204.6, "운영차액률": 53.5, "유동성비율": 0.5, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -55.2, "출석110": 2969}, {"교당": "마포교당", "지구": "서울지구", "선정점수": 1, "자립도": 447.4, "운영차액률": 80.3, "유동성비율": 3.62, "재무등급": "우수", "종합등급": "D", "종합설명": "안정", "추세감소율": -22.6, "출석110": 1727}];
+
+const TIER_COLOR = { S: '#b91c1c', A: '#c2410c', B: '#a16207', C: '#2563eb', D: '#166534' };
+const TIER_BG = { S: 'rgba(185,28,28,0.15)', A: 'rgba(194,65,12,0.15)', B: 'rgba(161,98,7,0.15)', C: 'rgba(37,99,235,0.1)', D: 'rgba(22,101,52,0.1)' };
+
+// ── SCATTER ──
+(function(){
+  const tiers = ['S','A','B','C','D'];
+  const datasets = tiers.map(t => {
+    const pts = DATA.filter(d => d.종합등급 === t).map(d => ({ x: d.자립도, y: d.선정점수, label: d.교당, hg: 1 }));
+    return {
+      label: t + '등급',
+      data: pts,
+      backgroundColor: TIER_BG[t], borderColor: TIER_COLOR[t], borderWidth: 1.5,
+      pointRadius: 7, pointHoverRadius: 9,
+    };
+  });
+
+  new Chart(document.getElementById('scatterChart').getContext('2d'), {
+    type: 'scatter',
+    data: { datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { family: "'Noto Sans KR'", size: 11 }, padding: 14, boxWidth: 10, usePointStyle: true } },
+        tooltip: { callbacks: { label: ctx => `${ctx.raw.label} | 자립도: ${ctx.raw.x}% | 선정점수: ${ctx.raw.y}` },
+          titleFont: { family: "'Noto Sans KR'" }, bodyFont: { family: "'Noto Sans KR'" } }
+      },
+      scales: {
+        x: { title: { display: true, text: '자립도 (%)', font: { family: "'Noto Sans KR'", size: 11 } },
+             grid: { color: '#edf1f5' }, ticks: { font: { family: "'IBM Plex Mono'", size: 10 } }, reverse: true },
+        y: { title: { display: true, text: '교화구조 선정점수', font: { family: "'Noto Sans KR'", size: 11 } },
+             grid: { color: '#edf1f5' }, ticks: { font: { family: "'IBM Plex Mono'", size: 10 }, stepSize: 1 }, min: -0.5, max: 4.5 }
+      }
+    }
+  });
+})();
+
+// ── TABLE ──
+(function(){
+  const tbody = document.getElementById('tableBody');
+  const order = {S:0,A:1,B:2,C:3,D:4};
+  const sorted = [...DATA].sort((a,b) => order[a.종합등급]-order[b.종합등급] || a.자립도-b.자립도);
+  sorted.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.dataset.tier = d.종합등급;
+    tr.innerHTML = `
+      <td><strong>${d.교당}</strong></td>
+      <td>${d.지구.replace('지구','')}</td>
+      <td class="center">${d.선정점수}점</td>
+      <td class="center">${d.자립도.toFixed(1)}%</td>
+      <td class="center ${d.운영차액률<0?'':''}" style="color:${d.운영차액률<0?'#b91c1c':'#166534'};font-weight:600;">${d.운영차액률>0?'+':''}${d.운영차액률.toFixed(1)}%</td>
+      <td class="center">${d.유동성비율.toFixed(2)}배</td>
+      <td class="center">${d.재무등급}</td>
+      <td class="center"><span class="tier-pill tp-${d.종합등급.toLowerCase()}">${d.종합등급}</span></td>
+      <td style="font-size:11.5px;color:var(--ink2);">${d.종합설명}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+})();
+
+function filterTable() {
+  const tf = document.getElementById('tierFilter').value;
+  document.querySelectorAll('#tableBody tr').forEach(tr => {
+    tr.classList.toggle('row-hidden', !(tf === 'all' || tr.dataset.tier === tf));
+  });
+}
+</script>
+</body>
+</html>
