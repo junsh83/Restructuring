@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서울교구 핵심 교도층 연령구조 분석 및 예측</title>
+<style>
+:root{
+  --ink:#1a1a18;--sub:#5f5e5a;--muted:#898781;
+  --line:#e1e0d9;--bg:#f8f7f4;--card:#fff;
+  --accent:#185fa5;--accent-bg:#e6f1fb;--accent-txt:#0c447c;
+  --warn:#993c1d;--warn-bg:#faece7;--warn-txt:#712b13;
+  --good:#3b6d11;--good-bg:#eaf3de;--good-txt:#27500a;
+  --navy:#121c33;--navy2:#1c2a4a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;}
+
+.header{background:var(--navy);color:#f4f1ec;padding:22px 28px 0;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+.header-top{max-width:1100px;margin:0 auto 14px;}
+.header-title{font-size:18px;font-weight:600;letter-spacing:-.01em;}
+.header-sub{font-size:12px;opacity:.65;margin-top:3px;}
+.badge{display:inline-block;font-size:11px;background:#eda100;color:#1a0e00;
+  padding:2px 8px;border-radius:4px;font-weight:600;margin-left:8px;vertical-align:middle;}
+
+.tab-bar{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{background:none;border:none;cursor:pointer;color:rgba(244,241,236,.55);
+  font-size:13.5px;font-family:inherit;padding:10px 18px;
+  border-bottom:3px solid transparent;white-space:nowrap;
+  transition:color .15s,border-color .15s;}
+.tab-btn:hover{color:rgba(244,241,236,.85);}
+.tab-btn.active{color:#f4f1ec;border-bottom-color:#eda100;font-weight:600;}
+
+.wrap{max-width:1100px;margin:0 auto;padding:28px 24px 80px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+h2{font-size:18px;font-weight:600;margin:32px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+h2:first-child{margin-top:0;}
+h3{font-size:15px;font-weight:600;margin:22px 0 10px;}
+p{margin-bottom:12px;}
+
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:16px 0 24px;}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+.kpi .label{font-size:12px;color:var(--muted);margin-bottom:5px;}
+.kpi .value{font-size:21px;font-weight:600;letter-spacing:-.01em;}
+.kpi .sub-value{font-size:13px;color:var(--sub);margin-top:2px;}
+.kpi .delta{font-size:11.5px;margin-top:4px;color:var(--warn);}
+.kpi .delta.g{color:var(--good);}
+
+.note{background:var(--accent-bg);border-left:3px solid var(--accent);padding:12px 15px;
+  border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;color:var(--accent-txt);}
+.warn{background:var(--warn-bg);border-left:3px solid var(--warn);padding:12px 15px;
+  border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;color:var(--warn-txt);}
+.good{background:var(--good-bg);border-left:3px solid var(--good);padding:12px 15px;
+  border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;color:var(--good-txt);}
+
+.chart-box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 18px 12px;margin:14px 0;}
+.chart-title{font-size:12.5px;font-weight:600;color:var(--sub);margin-bottom:12px;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+caption{text-align:left;font-size:12px;color:var(--muted);margin-bottom:6px;}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line);}
+th:first-child,td:first-child{text-align:left;}
+thead th{font-weight:600;color:var(--sub);font-size:12px;border-bottom:1.5px solid var(--ink);}
+tbody tr:hover{background:#f7f6f3;}
+.tbl-wrap{overflow-x:auto;}
+
+.findings{display:grid;gap:10px;margin:14px 0;}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px;font-size:14px;}
+.finding .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent-txt);
+  background:var(--accent-bg);padding:2px 8px;border-radius:4px;margin-bottom:6px;}
+
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0 10px;font-size:12px;color:var(--sub);}
+.legend span{display:flex;align-items:center;gap:4px;}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+.highlight-row td{background:#fff9f0;font-weight:600;}
+.danger-row td{background:#fff0f0;}
+.footnote{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+.search-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;}
+.search-row input{padding:6px 12px;border:1px solid var(--line);border-radius:6px;
+  font-size:13px;width:160px;font-family:inherit;}
+.search-row select{padding:6px 10px;border:1px solid var(--line);border-radius:6px;
+  font-size:13px;font-family:inherit;}
+.risk-badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:4px;font-weight:600;}
+.r5{background:#fde8e8;color:#a32d2d;}
+.r6{background:#fef3e2;color:#854f0b;}
+.r7{background:#eaf3de;color:#3b6d11;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-title">서울교구 핵심 교도층 연령구조 분석 및 예측<span class="badge">월1회+ 기준</span></div>
+    <div class="header-sub">원기97~110년 실측 · 원기111~120년 예측 · 교당별 절반·소멸 도달 시점 | 교화구조개선 TF</div>
+  </div>
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="switchTab('overview',this)">📊 개요</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('aging',this)">📈 고령화 분석</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('forecast',this)">🔮 미래 예측</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('church',this)">🏛 교당별 진단</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('method',this)">📋 방법론</button>
+  </nav>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 탭1: 개요 ══ -->
+<section id="tab-overview" class="tab-panel active">
+  <h2>핵심 요약</h2>
+  <div class="warn">
+    <strong>분석 기준:</strong> 모든 수치는 <strong>월 1회 이상(연 12회 이상) 출석한 핵심 교도층</strong> 기준입니다. 이탈 모델은 사망(통계청 공식 사망확률)과 비사망 영구이탈(실측 9.3%/년)을 함께 반영했습니다.
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="label">110년 핵심 교도층 인원</div>
+      <div class="value">3,541명</div>
+      <div class="delta">97년(4,969명) 대비 −28.7%</div>
+    </div>
+    <div class="kpi">
+      <div class="label">110년 평균연령 / 중앙값</div>
+      <div class="value">64.3세</div>
+      <div class="sub-value">중앙값 68세 — 절반이 68세 이상</div>
+      <div class="delta">97년 평균 53.7세 / 중앙 57세 대비 +10.6세</div>
+    </div>
+    <div class="kpi">
+      <div class="label">60대 이상 비중</div>
+      <div class="value">70.9%</div>
+      <div class="delta">97년(44.4%) 대비 +26.5%p</div>
+    </div>
+    <div class="kpi">
+      <div class="label">코로나 시기 대비 110년</div>
+      <div class="value">+1.8%</div>
+      <div class="delta g">105년 대비 소폭 회복</div>
+    </div>
+    <div class="kpi">
+      <div class="label">절반 도달 시점</div>
+      <div class="value" style="color:var(--warn);">원기117년</div>
+      <div class="sub-value">7년 후 · 서기2033년</div>
+      <div class="delta">동적 복귀 모델 · 방법론 탭 참조</div>
+    </div>
+    <div class="kpi">
+      <div class="label">5년 내 절반도달 교당</div>
+      <div class="value" style="color:var(--warn);">30개소</div>
+      <div class="delta">56개 교당 중 (30.4%)</div>
+    </div>
+  </div>
+
+  <h2>연1회+ 기준과의 비교</h2>
+  <p>월1회+ 기준은 "실질적으로 교당을 지탱하는 핵심 활동층"을, 연1회+(전체 교적 연결자) 기준은 "교도 공동체의 외연"을 보여줍니다.</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>지표</th><th>연1회+ 기준</th><th>월1회+ 기준</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td>110년 출석인원</td><td>5,561명</td><td>3,541명</td><td>월1회+는 연1회+의 63.7%</td></tr>
+      <tr><td>110년 평균연령</td><td>57.6세</td><td>64.3세</td><td>핵심층이 6.7세 더 고령</td></tr>
+      <tr><td>110년 중앙연령</td><td>62세</td><td>68세</td><td>핵심층 절반이 68세 이상</td></tr>
+      <tr><td>110년 60대+ 비중</td><td>55.9%</td><td>70.9%</td><td>핵심층 4명 중 3명이 60대 이상</td></tr>
+      <tr><td>코로나(105년) 대비 110년</td><td>−5.8% (정체)</td><td>+1.8% (회복)</td><td>핵심층은 이미 회복, 저빈도층이 정체 견인</td></tr>
+      <tr class="highlight-row"><td>절반도달 시점</td><td>원기135 (25년 후)</td><td>원기117 (7년 후)</td><td>연령별 차등 이탈율 + 복귀자 동적 모델 반영</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>왜 7년인가 (연1회+ 기준 25년과의 차이):</strong> 사망확률(연 2.6%)만 반영하면 절반도달이 25년 후이지만, 실측 교도번호 추적(원기97~108년)으로 확인한 연령별 차등 비사망이탈율(49세 이하 22.6%, 50대 9.5%, 60대 6.7%, 70대 5.7%, 80세+ 13.4%), 신규 교도 이탈율(30.4%)에 더해 이탈자의 복귀 흐름(1년 후 13.4%, 2년 후 5.8%, 3년 후 3.2%)까지 반영한 동적 복귀 모델에서 원기117년에 절반에 도달합니다. 이탈자의 약 14%는 이듬해 복귀(일시 이탈)하므로, 영구이탈 기준 수치입니다.
+  </div>
+</section>
+
+<!-- ══ 탭2: 고령화 분석 ══ -->
+<section id="tab-aging" class="tab-panel">
+  <h2>연도별 평균연령·중앙값 추이 (원기97~110)</h2>
+  <p>월1회+ 출석 교도의 평균연령은 97년 53.7세에서 110년 64.3세로 10.6세 상승했습니다. 중앙값은 57세에서 68세로 11세 상승해 분포의 고령화가 더 두드러집니다. 연1회+ 기준(평균 47.9→57.6세, 중앙 51→62세)보다 전 구간에서 5~6세 높습니다.</p>
+
+  <div class="note">
+    <strong>평균과 중앙값의 차이:</strong> 분포가 좌편향(왜도 −0.73→−1.23으로 심화)되어 평균이 중앙값보다 일관되게 3~4세 낮습니다. 소수의 어린이·청소년(29세 이하 249명, 7.1%)이 평균을 3.6세 끌어내리기 때문입니다. <strong>중앙값</strong>이 "전형적인 교도가 몇 살인가"를 더 정직하게 보여주며, 평균은 신규 유입의 연령 효과도 반영합니다. 두 지표를 함께 읽으시기 바랍니다.
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">연도별 평균연령 및 중앙연령 — 월1회+ vs 연1회+ (원기97~110)</div>
+    <div class="legend">
+      <span><span class="sw" style="background:#993c1d;"></span>월1회+ 평균연령</span>
+      <span><span class="sw" style="background:#e34948;"></span>월1회+ 중앙연령</span>
+      <span><span class="sw" style="background:#85b7eb;border:1px dashed #185fa5;"></span>연1회+ 평균연령(참고)</span>
+    </div>
+    <div style="position:relative;height:280px;"><canvas id="avgAgeChart" role="img"
+      aria-label="원기97~110년 평균연령 및 중앙연령 추이. 월1회+ 기준 평균53.7→64.3세, 중앙57→68세 상승."></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>표1. 연도별 출석인원·평균연령·중앙연령 (월1회+ 기준, 연1회+ 병기)</caption>
+    <thead><tr><th>원기</th><th>서기</th><th>월1회+ 평균</th><th>월1회+ 중앙</th><th>월1회+ 인원</th><th>연1회+ 평균(참고)</th><th>연1회+ 인원(참고)</th></tr></thead>
+    <tbody id="avgAgeTable"></tbody>
+  </table>
+  </div>
+  <p class="footnote">※ 97~108년: 교도번호 기준 완전 중복제거 후 출석수≥12 필터. 109~110년: 별도 출석 파일 + 교도명단 생년 보완(매칭률 99.96~99.98%) 후 출석수≥12 필터.</p>
+
+  <h2>연도별 열반자 추정</h2>
+  <p>관리구분=열반 항목은 입력 시차로 최근 연도일수록 과소 집계되어, 통계청 공식 사망원인통계 기반 연령대별 사망확률을 월1회+ 출석 교도 연령분포에 적용해 추정했습니다.</p>
+
+  <div class="chart-box">
+    <div class="chart-title">연도별 추정 열반자 수 (월1회+ 출석 교도 기준, 통계청 사망확률 적용)</div>
+    <div style="position:relative;height:240px;"><canvas id="deathChart" role="img"
+      aria-label="원기97~110년 추정 열반자 수. 97년 약 70명에서 110년 약 94명으로 증가."></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>표2. 연도별 추정 열반자 수</caption>
+    <thead><tr><th>원기</th><th>서기</th><th>추정 열반자</th><th>월1회+ 교도 대비</th></tr></thead>
+    <tbody id="deathTable"></tbody>
+  </table>
+  </div>
+  <p class="footnote">적용 사망확률 (통계청 2024년): 60대 1.20% · 70대 2.80% · 80세+ 8.10%</p>
+
+  <h2>코로나 전후 비교</h2>
+  <div class="good"><strong>핵심 교도층은 코로나 이후 회복됐습니다.</strong> 월1회+ 기준 110년(3,541명)은 코로나 최절정 105년(3,480명)보다 1.8%(61명) 많습니다. 연1회+ 기준에서 "정체"로 보였던 것은 저빈도 참여 교도(연 1~11회)의 회복 지연 때문이며, 핵심층 자체는 이미 회복한 상태입니다.</div>
+
+  <div class="chart-box">
+    <div class="chart-title">출석 교도 수 추이 (원기97~110, 월1회+ 기준)</div>
+    <div style="position:relative;height:280px;"><canvas id="covidChart" role="img"
+      aria-label="원기97~110년 월1회 이상 출석 교도 수 추이. 코로나 105-106년 급락 후 회복."></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>표3. 시기별 출석 교도 수 비교 (월1회+ 기준)</caption>
+    <thead><tr><th>시점</th><th>원기</th><th>월1회+ 출석 교도</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>97~108년 내 최고치</td><td>97 (2013)</td><td>4,969명</td><td>분석 시작연도</td></tr>
+      <tr><td>코로나 시작</td><td>104 (2020)</td><td>4,344명</td><td>최고치 대비 −12.6%</td></tr>
+      <tr><td>코로나 최절정</td><td>105 (2021)</td><td>3,480명</td><td>최고치 대비 −30.0%</td></tr>
+      <tr><td>코로나 종식 후</td><td>108 (2024)</td><td>3,740명</td><td>105년 대비 +7.5%</td></tr>
+      <tr class="highlight-row"><td>현재(최신)</td><td>110 (2026)</td><td>3,541명</td><td>105년 대비 +1.8%</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══ 탭3: 미래 예측 ══ -->
+<section id="tab-forecast" class="tab-panel">
+  <h2>향후 10년 예측 (원기111~120, 2027~2036)</h2>
+  <p>108년 월1회+ 출석 교도 3,740명을 기준코호트로, 통계청 보정 사망확률 + 비사망 영구이탈율 9.3%/년 + 신규유입(연 63명 → 감소 추세)을 반영한 코호트 시뮬레이션입니다.</p>
+
+  <div class="warn"><strong>10년 후(원기120년, 2036년)에는 약 1,153명 — 현재의 32.6%만 남습니다.</strong> 이탈자의 복귀 흐름(3년 내 누적 22.4%)까지 반영한 동적 복귀 모델 결과입니다.</div>
+
+  <div class="chart-box">
+    <div class="chart-title">출석 교도 수 및 평균연령 추이·예측 (실측 원기97~110, 예측 111~120)</div>
+    <div class="legend">
+      <span><span class="sw" style="background:#993c1d;"></span>평균연령 실측 (좌축)</span>
+      <span><span class="sw" style="background:#eda100;"></span>평균연령 예측 (좌축)</span>
+      <span><span class="sw" style="background:#185fa5;opacity:.7;"></span>출석 교도 실측 (우축)</span>
+      <span><span class="sw" style="background:#185fa5;opacity:.35;"></span>출석 교도 예측 (우축)</span>
+    </div>
+    <div style="position:relative;height:300px;"><canvas id="projChart" role="img"
+      aria-label="원기97~120년 출석 교도 수와 평균연령 추이 및 예측. 교도 수는 111년부터 급감해 120년 약 1226명."></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>표4. 향후 10년 예측 — 월1회+ 기준 (비사망 이탈 반영)</caption>
+    <thead><tr><th>원기</th><th>서기</th><th>예측 출석 교도</th><th>110년 대비</th><th>예측 평균연령</th><th>60대+ 비중</th><th>80세+ 비중</th><th>예측 열반자</th></tr></thead>
+    <tbody id="projTable"></tbody>
+  </table>
+  </div>
+
+  <div class="findings">
+    <div class="finding"><span class="tag">발견 1</span>핵심 교도층은 10년간 3,740명(108년) → 925명(120년)으로 <strong>약 75% 감소</strong>가 예상됩니다. 연령별 차등 이탈(49세 이하 22.6%, 80세+ 13.4%)과 신규 교도 이탈(30.4%)이 복합 작용한 결과입니다.</div>
+    <div class="finding"><span class="tag">발견 2</span>핵심 교도층의 구조가 빠르게 재편됩니다. 남은 인원 925명(110년 대비 26.1%) 중 고령층 비중이 높아지고, 신규 유입이 소진되면서 <strong>공동화가 가속되는 구조</strong>입니다.</div>
+    <div class="finding"><span class="tag">발견 3</span>80세 이상 비중이 108년 15%에서 120년 24%까지 늘어, 핵심 활동층 4명 중 1명이 80대 이상이 됩니다.</div>
+  </div>
+
+  <h2>절반 도달 시점 분석</h2>
+  <div class="warn"><strong>원기117년(2033년, 7년 후)</strong>에 핵심 교도층이 110년(3,541명) 대비 절반으로 줄어듭니다. 30회 반복 시뮬레이션 결과 원기117년으로 안정적(표준편차 0.4년)이었습니다.<br><br>
+  <strong>동적 복귀 모델 적용:</strong> 연령대별 차등 비사망이탈 + 신규 교도 이탈율(30.4%) + 이탈자 복귀 흐름(1년 후 13.4%, 2년 후 5.8%, 3년 후 3.2%)을 모두 반영한 결과입니다. 복귀자를 고려하지 않은 모델(원기116, 6년 후)보다 1년 늦어집니다.</div>
+
+  <div class="chart-box">
+    <div class="chart-title">출석 교도 수 장기 예측 및 절반 도달 시점 (원기97~130)</div>
+    <div style="position:relative;height:280px;"><canvas id="halfChart" role="img"
+      aria-label="원기97~130년 출석 교도 수 장기 추이. 원기116년에 절반에 도달."></canvas></div>
+  </div>
+
+  <h3>신규유입 수준별 민감도</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>시나리오</th><th>연간 신규유입</th><th>절반도달 시점</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr class="danger-row"><td>현상유지 (BAU)</td><td>~63명/년 (감소)</td><td>원기117 (7년 후)</td><td>동적 복귀 모델 기본 예측</td></tr>
+      <tr><td>유입 50명 방어</td><td>50명/년 유지</td><td>원기119~120 (9~10년 후)</td><td>1~2년 연장</td></tr>
+      <tr><td>유입 100명 방어</td><td>100명/년 유지</td><td>원기122~123 (12~13년 후)</td><td>4~5년 연장</td></tr>
+      <tr class="highlight-row"><td>유입+정착률 개선</td><td>100명 + 정착률 80%</td><td>원기125+ (15년 이후)</td><td>정착 프로그램 효과</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="footnote">※ 비사망 이탈율(9.3%)은 고정, 신규유입 수준만 변경한 민감도 분석</p>
+</section>
+
+<!-- ══ 탭4: 교당별 진단 ══ -->
+<section id="tab-church" class="tab-panel">
+  <h2>교당별 절반·소멸 도달 시점 (월1회+ 기준)</h2>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="label">5년 내 절반도달 (원기115)</div><div class="value" style="color:var(--warn);">8개 교당</div><div class="delta">개포·공항·신길·영등포 등</div></div>
+    <div class="kpi"><div class="label">6년 내 절반도달 (원기116)</div><div class="value" style="color:#854f0b;">26개 교당</div><div class="delta">원효·전농·이문·불광 등</div></div>
+    <div class="kpi"><div class="label">7년 이상 (원기117+)</div><div class="value" style="color:var(--good);">22개 교당</div><div class="delta">원기117 19개, 원기118+ 3개</div></div>
+  </div>
+
+  <div class="warn">56개 교당 중 34개(60.7%)가 5~6년 내 절반도달이 예상됩니다. 복귀자 흐름을 반영하면서 이전 모델보다 1~2년 여유가 생겼으나, 여전히 대다수 교당이 7년 내 절반도달에 직면합니다.</div>
+
+  <div class="findings">
+    <div class="finding"><span class="tag">최고위험군 — 5년 내</span><strong>5년 내 절반도달 8개 교당 (원기115, 2031년):</strong> 개포·공항·신길·영등포·의정부·연희·파주·안암교당. 안암교당은 젊은 교도 비중이 높지만 49세 이하 이탈율(22.6%)이 높아 복귀 모델에서도 5년 내로 분류됩니다.</div>
+    <div class="finding"><span class="tag">숨겨진 위험</span>연1회+ 기준으로는 양호해 보였던 <strong>정릉·신촌·마포·연희·구로·중곡·중구교당</strong>이 월1회+ 기준에서는 절반도달이 9~13년 앞당겨져 위험군으로 재분류됩니다. 핵심 교도층의 고령화가 가려져 있었습니다.</div>
+    <div class="finding"><span class="tag">가장 안정적</span>유린(8년)·동두천(9년)·전곡(10년) 3개 교당이 상대적으로 여유 있습니다. 다만 동두천은 7명으로 절반(3.5명)과 소멸(3명)이 사실상 동시 도달합니다.</div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">교당별 중앙연령 vs 절반도달까지 소요년수 (산점도)</div>
+    <div style="position:relative;height:300px;"><canvas id="churchScatterChart" role="img"
+      aria-label="56개 교당 산점도. 중앙연령이 높을수록 절반도달이 빠르다."></canvas></div>
+    <div class="legend" style="margin-top:8px;">
+      <span><span class="sw" style="background:#e34948;"></span>5년 내 (원기115)</span>
+      <span><span class="sw" style="background:#eda100;"></span>6년 내 (원기116)</span>
+      <span><span class="sw" style="background:#5cb85c;"></span>7년 (원기117)</span>
+      <span><span class="sw" style="background:#1baf7a;"></span>8년 이상 (원기118+)</span>
+    </div>
+  </div>
+
+  <div class="search-row">
+    <input type="text" id="churchSearch" placeholder="교당명 검색..." oninput="filterChurch()">
+    <select id="riskFilter" onchange="filterChurch()">
+      <option value="">전체</option>
+      <option value="5">5년 내 (원기115)</option>
+      <option value="6">6년 내 (원기116)</option>
+      <option value="7">7년 이상</option>
+    </select>
+    <span id="churchCount" style="font-size:12px;color:var(--muted);"></span>
+  </div>
+
+  <div class="tbl-wrap">
+  <table id="churchTableEl">
+    <caption>표5. 교당별 절반·소멸 도달 시점 (110년 기준, 월1회+ 기준)</caption>
+    <thead><tr>
+      <th>교당</th><th>월1회+ 인원</th><th>평균연령</th><th>중앙연령</th>
+      <th>위험도</th><th>절반도달(원기)</th><th>절반도달까지</th>
+      <th>소멸도달(원기)</th><th>소멸도달까지</th>
+    </tr></thead>
+    <tbody id="churchTableBody"></tbody>
+  </table>
+  </div>
+  <p class="footnote">※ 신규유입 = 연평균 신규입교(원기104~108년 실측) × 교당별 출석전환율 × 월1회+ 전환율(63.0%). 소멸 기준: 110년 월1회+ 인원의 5% 또는 3명 중 적은 쪽. 10회 반복 시뮬레이션 중앙값.</p>
+</section>
+
+<!-- ══ 탭5: 방법론 ══ -->
+<section id="tab-method" class="tab-panel">
+  <h2>이탈율 모델 — 현황 및 한계</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>이탈 유형</th><th>연간 비율</th><th>산출 방법</th><th>한계</th></tr></thead>
+    <tbody>
+      <tr><td>사망 이탈</td><td>약 2.6%</td><td>통계청 2024년 연령대별 사망확률 × 월1회+ 연령분포</td><td>5세 단위 정밀 생명표가 아닌 구간 근사</td></tr>
+      
+      <tr class="highlight-row"><td>합계(영구이탈)</td><td>연령별 차등</td><td>연령대별 차등 + 신규/기존 구분 (정밀화 적용 완료)</td><td>정밀화 모델(원기116) 기준 — 사망만 반영한 단순모델 대비 2년 빠름</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>동적 복귀 모델 (최종 적용):</strong><br>
+    비사망이탈: 49세 이하 22.6% · 50대 9.5% · 60대 6.7% · 70대 5.7% · 80세+ 13.4%<br>
+    신규 교도 이탈율: 30.4% (기존 교도 8.8%의 3.5배)<br>
+    복귀 흐름: 이탈 후 1년 내 13.4% · 2년 내 5.8% · 3년 내 3.2% 복귀 (3년 누적 22.4%)<br>
+    영구이탈율: 총 이탈의 77.6%만 영구이탈로 처리. 이탈자 풀을 연도별로 추적해 매년 복귀 흐름 반영.
+  </div>
+
+  <h2>평균연령 vs 중앙연령</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>지표</th><th>97년</th><th>110년</th><th>변화</th><th>특징</th></tr></thead>
+    <tbody>
+      <tr><td>평균연령</td><td>53.7세</td><td>64.3세</td><td>+10.6세</td><td>소수 어린이·청소년이 3~4세 낮추는 효과. 신규 유입 연령 반영</td></tr>
+      <tr><td>중앙연령</td><td>57세</td><td>68세</td><td>+11세</td><td>"전형적인 교도"의 나이. 극단값 영향 없음. 고령화 심각성 더 직관적</td></tr>
+      <tr><td>왜도</td><td>−0.73</td><td>−1.23</td><td>심화</td><td>좌편향 심화 = 고령층 집중 + 소수 저연령 혼재</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>주요 가정 및 한계</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>가정</th><th>내용</th><th>한계</th></tr></thead>
+    <tbody>
+      <tr><td>출석 기준</td><td>법회출석수 ≥ 12 (월1회 이상)</td><td>새벽좌선 등 합산 가능 — "주1회 정기법회"와 다를 수 있음</td></tr>
+      <tr><td>기준 모집단</td><td>원기110년 월1회+ 출석 교도의 개별 연령</td><td>110년이 마지막 안정적 모집단 연도</td></tr>
+      <tr><td>비사망 이탈율</td><td>연령대별 차등(49세↓ 22.6%~70대 5.7%) + 신규/기존 교도 구분(30.4%/8.8%) 적용</td><td>소규모 교당(20명 미만)에서 시뮬레이션 노이즈 가능성. 안암·동두천 등 별도 해석 필요</td></tr>
+      <tr><td>신규유입</td><td>실측 추세(연 −24.1명/년) × 출석전환율 × 월1회+ 전환율 63%</td><td>월1회+ 전환율의 교당별 편차 미반영</td></tr>
+      <tr><td>정책 개입</td><td>미반영 (BAU 가정)</td><td>거점교당 구조 개편, 정착 프로그램 효과는 별도 시나리오 필요</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>데이터 출처</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>구간</th><th>데이터 출처</th><th>처리 방법</th></tr></thead>
+    <tbody>
+      <tr><td>원기97~108</td><td>서울교구_전체교도_모든년도.csv</td><td>교도번호 기준 완전 중복제거 + 출석수≥12 필터. 특수교당 6개소 제외</td></tr>
+      <tr><td>원기109~110</td><td>서울교구_교도출석_원기109/110.xlsx + 교도명단_주소_최종.xlsx</td><td>생년 매칭(매칭률 99.96~99.98%) + 출석수≥12 필터</td></tr>
+      <tr><td>열반자 추정</td><td>통계청 2024년 사망원인통계</td><td>원자료 열반 항목 미사용 (입력 시차)</td></tr>
+      <tr><td>이탈율</td><td>원기97~108년 교도번호 연도별 추적</td><td>영구이탈 = 총이탈 − 이듬해 복귀자. 코로나 이상치 제외</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="footnote">작성: 원불교 서울교구 교화구조개선 TF · 데이터 분석 | 사망확률 출처: 통계청(국가데이터처) 2024년 사망원인통계</p>
+</section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const HL = [97,98,99,100,101,102,103,104,105,106,107,108,109,110];
+const mAvg  = [53.7,54.5,55.1,55.3,56.3,57.2,58.2,59.0,62.1,62.1,62.7,62.8,63.1,64.3];
+const mMed  = [57,58,59,59,60,61,62,63,65,65,66,67,67,68];
+const mAtt  = [4969,4785,4793,4806,4705,4612,4466,4344,3480,3783,3681,3740,3571,3541];
+const oAvg  = [47.9,48.3,48.4,47.9,49.3,49.9,50.6,52.0,55.4,56.5,56.1,56.1,56.1,57.6];
+const oAtt  = [7991,7784,7858,8350,8355,7897,7694,7249,5902,5820,5879,5906,5680,5561];
+const deaths= [70,71,74,76,77,80,81,84,75,83,85,88,88,94];
+
+const pYears= [109,110,111,112,113,114,115,116,117,118,119,120];
+const pAvg  = [63.9,63.3,62.6,62.0,60.9,59.8,58.7,57.4,55.8,54.0,52.5,51.2];
+const pPop  = [3183,2861,2602,2373,2154,1984,1828,1669,1526,1418,1309,1226];
+const p60   = [70.5,69.8,68.9,68.4,66.8,64.5,62.7,60.2,57.3,53.6,50.6,48.8];
+const p80   = [19.4,20.1,21.3,21.9,22.2,22.8,23.7,24.9,24.7,24.3,23.7,23.6];
+const pDeath= [94,86,79,73,67,61,56,51,47,42,38,34];
+
+const hBase = 3541, hTarget = hBase/2;
+const hYrs  = [110,111,112,113,114,115,116,117,118,119,120,121,122];
+const hPops = [3541,3104,2754,2464,2209,1994,1790,1606,1435,1289,1153,1028,914];
+
+const allYrs= [97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120];
+const allAvg= [53.7,54.5,55.1,55.3,56.3,57.2,58.2,59.0,62.1,62.1,62.7,62.8,63.9,63.3,62.6,62.0,60.9,59.8,58.7,57.4,55.8,54.0,52.5,51.2];
+const allPop= [4969,4785,4793,4806,4705,4612,4466,4344,3480,3783,3681,3740,3183,2861,2602,2373,2154,1984,1828,1669,1526,1418,1309,1226];
+
+const churchData = [
+{church:"개포교당",n:22,avgage:75.1,med:76,half_yr:115,half_n:5,ext_yr:123,ext_n:13},
+{church:"공항교당",n:21,avgage:70.9,med:74,half_yr:115,half_n:5,ext_yr:125,ext_n:15},
+{church:"신길교당",n:24,avgage:67.6,med:73,half_yr:115,half_n:5,ext_yr:124,ext_n:14},
+{church:"영등포교당",n:19,avgage:58.8,med:70,half_yr:115,half_n:5,ext_yr:120,ext_n:10},
+{church:"의정부교당",n:32,avgage:67.9,med:69,half_yr:115,half_n:5,ext_yr:126,ext_n:16},
+{church:"연희교당",n:24,avgage:63.5,med:66,half_yr:115,half_n:5,ext_yr:127,ext_n:17},
+{church:"파주교당",n:26,avgage:59.3,med:63,half_yr:115,half_n:5,ext_yr:128,ext_n:18},
+{church:"안암교당",n:73,avgage:47.8,med:46,half_yr:115,half_n:5,ext_yr:136,ext_n:26},
+{church:"원효교당",n:19,avgage:74.4,med:77,half_yr:116,half_n:6,ext_yr:123,ext_n:13},
+{church:"전농교당",n:39,avgage:73.6,med:76,half_yr:116,half_n:6,ext_yr:129,ext_n:19},
+{church:"면목교당",n:16,avgage:71.2,med:75,half_yr:116,half_n:6,ext_yr:122,ext_n:12},
+{church:"이문교당",n:59,avgage:70.7,med:75,half_yr:116,half_n:6,ext_yr:133,ext_n:23},
+{church:"방배교당",n:29,avgage:72.7,med:74,half_yr:116,half_n:6,ext_yr:126,ext_n:16},
+{church:"은평교당",n:21,avgage:73.9,med:74,half_yr:116,half_n:6,ext_yr:126,ext_n:16},
+{church:"불광교당",n:36,avgage:73.1,med:72,half_yr:116,half_n:6,ext_yr:128,ext_n:18},
+{church:"장충교당",n:48,avgage:72.4,med:72,half_yr:116,half_n:6,ext_yr:132,ext_n:22},
+{church:"홍제교당",n:27,avgage:73.1,med:72,half_yr:116,half_n:6,ext_yr:127,ext_n:17},
+{church:"구의교당",n:33,avgage:71.8,med:71,half_yr:116,half_n:6,ext_yr:129,ext_n:19},
+{church:"방학교당",n:37,avgage:70.6,med:71,half_yr:116,half_n:6,ext_yr:127,ext_n:17},
+{church:"송천교당",n:71,avgage:64.7,med:71,half_yr:116,half_n:6,ext_yr:136,ext_n:26},
+{church:"태릉교당",n:26,avgage:70.8,med:71,half_yr:116,half_n:6,ext_yr:126,ext_n:16},
+{church:"목동교당",n:70,avgage:69.4,med:70,half_yr:116,half_n:6,ext_yr:134,ext_n:24},
+{church:"서울교당",n:150,avgage:62.8,med:70,half_yr:116,half_n:6,ext_yr:134,ext_n:24},
+{church:"잠실교당",n:97,avgage:64.2,med:70,half_yr:116,half_n:6,ext_yr:132,ext_n:22},
+{church:"종로교당",n:67,avgage:67.9,med:70,half_yr:116,half_n:6,ext_yr:134,ext_n:24},
+{church:"도봉교당",n:34,avgage:69.3,med:69,half_yr:116,half_n:6,ext_yr:128,ext_n:18},
+{church:"역삼교당",n:156,avgage:61.0,med:69,half_yr:116,half_n:6,ext_yr:134,ext_n:24},
+{church:"한강교당",n:134,avgage:62.4,med:68,half_yr:116,half_n:6,ext_yr:135,ext_n:25},
+{church:"신림교당",n:147,avgage:61.8,med:67,half_yr:116,half_n:6,ext_yr:137,ext_n:27},
+{church:"신촌교당",n:51,avgage:61.8,med:66,half_yr:116,half_n:6,ext_yr:131,ext_n:21},
+{church:"일산교당",n:90,avgage:64.8,med:65,half_yr:116,half_n:6,ext_yr:135,ext_n:25},
+{church:"마포교당",n:44,avgage:56.8,med:64,half_yr:116,half_n:6,ext_yr:131,ext_n:21},
+{church:"돈암교당",n:68,avgage:63.4,med:63,half_yr:116,half_n:6,ext_yr:136,ext_n:26},
+{church:"원남교당",n:192,avgage:53.0,med:57,half_yr:116,half_n:6,ext_yr:138,ext_n:28},
+{church:"상계교당",n:41,avgage:72.2,med:73,half_yr:117,half_n:7,ext_yr:130,ext_n:20},
+{church:"가락교당",n:112,avgage:64.9,med:71,half_yr:117,half_n:7,ext_yr:133,ext_n:23},
+{church:"강화교당",n:37,avgage:70.1,med:71,half_yr:117,half_n:7,ext_yr:127,ext_n:17},
+{church:"금천교당",n:15,avgage:67.7,med:71,half_yr:117,half_n:7,ext_yr:123,ext_n:13},
+{church:"정릉교당",n:47,avgage:67.6,med:71,half_yr:117,half_n:7,ext_yr:132,ext_n:22},
+{church:"사직교당",n:15,avgage:64.9,med:70,half_yr:117,half_n:7,ext_yr:122,ext_n:12},
+{church:"서초교당",n:28,avgage:69.5,med:70,half_yr:117,half_n:7,ext_yr:129,ext_n:19},
+{church:"강동교당",n:99,avgage:66.4,med:69,half_yr:117,half_n:7,ext_yr:136,ext_n:26},
+{church:"개봉교당",n:65,avgage:65.6,med:69,half_yr:117,half_n:7,ext_yr:134,ext_n:24},
+{church:"구로교당",n:53,avgage:68.0,med:69,half_yr:117,half_n:7,ext_yr:133,ext_n:23},
+{church:"중곡교당",n:61,avgage:67.2,med:69,half_yr:117,half_n:7,ext_yr:133,ext_n:23},
+{church:"강남교당",n:398,avgage:64.1,med:68,half_yr:117,half_n:7,ext_yr:135,ext_n:25},
+{church:"양주교당",n:24,avgage:68.2,med:68,half_yr:117,half_n:7,ext_yr:128,ext_n:18},
+{church:"화곡교당",n:94,avgage:63.6,med:68,half_yr:117,half_n:7,ext_yr:134,ext_n:24},
+{church:"김포교당",n:44,avgage:63.2,med:67,half_yr:117,half_n:7,ext_yr:133,ext_n:23},
+{church:"여의도교당",n:148,avgage:63.1,med:66,half_yr:117,half_n:7,ext_yr:136,ext_n:26},
+{church:"포천교당",n:13,avgage:64.9,med:66,half_yr:117,half_n:7,ext_yr:125,ext_n:15},
+{church:"화정교당",n:64,avgage:66.5,med:66,half_yr:117,half_n:7,ext_yr:137,ext_n:27},
+{church:"중구교당",n:96,avgage:61.8,med:64,half_yr:117,half_n:7,ext_yr:136,ext_n:26},
+{church:"유린교당",n:41,avgage:62.9,med:63,half_yr:118,half_n:8,ext_yr:134,ext_n:24},
+{church:"동두천교당",n:7,avgage:53.7,med:60,half_yr:119,half_n:9,ext_yr:119,ext_n:9},
+{church:"전곡교당",n:37,avgage:60.3,med:62,half_yr:120,half_n:10,ext_yr:138,ext_n:28}
+];
+
+/* ── 표 채우기 ── */
+document.getElementById('avgAgeTable').innerHTML = HL.map((y,i)=>`
+  <tr><td>원기${y}</td><td>${y+1916}</td>
+  <td>${mAvg[i].toFixed(1)}세</td><td>${mMed[i]}세</td>
+  <td>${mAtt[i].toLocaleString()}</td>
+  <td>${oAvg[i].toFixed(1)}세</td><td>${oAtt[i].toLocaleString()}</td></tr>`).join('');
+
+document.getElementById('deathTable').innerHTML = HL.map((y,i)=>`
+  <tr><td>원기${y}</td><td>${y+1916}</td><td>${deaths[i]}명</td>
+  <td>${(deaths[i]/mAtt[i]*100).toFixed(1)}%</td></tr>`).join('');
+
+document.getElementById('projTable').innerHTML = pYears.map((y,i)=>{
+  const pct = Math.round(pPop[i]/mAtt[13]*100);
+  const cls = y<=110?'':' class="highlight-row"';
+  return `<tr${cls}><td>원기${y}</td><td>${y+1916}</td>
+    <td>${pPop[i].toLocaleString()}</td><td>${pct}%</td>
+    <td>${pAvg[i].toFixed(1)}세</td><td>${p60[i].toFixed(1)}%</td>
+    <td>${p80[i].toFixed(1)}%</td><td>${pDeath[i]}명</td></tr>`;
+}).join('');
+
+/* ── 교당 테이블 ── */
+function riskBadge(n){
+  if(n<=5) return '<span class="risk-badge r5">5년 · 원기115</span>';
+  if(n<=6) return '<span class="risk-badge r6">6년 · 원기116</span>';
+  if(n<=7) return '<span class="risk-badge" style="background:#e8f4de;color:#3b6d11;">7년 · 원기117</span>';
+  return '<span class="risk-badge r7">8년+ · 원기118+</span>';
+}
+function renderChurchTable(data){
+  document.getElementById('churchTableBody').innerHTML = data.map(d=>`
+    <tr><td>${d.church}</td><td>${d.n}</td>
+    <td>${d.avgage.toFixed(1)}세</td><td>${d.med}세</td>
+    <td>${riskBadge(d.half_n)}</td>
+    <td>원기${d.half_yr}</td><td>${d.half_n}년 후</td>
+    <td>원기${d.ext_yr}</td><td>${d.ext_n}년 후</td></tr>`).join('');
+  document.getElementById('churchCount').textContent = `${data.length}개 교당`;
+}
+function filterChurch(){
+  const q = document.getElementById('churchSearch').value.trim();
+  const rf= document.getElementById('riskFilter').value;
+  let d = churchData;
+  if(q) d = d.filter(x=>x.church.includes(q));
+  if(rf==='5') d = d.filter(x=>x.half_n<=5);
+  else if(rf==='6') d = d.filter(x=>x.half_n===6);
+  else if(rf==='7') d = d.filter(x=>x.half_n>=7);
+  renderChurchTable(d);
+}
+renderChurchTable(churchData);
+
+/* ── 차트 ── */
+const charts = {};
+const grid='#e1e0d9', muted='#898781';
+
+function mkChart(id, cfg){
+  if(charts[id]){ charts[id].destroy(); }
+  const el = document.getElementById(id);
+  if(!el) return;
+  charts[id] = new Chart(el, cfg);
+}
+
+function renderCharts(tab){
+  if(tab==='aging'){
+    /* 평균/중앙값 비교 차트 */
+    mkChart('avgAgeChart',{
+      type:'line',
+      data:{labels:HL.map(y=>'원기'+y), datasets:[
+        {label:'월1회+ 평균연령',data:mAvg,borderColor:'#993c1d',backgroundColor:'#993c1d',pointRadius:3,borderWidth:2,tension:.2},
+        {label:'월1회+ 중앙연령',data:mMed,borderColor:'#e34948',backgroundColor:'#e34948',borderDash:[4,3],pointRadius:2,borderWidth:1.5,tension:.2},
+        {label:'연1회+ 평균연령',data:oAvg,borderColor:'#85b7eb',backgroundColor:'#85b7eb',borderDash:[5,4],pointRadius:2,borderWidth:1.5,tension:.2}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:muted,font:{size:11},maxRotation:45,autoSkip:false},grid:{display:false}},
+          y:{min:40,max:75,ticks:{color:muted},grid:{color:grid},
+            title:{display:true,text:'세',color:muted}}
+        }}
+    });
+
+    /* 열반자 차트 */
+    mkChart('deathChart',{
+      type:'bar',
+      data:{labels:HL.map(y=>'원기'+y),datasets:[
+        {data:deaths,backgroundColor:'#993c1d',borderRadius:3,maxBarThickness:24}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:muted,font:{size:11},maxRotation:45,autoSkip:false},grid:{display:false}},
+          y:{ticks:{color:muted},grid:{color:grid},title:{display:true,text:'명',color:muted}}
+        }}
+    });
+
+    /* 코로나 차트 — Y축 최솟값 3000으로 상향 */
+    mkChart('covidChart',{
+      type:'line',
+      data:{labels:HL.map(y=>'원기'+y),datasets:[{
+        data:mAtt,borderColor:'#185fa5',backgroundColor:'rgba(24,95,165,.15)',
+        pointRadius:HL.map(y=>(y===105||y===106)?6:3),
+        pointBackgroundColor:HL.map(y=>(y===105||y===106)?'#993c1d':'#185fa5'),
+        borderWidth:2.5,fill:true,tension:.2
+      }]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{
+            label:ctx=>' 월1회+ 출석 교도: '+ctx.raw.toLocaleString()+'명'
+          }}},
+        scales:{
+          x:{ticks:{color:muted,font:{size:11},maxRotation:45,autoSkip:false},grid:{display:false}},
+          y:{min:3000,max:5200,
+            ticks:{color:muted,callback:v=>v.toLocaleString()},
+            grid:{color:grid},
+            title:{display:true,text:'출석 교도 수(명)',color:muted}}
+        }}
+    });
+  }
+  else if(tab==='forecast'){
+    mkChart('projChart',{
+      data:{labels:allYrs.map(y=>'원기'+y),datasets:[
+        {type:'line',label:'평균연령(실측)',
+          data:allAvg.map((v,i)=>i<14?v:null),
+          borderColor:'#993c1d',backgroundColor:'#993c1d',
+          pointRadius:2,borderWidth:2,yAxisID:'y',tension:.2},
+        {type:'line',label:'평균연령(예측)',
+          data:allAvg.map((v,i)=>i>=13?v:null),
+          borderColor:'#eda100',backgroundColor:'#eda100',
+          borderDash:[5,4],pointRadius:2,borderWidth:2,yAxisID:'y',tension:.2},
+        {type:'bar',label:'출석 교도(실측)',
+          data:allPop.map((v,i)=>i<14?v:null),
+          backgroundColor:'rgba(24,95,165,.65)',
+          maxBarThickness:16,yAxisID:'y1',borderRadius:2},
+        {type:'bar',label:'출석 교도(예측)',
+          data:allPop.map((v,i)=>i>=13?v:null),
+          backgroundColor:'rgba(24,95,165,.3)',
+          maxBarThickness:16,yAxisID:'y1',borderRadius:2}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:muted,font:{size:10},maxRotation:45,autoSkip:false},grid:{display:false}},
+          y:{position:'left',min:40,max:70,ticks:{color:muted},grid:{color:grid},
+            title:{display:true,text:'평균연령(세)',color:muted}},
+          y1:{position:'right',min:0,ticks:{color:muted},grid:{display:false},
+            title:{display:true,text:'출석 교도 수(명)',color:muted}}
+        }}
+    });
+
+    mkChart('halfChart',{
+      type:'line',
+      data:{labels:hYrs.map(y=>'원기'+y),datasets:[
+        {label:'출석 교도',data:hPops,borderColor:'#185fa5',
+          backgroundColor:'rgba(24,95,165,.1)',
+          pointRadius:hYrs.map(y=>y>=118?6:3),
+          pointBackgroundColor:hYrs.map(y=>y>=117?'#993c1d':'#185fa5'),
+          borderWidth:2.5,fill:true,tension:.2},
+        {label:'절반선',data:hYrs.map(()=>hTarget),
+          borderColor:'#993c1d',borderDash:[6,4],borderWidth:1.5,pointRadius:0}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:muted,font:{size:11},autoSkip:false},grid:{display:false}},
+          y:{min:0,ticks:{color:muted},grid:{color:grid},
+            title:{display:true,text:'출석 교도 수(명)',color:muted}}
+        }}
+    });
+  }
+  else if(tab==='church'){
+    mkChart('churchScatterChart',{
+      type:'scatter',
+      data:{datasets:[
+        {label:'5년(원기115)',
+          data:churchData.filter(d=>d.half_n<=5).map(d=>({x:d.med,y:d.half_n,label:d.church,n:d.n})),
+          backgroundColor:'#e34948',pointRadius:6},
+        {label:'6년(원기116)',
+          data:churchData.filter(d=>d.half_n===6).map(d=>({x:d.med,y:d.half_n,label:d.church,n:d.n})),
+          backgroundColor:'#eda100',pointRadius:5},
+        {label:'7년(원기117)',
+          data:churchData.filter(d=>d.half_n===7).map(d=>({x:d.med,y:d.half_n,label:d.church,n:d.n})),
+          backgroundColor:'#5cb85c',pointRadius:5},
+        {label:'8년+(원기118+)',
+          data:churchData.filter(d=>d.half_n>=8).map(d=>({x:d.med,y:d.half_n,label:d.church,n:d.n})),
+          backgroundColor:'#1baf7a',pointRadius:7}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:ctx=>`${ctx.raw.label}: 중앙${ctx.raw.x}세, ${ctx.raw.y}년후 (${ctx.raw.n}명)`}}},
+        scales:{
+          x:{title:{display:true,text:'월1회+ 중앙연령(세)',color:muted},
+            ticks:{color:muted},grid:{color:grid},min:40,max:85},
+          y:{title:{display:true,text:'절반도달까지(년)',color:muted},
+            ticks:{color:muted,stepSize:1},grid:{color:grid},min:4,max:11}
+        }}
+    });
+  }
+}
+
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  renderCharts(id);
+}
+</script>
+</body>
+</html>
