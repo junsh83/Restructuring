@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일반교도 설문 vs 광역패널(델파이) 비교분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;900&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink: #1a1611;
+    --paper: #f5f1ea;
+    --paper-2: #ebe5da;
+    --paper-3: #ddd4c4;
+    --rust: #a23e23;
+    --rust-deep: #6b2614;
+    --gold: #b08a3e;
+    --gold-light: #d4b76a;
+    --moss: #4a5d3a;
+    --moss-light: #7d8f63;
+    --indigo: #2f3e58;
+    --indigo-deep: #1c2638;
+    --plum: #5e2a3f;
+    --line: rgba(26,22,17,0.18);
+    --line-strong: rgba(26,22,17,0.45);
+    --shadow: 0 1px 0 rgba(26,22,17,0.06), 0 12px 32px -16px rgba(26,22,17,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Serif KR', 'Gowun Batang', serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(176,138,62,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(162,62,35,0.04) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* === 한지(韓紙) 질감 === */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0.08 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+  /* === HEADER === */
+  header {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: 0;
+    position: relative;
+  }
+  .seal {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust-deep);
+  }
+  .seal-mark {
+    width: 36px; height: 36px;
+    background: var(--rust);
+    color: var(--paper);
+    display: grid; place-items: center;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(162,62,35,0.3);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5.2vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 18px;
+  }
+  h1 .sub {
+    display: block;
+    font-size: 0.42em;
+    font-weight: 400;
+    color: var(--rust-deep);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .lead {
+    font-size: 1.05rem;
+    max-width: 760px;
+    color: rgba(26,22,17,0.78);
+    margin-bottom: 36px;
+  }
+  .meta-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-top: 40px;
+  }
+  .meta-cell {
+    background: var(--paper);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .meta-cell .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(26,22,17,0.55);
+  }
+  .meta-cell .val {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* === SECTION 공통 === */
+  section { padding: 70px 0 40px; border-bottom: 1px solid var(--line); }
+  .sec-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--rust-deep);
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: clamp(1.55rem, 3.2vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    position: relative;
+    padding-left: 22px;
+  }
+  h2::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.5em;
+    width: 8px; height: 8px;
+    background: var(--rust);
+    border-radius: 2px;
+  }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 32px 0 14px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  h4 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 18px 0 8px;
+    color: var(--indigo-deep);
+  }
+  p { margin-bottom: 16px; color: rgba(26,22,17,0.85); }
+  .sec-intro {
+    max-width: 800px;
+    color: rgba(26,22,17,0.7);
+    margin-bottom: 32px;
+    font-size: 1.02rem;
+  }
+
+  /* === 카드 그리드: 조사개요 === */
+  .panel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 30px 0;
+  }
+  .panel-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 24px 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .panel-card.tf::before { background: var(--rust); }
+  .panel-card.expand::before { background: var(--gold); }
+  .panel-card.field::before { background: var(--moss); }
+  .panel-card .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(26,22,17,0.55);
+    margin-bottom: 8px;
+  }
+  .panel-card .name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .panel-card .stat {
+    font-size: 2rem;
+    font-weight: 900;
+    font-family: 'Noto Serif KR', serif;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .panel-card .stat .pct {
+    font-size: 0.55em;
+    color: rgba(26,22,17,0.5);
+    font-weight: 500;
+    margin-left: 8px;
+  }
+  .panel-card .desc {
+    font-size: 0.88rem;
+    color: rgba(26,22,17,0.65);
+    line-height: 1.6;
+  }
+  .panel-bar {
+    height: 6px;
+    background: var(--paper-3);
+    margin-top: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel-bar .fill { position: absolute; top: 0; left: 0; bottom: 0; }
+  .tf .fill { background: var(--rust); }
+  .expand .fill { background: var(--gold); }
+  .field .fill { background: var(--moss); }
+
+  /* === 응답률 종합 (광역) === */
+  .total-callout {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 32px 36px;
+    margin: 24px 0 8px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 32px;
+  }
+  .total-callout .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .total-callout .name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .total-callout .mid {
+    font-size: 0.92rem;
+    color: rgba(245,241,234,0.7);
+    line-height: 1.65;
+  }
+  .total-callout .num {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .total-callout .num .pct {
+    font-size: 0.4em;
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  /* === 박스/콜아웃 === */
+  .callout {
+    border-left: 3px solid var(--rust);
+    background: var(--paper-2);
+    padding: 18px 22px;
+    margin: 22px 0;
+    font-size: 0.97rem;
+  }
+  .callout.indigo { border-color: var(--indigo); }
+  .callout.moss { border-color: var(--moss); }
+  .callout.gold { border-color: var(--gold); }
+  .callout strong { color: var(--rust-deep); font-weight: 700; }
+  .callout.indigo strong { color: var(--indigo-deep); }
+  .callout.moss strong { color: var(--moss); }
+
+  /* === 합의지점 테이블 === */
+  .consensus-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    background: var(--paper);
+    font-size: 0.92rem;
+  }
+  .consensus-table th {
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 12px;
+    text-align: left;
+  }
+  .consensus-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .consensus-table tr:hover td { background: rgba(176,138,62,0.06); }
+  .consensus-table .code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--rust-deep);
+    font-size: 0.86rem;
+  }
+  .consensus-table .nm { font-weight: 600; }
+  .consensus-table .area {
+    font-size: 0.78rem;
+    color: rgba(26,22,17,0.55);
+    display: block;
+    margin-top: 2px;
+  }
+  .pct-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .pct-bar .bar {
+    width: 70px;
+    height: 6px;
+    background: var(--paper-3);
+    position: relative;
+    overflow: hidden;
+  }
+  .pct-bar .fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    background: var(--rust);
+  }
+  .pct-bar .fill.delphi { background: var(--gold); }
+  .pct-bar .fill.field { background: var(--moss); }
+  .pct-bar .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    min-width: 50px;
+  }
+  .type-pill {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+    background: var(--paper-3);
+    color: var(--ink);
+  }
+  .type-pill.solution { background: rgba(47,62,88,0.15); color: var(--indigo-deep); }
+  .type-pill.diagnosis-n { background: rgba(162,62,35,0.15); color: var(--rust-deep); }
+  .type-pill.diagnosis-p { background: rgba(74,93,58,0.18); color: var(--moss); }
+  .type-pill.definition { background: rgba(94,42,63,0.15); color: var(--plum); }
+  .type-pill.criteria { background: rgba(176,138,62,0.18); color: var(--gold); }
+  .type-pill.meta { background: rgba(26,22,17,0.1); color: rgba(26,22,17,0.65); }
+  .type-pill.target { background: rgba(162,62,35,0.1); color: var(--rust); }
+
+  /* === 차트 컨테이너 === */
+  .chart-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 28px;
+    margin: 24px 0;
+    box-shadow: var(--shadow);
+  }
+  .chart-card .chart-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .chart-card .chart-sub {
+    font-size: 0.85rem;
+    color: rgba(26,22,17,0.6);
+    margin-bottom: 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .chart-wrap {
+    position: relative;
+    height: 380px;
+    width: 100%;
+  }
+  .chart-wrap.tall { height: 520px; }
+  .chart-wrap.short { height: 260px; }
+  .chart-wrap.xtall { height: 640px; }
+
+  /* === 이견 카드 === */
+  .dissent-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .dissent-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 22px 26px;
+  }
+  .dissent-card .head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .dissent-card .num {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--rust);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .dissent-card .title {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .dissent-card .sides {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 12px 0 14px;
+  }
+  .dissent-card .side {
+    padding: 14px;
+    background: var(--paper-2);
+    border-radius: 2px;
+    font-size: 0.92rem;
+  }
+  .dissent-card .side.pro { border-left: 3px solid var(--moss); }
+  .dissent-card .side.con { border-left: 3px solid var(--rust); }
+  .dissent-card .side .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(26,22,17,0.55);
+    margin-bottom: 6px;
+  }
+  .dissent-card .measure {
+    background: var(--indigo-deep);
+    color: var(--paper);
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    border-radius: 2px;
+  }
+  .dissent-card .measure strong { color: var(--gold-light); margin-right: 8px; font-weight: 500; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* === 라운드2 쟁점 카드 === */
+  .issue-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 22px 0;
+  }
+  .issue-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 20px 22px;
+    transition: all 0.2s;
+  }
+  .issue-card:hover {
+    border-color: var(--rust);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .issue-card .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--rust);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .issue-card .title {
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .issue-card .desc {
+    font-size: 0.9rem;
+    color: rgba(26,22,17,0.7);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .issue-card .codes {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(26,22,17,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* === 영역별 히트맵 === */
+  .heat-grid {
+    display: grid;
+    grid-template-columns: 200px repeat(5, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+    font-size: 0.85rem;
+  }
+  .heat-cell {
+    background: var(--paper);
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .heat-cell.head {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .heat-cell.row-head {
+    background: var(--paper-2);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+
+  /* === 타임라인 === */
+  .timeline {
+    margin: 24px 0;
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: var(--rust);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 22px;
+    padding-left: 22px;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -22px; top: 6px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--rust);
+  }
+  .timeline-item .when {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--rust-deep);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .timeline-item .what {
+    font-weight: 700;
+    margin-bottom: 3px;
+    font-size: 1rem;
+  }
+  .timeline-item .detail {
+    font-size: 0.88rem;
+    color: rgba(26,22,17,0.68);
+  }
+
+  /* === 패널별 영역 분포 시각화 === */
+  .area-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .area-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 50px;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.88rem;
+  }
+  .area-row .nm { font-weight: 500; }
+  .area-row .gauge {
+    height: 18px;
+    background: var(--paper-3);
+    position: relative;
+    overflow: hidden;
+  }
+  .area-row .gauge .f { position: absolute; left:0; top:0; bottom:0; background: var(--indigo); }
+  .area-row .n { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; }
+
+  /* === 인용 박스 (응답 발췌) === */
+  .quote {
+    border-left: 4px solid var(--gold);
+    padding: 14px 22px;
+    margin: 16px 0;
+    background: rgba(176,138,62,0.05);
+    font-family: 'Gowun Batang', serif;
+    font-size: 0.95rem;
+    color: rgba(26,22,17,0.85);
+    font-style: italic;
+  }
+  .quote::before {
+    content: "“";
+    font-size: 2em;
+    line-height: 0;
+    vertical-align: -0.3em;
+    color: var(--gold);
+    margin-right: 4px;
+  }
+
+  /* === Footer === */
+  footer {
+    padding: 50px 0 60px;
+    text-align: center;
+    color: rgba(26,22,17,0.55);
+    font-size: 0.85rem;
+    border-top: 2px double var(--line-strong);
+    margin-top: 24px;
+  }
+  footer .mark {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  /* === 목차(TOC) === */
+  .toc {
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    padding: 24px 28px;
+    margin: 36px 0 0;
+    font-size: 0.92rem;
+  }
+  .toc .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust-deep);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+    columns: 2;
+    column-gap: 36px;
+  }
+  .toc li {
+    counter-increment: toc;
+    padding: 5px 0;
+    break-inside: avoid;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero) ". ";
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--gold);
+    margin-right: 8px;
+  }
+  .toc a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--line-strong);
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--rust); }
+
+  /* === 강조 인사이트 === */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .insight {
+    background: var(--paper);
+    border-top: 3px solid var(--ink);
+    padding: 20px 22px;
+  }
+  .insight .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--rust);
+    margin-bottom: 8px;
+  }
+  .insight .big {
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .insight .desc {
+    font-size: 0.88rem;
+    color: rgba(26,22,17,0.7);
+    line-height: 1.6;
+  }
+
+  /* === 카테고리 색 === */
+  .area-pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 500;
+    background: var(--paper-3);
+    color: var(--ink);
+  }
+
+  /* === 코드 매핑 통계 종합 === */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .stats-item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 20px;
+    text-align: center;
+  }
+  .stats-item .big {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--rust-deep);
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .stats-item .lbl {
+    font-size: 0.82rem;
+    color: rgba(26,22,17,0.65);
+  }
+
+  /* === 모바일 === */
+  @media (max-width: 800px) {
+    .wrap { padding: 0 20px; }
+    .meta-bar { grid-template-columns: 1fr 1fr; }
+    .panel-grid { grid-template-columns: 1fr; }
+    .total-callout { grid-template-columns: 1fr; gap: 16px; }
+    .dissent-card .sides { grid-template-columns: 1fr; }
+    .issue-grid { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .toc ol { columns: 1; }
+    .heat-grid { grid-template-columns: 120px repeat(5, 1fr); font-size: 0.75rem; }
+    .heat-cell { padding: 6px 4px; }
+    .area-row { grid-template-columns: 100px 1fr 44px; font-size: 0.8rem; }
+  }
+</style>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="seal">
+      <span class="seal-mark">圓</span>
+      <span>원불교 서울교구 · 교화구조개선 연구 · 원기 111년</span>
+    </div>
+    <h1>
+      <span class="sub">일반교도 설문 vs 광역패널(델파이 라운드1) 비교분석</span>
+      같은 방향, 다른 온도 —<br>두 목소리가 갈라지는 지점
+    </h1>
+    <p class="lead">
+      본 문서는 원기 111년 일반교도 대상 설문(응답 533건)과, 앞서 실시된 광역패널 1차 설문(델파이패널·현장패널 통합, 응답 71건, 자유서술 코딩)의
+      결과를 나란히 놓고 비교한 것이다. 두 조사는 응답 방식이 근본적으로 다르므로 — 광역패널은 <strong>자유서술 중 자발적 언급 비율</strong>,
+      일반교도는 <strong>사전 제시 보기 중 선택 비율</strong> — 절대 수치의 직접 비교보다 <strong>순위·방향·상대적 강조점</strong> 중심으로 해석해야 한다.
+    </p>
+
+    <div class="meta-bar">
+      <div class="meta-cell"><span class="lbl">일반교도 응답</span><span class="val">533건 (체크박스형)</span></div>
+      <div class="meta-cell"><span class="lbl">광역패널 응답</span><span class="val">71건 (자유서술형)</span></div>
+      <div class="meta-cell"><span class="lbl">비교 방식</span><span class="val">순위·방향 중심 대조</span></div>
+      <div class="meta-cell"><span class="lbl">활용 위치</span><span class="val">라운드2 참고자료 (보조)</span></div>
+    </div>
+
+    <nav class="toc">
+      <span class="lbl">CONTENTS · 목차</span>
+      <ol>
+        <li><a href="#sec1">비교 전 유의사항 — 방법론 차이</a></li>
+        <li><a href="#sec2">① 교화 본질 인식 차이</a></li>
+        <li><a href="#sec3">② 위기 원인 인식 차이</a></li>
+        <li><a href="#sec4">③ 법회·교당 분위기 격차</a></li>
+        <li><a href="#sec5">④ 재가 위상 — 방향 일치, 강도 차이</a></li>
+        <li><a href="#sec6">⑤ 온라인·디지털 채널 — 새로운 논점</a></li>
+        <li><a href="#sec7">방향이 일치하는 지점</a></li>
+        <li><a href="#sec8">종합 결론 및 라운드2 시사점</a></li>
+      </ol>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 1. 유의사항 ============ -->
+<section id="sec1">
+  <div class="wrap">
+    <span class="sec-num">SECTION 01</span>
+    <h2>비교 전 유의사항 — 방법론 차이</h2>
+    <p class="sec-intro">
+      두 조사는 표본 구성뿐 아니라 <strong>측정 방식 자체가 다르다.</strong> 이 차이를 인지하지 않고 절대 percentage를 나란히 놓으면
+      실제보다 훨씬 큰 격차로 오독될 위험이 있다.
+    </p>
+
+    <div class="panel-grid">
+      <div class="panel-card tf">
+        <div class="tag">DELPHI ROUND 1</div>
+        <div class="name">광역패널 (n=71)</div>
+        <div class="stat">자유서술<span class="pct">개방형 질적 코딩</span></div>
+        <div class="desc">응답자가 자발적으로 언급한 내용만 코딩. %는 "71명 중 이 얘기를 스스로 꺼낸 사람의 비율". 언급하지 않았다고 해서 반대하는 것은 아님.</div>
+        <div class="panel-bar"><div class="fill" style="width:100%"></div></div>
+      </div>
+      <div class="panel-card field">
+        <div class="tag">GENERAL SURVEY</div>
+        <div class="name">일반교도 (n=533)</div>
+        <div class="stat">체크박스<span class="pct">사전 제시 보기 중 선택</span></div>
+        <div class="desc">보기를 눈으로 보고 선택. 구조상 자유서술보다 선택률이 항상 높게 나오는 응답 방식.</div>
+        <div class="panel-bar"><div class="fill" style="width:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>해석 원칙.</strong> 이 비교분석에서는 두 그룹 간 절대 %p 격차보다, <strong>같은 항목의 순위(1위·2위·3위)</strong>와
+      <strong>상대적으로 더 강조되는 항목</strong>을 중심으로 차이를 짚는다. 예컨대 "일반교도 78% vs 광역패널 20%"라는 수치 자체가
+      아니라, "일반교도에서는 1위, 광역패널에서는 우선순위에 들지 못함" 같은 순위 이동에 주목한다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. 교화 본질 ============ -->
+<section id="sec2">
+  <div class="wrap">
+    <span class="sec-num">SECTION 02</span>
+    <h2>① 교화 본질 인식 차이 — 일반교도는 "마음공부"로 강하게 수렴</h2>
+    <p class="sec-intro">
+      광역패널은 세 관점(마음공부·교법전파·공동체)이 비교적 균형 있게 분산되어 있는 반면,
+      일반교도는 마음공부·신행 쪽으로 뚜렷하게 쏠린다.
+    </p>
+
+    <div class="chart-card">
+      <div class="chart-title">교화의 본질 — 광역패널 vs 일반교도</div>
+      <div class="chart-sub">DELPHI ROUND1 (자유서술) VS GENERAL SURVEY (선택형) · %</div>
+      <div class="chart-wrap short">
+        <canvas id="chartEssence"></canvas>
+      </div>
+    </div>
+
+    <div class="callout indigo">
+      <strong>해석.</strong> 광역패널(전문가·TF·현장교무)은 "교화란 무엇인가"에 대해 개인 수행, 교세 확장, 공동체적 은혜나눔을
+      비교적 고르게 언급한다. 반면 일반교도는 과반(52.6%)이 마음공부·신앙수행을 핵심으로 꼽아, 교화를 "확장·관계"보다
+      "개인 수행"의 문제로 이해하는 경향이 훨씬 뚜렷하다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. 위기 원인 ============ -->
+<section id="sec3">
+  <div class="wrap">
+    <span class="sec-num">SECTION 03</span>
+    <h2>② 위기 원인 인식 차이 — "교무 감소"보다 "신도 고령화·이탈"</h2>
+    <p class="sec-intro">
+      광역패널(TF 중간보고)은 출가교무 감소(D1)를 구조 위기의 핵심 축으로 강조하지만(직접+암묵 언급 51%),
+      일반교도는 신도 측 문제(고령화·청년부재)를 압도적으로 더 절박하게 느낀다.
+    </p>
+
+    <div class="chart-card">
+      <div class="chart-title">지속가능성 저해 요인 — 일반교도 응답 순위 vs 광역패널 강조점</div>
+      <div class="chart-sub">GENERAL SURVEY Q2 SELECTION RATE (%) · n=531</div>
+      <div class="chart-wrap short">
+        <canvas id="chartCrisis"></canvas>
+      </div>
+    </div>
+
+    <div class="callout moss">
+      <strong>순위 역전.</strong> 일반교도 Q2에서 "교무 수 감소"는 22.8%로 <strong>3위</strong>에 그친다.
+      1·2위는 "출석 교도 고령화"(78.0%)와 "청년·신규 교도 부재"(77.2%)로, 광역패널이 구조 위기의 중심축으로 짚은
+      "공급측(교무 인력) 위기"보다 <strong>"수요측(신도 자체) 위기"</strong>를 훨씬 심각하게 체감하고 있다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. 법회 분위기 ============ -->
+<section id="sec4">
+  <div class="wrap">
+    <span class="sec-num">SECTION 04</span>
+    <h2>③ 법회·교당 분위기 격차 — 일반교도가 훨씬 더 비판적</h2>
+    <p class="sec-intro">
+      광역패널에서 법회 형식주의(C1)는 20~26.3% 수준으로 언급되었다. 일반교도는 같은 주제를 체크박스로 물었을 때
+      훨씬 높은 비율로, 그리고 더 다각도로 문제를 짚었다.
+    </p>
+
+    <div class="chart-card">
+      <div class="chart-title">교화 본질에서 "가장 멀어진" 활동 — 일반교도 (n=531)</div>
+      <div class="chart-sub">GENERAL SURVEY Q1 · MULTI-SELECT (%)</div>
+      <div class="chart-wrap short">
+        <canvas id="chartAtmosphere"></canvas>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>내부 관계 피로도.</strong> "새로 온 사람이 들어오기 어려운 분위기"(47.8%), "형식만 남은 법회"(45.2%),
+      "교도 간 불화나 갈등"(41.6%)까지 세 항목 모두 40%를 넘는다. 광역패널에서 법회 형식주의(C1)는 다뤄졌지만,
+      "교도 간 불화" 같은 내부 관계 피로도는 광역패널 고빈도 항목에 별도로 잡히지 않았다. 현장 신도들이 전문가·교무 그룹보다
+      교당 내부의 폐쇄성·관계 갈등을 더 크게 체감하고 있을 가능성을 시사한다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. 재가 위상 ============ -->
+<section id="sec5">
+  <div class="wrap">
+    <span class="sec-num">SECTION 05</span>
+    <h2>④ 재가 위상 — 방향은 일치, 강도는 일반교도가 더 온건</h2>
+    <p class="sec-intro">
+      광역패널 이견02("재가 위상 — 보조·동반자·주체")에서 확인된 다수/소수 구도가, 일반교도 Q4 Likert 결과에서도
+      거의 그대로 재현된다. 다만 일반교도는 "교무 최종결정권"을 완전히 부정하지 않는다.
+    </p>
+
+    <div class="chart-card">
+      <div class="chart-title">교화 주체 역할분담 — 일반교도 동의 정도 (5점 평균)</div>
+      <div class="chart-sub">GENERAL SURVEY Q4 · LIKERT MEAN (1~5)</div>
+      <div class="chart-wrap short">
+        <canvas id="chartRole"></canvas>
+      </div>
+    </div>
+
+    <div class="callout indigo">
+      <strong>같은 긴장, 다른 온도.</strong> 광역패널 이견02는 "재가 위상 격상 다수(N1 25.4%·N3 33.8%) vs 교무 중심 유지 소수(최종결정권 5명)"
+      구도였다. 일반교도도 수평적 동반자 관계(3.60)·재가 행정 분담(3.42)에 가장 높이 동의하지만,
+      "교무 최종결정권"에 대해서도 3.09로 완전히 반대하지 않는 중간값을 유지한다. 방향성은 일치하되,
+      일반교도는 델파이패널만큼 급진적인 권한 이양에는 조금 더 신중하다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 온라인 채널 ============ -->
+<section id="sec6">
+  <div class="wrap">
+    <span class="sec-num">SECTION 06</span>
+    <h2>⑤ 온라인·디지털 채널 — 일반교도가 새롭게 제기한 논점</h2>
+    <p class="sec-intro">
+      광역패널 고빈도 14개 항목에는 온라인·디지털 채널이 별도 코드로 등장하지 않는다.
+      반면 일반교도는 체크박스에서 이 항목에 상당히 높은 지지를 보냈다.
+    </p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <div class="lbl">GENERAL SURVEY Q2</div>
+        <div class="big">34.9%</div>
+        <div class="desc">일반교도가 꼽은 "필요한 변화 방향" 중 온라인·디지털 교화 채널 확대 — 변화방향 항목 중 3위권.</div>
+      </div>
+      <div class="insight">
+        <div class="lbl">DELPHI ROUND 1</div>
+        <div class="big">—</div>
+        <div class="desc">광역패널 고빈도 14개 항목(자유서술)에는 온라인/디지털이 독립 코드로 명시되지 않음.</div>
+      </div>
+      <div class="insight">
+        <div class="lbl">해석</div>
+        <div class="big">신규 논점</div>
+        <div class="desc">광역패널 라운드1에서는 두드러지지 않았으나, 일반교도 조사를 통해 새롭게 부상한 의제.</div>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <strong>라운드2 반영 제안.</strong> 온라인·디지털 채널 확대는 델파이패널이 자발적으로 제기하지 않았던 항목이므로,
+      라운드2 Block 3(일반교도 조사 결과 프롬프트)에서 패널에게 별도로 동의 여부를 확인할 필요가 있다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. 일치 지점 ============ -->
+<section id="sec7">
+  <div class="wrap">
+    <span class="sec-num">SECTION 07</span>
+    <h2>방향이 일치하는 지점</h2>
+    <p class="sec-intro">
+      아래 항목들은 두 조사에서 측정 방식은 다르지만, 순위와 방향성이 뚜렷하게 일치한다.
+      이 지점들은 이미 광범위한 공감대가 형성된 것으로 볼 수 있다.
+    </p>
+
+    <table class="consensus-table">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>광역패널 (자유서술)</th>
+          <th>일반교도 (선택형)</th>
+          <th>일치 정도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="nm">청년·MZ 세대를 핵심 접점 대상으로</span></td>
+          <td>25.4~26.3%, 순위 1위</td>
+          <td>71.2%, 순위 1위</td>
+          <td><span class="type-pill solution">순위 일치</span></td>
+        </tr>
+        <tr>
+          <td><span class="nm">교당 개방·문턱 낮추기</span></td>
+          <td>R5 26.3%</td>
+          <td>57.1%, 접근방식 1위</td>
+          <td><span class="type-pill solution">방향 일치</span></td>
+        </tr>
+        <tr>
+          <td><span class="nm">명상·선·요가 등 영성 프로그램</span></td>
+          <td>R1 22.5~24%</td>
+          <td>44.4%, 접근방식 3위</td>
+          <td><span class="type-pill solution">방향 일치</span></td>
+        </tr>
+        <tr>
+          <td><span class="nm">교당 통합·거점화</span></td>
+          <td>F1 25.4~27%</td>
+          <td>48.7~48.9%, 변화방향 상위권</td>
+          <td><span class="type-pill solution">방향 일치</span></td>
+        </tr>
+        <tr>
+          <td><span class="nm">재가교역자(원무·도무) 양성 확대</span></td>
+          <td>G1 25.4%</td>
+          <td>46.8~49.8%, 대응방안 상위권</td>
+          <td><span class="type-pill solution">방향 일치</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 8. 결론 ============ -->
+<section id="sec8">
+  <div class="wrap">
+    <span class="sec-num">SECTION 08</span>
+    <h2>종합 결론 및 라운드2 시사점</h2>
+
+    <div class="callout indigo">
+      <strong>"무엇을 바꿔야 하는가"는 일치, "무엇이 더 급한가"는 온도차.</strong>
+      청년 접점 확대, 교당 개방, 재가 위상 강화, 통폐합·거점화라는 큰 방향에는 광역패널과 일반교도가 대체로 일치한다.
+      그러나 <strong>우선순위와 절박함의 온도</strong>가 다르다 — 광역패널(전문가·교무)은 교무 인력 공급 위기를,
+      일반교도는 신도 고령화·법회 분위기·내부 관계 피로도를 더 절박하게 느낀다.
+    </div>
+
+    <div class="callout">
+      <strong>라운드2 Block 3 설계 제안.</strong> 아래 세 지점은 일반교도 조사에서 광역패널과 다르게 나타난 만큼,
+      패널에게 별도로 데이터를 제시하고 해석을 구하는 것이 필요하다.
+      ① 신도 고령화·청년부재를 교무 감소보다 우선순위로 볼 것인가,
+      ② 법회 형식주의뿐 아니라 "교도 간 불화·폐쇄적 분위기"까지 구조개선 의제에 포함할 것인가,
+      ③ 온라인·디지털 채널 확대를 정식 정책 옵션으로 채택할 것인가.
+    </div>
+
+    <div class="quote">
+      무엇을 바꿔야 하는지에 대한 공감대는 이미 넓다. 관건은 무엇을 먼저, 얼마나 절박하게 다룰 것인가이다.
+      <span class="quote-from">— 일반교도·광역패널 비교분석 종합</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="mark">SEOUL DIOCESE · OUTREACH STRUCTURE REFORM RESEARCH</div>
+    <div>일반교도 설문(n=533) vs 광역패널 델파이 라운드1(n=71) 비교분석 · 원기 111년</div>
+  </div>
+</footer>
+
+<script>
+const COLORS = {
+  ink: '#1a1611',
+  rust: '#a23e23',
+  rustDeep: '#6b2614',
+  gold: '#b08a3e',
+  goldLight: '#d4b76a',
+  moss: '#4a5d3a',
+  mossLight: '#7d8f63',
+  indigo: '#2f3e58',
+  paper3: '#ddd4c4',
+  plum: '#5e2a3f'
+};
+
+// === 1. 교화 본질 비교 ===
+new Chart(document.getElementById('chartEssence'), {
+  type: 'bar',
+  data: {
+    labels: ['마음공부·신앙수행', '교법전파·교세확장', '공동체·은혜나눔'],
+    datasets: [
+      { label: '광역패널 (자유서술, n=71)', data: [39.4, 32.4, 28.2], backgroundColor: COLORS.gold, borderRadius: 0 },
+      { label: '일반교도 (선택형, n=532)', data: [52.6, 20.1, 11.1], backgroundColor: COLORS.rust, borderRadius: 0 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', labels: { boxWidth: 14, font: { size: 12 } } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}%` } } },
+    scales: {
+      y: { beginAtZero: true, max: 60, grid: { color: 'rgba(26,22,17,0.06)' }, ticks: { font: { size: 11 }, callback: v => v + '%' } },
+      x: { grid: { display: false }, ticks: { font: { size: 12, weight: '500' } } }
+    }
+  }
+});
+
+// === 2. 위기 원인 ===
+new Chart(document.getElementById('chartCrisis'), {
+  type: 'bar',
+  data: {
+    labels: ['출석 교도 고령화', '청년·신규 교도 부재', '교무님 수 감소', '교무 1인 부담 과다', '교당 규모 영세화', '교당 재정 불안정'],
+    datasets: [
+      { label: '일반교도 선택률 (%)', data: [78.0, 77.2, 22.8, 21.5, 21.1, 12.4], backgroundColor: COLORS.rust, borderRadius: 0 }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.raw}%` } } },
+    scales: {
+      x: { beginAtZero: true, max: 90, grid: { color: 'rgba(26,22,17,0.06)' }, ticks: { font: { size: 11 }, callback: v => v + '%' } },
+      y: { grid: { display: false }, ticks: { font: { size: 11, weight: '500' } } }
+    }
+  }
+});
+
+// === 3. 법회 분위기 ===
+new Chart(document.getElementById('chartAtmosphere'), {
+  type: 'bar',
+  data: {
+    labels: ['새 사람 들어오기 어려운 분위기', '형식만 남은 법회·예회', '행정·회의 위주 운영', '교도 간 불화·갈등', '사람 동원 위주 행사'],
+    datasets: [
+      { label: '일반교도 선택률 (%)', data: [47.8, 45.2, 42.4, 41.6, 28.4], backgroundColor: COLORS.rustDeep, borderRadius: 0 }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.raw}%` } } },
+    scales: {
+      x: { beginAtZero: true, max: 60, grid: { color: 'rgba(26,22,17,0.06)' }, ticks: { font: { size: 11 }, callback: v => v + '%' } },
+      y: { grid: { display: false }, ticks: { font: { size: 11, weight: '500' } } }
+    }
+  }
+});
+
+// === 4. 역할분담 Likert ===
+new Chart(document.getElementById('chartRole'), {
+  type: 'bar',
+  data: {
+    labels: ['수평적 동반자 관계', '재가양성제도 필요', '교도 행정·재무 분담', '교도 주도적 설법참여', '교무 최종결정권'],
+    datasets: [
+      { label: '일반교도 동의 평균 (5점)', data: [3.60, 3.55, 3.42, 3.13, 3.09], backgroundColor: COLORS.indigo, borderRadius: 0 }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `평균 ${ctx.raw} / 5` } } },
+    scales: {
+      x: { beginAtZero: true, max: 5, grid: { color: 'rgba(26,22,17,0.06)' }, ticks: { font: { size: 11 } } },
+      y: { grid: { display: false }, ticks: { font: { size: 11, weight: '500' } } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
