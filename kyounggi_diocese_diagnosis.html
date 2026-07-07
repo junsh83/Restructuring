@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경기인천교구 교화진단 보고서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF;
+    --ink:#20242C;
+    --ink-soft:#565C68;
+    --line:#D8D4C8;
+    --navy:#233A5E;
+    --navy-deep:#152238;
+    --gold:#A9822F;
+    --red:#9B3A32;
+    --red-soft:#F2E4E1;
+    --green:#3E6E52;
+    --green-soft:#E5EEE7;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:400;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px 120px;}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    background:linear-gradient(180deg,var(--navy-deep) 0%, var(--navy) 100%);
+    color:#EDE8DA;
+    padding:88px 0 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero .wrap{position:relative;z-index:2;}
+  .won-mark{
+    position:absolute;
+    right:-60px; top:-60px;
+    width:340px; height:340px;
+    border-radius:50%;
+    border:1.5px solid rgba(237,232,218,0.18);
+    z-index:1;
+  }
+  .won-mark::after{
+    content:"";
+    position:absolute; inset:34px;
+    border-radius:50%;
+    border:1px solid rgba(237,232,218,0.12);
+  }
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.22em;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  h1.title{
+    font-family:'Noto Serif KR',serif;
+    font-weight:700;
+    font-size:46px;
+    line-height:1.28;
+    margin:0 0 22px;
+    max-width:620px;
+  }
+  .hero-sub{
+    font-size:16px;
+    color:#C9C4B4;
+    max-width:560px;
+    margin-bottom:34px;
+  }
+  .source-box{
+    border-top:1px solid rgba(237,232,218,0.22);
+    padding-top:22px;
+    font-size:13px;
+    color:#B7B2A2;
+    line-height:1.9;
+  }
+  .source-box b{color:#EDE8DA;font-weight:500;}
+
+  /* ---------- KPI band ---------- */
+  .kpi-band{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    margin:-46px 0 64px;
+    border:1px solid var(--line);
+    position:relative;
+    z-index:3;
+  }
+  .kpi{
+    background:var(--card);
+    padding:26px 22px;
+  }
+  .kpi .num{
+    font-family:'Noto Serif KR',serif;
+    font-weight:700;
+    font-size:30px;
+    color:var(--navy-deep);
+    display:block;
+  }
+  .kpi .num.red{color:var(--red);}
+  .kpi .num.green{color:var(--green);}
+  .kpi .label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:6px;
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- Section structure ---------- */
+  section{margin-bottom:76px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:8px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:14px;
+  }
+  .sec-num{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    color:var(--gold);
+    font-weight:700;
+  }
+  h2.sec-title{
+    font-family:'Noto Serif KR',serif;
+    font-size:26px;
+    font-weight:600;
+    margin:0;
+  }
+  h3.sub-title{
+    font-family:'Noto Serif KR',serif;
+    font-size:18.5px;
+    font-weight:600;
+    margin:40px 0 14px;
+    color:var(--navy-deep);
+  }
+  p{color:var(--ink);font-size:15.3px;}
+  p.lede{
+    font-size:16.5px;
+    color:var(--ink-soft);
+    margin-top:18px;
+    max-width:680px;
+  }
+  strong{color:var(--navy-deep);font-weight:600;}
+
+  /* ---------- Tables ---------- */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0 8px;
+    font-size:13.6px;
+    background:var(--card);
+  }
+  caption{
+    text-align:left;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:8px;
+    font-family:'Space Mono',monospace;
+  }
+  th,td{
+    padding:10px 12px;
+    border-bottom:1px solid var(--line);
+    text-align:right;
+  }
+  th{
+    font-weight:600;
+    color:var(--navy-deep);
+    font-size:12.5px;
+    letter-spacing:0.01em;
+    background:#EFEBE0;
+    text-align:right;
+  }
+  th:first-child,td:first-child{text-align:left;}
+  tr:last-child td{border-bottom:none;}
+  td.neg{color:var(--red);font-weight:600;}
+  td.pos{color:var(--green);font-weight:600;}
+
+  /* ---------- Bar charts ---------- */
+  .chart-block{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:26px 26px 14px;
+    margin:22px 0 8px;
+  }
+  .chart-title{
+    font-size:12.5px;
+    font-family:'Space Mono',monospace;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+    letter-spacing:0.03em;
+  }
+  .bar-row{
+    display:grid;
+    grid-template-columns:38px 1fr 74px;
+    align-items:center;
+    gap:12px;
+    height:26px;
+    margin-bottom:6px;
+  }
+  .bar-row .yr{font-family:'Space Mono',monospace;font-size:12px;color:var(--ink-soft);}
+  .bar-track{background:#EDEAE1;height:14px;position:relative;}
+  .bar-fill{height:100%;background:var(--navy);}
+  .bar-fill.low{background:var(--red);}
+  .bar-row .val{font-family:'Space Mono',monospace;font-size:12px;text-align:right;color:var(--ink);}
+
+  .age-stack{display:flex;height:40px;width:100%;margin:18px 0 6px;overflow:hidden;}
+  .age-seg{height:100%;}
+  .age-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--ink-soft);margin-bottom:6px;}
+  .age-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .age-legend i{width:10px;height:10px;display:inline-block;}
+
+  /* ---------- Callouts ---------- */
+  .callout{
+    border-left:3px solid var(--red);
+    background:var(--red-soft);
+    padding:16px 20px;
+    margin:20px 0;
+    font-size:14.6px;
+  }
+  .callout.good{border-left-color:var(--green);background:var(--green-soft);}
+  .callout b{display:block;font-family:'Noto Serif KR',serif;font-size:15px;margin-bottom:4px;}
+
+  /* ---------- Diagnosis list ---------- */
+  .diag{
+    counter-reset:diag;
+    padding:0; margin:0; list-style:none;
+  }
+  .diag li{
+    counter-increment:diag;
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:18px;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .diag li:first-child{padding-top:0;}
+  .diag li::before{
+    content: counter(diag,decimal-leading-zero);
+    font-family:'Space Mono',monospace;
+    font-size:20px;
+    color:var(--gold);
+    font-weight:700;
+  }
+  .diag h4{
+    margin:0 0 6px;
+    font-family:'Noto Serif KR',serif;
+    font-size:16px;
+  }
+  .diag p{margin:0;font-size:14.4px;color:var(--ink-soft);}
+
+  /* Proposals */
+  .props{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;}
+  .prop-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-top:3px solid var(--navy);
+    padding:20px 20px 18px;
+  }
+  .prop-card h4{
+    font-family:'Noto Serif KR',serif;
+    font-size:15.5px;
+    margin:0 0 8px;
+  }
+  .prop-card p{font-size:13.8px;color:var(--ink-soft);margin:0;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:28px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+
+  @media (max-width:720px){
+    .kpi-band{grid-template-columns:repeat(2,1fr);}
+    h1.title{font-size:32px;}
+    .props{grid-template-columns:1fr;}
+    table{font-size:12px;}
+    .bar-row{grid-template-columns:30px 1fr 56px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="won-mark"></div>
+  <div class="wrap">
+    <div class="eyebrow">교화훈련부 · 교화 현황 진단 자료</div>
+    <h1 class="title">경기인천교구<br>교화진단 보고서</h1>
+    <p class="hero-sub">44개 교당의 교도 현황(원기 111년), 10개년 입교자 추이(원기 101~110년), 재정 현황을 교차 분석하여 교구의 교화 체력을 진단한다.</p>
+    <div class="source-box">
+      <b>분석 기준</b> 교화 현황: 경기인천교구 44개 교당(주교당기관) · 성별·연령대별 원기 111년 스냅샷<br>
+      입교자 현황: 원기 101~110년 교당별·성별·연령대별 (입교일자가 열반일자보다 이른 경우 제외, 열반자 제외)<br>
+      재정 현황: 유지보은금·의식수입금(교금)·기타의식수입금·헌공금, 자금계산서 기준
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="kpi-band">
+    <div class="kpi"><span class="num">20,859</span><span class="label">전체 교도수 (남 10,336 · 여 10,523)</span></div>
+    <div class="kpi"><span class="num red">39.0%</span><span class="label">60세 이상 교도 비율</span></div>
+    <div class="kpi"><span class="num red">–29%</span><span class="label">최근 5년 평균입교 (초기 5년 대비)</span></div>
+    <div class="kpi"><span class="num green">+36%</span><span class="label">헌공금 10년 증가율 (101→110년)</span></div>
+  </div>
+
+  <!-- ================= SECTION 1 ================= -->
+  <section id="s1">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">교구 전체 현황</h2>
+    </div>
+    <p class="lede">44개 교당 평균 교도수는 약 474명이나 규모 편차가 매우 크고, 연령 구조는 뚜렷한 고령화 양상을 보인다.</p>
+
+    <h3 class="sub-title">교당 규모 편차</h3>
+    <p>상위 10개 교당(수원·인천·분당·군포·안산·북인천·부천·동안양·부평·성남)이 전체 교도의 <strong>54.5%(11,365명)</strong>를 차지한다. 반면 300명 미만 소형 교당이 21개로 전체의 절반에 가까워, 교구 내 양극화가 뚜렷하다.</p>
+
+    <h3 class="sub-title">연령 구조 — 고령화</h3>
+    <div class="age-legend">
+      <span><i style="background:#8B9DBE"></i>~9</span>
+      <span><i style="background:#6C84AC"></i>10~19</span>
+      <span><i style="background:#4E6C9A"></i>20~29</span>
+      <span><i style="background:#345187"></i>30~39</span>
+      <span><i style="background:#233A5E"></i>40~49</span>
+      <span><i style="background:#152238"></i>50~59</span>
+      <span><i style="background:#9B3A32"></i>60~69</span>
+      <span><i style="background:#B5564E"></i>70~79</span>
+      <span><i style="background:#CE756E"></i>80~89</span>
+      <span><i style="background:#E2A29C"></i>90이상</span>
+    </div>
+    <div class="age-stack">
+      <div class="age-seg" style="width:1.4%;background:#8B9DBE"></div>
+      <div class="age-seg" style="width:5.1%;background:#6C84AC"></div>
+      <div class="age-seg" style="width:11.0%;background:#4E6C9A"></div>
+      <div class="age-seg" style="width:14.3%;background:#345187"></div>
+      <div class="age-seg" style="width:12.4%;background:#233A5E"></div>
+      <div class="age-seg" style="width:16.8%;background:#152238"></div>
+      <div class="age-seg" style="width:18.5%;background:#9B3A32"></div>
+      <div class="age-seg" style="width:11.2%;background:#B5564E"></div>
+      <div class="age-seg" style="width:5.4%;background:#CE756E"></div>
+      <div class="age-seg" style="width:4.0%;background:#E2A29C"></div>
+    </div>
+    <p>전체 교도의 약 <strong>39%가 60세 이상</strong>이며, 60대(3,853명)·50대(3,499명)가 최다 연령층이다. 10대 이하는 1,360명(6.5%)에 불과해 후속 세대·청년층 비중이 구조적으로 얇다.</p>
+    <div class="callout">
+      <b>고령화 위험 신호</b>
+      동안양(48.2%)·오정(53.7%)·부평(46.7%)교당은 60세 이상 비율이 특히 높고, 병점교당은 85%에 달해 세대 재생산이 사실상 멈춘 상태로 보인다.
+    </div>
+
+    <h3 class="sub-title">입교자 추이 (원기 101~110년)</h3>
+    <div class="chart-block">
+      <div class="chart-title">교구 전체 신규 입교자 수 (연도별, 최대값=101년 518명)</div>
+      <div class="bar-row"><span class="yr">101</span><div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div><span class="val">518명</span></div>
+      <div class="bar-row"><span class="yr">102</span><div class="bar-track"><div class="bar-fill" style="width:66.2%"></div></div><span class="val">343명</span></div>
+      <div class="bar-row"><span class="yr">103</span><div class="bar-track"><div class="bar-fill" style="width:96.9%"></div></div><span class="val">502명</span></div>
+      <div class="bar-row"><span class="yr">104</span><div class="bar-track"><div class="bar-fill" style="width:53.7%"></div></div><span class="val">278명</span></div>
+      <div class="bar-row"><span class="yr">105</span><div class="bar-track"><div class="bar-fill low" style="width:31.3%"></div></div><span class="val">162명</span></div>
+      <div class="bar-row"><span class="yr">106</span><div class="bar-track"><div class="bar-fill low" style="width:21.8%"></div></div><span class="val">113명</span></div>
+      <div class="bar-row"><span class="yr">107</span><div class="bar-track"><div class="bar-fill" style="width:52.7%"></div></div><span class="val">273명</span></div>
+      <div class="bar-row"><span class="yr">108</span><div class="bar-track"><div class="bar-fill" style="width:47.7%"></div></div><span class="val">247명</span></div>
+      <div class="bar-row"><span class="yr">109</span><div class="bar-track"><div class="bar-fill" style="width:57.3%"></div></div><span class="val">297명</span></div>
+      <div class="bar-row"><span class="yr">110</span><div class="bar-track"><div class="bar-fill" style="width:66.8%"></div></div><span class="val">346명</span></div>
+    </div>
+    <p>105~106년 저점을 찍은 뒤 완만히 회복 중이나, 초반 5년 평균(약 361명/년) 대비 최근 5년 평균(약 256명/년)은 여전히 <strong>29% 낮은 수준</strong>이다. 44개 교당 중 25곳 이상이 최근 5년 평균 입교자 연 5명 이하이며, 양평·병점·하남·가평·경기판교교당 등은 연 1명 미만이다.</p>
+
+    <h3 class="sub-title">재정 추이 — 헌공금 (교구 전체 합계)</h3>
+    <div class="chart-block">
+      <div class="chart-title">헌공금 합계 추이, 단위: 억 원 (최대값=110년 18.59억)</div>
+      <div class="bar-row"><span class="yr">101</span><div class="bar-track"><div class="bar-fill" style="width:73.5%;background:var(--gold)"></div></div><span class="val">13.66억</span></div>
+      <div class="bar-row"><span class="yr">104</span><div class="bar-track"><div class="bar-fill" style="width:92.1%;background:var(--gold)"></div></div><span class="val">17.11억</span></div>
+      <div class="bar-row"><span class="yr">107</span><div class="bar-track"><div class="bar-fill" style="width:93.4%;background:var(--gold)"></div></div><span class="val">17.35억</span></div>
+      <div class="bar-row"><span class="yr">110</span><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:var(--gold)"></div></div><span class="val">18.59억</span></div>
+    </div>
+    <p>유지보은금(+46%)과 헌공금(+36%)은 10년간 꾸준히 증가했지만, 의식수입금(교금)은 오히려 <strong>9% 감소</strong>했다. 교도·입교자 수는 정체·감소하는데 재정 총액은 늘어난 것은, 신자 확대가 아니라 <strong>기존 고연령·고정 신도층의 헌공·보은 증가에 기댄 구조</strong>임을 시사한다.</p>
+  </section>
+
+  <!-- ================= SECTION 2 ================= -->
+  <section id="s2">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">교당별 진단</h2>
+    </div>
+
+    <h3 class="sub-title">대형 교당 (교도 1,000명 이상)</h3>
+    <table>
+      <caption>단위 : 명 / %</caption>
+      <thead><tr><th>교당명</th><th>교도수</th><th>60+비율</th><th>초기 5년 평균입교</th><th>최근 5년 평균입교</th><th>입교 증감률</th></tr></thead>
+      <tbody>
+        <tr><td>수원교당</td><td>1,915</td><td>42.1%</td><td>22.4</td><td>10.8</td><td class="neg">–51.8%</td></tr>
+        <tr><td>인천교당</td><td>1,638</td><td>36.9%</td><td>17.2</td><td>7.6</td><td class="neg">–55.8%</td></tr>
+        <tr><td>분당교당</td><td>1,449</td><td>39.3%</td><td>34.4</td><td>11.2</td><td class="neg">–67.4%</td></tr>
+        <tr><td>군포교당</td><td>1,370</td><td>43.7%</td><td>34.8</td><td>8.0</td><td class="neg">–77.0%</td></tr>
+        <tr><td>안산교당</td><td>1,104</td><td>42.7%</td><td>23.6</td><td>5.6</td><td class="neg">–76.3%</td></tr>
+        <tr><td>북인천교당</td><td>1,059</td><td>38.2%</td><td>6.6</td><td>4.2</td><td class="neg">–36.4%</td></tr>
+      </tbody>
+    </table>
+    <p>가장 규모가 큰 6개 교당 <strong>모두 입교자가 큰 폭(–36%~–77%)으로 감소</strong>하고 있다. 규모가 클수록 감소율이 오히려 가파른 경향(분당·군포·안산 –67~77%)으로, 교구의 성장 엔진이던 대형 교당들의 신규 유입력 약화가 교구 전체 정체의 핵심 원인으로 보인다.</p>
+
+    <h3 class="sub-title">고령화 위험 교당 (60세 이상 비율 45% 이상)</h3>
+    <table>
+      <thead><tr><th>교당명</th><th>교도수</th><th>60+비율</th></tr></thead>
+      <tbody>
+        <tr><td>병점교당</td><td>20</td><td class="neg">85.0%</td></tr>
+        <tr><td>오정교당</td><td>205</td><td class="neg">53.7%</td></tr>
+        <tr><td>동안양교당</td><td>735</td><td class="neg">48.2%</td></tr>
+        <tr><td>부평교당</td><td>655</td><td class="neg">46.7%</td></tr>
+      </tbody>
+    </table>
+    <p>병점교당은 교도수가 20명에 불과하고 그중 85%가 60대 이상으로, 존립을 위한 특별 대책(합병·순회교화 등)이 필요하다. 동안양·부평교당은 규모(600명대 이상)는 크지만 고령 비율도 높아 향후 5~10년 내 자연 감소가 예상된다.</p>
+
+    <div class="callout">
+      <b>입교 정체·소멸 교당</b>
+      양평·병점·하남·가평·경기판교교당은 최근 5년 평균 입교자가 1명 미만이다. 하남교당은 9.0명→0.4명(–95.6%), 양평교당은 –95.7% 감소했다.
+    </div>
+
+    <div class="callout good">
+      <b>입교가 늘어난 예외 교당</b>
+      과천(+721%, 2.8→23.0명), 동탄(+326%), 하늘(+263%), 부평(+129%), 남양주(+71%), 산본(+69%), 구리(+44%), 이천(+46%), 의왕(+100%) 등은 최근 입교가 오히려 늘었다. 청년층 유입 채널·신도시 인구 유입 등 성공 요인의 벤치마킹 가치가 있다.
+    </div>
+
+    <h3 class="sub-title">특수 교당</h3>
+    <p><strong>번개교당</strong>은 교도의 95.2%가 9~39세로 교구 내 유일하게 청년층이 압도적이며, 20대 비중(273/392)이 특히 높아 군(軍) 관련 특수교당으로 추정된다. 일반 지역 교당과는 다른 성격의 통계로 별도 해석이 필요하다.<br>
+    <strong>원광종합병원교당·부개교당</strong>은 두 자료 간 집계 범위가 달라(교도·입교자 자료에는 없고 재정·헌공 자료에만 존재, 혹은 그 반대) 교차 비교가 어려워 통계 정합성 점검이 필요하다.</p>
+  </section>
+
+  <!-- ================= SECTION 3 ================= -->
+  <section id="s3">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">종합 진단</h2>
+    </div>
+    <ol class="diag">
+      <li>
+        <h4>양적 정체 속 재정 의존 심화</h4>
+        <p>10년간 교도수·입교자 수는 정체·감소했으나 헌공금·유지보은금은 꾸준히 늘어, 교구 재정이 신규 교화 성과가 아니라 기존 고연령 교도층의 헌신에 의존하는 구조로 전환되고 있다.</p>
+      </li>
+      <li>
+        <h4>세대 재생산 위기</h4>
+        <p>60세 이상이 전체의 39%, 10대 이하는 6.5%에 불과해 향후 10~20년 내 자연 감소가 불가피한 인구 구조다. 특히 대형 교당(수원·인천·분당·군포·안산)의 신규 입교 급감이 교구 전체 성장 동력 약화의 직접적 원인이다.</p>
+      </li>
+      <li>
+        <h4>양극화</h4>
+        <p>상위 10개 교당이 교도의 절반 이상을 차지하고, 절반에 가까운 소형 교당은 규모가 작을 뿐 아니라 입교마저 끊긴 상태다. 병점·양평·하남·가평·경기판교교당은 통합 교화 거점화, 순회교화, 청년 특화 프로그램 등 특단의 조치가 필요하다.</p>
+      </li>
+      <li>
+        <h4>긍정 신호</h4>
+        <p>과천·동탄·하늘·부평 등 일부 교당은 입교 반등에 성공했다. 이들의 공통 요인(신도시 개발, 청년 프로그램, 온라인 교화 등)을 분석해 전 교구로 확산할 필요가 있다.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================= SECTION 4 ================= -->
+  <section id="s4">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">제언</h2>
+    </div>
+    <div class="props">
+      <div class="prop-card">
+        <h4>청년·후속세대 특화 교화 전략</h4>
+        <p>번개교당·동탄·하늘교당 등 성공 사례를 벤치마킹해 청년 유입 채널을 전 교구로 확산한다.</p>
+      </div>
+      <div class="prop-card">
+        <h4>소멸위험 교당 통폐합·순회교화</h4>
+        <p>병점·양평·하남·가평·경기판교교당은 통합 교화 거점화 또는 순회교화 체계를 검토한다.</p>
+      </div>
+      <div class="prop-card">
+        <h4>대형 교당 입교 감소 정밀 진단</h4>
+        <p>수원·분당·군포·안산 등 지역 인구 변화, 프로그램 노후화, 접근성 등 원인을 분석한다.</p>
+      </div>
+      <div class="prop-card">
+        <h4>재정-교화 성과 분리 현상 모니터링</h4>
+        <p>헌공금 증가를 교화 성과로 오인하지 않도록 입교자 수·연령 구조와 함께 관리한다.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    경기인천교구 교화진단 보고서 · 자료 : 교화훈련부 「교화 현황」·「교화 현황 데이터_헌공금」(원기 101~111년 기준)
+  </footer>
+
+</div>
+</body>
+</html>
