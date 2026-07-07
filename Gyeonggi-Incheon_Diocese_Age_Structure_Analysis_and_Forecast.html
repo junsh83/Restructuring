@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경기인천교구 교도 연령구조 분석 및 예측</title>
+<style>
+:root{
+  --ink:#1a1a18;--sub:#5f5e5a;--muted:#898781;
+  --line:#e1e0d9;--bg:#f8f7f4;--card:#fff;
+  --accent:#185fa5;--accent-bg:#e6f1fb;--accent-txt:#0c447c;
+  --warn:#993c1d;--warn-bg:#faece7;--warn-txt:#712b13;
+  --good:#3b6d11;--good-bg:#eaf3de;--good-txt:#27500a;
+  --navy:#121c33;--navy2:#1c2a4a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;}
+
+.header{background:var(--navy);color:#f4f1ec;padding:22px 28px 0;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+.header-top{max-width:1140px;margin:0 auto 14px;}
+.header-title{font-size:18px;font-weight:600;letter-spacing:-.01em;}
+.header-sub{font-size:12px;opacity:.65;margin-top:3px;}
+.badge{display:inline-block;font-size:11px;background:#eda100;color:#1a0e00;
+  padding:2px 8px;border-radius:4px;font-weight:600;margin-left:8px;vertical-align:middle;}
+
+.tab-bar{max-width:1140px;margin:0 auto;display:flex;overflow-x:auto;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{background:none;border:none;cursor:pointer;color:rgba(244,241,236,.55);
+  font-size:13.5px;font-family:inherit;padding:10px 18px;
+  border-bottom:3px solid transparent;white-space:nowrap;
+  transition:color .15s,border-color .15s;}
+.tab-btn:hover{color:rgba(244,241,236,.85);}
+.tab-btn.active{color:#f4f1ec;border-bottom-color:#eda100;font-weight:600;}
+
+.wrap{max-width:1140px;margin:0 auto;padding:28px 24px 80px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+h2{font-size:18px;font-weight:600;margin:32px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+h2:first-child{margin-top:0;}
+h3{font-size:15px;font-weight:600;margin:22px 0 10px;}
+p{margin-bottom:12px;}
+
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:16px 0 24px;}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+.kpi .label{font-size:12px;color:var(--muted);margin-bottom:5px;}
+.kpi .value{font-size:21px;font-weight:600;letter-spacing:-.01em;}
+.kpi .sub-value{font-size:13px;color:var(--sub);margin-top:2px;}
+.kpi .delta{font-size:11.5px;margin-top:4px;color:var(--warn);}
+.kpi .delta.g{color:var(--good);}
+
+.note{background:var(--accent-bg);border-left:3px solid var(--accent);padding:12px 15px;
+  border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;color:var(--accent-txt);}
+.warn{background:var(--warn-bg);border-left:3px solid var(--warn);padding:12px 15px;
+  border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;color:var(--warn-txt);}
+.good{background:var(--good-bg);border-left:3px solid var(--good);padding:12px 15px;
+  border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;color:var(--good-txt);}
+
+.chart-box{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 18px 12px;margin:14px 0;}
+.chart-title{font-size:12.5px;font-weight:600;color:var(--sub);margin-bottom:12px;}
+.chart-h{height:300px;}
+.chart-h-lg{height:380px;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+caption{text-align:left;font-size:12px;color:var(--muted);margin-bottom:6px;}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line);}
+th:first-child,td:first-child{text-align:left;}
+thead th{font-weight:600;color:var(--sub);font-size:12px;border-bottom:1.5px solid var(--ink);}
+tbody tr:hover{background:#f7f6f3;}
+.tbl-wrap{overflow-x:auto;}
+
+.findings{display:grid;gap:10px;margin:14px 0;}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px;font-size:14px;}
+.finding .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent-txt);
+  background:var(--accent-bg);padding:2px 8px;border-radius:4px;margin-bottom:6px;}
+
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0 10px;font-size:12px;color:var(--sub);}
+.legend span{display:flex;align-items:center;gap:4px;}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+.highlight-row td{background:#fff9f0;font-weight:600;}
+.danger-row td{background:#fff0f0;}
+.footnote{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+.search-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;}
+.search-row input{padding:6px 12px;border:1px solid var(--line);border-radius:6px;
+  font-size:13px;width:160px;font-family:inherit;}
+.search-row select{padding:6px 10px;border:1px solid var(--line);border-radius:6px;
+  font-size:13px;font-family:inherit;}
+.risk-badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:4px;font-weight:600;}
+.rHigh{background:#fde8e8;color:#a32d2d;}
+.rMid{background:#fef3e2;color:#854f0b;}
+.rLow{background:#eaf3de;color:#3b6d11;}
+.tag-scn{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-right:6px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-title">경기인천교구 교도 연령구조 분석 및 예측<span class="badge">전체 등록교도 기준</span></div>
+    <div class="header-sub">원기90~108년 실측(교당 집계) · 원기111년 연령 스냅샷 · 원기111~121년 예측 · 교화훈련부 자료</div>
+  </div>
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="switchTab('overview',this)">📊 개요</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('aging',this)">📈 연령구조 현황</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('forecast',this)">🔮 미래 예측</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('church',this)">🏛 교당별 진단</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('method',this)">📋 방법론</button>
+  </nav>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 탭1: 개요 ══ -->
+<section id="tab-overview" class="tab-panel active">
+  <h2>핵심 요약</h2>
+  <div class="warn">
+    <strong>서울교구 분석과의 차이:</strong> 서울교구 분석은 개인별 <strong>월간 출석횟수(월1회+)</strong>를 추적한 데이터가 있어 "핵심 활동층"만 따로 걸러낼 수 있었습니다. 경기인천교구는 개인별 출석 빈도 데이터가 없어, <strong>전체 등록교도(관리+미관리)</strong> 기준으로 분석했습니다. 즉 이 보고서의 수치는 서울교구의 "연1회+"에 가깝고, "월1회+ 핵심층"보다는 고령화 정도가 낮게 나타날 수 있습니다. 자세한 내용은 방법론 탭 참조.
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="label">111년 전체 교도수</div>
+      <div class="value">20,859명</div>
+      <div class="sub-value">남 10,336 · 여 10,523</div>
+    </div>
+    <div class="kpi">
+      <div class="label">111년 평균연령 / 중앙값</div>
+      <div class="value">52.1세</div>
+      <div class="sub-value">중앙값 약 53세</div>
+    </div>
+    <div class="kpi">
+      <div class="label">60세 이상 비중</div>
+      <div class="value" style="color:var(--warn);">39.0%</div>
+      <div class="delta">10대 이하는 6.5%뿐</div>
+    </div>
+    <div class="kpi">
+      <div class="label">입교자 추이(100→108년)</div>
+      <div class="value" style="color:var(--warn);">808→249명</div>
+      <div class="delta">−69.2%</div>
+    </div>
+    <div class="kpi">
+      <div class="label">90→108년 전체 교도수</div>
+      <div class="value g" style="color:var(--good);">9,472→20,054명</div>
+      <div class="delta g">헤드카운트 자체는 매년 증가</div>
+    </div>
+    <div class="kpi">
+      <div class="label">10년 후(121년) 예상 60+비중</div>
+      <div class="value" style="color:var(--warn);">40.8~42.9%</div>
+      <div class="sub-value">시나리오별 · 예측 탭 참조</div>
+    </div>
+  </div>
+
+  <h2>구조적 특징: 서울교구와 다른 패턴</h2>
+  <p>경기인천교구는 서울교구처럼 <strong>출석 인원이 줄어드는 "감소형"이 아니라, 등록 인원은 계속 늘어나면서 속이 고령화되는 "정체·노화형"</strong>에 가깝습니다.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>지표</th><th>90년</th><th>108년</th><th>변화</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td>전체 교도수(관리+미관리)</td><td>9,472명</td><td>20,054명</td><td class="delta g" style="color:var(--good)">+111.7%</td><td>등록교도는 계속 순증가</td></tr>
+      <tr><td>관리교도수(활동 관리 대상)</td><td>3,419명</td><td>8,822명</td><td style="color:var(--good)">+158.0%</td><td>관리 대상도 함께 증가</td></tr>
+      <tr><td>입교자수(연간)</td><td>428명</td><td>249명</td><td style="color:var(--warn)">−41.8%</td><td>신규 유입은 장기적으로 둔화</td></tr>
+      <tr><td>법회출석수(연간 총 인원수)</td><td>75,346명</td><td>69,399명</td><td style="color:var(--warn)">−7.9%</td><td>코로나(105년 46,826) 이후 아직 미회복</td></tr>
+      <tr class="highlight-row"><td>111년 60세 이상 비중</td><td colspan="3">39.0%</td><td>전체 등록교도 기준으로도 이미 고령화 뚜렷</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>읽는 법:</strong> 등록교도 총계가 늘어나는 이유는 "미관리"(활동을 쉬는 교도)가 명부에서 빠지지 않고 계속 쌓이기 때문입니다(90년 미관리 6,053명 → 108년 11,232명). 실제 위험 신호는 머릿수 감소가 아니라 <strong>①입교자 급감 ②기존 교도층의 고령화 ③법회출석 회복 지연</strong> 세 가지입니다.
+  </div>
+</section>
+
+<!-- ══ 탭2: 연령구조 현황 ══ -->
+<section id="tab-aging" class="tab-panel">
+  <h2>111년 연령 피라미드 (성별·연령대별)</h2>
+  <p>전체 20,859명(남 10,336 · 여 10,523) 중 <strong>60대(3,853명)</strong>와 <strong>50대(3,499명)</strong>가 최다 연령층이며, 10대 이하는 1,360명(6.5%)에 불과합니다.</p>
+  <div class="chart-box">
+    <div class="chart-title">성별·연령대별 분포 — 원기111년</div>
+    <div class="chart-h-lg"><canvas id="pyramidChart"></canvas></div>
+  </div>
+
+  <h3>연령대별 분포표</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>연령대</th><th>남</th><th>여</th><th>합계</th><th>비중</th></tr></thead>
+    <tbody id="ageBandTableBody"></tbody>
+  </table>
+  </div>
+
+  <h2>90~108년 등록교도수 추이</h2>
+  <div class="chart-box">
+    <div class="chart-title">전체 교도수 — 관리 vs 미관리 (원기90~108)</div>
+    <div class="chart-h"><canvas id="histPopChart"></canvas></div>
+  </div>
+  <p class="footnote">※ 미관리 교도는 명부에서 삭제되지 않고 누적되는 구조로, 총계 증가가 실제 활동 인원 증가를 의미하지 않습니다.</p>
+
+  <h2>입교자수 추이 (원기90~110)</h2>
+  <div class="chart-box">
+    <div class="chart-title">연간 신규 입교자수</div>
+    <div class="chart-h"><canvas id="entrantChart"></canvas></div>
+  </div>
+  <div class="warn">
+    100년(808명) 정점 이후 108년(249명)까지 8개년 연속 하락 추세이며, 연평균 약 −13.8%의 감소율을 보였습니다. 109~110년 소폭 반등(297명·346명)했으나 정점 대비 여전히 낮은 수준입니다.
+  </div>
+
+  <h2>법회출석수 추이 (원기90~108)</h2>
+  <div class="chart-box">
+    <div class="chart-title">연간 법회출석 총 인원수</div>
+    <div class="chart-h"><canvas id="attChart"></canvas></div>
+  </div>
+  <p class="footnote">※ 105년(코로나 최절정) 46,826명까지 급락 후 108년 69,399명으로 일부 회복했으나, 100년 이전 수준(80,000명대)에는 미치지 못합니다.</p>
+
+  <div class="findings">
+    <div class="finding"><span class="tag">발견 1</span> 등록교도 총계는 19년간 꾸준히 증가(9,472→20,054명)했지만, 이는 미관리 교도 누적 효과이며 활동 실질을 보여주지 않습니다.</div>
+    <div class="finding"><span class="tag">발견 2</span> 신규 입교자는 100년 808명에서 108년 249명으로 −69.2% 급감해, 향후 연령구조 개선의 가장 큰 제약 요인입니다.</div>
+    <div class="finding"><span class="tag">발견 3</span> 법회출석은 코로나 이후 완전히 회복되지 못한 상태로, 111년 현재도 팬데믹 이전 수준보다 낮습니다.</div>
+  </div>
+</section>
+
+<!-- ══ 탭3: 미래 예측 ══ -->
+<section id="tab-forecast" class="tab-panel">
+  <h2>향후 10년 예측 (원기111~121, 2027~2037)</h2>
+  <p>111년 연령 스냅샷(20,859명)을 출발 코호트로, <strong>통계청 연령대별 사망확률</strong>과 <strong>최근 입교자 연령분포(108~110년)</strong>를 반영한 코호트 시뮬레이션입니다. 개인별 비사망 이탈(활동 중단) 데이터가 없어, 등록교도수 자체의 감소는 <u>사망에 의한 자연감소</u>만 반영했고, 신규유입 수준을 3가지 시나리오로 나눠 민감도를 살펴봤습니다.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>시나리오별 연간 신규입교 가정</caption>
+    <thead><tr><th>시나리오</th><th>가정</th><th>121년 예상 인원</th><th>111년 대비</th><th>121년 60+비중</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag-scn" style="background:#e6f1fb;color:#0c447c;">A. 현상유지</span>최근 3개년(108~110) 평균 297명/년 유지</td><td></td><td>19,793명</td><td style="color:var(--warn)">−5.1%</td><td>41.6%</td></tr>
+      <tr class="highlight-row"><td><span class="tag-scn" style="background:#faece7;color:#712b13;">B. 감소 지속</span>100~108년 추세(연 −13.8%) 지속, 하한 80명/년</td><td></td><td>18,526명</td><td style="color:var(--warn)">−11.2%</td><td>42.9%</td></tr>
+      <tr><td><span class="tag-scn" style="background:#eaf3de;color:#27500a;">C. 입교 회복</span>3년 내 400명/년까지 회복 후 유지</td><td></td><td>20,646명</td><td style="color:var(--warn)">−1.0%</td><td>40.8%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">시나리오별 전체 교도수 예측 (원기111~121)</div>
+    <div class="chart-h-lg"><canvas id="scnPopChart"></canvas></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">시나리오별 60세 이상 비중 예측</div>
+    <div class="chart-h"><canvas id="scnShareChart"></canvas></div>
+  </div>
+
+  <div class="note">
+    <strong>세 시나리오 모두에서 60세 이상 비중은 계속 상승합니다.</strong> 입교자를 현재의 1.3배(400명/년)까지 끌어올리는 낙관적 시나리오(C)에서도 60+ 비중은 39.0%→40.8%로 올라갑니다. 이는 이미 형성된 50~60대 인구 집단이 그대로 10년치 나이를 먹고 넘어가는 구조적 효과이기 때문에, 입교자 증대만으로는 고령화 자체를 되돌릴 수 없고 <strong>속도를 늦추는 효과</strong>만 기대할 수 있습니다.
+  </div>
+
+  <div class="warn">
+    <strong>주의(서울교구 방법론과 차이):</strong> 서울교구는 개인별 이탈 추적으로 "비사망 영구이탈율"(연령대별 5.7~22.6%)을 반영해 절반도달 시점을 6년 후로 계산했습니다. 경기인천교구는 그런 개인 추적 데이터가 없어 사망 감소만 반영했으며, 이는 실제보다 <strong>낙관적인(완만한) 예측</strong>일 가능성이 높습니다. 즉 위 세 시나리오는 "최소 이 정도는 고령화가 진행된다"는 하한선에 가깝게 해석해야 합니다.
+  </div>
+</section>
+
+<!-- ══ 탭4: 교당별 진단 ══ -->
+<section id="tab-church" class="tab-panel">
+  <h2>교당별 연령구조 진단 (원기111년 기준)</h2>
+  <p>44개 교당 중 <strong>병점·오정·동안양·부평교당</strong>은 60세 이상 비중이 45%를 넘고 최근 5년 평균 입교자가 4명 미만으로, 신규 유입 없이 고령화만 진행되는 고위험 교당입니다. 반대로 <strong>번개·동탄·안성교당</strong>은 60+비중이 25% 미만이면서 입교자도 활발해 벤치마킹 가치가 있습니다.</p>
+
+  <div class="chart-box">
+    <div class="chart-title">교당별 중앙연령 vs 최근 5년 평균 입교자수 (원 크기 = 교도수)</div>
+    <div class="chart-h-lg"><canvas id="churchScatterChart"></canvas></div>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:#a32d2d"></i>고위험(60+ 45%↑, 입교 4명 미만/년)</span>
+    <span><i class="sw" style="background:#eda100"></i>주의(60+ 40~45%)</span>
+    <span><i class="sw" style="background:#1baf7a"></i>안정/청년형(60+ 25% 미만)</span>
+    <span><i class="sw" style="background:#85b7eb"></i>일반</span>
+  </div>
+
+  <h3>전체 교당 목록</h3>
+  <div class="search-row">
+    <input id="churchSearch" placeholder="교당명 검색" oninput="filterChurch()">
+    <select id="riskFilter" onchange="filterChurch()">
+      <option value="all">전체</option>
+      <option value="high">고위험(60+ 45%↑)</option>
+      <option value="mid">주의(60+ 40~45%)</option>
+      <option value="low">안정/청년형(60+ 25%미만)</option>
+    </select>
+    <span id="churchCount" style="font-size:12px;color:var(--muted);"></span>
+  </div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr>
+      <th>교당명</th><th>111년 인원</th><th>평균연령</th><th>중앙연령</th>
+      <th>60+비율</th><th>80+비율</th><th>최근5년평균입교</th>
+      <th>121년 예상인원</th><th>121년 예상60+</th><th>위험도</th>
+    </tr></thead>
+    <tbody id="churchTableBody"></tbody>
+  </table>
+  </div>
+
+  <div class="findings">
+    <div class="finding"><span class="tag">최고위험</span> <strong>병점교당</strong>은 20명 중 60세 이상이 85%(17명)에 달하고, 최근 5년 평균 입교자가 연 0.6명으로 사실상 신규 유입이 끊겨 소규모 교당 특유의 시뮬레이션 변동성을 감안해도 가장 시급한 진단이 필요합니다.</div>
+    <div class="finding"><span class="tag">숨겨진 위험</span> <strong>오정·동안양교당</strong>은 규모(205명·735명)가 작지 않은데도 60+ 비중이 각각 53.7%·48.2%로 매우 높고 80+ 비중도 8.3%·19.5%로 높아, 향후 5~10년 내 급격한 자연감소가 예상됩니다.</div>
+    <div class="finding"><span class="tag">긍정 신호</span> <strong>번개(27.2명/년)·동탄(12.0명/년)·안성교당(12.6명/년)</strong>은 최근 입교가 활발하고 연령 구조도 젊어(60+ 1.3~24.4%), 성공 요인을 분석해 타 교당에 확산할 가치가 있습니다.</div>
+    <div class="finding"><span class="tag">대형 교당</span> 수원(1,915명)·인천(1,638명)·분당(1,449명)·군포(1,370명)·안산(1,104명) 등 상위 5개 교당이 전체의 34.5%를 차지하며, 이들의 60+비중(36.9~43.7%)과 입교 추세가 교구 전체 지표를 좌우합니다.</div>
+  </div>
+</section>
+
+<!-- ══ 탭5: 방법론 ══ -->
+<section id="tab-method" class="tab-panel">
+  <h2>서울교구 분석과의 방법론 차이</h2>
+  <p>서울교구 「핵심 교도층 연령구조 분석」은 개인별 <strong>연간 법회출석수(≥12회 = 월1회+)</strong>를 활용해 "핵심 활동층"만 걸러냈고, 교도번호를 연도별로 추적해 <strong>연령대별 비사망 이탈율</strong>까지 실측했습니다. 경기인천교구 데이터를 검토한 결과, 다음과 같은 이유로 동일한 방법을 그대로 적용할 수 없었습니다.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>항목</th><th>서울교구</th><th>경기인천교구</th><th>영향</th></tr></thead>
+    <tbody>
+      <tr><td>개인별 출석 빈도</td><td>있음(연간 출석횟수)</td><td>없음</td><td>"월1회+ 핵심층" 필터링 불가 → 전체 등록교도 기준으로 분석</td></tr>
+      <tr><td>개인별 생년/연령</td><td>교도번호+명단으로 확보(매칭률 99.96%+)</td><td>111년 스냅샷(교당·성별·연령대 집계)만 존재, 개인 단위 아님</td><td>연도별 개인 연령 추적·이탈율 실측 불가 → 111년 단일 시점 구조 분석 + 추세는 집계 데이터로 대체</td></tr>
+      <tr><td>교도번호 생년 인코딩</td><td>확인·활용</td><td>검증 결과 불일치 확인(아래 참조)</td><td>교도번호 기반 개인 연령 역산 방식 폐기</td></tr>
+      <tr><td>비사망 이탈율</td><td>연령대별 실측(5.7~22.6%)</td><td>산출 불가(활동중단자가 명부에서 제거되지 않음)</td><td>예측 모델에 사망 감소만 반영 → 실제보다 완만한 예측일 가능성</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="warn">
+    <strong>교도번호 생년 역산을 시도했으나 폐기한 이유:</strong> 원기90~108년 장기 개인 명부(member_90-108_long)의 교도번호 앞 4자리(생년월일 추정)로 나이를 역산해본 결과, 108년 기준 평균연령이 약 34세(중앙값 32세, 60+비중 6%)로 계산되어, 같은 시점 실제 연령 스냅샷(111년, 평균 52세·60+ 39%)과 크게 어긋났습니다. 이는 해당 파일의 교도번호 앞자리가 생년이 아니거나 다른 규칙을 따른다는 뜻이므로, 이 방식은 사용하지 않고 <strong>공식 연령대별 집계(원본_111년 교당별 성별 연령대별 목록)</strong>만 신뢰할 수 있는 연령 정보로 채택했습니다.
+  </div>
+
+  <h2>데이터 출처</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>구간</th><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>원기90~108년</td><td>교당데이터90108_경기인천교구_시트1.csv</td><td>44개 교당 × 19개년, 관리/미관리/열반/입교자/법회출석수 등 교당별 연간 집계</td></tr>
+      <tr><td>원기111년</td><td>1110520_교화훈련부_경기인천교구_교화_현황.xlsx (원본_111년 교당별 성별 연령대별 목록)</td><td>44개 교당 × 성별 × 10세 단위 연령대 인원 (전체 20,859명)</td></tr>
+      <tr><td>원기101~110년</td><td>동 파일(원본_101-110년 입교자 교당별 성별 연령대별 목록)</td><td>교당별·성별·연령대별 신규 입교자 수</td></tr>
+      <tr><td>참고(미사용)</td><td>member_90-108_long4.csv</td><td>전국 개인별 관리구분 명부 — 경기인천교구분 30.7만행 추출·검증했으나 개인 연령 신뢰도 문제로 최종 분석에는 미사용</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>예측 모델</h2>
+  <p>111년 연령대별 인원을 출발점으로, 10세 단위 연령대를 1년마다 1/10씩 다음 구간으로 이동시키는 코호트 이동 모델을 사용했습니다.</p>
+  <ul style="margin:0 0 14px 20px;">
+    <li><strong>사망 감소:</strong> 연령대별 근사 사망확률 적용 — 60대 1.20%, 70대 2.80%, 80대 8.10%(통계청 생명표 기준), 90세+ 20%, 50세 이하는 0.03~0.45% 수준의 낮은 값 적용</li>
+    <li><strong>신규 입교:</strong> 108~110년 평균 연령분포(첨부3 데이터)로 신규 입교자를 배분, 3개 시나리오(현상유지/감소지속/회복)로 연간 규모만 변경</li>
+    <li><strong>미반영:</strong> 비사망 이탈(활동 중단), 교구 간 전출입, 지역 인구 변화 등은 개인 단위 데이터 부재로 모델에 포함하지 못함</li>
+  </ul>
+
+  <h2>한계</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>한계</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>활동 강도 미반영</td><td>"관리/미관리" 구분은 행정상 관리 여부이며, 서울교구의 "월1회+" 같은 실제 참여 빈도를 반영하지 못함</td></tr>
+      <tr><td>단일 시점 연령구조</td><td>111년 한 시점의 연령 스냅샷만 있어, 과거 연령 추세(예: 97→110년 평균연령 변화)는 재현할 수 없음</td></tr>
+      <tr><td>예측의 보수적 편향</td><td>비사망 이탈을 반영하지 못해, 실제 고령화·감소 속도는 본 보고서 예측보다 빠를 가능성이 있음</td></tr>
+      <tr><td>교당별 소규모 변동성</td><td>병점(20명)·경기판교(39명) 등 소형 교당은 개인 1~2명의 변화에도 비율이 크게 흔들릴 수 있음</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="footnote">작성: 경기인천교구 교화훈련부 데이터 기반 분석 · 사망확률 참고: 통계청(국가데이터처) 생명표/사망원인통계 · 서울교구 「핵심 교도층 연령구조 분석 및 예측」 방법론 대조</p>
+</section>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+
+const SCN = {"years": [111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121], "A": [[111, 20859, 52.1, 39.0, 9.3], [112, 20698, 52.2, 39.2, 9.0], [113, 20567, 52.3, 39.4, 8.8], [114, 20456, 52.4, 39.7, 8.8], [115, 20355, 52.6, 40.0, 8.9], [116, 20261, 52.7, 40.3, 9.0], [117, 20170, 52.9, 40.5, 9.2], [118, 20079, 53.1, 40.8, 9.4], [119, 19986, 53.3, 41.1, 9.5], [120, 19891, 53.5, 41.4, 9.7], [121, 19793, 53.6, 41.6, 9.9]], "B": [[111, 20859, 52.1, 39.0, 9.3], [112, 20698, 52.2, 39.2, 9.0], [113, 20527, 52.3, 39.4, 8.8], [114, 20339, 52.5, 39.8, 8.8], [115, 20133, 52.7, 40.2, 8.9], [116, 19908, 53.0, 40.6, 9.1], [117, 19665, 53.3, 41.0, 9.3], [118, 19403, 53.6, 41.5, 9.6], [119, 19125, 53.9, 42.0, 9.8], [120, 18831, 54.2, 42.4, 10.1], [121, 18526, 54.6, 42.9, 10.4]], "C": [[111, 20859, 52.1, 39.0, 9.3], [112, 20722, 52.2, 39.1, 9.0], [113, 20644, 52.2, 39.3, 8.8], [114, 20615, 52.3, 39.5, 8.8], [115, 20616, 52.4, 39.7, 8.8], [116, 20623, 52.5, 39.9, 8.9], [117, 20632, 52.6, 40.1, 9.0], [118, 20640, 52.7, 40.3, 9.2], [119, 20645, 52.9, 40.5, 9.4], [120, 20647, 53.0, 40.7, 9.5], [121, 20646, 53.1, 40.8, 9.7]]};
+const HIST = [{"년도": 90, "관리": 3419, "미관리": 6053, "열반": 15, "입교자": 428, "법회출석_전체": 75346, "교화단원": 3049, "총교도": 9472}, {"년도": 91, "관리": 3644, "미관리": 6477, "열반": 25, "입교자": 388, "법회출석_전체": 73652, "교화단원": 3691, "총교도": 10121}, {"년도": 92, "관리": 3793, "미관리": 6749, "열반": 25, "입교자": 370, "법회출석_전체": 76841, "교화단원": 4199, "총교도": 10542}, {"년도": 93, "관리": 3977, "미관리": 7046, "열반": 15, "입교자": 470, "법회출석_전체": 80532, "교화단원": 4443, "총교도": 11023}, {"년도": 94, "관리": 5055, "미관리": 8185, "열반": 31, "입교자": 622, "법회출석_전체": 93168, "교화단원": 5347, "총교도": 13240}, {"년도": 95, "관리": 5260, "미관리": 8657, "열반": 26, "입교자": 618, "법회출석_전체": 88347, "교화단원": 5264, "총교도": 13917}, {"년도": 96, "관리": 5607, "미관리": 9130, "열반": 38, "입교자": 723, "법회출석_전체": 87346, "교화단원": 4928, "총교도": 14737}, {"년도": 97, "관리": 5915, "미관리": 9488, "열반": 56, "입교자": 624, "법회출석_전체": 85523, "교화단원": 4921, "총교도": 15403}, {"년도": 98, "관리": 6189, "미관리": 9731, "열반": 34, "입교자": 476, "법회출석_전체": 81360, "교화단원": 5016, "총교도": 15920}, {"년도": 99, "관리": 6539, "미관리": 9991, "열반": 41, "입교자": 595, "법회출석_전체": 82296, "교화단원": 5066, "총교도": 16530}, {"년도": 100, "관리": 6956, "미관리": 10324, "열반": 51, "입교자": 808, "법회출석_전체": 80982, "교화단원": 5015, "총교도": 17280}, {"년도": 101, "관리": 7279, "미관리": 10577, "열반": 39, "입교자": 528, "법회출석_전체": 81234, "교화단원": 4649, "총교도": 17856}, {"년도": 102, "관리": 7501, "미관리": 10730, "열반": 42, "입교자": 364, "법회출석_전체": 83646, "교화단원": 4984, "총교도": 18231}, {"년도": 103, "관리": 7742, "미관리": 11039, "열반": 34, "입교자": 584, "법회출석_전체": 79196, "교화단원": 4864, "총교도": 18781}, {"년도": 104, "관리": 8021, "미관리": 11124, "열반": 41, "입교자": 283, "법회출석_전체": 76799, "교화단원": 4329, "총교도": 19145}, {"년도": 105, "관리": 8198, "미관리": 11159, "열반": 39, "입교자": 165, "법회출석_전체": 46826, "교화단원": 4311, "총교도": 19357}, {"년도": 106, "관리": 8316, "미관리": 11183, "열반": 42, "입교자": 119, "법회출석_전체": 64499, "교화단원": 4132, "총교도": 19499}, {"년도": 107, "관리": 8583, "미관리": 11213, "열반": 38, "입교자": 278, "법회출석_전체": 68147, "교화단원": 4112, "총교도": 19796}, {"년도": 108, "관리": 8822, "미관리": 11232, "열반": 43, "입교자": 249, "법회출석_전체": 69399, "교화단원": 3934, "총교도": 20054}];
+const TEMPLE = [{"교당명": "병점교당", "총계": 20.0, "평균연령": 67.0, "중앙연령": 65.8, "60+비율": 85.0, "80+비율": 20.0, "최근5년평균입교(104-108)": 0.6, "121년예상인원": 19.0, "121년예상60+비율": 68.4}, {"교당명": "오정교당", "총계": 205.0, "평균연령": 56.8, "중앙연령": 61.4, "60+비율": 53.7, "80+비율": 8.3, "최근5년평균입교(104-108)": 3.2, "121년예상인원": 189.0, "121년예상60+비율": 51.4}, {"교당명": "동안양교당", "총계": 735.0, "평균연령": 57.9, "중앙연령": 58.6, "60+비율": 48.2, "80+비율": 19.5, "최근5년평균입교(104-108)": 3.8, "121년예상인원": 565.0, "121년예상60+비율": 44.4}, {"교당명": "부평교당", "총계": 655.0, "평균연령": 55.3, "중앙연령": 57.6, "60+비율": 46.7, "80+비율": 12.2, "최근5년평균입교(104-108)": 1.2, "121년예상인원": 517.0, "121년예상60+비율": 48.6}, {"교당명": "군포교당", "총계": 1370.0, "평균연령": 54.4, "중앙연령": 55.2, "60+비율": 43.7, "80+비율": 11.7, "최근5년평균입교(104-108)": 7.6, "121년예상인원": 1151.0, "121년예상60+비율": 45.6}, {"교당명": "과천교당", "총계": 504.0, "평균연령": 52.9, "중앙연령": 55.1, "60+비율": 42.9, "80+비율": 9.9, "최근5년평균입교(104-108)": 10.2, "121년예상인원": 498.0, "121년예상60+비율": 41.7}, {"교당명": "남양주교당", "총계": 403.0, "평균연령": 53.8, "중앙연령": 55.7, "60+비율": 42.7, "80+비율": 10.2, "최근5년평균입교(104-108)": 1.4, "121년예상인원": 339.0, "121년예상60+비율": 47.1}, {"교당명": "안산교당", "총계": 1104.0, "평균연령": 53.9, "중앙연령": 55.9, "60+비율": 42.7, "80+비율": 8.1, "최근5년평균입교(104-108)": 8.2, "121년예상인원": 972.0, "121년예상60+비율": 47.6}, {"교당명": "산본교당", "총계": 529.0, "평균연령": 54.6, "중앙연령": 56.9, "60+비율": 42.2, "80+비율": 8.5, "최근5년평균입교(104-108)": 4.4, "121년예상인원": 466.0, "121년예상60+비율": 50.3}, {"교당명": "수원교당", "총계": 1915.0, "평균연령": 54.1, "중앙연령": 55.5, "60+비율": 42.1, "80+비율": 11.2, "최근5년평균입교(104-108)": 12.4, "121년예상인원": 1633.0, "121년예상60+비율": 45.8}, {"교당명": "오산교당", "총계": 588.0, "평균연령": 54.1, "중앙연령": 55.5, "60+비율": 41.8, "80+비율": 12.9, "최근5년평균입교(104-108)": 5.4, "121년예상인원": 515.0, "121년예상60+비율": 44.6}, {"교당명": "부천교당", "총계": 820.0, "평균연령": 54.9, "중앙연령": 55.8, "60+비율": 41.8, "80+비율": 11.5, "최근5년평균입교(104-108)": 1.8, "121년예상인원": 663.0, "121년예상60+비율": 47.8}, {"교당명": "구리교당", "총계": 318.0, "평균연령": 52.4, "중앙연령": 55.4, "60+비율": 41.5, "80+비율": 6.6, "최근5년평균입교(104-108)": 6.8, "121년예상인원": 328.0, "121년예상60+비율": 44.3}, {"교당명": "용인교당", "총계": 426.0, "평균연령": 54.1, "중앙연령": 55.3, "60+비율": 41.5, "80+비율": 10.1, "최근5년평균입교(104-108)": 2.4, "121년예상인원": 361.0, "121년예상60+비율": 45.5}, {"교당명": "기흥교당", "총계": 227.0, "평균연령": 53.1, "중앙연령": 54.4, "60+비율": 41.4, "80+비율": 16.7, "최근5년평균입교(104-108)": 2.8, "121년예상인원": 201.0, "121년예상60+비율": 39.4}, {"교당명": "가평교당", "총계": 109.0, "평균연령": 55.9, "중앙연령": 55.7, "60+비율": 41.3, "80+비율": 10.1, "최근5년평균입교(104-108)": 0.2, "121년예상인원": 88.0, "121년예상60+비율": 49.2}, {"교당명": "광명교당", "총계": 385.0, "평균연령": 51.5, "중앙연령": 54.1, "60+비율": 40.8, "80+비율": 7.3, "최근5년평균입교(104-108)": 4.8, "121년예상인원": 361.0, "121년예상60+비율": 43.2}, {"교당명": "죽전교당", "총계": 291.0, "평균연령": 52.7, "중앙연령": 55.2, "60+비율": 40.2, "80+비율": 12.0, "최근5년평균입교(104-108)": 1.2, "121년예상인원": 242.0, "121년예상60+비율": 45.0}, {"교당명": "화성교당", "총계": 213.0, "평균연령": 52.2, "중앙연령": 48.9, "60+비율": 39.4, "80+비율": 12.7, "최근5년평균입교(104-108)": 2.0, "121년예상인원": 187.0, "121년예상60+비율": 36.2}, {"교당명": "분당교당", "총계": 1449.0, "평균연령": 52.1, "중앙연령": 54.2, "60+비율": 39.3, "80+비율": 9.9, "최근5년평균입교(104-108)": 14.0, "121년예상인원": 1308.0, "121년예상60+비율": 43.6}, {"교당명": "약대교당", "총계": 530.0, "평균연령": 51.1, "중앙연령": 53.4, "60+비율": 39.2, "80+비율": 6.4, "최근5년평균입교(104-108)": 7.0, "121년예상인원": 505.0, "121년예상60+비율": 42.4}, {"교당명": "안산국제교당", "총계": 253.0, "평균연령": 49.5, "중앙연령": 52.4, "60+비율": 39.1, "80+비율": 5.1, "최근5년평균입교(104-108)": 3.4, "121년예상인원": 246.0, "121년예상60+비율": 42.3}, {"교당명": "남동교당", "총계": 272.0, "평균연령": 51.8, "중앙연령": 52.5, "60+비율": 39.0, "80+비율": 7.4, "최근5년평균입교(104-108)": 2.6, "121년예상인원": 251.0, "121년예상60+비율": 43.9}, {"교당명": "평택교당", "총계": 401.0, "평균연령": 52.2, "중앙연령": 52.7, "60+비율": 38.9, "80+비율": 9.0, "최근5년평균입교(104-108)": 2.4, "121년예상인원": 349.0, "121년예상60+비율": 41.7}, {"교당명": "동수원교당", "총계": 496.0, "평균연령": 51.9, "중앙연령": 54.3, "60+비율": 38.7, "80+비율": 8.9, "최근5년평균입교(104-108)": 1.8, "121년예상인원": 425.0, "121년예상60+비율": 45.8}, {"교당명": "경기판교교당", "총계": 39.0, "평균연령": 50.4, "중앙연령": 52.5, "60+비율": 38.5, "80+비율": 17.9, "최근5년평균입교(104-108)": 0.0, "121년예상인원": 31.0, "121년예상60+비율": 38.4}, {"교당명": "북인천교당", "총계": 1059.0, "평균연령": 52.5, "중앙연령": 53.3, "60+비율": 38.2, "80+비율": 6.3, "최근5년평균입교(104-108)": 4.4, "121년예상인원": 920.0, "121년예상60+비율": 45.9}, {"교당명": "경기광주교당", "총계": 208.0, "평균연령": 51.4, "중앙연령": 53.8, "60+비율": 38.0, "80+비율": 6.2, "최근5년평균입교(104-108)": 2.0, "121년예상인원": 194.0, "121년예상60+비율": 45.1}, {"교당명": "성남교당", "총계": 620.0, "평균연령": 53.2, "중앙연령": 54.0, "60+비율": 37.9, "80+비율": 7.9, "최근5년평균입교(104-108)": 7.0, "121년예상인원": 572.0, "121년예상60+비율": 43.9}, {"교당명": "의왕교당", "총계": 171.0, "평균연령": 51.8, "중앙연령": 50.7, "60+비율": 37.4, "80+비율": 10.5, "최근5년평균입교(104-108)": 1.4, "121년예상인원": 153.0, "121년예상60+비율": 41.0}, {"교당명": "인천교당", "총계": 1638.0, "평균연령": 51.7, "중앙연령": 52.7, "60+비율": 36.9, "80+비율": 8.1, "최근5년평균입교(104-108)": 8.2, "121년예상인원": 1430.0, "121년예상60+비율": 43.4}, {"교당명": "하늘교당", "총계": 119.0, "평균연령": 48.5, "중앙연령": 54.1, "60+비율": 36.1, "80+비율": 4.2, "최근5년평균입교(104-108)": 4.4, "121년예상인원": 144.0, "121년예상60+비율": 39.7}, {"교당명": "하남교당", "총계": 274.0, "평균연령": 50.8, "중앙연령": 47.9, "60+비율": 34.7, "80+비율": 7.7, "최근5년평균입교(104-108)": 1.0, "121년예상인원": 239.0, "121년예상60+비율": 39.3}, {"교당명": "시화교당", "총계": 216.0, "평균연령": 50.9, "중앙연령": 53.8, "60+비율": 32.9, "80+비율": 5.6, "최근5년평균입교(104-108)": 2.2, "121년예상인원": 206.0, "121년예상60+비율": 45.2}, {"교당명": "수정교당", "총계": 58.0, "평균연령": 49.0, "중앙연령": 52.3, "60+비율": 32.8, "80+비율": 1.7, "최근5년평균입교(104-108)": 2.0, "121년예상인원": 70.0, "121년예상60+비율": 40.6}, {"교당명": "이천교당", "총계": 346.0, "평균연령": 46.6, "중앙연령": 45.7, "60+비율": 31.5, "80+비율": 6.1, "최근5년평균입교(104-108)": 6.6, "121년예상인원": 360.0, "121년예상60+비율": 34.1}, {"교당명": "연수교당", "총계": 271.0, "평균연령": 47.9, "중앙연령": 50.3, "60+비율": 31.0, "80+비율": 5.2, "최근5년평균입교(104-108)": 7.4, "121년예상인원": 306.0, "121년예상60+비율": 37.5}, {"교당명": "청라교당", "총계": 107.0, "평균연령": 48.6, "중앙연령": 51.8, "60+비율": 30.8, "80+비율": 6.5, "최근5년평균입교(104-108)": 1.8, "121년예상인원": 109.0, "121년예상60+비율": 40.8}, {"교당명": "여주교당", "총계": 320.0, "평균연령": 48.4, "중앙연령": 46.7, "60+비율": 28.4, "80+비율": 7.2, "최근5년평균입교(104-108)": 5.4, "121년예상인원": 326.0, "121년예상60+비율": 34.6}, {"교당명": "양평교당", "총계": 221.0, "평균연령": 48.0, "중앙연령": 41.3, "60+비율": 26.2, "80+비율": 8.6, "최근5년평균입교(104-108)": 0.2, "121년예상인원": 192.0, "121년예상60+비율": 31.0}, {"교당명": "안성교당", "총계": 287.0, "평균연령": 43.0, "중앙연령": 35.7, "60+비율": 24.4, "80+비율": 8.0, "최근5년평균입교(104-108)": 12.6, "121년예상인원": 371.0, "121년예상60+비율": 23.0}, {"교당명": "송도교당", "총계": 95.0, "평균연령": 45.7, "중앙연령": 47.7, "60+비율": 24.2, "80+비율": 1.1, "최근5년평균입교(104-108)": 1.4, "121년예상인원": 99.0, "121년예상60+비율": 37.0}, {"교당명": "동탄교당", "총계": 200.0, "평균연령": 40.4, "중앙연령": 41.5, "60+비율": 13.5, "80+비율": 2.5, "최근5년평균입교(104-108)": 12.0, "121년예상인원": 298.0, "121년예상60+비율": 26.6}, {"교당명": "번개교당", "총계": 392.0, "평균연령": 26.2, "중앙연령": 25.3, "60+비율": 1.3, "80+비율": 0.0, "최근5년평균입교(104-108)": 27.2, "121년예상인원": 648.0, "121년예상60+비율": 11.9}];
+const PYRAMID = {"labels": ["~9", "10~19", "20~29", "30~39", "40~49", "50~59", "60~69", "70~79", "80~89", "90+"], "male": [142, 554, 1414, 1703, 1361, 1604, 1809, 1010, 414, 325], "female": [147, 517, 872, 1287, 1234, 1895, 2044, 1320, 704, 503]};
+const ENTRANT = {"years": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110], "total": [518, 343, 502, 278, 162, 113, 273, 247, 297, 346]};
+
+</script>
+<script>
+const grid='#e1e0d9', muted='#898781';
+const charts = {};
+function mkChart(id, cfg){
+  if(charts[id]){ charts[id].destroy(); }
+  const el = document.getElementById(id);
+  if(!el) return;
+  charts[id] = new Chart(el, cfg);
+}
+
+/* ── 연령 밴드 표 ── */
+function renderAgeBandTable(){
+  const tb = document.getElementById('ageBandTableBody');
+  if(!tb) return;
+  let rows = '';
+  const total = PYRAMID.male.reduce((a,b)=>a+b,0) + PYRAMID.female.reduce((a,b)=>a+b,0);
+  for(let i=0;i<PYRAMID.labels.length;i++){
+    const m = PYRAMID.male[i], f = PYRAMID.female[i], sum = m+f;
+    rows += `<tr><td>${PYRAMID.labels[i]}</td><td>${m.toLocaleString()}</td><td>${f.toLocaleString()}</td><td>${sum.toLocaleString()}</td><td>${(sum/total*100).toFixed(1)}%</td></tr>`;
+  }
+  tb.innerHTML = rows;
+}
+
+/* ── 교당 테이블 ── */
+function riskClass(d){
+  if(d['60+비율']>=45 && d['최근5년평균입교(104-108)']<4) return 'high';
+  if(d['60+비율']>=40) return 'mid';
+  if(d['60+비율']<25) return 'low';
+  return 'normal';
+}
+function riskBadge(cls){
+  if(cls==='high') return '<span class="risk-badge rHigh">고위험</span>';
+  if(cls==='mid') return '<span class="risk-badge rMid">주의</span>';
+  if(cls==='low') return '<span class="risk-badge rLow">안정/청년</span>';
+  return '';
+}
+function renderChurchTable(data){
+  const tb = document.getElementById('churchTableBody');
+  if(!tb) return;
+  tb.innerHTML = data.map(d=>{
+    const cls = riskClass(d);
+    return `<tr><td>${d['교당명']}</td><td>${d['총계'].toLocaleString()}</td>
+    <td>${d['평균연령'].toFixed(1)}세</td><td>${d['중앙연령'].toFixed(1)}세</td>
+    <td>${d['60+비율'].toFixed(1)}%</td><td>${d['80+비율'].toFixed(1)}%</td>
+    <td>${d['최근5년평균입교(104-108)'].toFixed(1)}명</td>
+    <td>${d['121년예상인원'].toLocaleString()}</td><td>${d['121년예상60+비율'].toFixed(1)}%</td>
+    <td>${riskBadge(cls)}</td></tr>`;
+  }).join('');
+  const el = document.getElementById('churchCount');
+  if(el) el.textContent = `${data.length}개 교당`;
+}
+function filterChurch(){
+  const q = document.getElementById('churchSearch').value.trim();
+  const rf = document.getElementById('riskFilter').value;
+  let d = TEMPLE;
+  if(q) d = d.filter(x=>x['교당명'].includes(q));
+  if(rf!=='all') d = d.filter(x=>riskClass(x)===rf);
+  renderChurchTable(d);
+}
+
+/* ── 차트 렌더링 ── */
+function renderCharts(tab){
+  if(tab==='aging'){
+    renderAgeBandTable();
+    mkChart('pyramidChart',{
+      type:'bar',
+      data:{labels:PYRAMID.labels, datasets:[
+        {label:'남', data:PYRAMID.male.map(v=>-v), backgroundColor:'#185fa5', maxBarThickness:22},
+        {label:'여', data:PYRAMID.female, backgroundColor:'#e34948', maxBarThickness:22}
+      ]},
+      options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:'top'},
+          tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${Math.abs(ctx.raw).toLocaleString()}명`}}},
+        scales:{
+          x:{ticks:{color:muted, callback:v=>Math.abs(v).toLocaleString()}, grid:{color:grid}},
+          y:{ticks:{color:muted}, grid:{display:false}}
+        }}
+    });
+
+    const years = HIST.map(d=>d['년도']);
+    mkChart('histPopChart',{
+      type:'bar',
+      data:{labels:years.map(y=>'원기'+y), datasets:[
+        {label:'관리', data:HIST.map(d=>d['관리']), backgroundColor:'#185fa5', stack:'s', maxBarThickness:22},
+        {label:'미관리', data:HIST.map(d=>d['미관리']), backgroundColor:'#eda100', stack:'s', maxBarThickness:22}
+      ]},
+      options:{responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:'top'}},
+        scales:{
+          x:{ticks:{color:muted, font:{size:10}, maxRotation:45, autoSkip:false}, grid:{display:false}},
+          y:{stacked:true, ticks:{color:muted, callback:v=>v.toLocaleString()}, grid:{color:grid}}
+        }}
+    });
+
+    mkChart('entrantChart',{
+      type:'line',
+      data:{labels:ENTRANT.years.map(y=>'원기'+y), datasets:[
+        {label:'입교자수', data:ENTRANT.total, borderColor:'#993c1d', backgroundColor:'rgba(153,60,29,.15)', fill:true, pointRadius:3, borderWidth:2, tension:.2}
+      ]},
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:muted}, grid:{display:false}},
+          y:{ticks:{color:muted}, grid:{color:grid}, title:{display:true,text:'명',color:muted}}
+        }}
+    });
+
+    mkChart('attChart',{
+      type:'line',
+      data:{labels:years.map(y=>'원기'+y), datasets:[
+        {label:'법회출석수(연간 총 인원)', data:HIST.map(d=>d['법회출석_전체']),
+          borderColor:'#185fa5', backgroundColor:'rgba(24,95,165,.12)',
+          pointRadius:years.map(y=>(y===105||y===106)?6:3),
+          pointBackgroundColor:years.map(y=>(y===105||y===106)?'#993c1d':'#185fa5'),
+          borderWidth:2.5, fill:true, tension:.2}
+      ]},
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:muted, font:{size:10}, maxRotation:45, autoSkip:false}, grid:{display:false}},
+          y:{ticks:{color:muted, callback:v=>v.toLocaleString()}, grid:{color:grid}, title:{display:true,text:'명',color:muted}}
+        }}
+    });
+  }
+  else if(tab==='forecast'){
+    const yrs = SCN.years.map(y=>'원기'+y);
+    mkChart('scnPopChart',{
+      type:'line',
+      data:{labels:yrs, datasets:[
+        {label:'A. 현상유지', data:SCN.A.map(r=>r[1]), borderColor:'#185fa5', backgroundColor:'#185fa5', pointRadius:3, borderWidth:2, tension:.2},
+        {label:'B. 감소지속', data:SCN.B.map(r=>r[1]), borderColor:'#993c1d', backgroundColor:'#993c1d', pointRadius:3, borderWidth:2, borderDash:[5,4], tension:.2},
+        {label:'C. 입교회복', data:SCN.C.map(r=>r[1]), borderColor:'#3b6d11', backgroundColor:'#3b6d11', pointRadius:3, borderWidth:2, borderDash:[2,2], tension:.2}
+      ]},
+      options:{responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:'top'},
+          tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toLocaleString()}명`}}},
+        scales:{
+          x:{ticks:{color:muted}, grid:{display:false}},
+          y:{ticks:{color:muted, callback:v=>v.toLocaleString()}, grid:{color:grid}, title:{display:true,text:'명',color:muted}}
+        }}
+    });
+
+    mkChart('scnShareChart',{
+      type:'line',
+      data:{labels:yrs, datasets:[
+        {label:'A. 현상유지', data:SCN.A.map(r=>r[3]), borderColor:'#185fa5', backgroundColor:'#185fa5', pointRadius:3, borderWidth:2, tension:.2},
+        {label:'B. 감소지속', data:SCN.B.map(r=>r[3]), borderColor:'#993c1d', backgroundColor:'#993c1d', pointRadius:3, borderWidth:2, borderDash:[5,4], tension:.2},
+        {label:'C. 입교회복', data:SCN.C.map(r=>r[3]), borderColor:'#3b6d11', backgroundColor:'#3b6d11', pointRadius:3, borderWidth:2, borderDash:[2,2], tension:.2}
+      ]},
+      options:{responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:'top'}},
+        scales:{
+          x:{ticks:{color:muted}, grid:{display:false}},
+          y:{min:35, max:45, ticks:{color:muted, callback:v=>v+'%'}, grid:{color:grid}, title:{display:true,text:'60세 이상 비중',color:muted}}
+        }}
+    });
+  }
+  else if(tab==='church'){
+    function colorFor(d){
+      const cls = riskClass(d);
+      if(cls==='high') return '#a32d2d';
+      if(cls==='mid') return '#eda100';
+      if(cls==='low') return '#1baf7a';
+      return '#85b7eb';
+    }
+    mkChart('churchScatterChart',{
+      type:'bubble',
+      data:{datasets:[{
+        label:'교당',
+        data:TEMPLE.map(d=>({x:d['중앙연령'], y:d['최근5년평균입교(104-108)'], r:Math.max(4,Math.sqrt(d['총계'])/2.2), label:d['교당명'], n:d['총계']})),
+        backgroundColor:TEMPLE.map(d=>colorFor(d)+'cc')
+      }]},
+      options:{responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:ctx=>`${ctx.raw.label}: 중앙${ctx.raw.x}세, 최근입교 ${ctx.raw.y}명/년 (${ctx.raw.n}명)`}}},
+        scales:{
+          x:{title:{display:true,text:'중앙연령(세)',color:muted}, ticks:{color:muted}, grid:{color:grid}, min:20, max:70},
+          y:{title:{display:true,text:'최근5년평균 입교자수(명/년)',color:muted}, ticks:{color:muted}, grid:{color:grid}}
+        }}
+    });
+  }
+}
+
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  renderCharts(id);
+}
+
+/* 초기 렌더 */
+renderChurchTable(TEMPLE);
+renderCharts('overview');
+</script>
+</body>
+</html>
