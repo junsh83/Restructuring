@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--
+  교화구조개선 HTML 산출물 — 표준 템플릿(10_리포트_템플릿.html)으로 제작.
+  원본 중간산출물: 1 프로젝트/교화구조개선/서울/04_연구결과/공동교화_시너지효과.md (v09)
+  제작 규칙: [[10_HTML 산출물 공유 시스템]] · 게시 전 개인정보 감수 완료(교구·교당유형 집계 단위).
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공동교화 시너지 효과 분석 — 서울교구 교화구조개선</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d24; --muted:#5b6472; --line:#e3e7ee;
+    --accent:#2b6cb0;              /* 영역: 인력 */
+    --good:#1f9d57; --warn:#d69a12; --bad:#d34b4b;
+    --area-인력:#2b6cb0;
+    --maxw:960px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#12151b; --card:#1b1f28; --ink:#e8ebf1; --muted:#9aa3b2; --line:#2a303c; --accent:#5aa0e0; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.7;-webkit-text-size-adjust:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px 20px 80px}
+  header.doc{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:26px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .badge{font-size:.78rem;font-weight:600;color:#fff;padding:3px 10px;border-radius:999px;background:var(--area-인력)}
+  .badge.meta{background:var(--muted)}
+  h1{font-size:1.72rem;line-height:1.3;margin:.1em 0 .3em}
+  .sub{color:var(--muted);font-size:.95rem}
+  .lead{font-size:1.05rem;background:var(--card);border-left:4px solid var(--accent);
+    padding:14px 18px;border-radius:0 8px 8px 0;margin:22px 0}
+  .lead .q{font-weight:700;color:var(--accent)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:24px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .label{font-size:.82rem;color:var(--muted);margin-bottom:6px}
+  .kpi .value{font-size:1.7rem;font-weight:700;letter-spacing:-.5px}
+  .kpi .delta{font-size:.82rem;font-weight:600;margin-top:4px}
+  .up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--warn)}
+  section{margin:34px 0}
+  h2{font-size:1.28rem;border-bottom:1px solid var(--line);padding-bottom:8px;margin:0 0 14px}
+  h3{font-size:1.05rem;margin:22px 0 8px}
+  .bars{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+  .bar-row{display:grid;grid-template-columns:200px 1fr 56px;align-items:center;gap:10px;font-size:.9rem}
+  .bar-track{display:block;background:var(--line);border-radius:6px;height:20px;overflow:hidden}
+  .bar-fill{display:block;height:100%;background:var(--accent);border-radius:6px}
+  .bar-fill.good{background:var(--good)} .bar-fill.warn{background:var(--warn)} .bar-fill.bad{background:var(--bad)}
+  .bar-val{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:520px}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
+  th{background:var(--card);font-weight:600}
+  tbody tr:hover{background:rgba(127,127,127,.06)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pill{font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px}
+  .pill.good{background:rgba(31,157,87,.15);color:var(--good)}
+  .pill.warn{background:rgba(214,154,18,.15);color:var(--warn)}
+  .pill.bad{background:rgba(211,75,75,.15);color:var(--bad)}
+  .model{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:.92rem}
+  .model ul{margin:6px 0}
+  footer.doc{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  footer.doc .refs{margin:8px 0}
+  .notice{background:rgba(31,157,87,.10);border:1px solid rgba(31,157,87,.35);color:var(--ink);
+    border-radius:8px;padding:10px 14px;font-size:.85rem;margin-top:16px}
+  a{color:var(--accent)}
+  @media print{body{background:#fff}.kpi,.table-scroll{break-inside:avoid}.notice{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc">
+    <div class="badges">
+      <span class="badge">인력</span>
+      <span class="badge meta">서울교구 교화구조개선 TF</span>
+      <span class="badge meta">원기 111.07</span>
+    </div>
+    <h1>공동교화 시너지 효과 분석</h1>
+    <div class="sub">서울교구 교화구조개선 TF · 최종수정 원기 111.07 · 데이터 기준 서울교구 전수(원기 97~110) · 분석본 v09</div>
+  </header>
+
+  <p class="lead"><span class="q">"교무가 함께 일하면 교화가 달라지는가?"</span><br>
+    복수배치·거점 교당은 신앙 활성화·신규 유입·활동 유지 모든 축에서 우위를 보였고,
+    운영역량 지수(B2)가 교당 간 출석 격차의 약 3분의 2를 설명했다. 지구 단위 거점화(Hub-Spoke)의 핵심 근거다.</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="label">대형교당 이적 후 출석 증가</div><div class="value">+5.2회<span style="font-size:1rem">/년</span></div><div class="delta up">▲ 신앙 활성화 효과</div></div>
+    <div class="kpi"><div class="label">신규 유입 (대형 vs 비대형)</div><div class="value">2.8배</div><div class="delta up">▲ 유입력 우위</div></div>
+    <div class="kpi"><div class="label">10년 후 활동 유지율</div><div class="value">24.6%</div><div class="delta up">▲ 유지력 우위</div></div>
+    <div class="kpi"><div class="label">소규모 교당 비율 (30명 미만)</div><div class="value">48.3%</div><div class="delta down">▼ 현 구조의 취약성</div></div>
+  </div>
+
+  <section>
+    <h2>1. 배경 · 목적</h2>
+    <p>서울교구는 다수 교당이 1인 교무 체제이며, 주간 출석 30명 미만의 소규모·한계형 교당이 전체의 절반에 육박한다.
+      본 분석은 <strong>복수배치·공동교화가 실제 교화 성과로 이어지는지</strong>를 전수데이터로 검증하여,
+      TF의 <em>② 공간·통합·거점화</em>와 <em>① 인력·직무구조</em> 과제에 근거를 제공한다.</p>
+  </section>
+
+  <section>
+    <h2>2. 분석 결과</h2>
+    <h3>운영역량(B2)이 출석 격차의 대부분을 설명한다</h3>
+    <p>복수배치·운영역량 지수(B2)는 교당 간 출석 분산의 약 <strong>64%</strong>를 설명했다.
+      단순 규모가 아니라 <strong>운영 방식</strong>이 성과를 가른다는 뜻으로, 거점화·복수배치 정책의 직접 근거가 된다.</p>
+
+    <div class="bars">
+      <div class="bar-row"><span>B2가 설명하는 출석 분산</span><span class="bar-track"><span class="bar-fill good" style="width:64%"></span></span><span class="bar-val">64%</span></div>
+      <div class="bar-row"><span>소규모 교당 비율(30명 미만)</span><span class="bar-track"><span class="bar-fill warn" style="width:48.3%"></span></span><span class="bar-val">48.3%</span></div>
+      <div class="bar-row"><span>10년 후 활동 유지율</span><span class="bar-track"><span class="bar-fill bad" style="width:24.6%"></span></span><span class="bar-val">24.6%</span></div>
+    </div>
+    <p class="sub">막대는 각 지표의 비율(0~100%). 유지율이 낮을수록 이탈 위험이 크다.</p>
+  </section>
+
+  <section>
+    <h2>3. 상세 데이터</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>지표</th><th class="num">수치</th><th>의미</th><th>판정</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>대형교당 이적 후 출석 증가</td><td class="num">+5.2회/년</td><td>신앙 활성화 효과</td><td><span class="pill good">우위</span></td></tr>
+          <tr><td>대형 vs 비대형 신규 유입</td><td class="num">2.8배</td><td>유입력 우위</td><td><span class="pill good">우위</span></td></tr>
+          <tr><td>10년 후 활동 유지율</td><td class="num">24.6%</td><td>유지력 우위</td><td><span class="pill good">우위</span></td></tr>
+          <tr><td>소규모 교당 비율(30명 미만)</td><td class="num">48.3%</td><td>현 구조의 취약성</td><td><span class="pill warn">주의</span></td></tr>
+          <tr><td>비대형교당 실질 순유입률</td><td class="num">−54.3%</td><td>구조적 손실</td><td><span class="pill bad">위험</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 공동교화 모델 방향</h2>
+    <div class="model">
+      <strong>지구 단위 거점화 (Hub-Spoke)</strong>
+      <ul>
+        <li><strong>Hub — 대형 거점 교당</strong>: 복수 교역자 배치 · 특화 프로그램(청년·가족·시민) · 행정 통합 운영</li>
+        <li><strong>Spoke — 인근 소교당</strong>: 법회 연합 운영 · 교역자 순환 지원</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 시사점 · 제언</h2>
+    <ul>
+      <li><strong>거점화는 규모가 아니라 운영역량(B2)을 겨냥</strong>해야 한다 — 복수배치·행정통합이 성과의 실질 동인. <em>(② 공간·통합·거점화 / 중기)</em></li>
+      <li>소규모 48.3%·비대형 순유입 −54.3%는 <strong>현 분산 구조의 지속가능성 한계</strong>를 보여준다. 지구 단위 통합 우선순위 설정이 필요. <em>(② 공간 / 단기~중기)</em></li>
+      <li>복수배치의 교화 효과가 확인된 만큼 <strong>인력 재배치·순환 모델</strong>을 ① 인력·직무구조 과제와 연동해 설계. <em>(① 인력 / 중기)</em></li>
+    </ul>
+  </section>
+
+  <footer class="doc">
+    <div class="refs"><strong>참고문헌</strong> 서울교구 교화구조개선 TF (2026). 공동교화 시너지 효과 분석 (v09). — B2 운영역량 지수·SCM 분석은 연구보고서 v1.3 3.3절과 동일 계열.</div>
+    <div class="refs"><strong>원출처</strong> 볼트 중간산출물 「공동교화 시너지 효과 분석」에서 표준 템플릿으로 생성</div>
+    <div class="notice">🔒 개인정보 감수 완료 — 본 페이지는 교구·교당 유형 단위로 <strong>집계·익명화</strong>된 결과만 담았으며, 개인/가구 식별 데이터를 포함하지 않는다. (운영 매뉴얼 §2·§7)</div>
+  </footer>
+
+</div>
+</body>
+</html>
