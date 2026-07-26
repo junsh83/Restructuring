@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일반교도 1차 설문 분석 (N=633) — 서울교구 교화구조개선</title>
+<style>
+  :root{--ink:#1a2233;--muted:#5b6577;--line:#e3e8f0;--accent:#2f6f4f;--accent2:#b4462e;--blue:#3d6ea5;--gray:#9aa7b8;--bg:#fbfcfe;--card:#fff;}
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,"Segoe UI","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.7}
+  .wrap{max-width:940px;margin:0 auto;padding:40px 22px 80px}
+  header{border-bottom:3px solid var(--accent);padding-bottom:18px}
+  h1{font-size:1.7rem;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:.95rem}
+  h2{font-size:1.25rem;margin:40px 0 14px;padding-left:10px;border-left:5px solid var(--accent)}
+  h3{font-size:1.03rem;margin:22px 0 8px;color:var(--accent)}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.9rem;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+  th{background:#eef4f0;font-weight:700}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  /* bar chart */
+  .chart{margin:12px 0 20px}
+  .cap{font-size:.85rem;color:var(--muted);margin:0 0 8px}
+  .brow{display:grid;grid-template-columns:158px 1fr 50px;align-items:center;gap:9px;margin:5px 0;font-size:.88rem}
+  .brow .lbl{text-align:right;color:#2c3850;line-height:1.3}
+  .track{background:#eef2f7;border-radius:4px;height:17px;display:block;width:100%;overflow:hidden}
+  .fill{display:block;height:100%;border-radius:4px;background:var(--accent);min-width:2px}
+  .fill.hi{background:var(--accent2)} .fill.b{background:var(--blue)} .fill.gr{background:var(--gray)}
+  .brow .val{font-variant-numeric:tabular-nums;color:#33405a;font-weight:600}
+  .legend{font-size:.8rem;color:var(--muted);margin:4px 0 0 158px}
+  .sw{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:middle;margin:0 4px 0 10px}
+  .grp{margin:6px 0 14px;padding:8px 12px;background:#f7f9fc;border-radius:8px}
+  .grp .gt{font-size:.9rem;font-weight:700;margin-bottom:4px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin:12px 0;box-shadow:0 1px 3px rgba(20,40,80,.04)}
+  .flag{background:#fff6ed;border-left:4px solid var(--accent2);padding:11px 15px;border-radius:6px;margin:14px 0}
+  .key{background:#eef4f0;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:14px 0}
+  blockquote{margin:8px 0;padding:8px 14px;border-left:3px solid var(--line);color:#33405a;font-style:italic;background:#f7f9fc;border-radius:0 6px 6px 0}
+  .tag{display:inline-block;background:#eef2f7;color:var(--muted);border-radius:20px;padding:1px 9px;font-size:.78rem;margin-right:4px}
+  .lead{font-size:1.06rem;color:#33405a}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .num{font-size:1.5rem;font-weight:800;color:var(--accent)}
+  footer{margin-top:50px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:.82rem}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+  <h1>일반교도 1차 설문 분석 <span style="color:var(--accent)">(N=633)</span></h1>
+  <div class="sub">서울교구 교화구조개선 연구 · 원기111년 7월 · 정량·계층·주관식·대표성(모집단=코어) 통합</div>
+</header>
+
+<p class="lead">재가 교도 633명의 목소리를 정량·정성으로 읽었다. 한 문장으로 — <b>“위기는 세대 단절과 고령화, 처방은 구조보다 사람(교무 역량·재가 양성)과 언어(설법·용어·홍보).”</b></p>
+
+<div class="grid">
+  <div class="stat"><div class="num">633</div>응답(6월온라인 429·7월온라인 128·종이 76)</div>
+  <div class="stat"><div class="num">17.8%</div>응답률 — 코어(월1회+ 3,553) 6명 중 1명</div>
+  <div class="stat"><div class="num">73.6%</div>응답자 60세 이상 (코어 70.1%와 근접)</div>
+  <div class="stat"><div class="num">+4.2%p</div>코어 대비 60+ 편향(소폭) — 대표성 양호</div>
+</div>
+
+<h2>Ⅰ. 조사 개요와 기준</h2>
+<p>수집 원기111.6/13~7/6(약 3.5주), 교당·단 조직으로 배포. 응답층은 <b>60세 이상 73.6%·신앙 20년 이상 69.0%</b>로 고연령·고신심 재가 중심이다.</p>
+<div class="key"><b>대표성 판단 기준 = 코어(월1회+ 출석).</b> 설문이 3.5주 동안 교당·단으로 배포된 만큼, 그 기간에 응답할 기회·성향이 있던 <b>활동핵심층(코어)</b>이 이 조사의 모집단이다. 연1회+ 출석·관리교도 전체는 응답기간에 닿지 않는 비활동층을 대량 포함하므로 기준으로 쓰지 않는다. (근거·수치는 Ⅴ장.)</div>
+
+<h2>Ⅱ. 정량 핵심 (객관식)</h2>
+
+<h3>교화의 본질 — 압도적으로 ‘개인 수행’ (단일선택)</h3>
+<div class="chart">
+  <div class="brow"><span class="lbl">마음공부·신앙수행(A2)</span><span class="track"><span class="fill hi" style="width:52.4%"></span></span><span class="val">52.4%</span></div>
+  <div class="brow"><span class="lbl">교법 전파·교세(A4)</span><span class="track"><span class="fill" style="width:20.1%"></span></span><span class="val">20.1%</span></div>
+  <div class="brow"><span class="lbl">공동체·은혜나눔(A5)</span><span class="track"><span class="fill" style="width:11.5%"></span></span><span class="val">11.5%</span></div>
+  <div class="brow"><span class="lbl">삶의 문제 해결(A3)</span><span class="track"><span class="fill" style="width:10.7%"></span></span><span class="val">10.7%</span></div>
+  <div class="brow"><span class="lbl">진급·정신개벽(A1)</span><span class="track"><span class="fill" style="width:3.3%"></span></span><span class="val">3.3%</span></div>
+</div>
+
+<h3>지속가능성 위기 — 고령화·청년단절 양대 축 (다중선택)</h3>
+<div class="chart">
+  <div class="brow"><span class="lbl">출석교도 고령화(D2)</span><span class="track"><span class="fill hi" style="width:77.4%"></span></span><span class="val">77.4%</span></div>
+  <div class="brow"><span class="lbl">청년·신규 부재(D7)</span><span class="track"><span class="fill hi" style="width:77.1%"></span></span><span class="val">77.1%</span></div>
+  <div class="brow"><span class="lbl">출가교무 감소(D1)</span><span class="track"><span class="fill" style="width:23.1%"></span></span><span class="val">23.1%</span></div>
+  <div class="brow"><span class="lbl">교무 행정매몰(D3)</span><span class="track"><span class="fill" style="width:22.4%"></span></span><span class="val">22.4%</span></div>
+  <div class="brow"><span class="lbl">교당 영세화(D4)</span><span class="track"><span class="fill" style="width:20.5%"></span></span><span class="val">20.5%</span></div>
+  <div class="brow"><span class="lbl">재정 취약(D8)</span><span class="track"><span class="fill" style="width:11.8%"></span></span><span class="val">11.8%</span></div>
+</div>
+<p class="cap">고령화·청년단절이 나머지와 큰 격차로 양대 축. 교무 감소(23%) 체감은 상대적으로 낮다 — 재가는 ‘공급’보다 ‘수요·세대’를 절박하게 본다.</p>
+
+<h3>본질에서 멀어진 활동 — 관계·형식 문제 전면화 (다중)</h3>
+<div class="chart">
+  <div class="brow"><span class="lbl">폐쇄성(진입장벽)</span><span class="track"><span class="fill" style="width:46.1%"></span></span><span class="val">46.1%</span></div>
+  <div class="brow"><span class="lbl">형식만 남은 법회</span><span class="track"><span class="fill" style="width:44.4%"></span></span><span class="val">44.4%</span></div>
+  <div class="brow"><span class="lbl">행정·보고 위주 운영</span><span class="track"><span class="fill" style="width:40.9%"></span></span><span class="val">40.9%</span></div>
+  <div class="brow"><span class="lbl">교도 간 관계갈등 <span class="tag">신규 C2</span></span><span class="track"><span class="fill hi" style="width:40.8%"></span></span><span class="val">40.8%</span></div>
+  <div class="brow"><span class="lbl">동원·인원채우기 행사</span><span class="track"><span class="fill" style="width:28.3%"></span></span><span class="val">28.3%</span></div>
+</div>
+<div class="key"><b>신규 코드 C2(관계갈등) 신설.</b> ‘교도 간 불화’가 40.8%로 안정적인데 기존 코드북에 없어 ‘폐쇄성’에 섞여 있었다. <b>새 사람 진입장벽(폐쇄성)과 기존 교도 내부 갈등(관계갈등)은 다른 문제</b>로 분리.</div>
+
+<h3>인력 대응 — ‘사람’(역량·양성)이 ‘구조’(통합)를 앞선다 · 시민 대상 = 청년</h3>
+<div class="chart">
+  <div class="brow"><span class="lbl">교무 역량강화(G2)</span><span class="track"><span class="fill" style="width:49.6%"></span></span><span class="val">49.6%</span></div>
+  <div class="brow"><span class="lbl">재가 양성(G1)</span><span class="track"><span class="fill" style="width:45.3%"></span></span><span class="val">45.3%</span></div>
+  <div class="brow"><span class="lbl">교무 행정이관(F4)</span><span class="track"><span class="fill" style="width:40.3%"></span></span><span class="val">40.3%</span></div>
+  <div class="brow"><span class="lbl">교당 통합(F1)</span><span class="track"><span class="fill" style="width:39.5%"></span></span><span class="val">39.5%</span></div>
+  <div class="brow"><span class="lbl">청년·MZ 접점(대상)</span><span class="track"><span class="fill hi" style="width:71.4%"></span></span><span class="val">71.4%</span></div>
+</div>
+
+<h2>Ⅲ. 주관식 추가분석 — 255명 전수 재코딩 <span class="tag">이 보고서의 기여</span></h2>
+<p>원 보고서는 주관식을 <b>키워드 자동 코딩</b>했고 미분류 393건을 “흩어져 있다”고 결론냈다. 작성자 255명을 <b>응답자 단위로 재분석</b>하니, 코드북에 코드가 없어 0코드로 빠진 <b>대형 주제</b>가 드러난다(붉은 막대).</p>
+<div class="chart">
+  <div class="cap">주관식 주제별 언급률 (작성자 255명 기준)</div>
+  <div class="brow"><span class="lbl">교무 역량·자질</span><span class="track"><span class="fill" style="width:72%"></span></span><span class="val">18.0%</span></div>
+  <div class="brow"><span class="lbl">재가 양성·역할확대</span><span class="track"><span class="fill" style="width:64.4%"></span></span><span class="val">16.1%</span></div>
+  <div class="brow"><span class="lbl">설법·법회 질(감동)</span><span class="track"><span class="fill" style="width:59.6%"></span></span><span class="val">14.9%</span></div>
+  <div class="brow"><span class="lbl">홍보·인지도·이미지</span><span class="track"><span class="fill hi" style="width:53.2%"></span></span><span class="val">13.3%</span></div>
+  <div class="brow"><span class="lbl">용어·교리 난해성</span><span class="track"><span class="fill hi" style="width:50%"></span></span><span class="val">12.5%</span></div>
+  <div class="brow"><span class="lbl">교당 상시개방·문턱</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="val">12.5%</span></div>
+  <div class="brow"><span class="lbl">명상·선·힐링·문화</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="val">12.5%</span></div>
+  <div class="brow"><span class="lbl">통합·통폐합·거점</span><span class="track"><span class="fill" style="width:44%"></span></span><span class="val">11.0%</span></div>
+  <div class="brow"><span class="lbl">온라인·유튜브</span><span class="track"><span class="fill" style="width:42.4%"></span></span><span class="val">10.6%</span></div>
+  <div class="brow"><span class="lbl">폐쇄성·텃세·관계갈등</span><span class="track"><span class="fill" style="width:31.2%"></span></span><span class="val">7.8%</span></div>
+  <div class="brow"><span class="lbl">가족·생애주기 교화</span><span class="track"><span class="fill hi" style="width:30%"></span></span><span class="val">7.5%</span></div>
+  <div class="legend"><span class="sw" style="background:var(--accent2)"></span>붉은 막대 = 원 보고서가 ‘소수의견(3~5건)’으로 과소집계한 대형 주제</div>
+</div>
+<div class="flag"><b>방법론 보완 — 신규 코드 3종 제안.</b> 자동 코딩이 0코드로 흘린 <b>홍보·인지도 / 용어·교리 접근성 / 가족·생애주기 교화</b>는 소수의견이 아니라 7~13%대 대형 주제다. 코드북에 정식 코드로 신설할 것을 제안한다.</div>
+<p><b>세대 차</b> — 60대 미만(66명)은 교무 역량(23%)·온라인(15%)·<b>관계갈등/텃세(15%, 3배)</b>·가족교화(11%)를 더 강하게 제기한다.</p>
+<blockquote style="border-left-color:var(--accent2);background:#fff6ed">“길을 가다가 원불교 간판만 봐도 눈물이 난다. 그리워서. 나 원불교 다니고 싶어요.” <span class="tag">충성-소외 정서 · 40대·신앙20년+</span></blockquote>
+<blockquote>“원불교 용어가 너무 어려워… 쉽게 재해석하는 방법이 필요” · “불교 스님 한 명 채널보다 파급력이 낮다는 게 충격적” · “설법이 교전 해설로 끝나 와닿지 않음”</blockquote>
+
+<h2>Ⅳ. 계층별 객관식 — 전체 평균이 가리는 것</h2>
+<p>전체 평균은 <b>최소 3~4개 이해관계 집단이 겹친 값</b>이다.</p>
+
+<div class="grp"><div class="gt">위기 진단이 세대별로 뒤바뀐다 (연령 × 진단)</div>
+  <div class="brow"><span class="lbl">고령화 · 40대↓</span><span class="track"><span class="fill b" style="width:67.2%"></span></span><span class="val">67.2%</span></div>
+  <div class="brow"><span class="lbl">고령화 · 60대+</span><span class="track"><span class="fill" style="width:78.1%"></span></span><span class="val">78.1%</span></div>
+  <div class="brow"><span class="lbl">청년단절 · 40대↓</span><span class="track"><span class="fill b" style="width:78.7%"></span></span><span class="val">78.7%</span></div>
+  <div class="brow"><span class="lbl">청년단절 · 60대+</span><span class="track"><span class="fill" style="width:75.8%"></span></span><span class="val">75.8%</span></div>
+  <div class="legend"><span class="sw" style="background:var(--blue)"></span>40대↓ <span class="sw" style="background:var(--accent)"></span>60대+ — 40대↓은 청년단절을, 60대+는 고령화를 더 절박하게 본다</div>
+</div>
+
+<div class="grp"><div class="gt">규모 클수록 ‘교무 권한’보다 협의 선호 (교무수 × N4 최종결정권, 5점)</div>
+  <div class="brow"><span class="lbl">교무 1명 교당</span><span class="track"><span class="fill" style="width:66.2%"></span></span><span class="val">3.31</span></div>
+  <div class="brow"><span class="lbl">교무 2명 교당</span><span class="track"><span class="fill" style="width:63.8%"></span></span><span class="val">3.19</span></div>
+  <div class="brow"><span class="lbl">교무 3명+ 교당</span><span class="track"><span class="fill" style="width:59%"></span></span><span class="val">2.95</span></div>
+  <div class="legend">단조 감소 — 큰 교당일수록 교무 최종결정권 지지가 낮다</div>
+</div>
+
+<div class="key"><b>계층 함의.</b> 위기 원인은 세대별로 달라 <b>하나로 못 박지 말 것</b>(병렬). 통합은 정작 <b>미래세대(40↓) 지지 최저(24.6%)</b>. 거버넌스는 교당 규모별 차등. 신입 유치 메시지는 ‘마음공부’(1년미만 70.8%). 이탈위험군은 신입 아닌 <b>중간연차(폐쇄성 10~20년 54.4%)</b>.</div>
+
+<h2>Ⅴ. 대표성 — 모집단은 코어(월1회+)</h2>
+<p><b>모집단 = 코어(월1회+ 출석).</b> 3.5주 동안 교당·단으로 배포된 설문에 응답할 수 있던 층은 활동핵심층이다. 올해(원기111) 출석은 반기치라 임계값을 절반(정례 6회+)으로 환산 = <b>3,553명</b>, 마지막 완전연도(원기110) 코어 <b>3,541명</b>과 일치해(=지표 M01) 신뢰할 수 있다. 코어의 약 98%가 이미 교화단 편성이라 교화단 조건을 더해도 결과가 같다 → <b>코어 단일 기준</b>으로 정리한다.</p>
+
+<div class="grid">
+  <div class="stat"><div class="num">3,553</div>코어(월1회+, 올해 원기111)</div>
+  <div class="stat"><div class="num">17.8%</div>응답률 — 코어 6명 중 1명</div>
+  <div class="stat"><div class="num">+4.2%p</div>60세+ 편향(소폭)</div>
+  <div class="stat"><div class="num">−6.1%p</div>신앙20년+ 편향(신입 더 담음)</div>
+</div>
+
+<h3>분모를 코어로 잡아야 하는 이유 — 넓은 분모는 편향을 부풀린다</h3>
+<div class="chart">
+  <div class="cap">모집단 후보별 ‘60세 이상’ 비율 — 응답자(74.3%)에 가장 가까운 것은 코어다</div>
+  <div class="brow"><span class="lbl">관리교도 명부</span><span class="track"><span class="fill gr" style="width:40.4%"></span></span><span class="val">40.4%</span></div>
+  <div class="brow"><span class="lbl">연1회+ 출석</span><span class="track"><span class="fill gr" style="width:54.5%"></span></span><span class="val">54.5%</span></div>
+  <div class="brow"><span class="lbl">교화단 편성</span><span class="track"><span class="fill gr" style="width:52%"></span></span><span class="val">52.0%</span></div>
+  <div class="brow"><span class="lbl">코어(월1회+) ★기준</span><span class="track"><span class="fill" style="width:70.1%"></span></span><span class="val">70.1%</span></div>
+  <div class="brow"><span class="lbl">응답자(설문)</span><span class="track"><span class="fill hi" style="width:74.3%"></span></span><span class="val">74.3%</span></div>
+  <div class="legend"><span class="sw" style="background:var(--gray)"></span>부적절(비활동층 포함) <span class="sw" style="background:var(--accent)"></span>기준=코어 <span class="sw" style="background:var(--accent2)"></span>응답자</div>
+</div>
+<p class="cap">넓은 분모(관리교도·연1회+)일수록 응답자와 벌어져 편향이 +18~34%p로 부풀지만, 이는 응답기간에 닿지 않은 비활동층을 넣은 왜곡이다. 코어(70.1%)는 응답자(74.3%)와 거의 붙어 있다.</p>
+
+<h3>코어 대비 대표성 — 편향은 작다</h3>
+<div class="chart">
+  <div class="grp"><div class="gt">60세 이상</div>
+    <div class="brow"><span class="lbl">코어</span><span class="track"><span class="fill" style="width:70.1%"></span></span><span class="val">70.1%</span></div>
+    <div class="brow"><span class="lbl">응답자</span><span class="track"><span class="fill hi" style="width:74.3%"></span></span><span class="val">74.3%</span></div>
+  </div>
+  <div class="grp"><div class="gt">신앙 20년 이상</div>
+    <div class="brow"><span class="lbl">코어</span><span class="track"><span class="fill" style="width:76.6%"></span></span><span class="val">76.6%</span></div>
+    <div class="brow"><span class="lbl">응답자</span><span class="track"><span class="fill hi" style="width:70.5%"></span></span><span class="val">70.5%</span></div>
+  </div>
+</div>
+<div class="flag"><b>해석.</b> 코어 기준으로 보면 응답자는 <b>60대를 소폭 더(+4.2%p), 장기신앙자를 소폭 덜(−6.1%p, =신입을 더)</b> 담았을 뿐 <b>활동핵심층을 정확히 대표</b>한다. 따라서 ① 전체 수치는 ‘코어의 견해’로 읽으면 타당하고, ② ‘고령 편중’의 대부분은 설문 결함이 아니라 <b>코어 자체가 이미 60대+ 70%인 실제 속성</b>이며, ③ 청년 접점 71.4% 등은 고령 코어에서도 나온 값이라 <b>오히려 보수적(강한) 신호</b>다. ④ 진짜 공백은 ‘코어 바깥’(비활동·청년·주변층)으로, 별도 조사(질적 인터뷰·청년 표적조사)로만 얻을 수 있다.</div>
+
+<h2>Ⅵ. 정책적 함의</h2>
+<ol>
+<li><b>성과지표는 ‘사람’</b> — 재가는 교무 역량·재가 양성을 1·2번으로 꼽는다. 통합·구조는 그다음.</li>
+<li><b>과소평가된 콘텐츠 3종</b> — 설법의 질 + 용어 현대화 + 홍보/대외이미지. 공간 재편만큼 시급한 ‘언어와 감동’.</li>
+<li><b>정착 설계 = 관계 + 안내</b> — 폐쇄성(진입)과 관계갈등(내부)을 분리 대응. 신입 안내·단(團) 정착 시스템.</li>
+<li><b>가족·생애주기 교화</b> — 청년 단독이 아니라 ‘아이→부모→지인’ 파이프라인.</li>
+<li><b>대표성 원칙</b> — 이 조사는 ‘활동핵심층(코어)’을 대표한다. 코어 바깥(청년·비활동)은 별도 표적조사로 보완.</li>
+</ol>
+
+<footer>
+원자료: 일반교도 설문조사 응답(N=633, Google Sheet). 모집단 분포: 서울교구 교도통합 마스터(일반56, 원기111) 전수 산출. 주관식 산출물: 일반교도설문_주관식_주제언급률.csv.<br>
+※ <b>모집단 기준 = 코어(월1회+ 출석), 올해 원기111 반기환산 3,553명</b>(완전연도 원기110 코어 3,541과 일치, =지표 M01). 응답률 17.8%.<br>
+※ 본 조사는 <b>일반교도(재가) 현장 설문</b>으로, 전문가 패널 델파이(라운드1)와는 별개 데이터셋이다. · 서울교구 교화구조개선 TF · 원기111년.
+</footer>
+</div></body></html>
