@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영광교구 교화현황 진단 (원기95–108) — 발상지의 역설</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d24; --muted:#5b6472; --line:#e3e7ee;
+    --accent:#2f6f4e; --good:#1f9d57; --warn:#d69a12; --bad:#d34b4b; --maxw:960px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#12151b; --card:#1b1f28; --ink:#e8ebf1; --muted:#9aa3b2; --line:#2a303c; --accent:#5bbf8c; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px 20px 80px}
+  header.doc{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:26px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .badge{font-size:.78rem;font-weight:600;color:#fff;padding:3px 10px;border-radius:999px;background:var(--accent)}
+  .badge.meta{background:var(--muted)}
+  .badge.bad{background:var(--bad)}
+  h1{font-size:1.72rem;line-height:1.3;margin:.1em 0 .3em}
+  .sub{color:var(--muted);font-size:.95rem}
+  .lead{font-size:1.06rem;color:var(--ink);background:var(--card);border-left:4px solid var(--accent);
+    padding:16px 18px;border-radius:0 8px 8px 0;margin:22px 0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .label{font-size:.82rem;color:var(--muted);margin-bottom:6px}
+  .kpi .value{font-size:1.7rem;font-weight:700;letter-spacing:-.5px}
+  .kpi .delta{font-size:.82rem;font-weight:600;margin-top:4px}
+  .up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--warn)}
+  section{margin:36px 0}
+  h2{font-size:1.3rem;border-bottom:1px solid var(--line);padding-bottom:8px;margin:0 0 14px}
+  h3{font-size:1.06rem;margin:24px 0 8px;color:var(--accent)}
+  p{margin:12px 0}
+  .bars{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 84px;align-items:center;gap:10px;font-size:.9rem}
+  .bar-track{display:block;background:var(--line);border-radius:6px;height:20px;overflow:hidden}
+  .bar-fill{display:block;height:100%;background:var(--accent);border-radius:6px}
+  .bar-fill.good{background:var(--good)} .bar-fill.warn{background:var(--warn)} .bar-fill.bad{background:var(--bad)}
+  .bar-val{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:520px}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+  th{background:var(--card);position:sticky;top:0;font-weight:600}
+  tbody tr:hover{background:rgba(127,127,127,.06)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px}
+  .pill.good{background:rgba(31,157,87,.15);color:var(--good)}
+  .pill.warn{background:rgba(214,154,18,.15);color:var(--warn)}
+  .pill.bad{background:rgba(211,75,75,.15);color:var(--bad)}
+  blockquote{margin:16px 0;padding:12px 18px;background:var(--card);border-left:4px solid var(--warn);
+    border-radius:0 8px 8px 0;color:var(--ink);font-size:.98rem}
+  .rec{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 0;margin:14px 0}
+  .rec .item{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .rec .item:last-child{border-bottom:0}
+  .rec .item b{color:var(--accent)}
+  .tag{display:inline-block;font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px}
+  footer.doc{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  .notice{background:rgba(47,111,78,.10);border:1px solid rgba(47,111,78,.35);color:var(--ink);
+    border-radius:8px;padding:10px 14px;font-size:.85rem;margin-top:16px}
+  a{color:var(--accent)}
+  @media print{body{background:#fff}.kpi,.table-scroll{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc">
+    <div class="badges">
+      <span class="badge">교구 종합진단</span>
+      <span class="badge bad">전국 최하위</span>
+      <span class="badge meta">교화구조개선 · 교단전체</span>
+      <span class="badge meta">원기 111.07</span>
+    </div>
+    <h1>영광교구 교화현황 진단 <span style="font-weight:400;color:var(--muted)">(원기95–108 · 2010–2023)</span></h1>
+    <div class="sub">데이터 기준 원기95~108 교정통계 패널 · 전남 15개 교당 · 교무 23명 · 관리교도 5,287명(원기108)</div>
+  </header>
+
+  <p class="lead">
+    <strong>원불교 발상지(영산성지·소태산 대종사 탄생지)를 품은 교구가, 전국에서 교화력이 가장 빠르게 무너지고 있다.</strong>
+    원기95→108년 사이 주법회 출석은 <strong>−51.1%</strong>로 전국 15개 교구 가운데 낙폭 1위, 출석률(6.7%)·입교율(13.1‰)·청년비중(1.7%)도 모두 전국 꼴찌다.
+    「발상지」라는 상징자본과 「현장 교화력」 사이의 벌어진 거리 — 이것이 이 진단의 핵심이다. 자원(성지·인력·명부)이 없어서가 아니라, 자원이 교화 성과로 전환되지 않아서 무너지고 있다.
+  </p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="label">주법회출석 변화(95→108)</div><div class="value">−51.1%</div><div class="delta down">▼ 전국 1위 최악 (전국 평균 −33%)</div></div>
+    <div class="kpi"><div class="label">출석률(주출석÷관리교도)</div><div class="value">6.7%</div><div class="delta down">▼ 전국 14.4%의 0.47배</div></div>
+    <div class="kpi"><div class="label">입교율(관리교도 천명당)</div><div class="value">13.1‰</div><div class="delta down">▼ 전국 33.5‰의 0.39배</div></div>
+    <div class="kpi"><div class="label">교화단 편성률</div><div class="value">22.8%</div><div class="delta down">▼ 57%→23% (전국 40.1%)</div></div>
+    <div class="kpi"><div class="label">쇠퇴 교당 비율</div><div class="value">100%</div><div class="delta down">15개 교당 전부 쇠퇴 (전국 78.9%)</div></div>
+  </div>
+
+  <section>
+    <h2>1. 한눈에 — 교화 사이클 전체가 약해졌다</h2>
+    <p>
+      교화의 건강은 하나의 숫자가 아니라 <strong>유입(입교) → 정착(출석) → 조직(교화단) → 재생산(청년)</strong>으로 이어지는 순환으로 읽어야 한다.
+      영광교구는 이 네 축이 <strong>동시에</strong> 전국 최하위로 내려앉았다. 한 곳이 막힌 것이 아니라 사이클 전체의 압력이 빠진 상태다.
+    </p>
+    <div class="bars">
+      <div class="bar-row"><span>출석률 (영광/전국)</span><span class="bar-track"><span class="bar-fill bad" style="width:47%"></span></span><span class="bar-val">0.47배</span></div>
+      <div class="bar-row"><span>입교율 (영광/전국)</span><span class="bar-track"><span class="bar-fill bad" style="width:39%"></span></span><span class="bar-val">0.39배</span></div>
+      <div class="bar-row"><span>교화단 편성률</span><span class="bar-track"><span class="bar-fill bad" style="width:57%"></span></span><span class="bar-val">0.57배</span></div>
+      <div class="bar-row"><span>청년비중 (영광/전국)</span><span class="bar-track"><span class="bar-fill bad" style="width:34%"></span></span><span class="bar-val">0.34배</span></div>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>지표 (원기108)</th><th class="num">영광</th><th class="num">전국</th><th>판정</th></tr></thead>
+        <tbody>
+          <tr><td>95→108 주법회출석 변화</td><td class="num">−51.1%</td><td class="num">약 −33%</td><td><span class="pill bad">전국 1위 최악</span></td></tr>
+          <tr><td>출석률(주출석/관리교도)</td><td class="num">6.7%</td><td class="num">14.4%</td><td><span class="pill bad">0.47배</span></td></tr>
+          <tr><td>입교율(관리교도 천명당)</td><td class="num">13.1‰</td><td class="num">33.5‰</td><td><span class="pill bad">0.39배</span></td></tr>
+          <tr><td>교화단 편성률(단원/관리교도)</td><td class="num">22.8%</td><td class="num">40.1%</td><td><span class="pill bad">0.57배</span></td></tr>
+          <tr><td>청년비중</td><td class="num">1.7%</td><td class="num">5.0%</td><td><span class="pill bad">0.34배</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 명부는 늘고 사람은 빠졌다 — 괴리의 극단</h2>
+    <p>
+      가장 먼저 눈에 띄는 것은 <strong>명부와 실질의 정반대 방향</strong>이다. 원기95→108년 사이 관리교도(명부)는 4,166명에서 5,287명으로 <strong>+26.9%</strong> 늘었는데,
+      실제로 법회에 나오는 주평균 출석은 720명에서 352명으로 <strong>반토막(−51.1%)</strong>이 났다. 관리교도 5,287명 가운데 주법회에 실제로 앉는 사람은 352명뿐이다.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="num">원기</th><th class="num">관리교도(명부)</th><th class="num">주평균출석</th><th class="num">출석률</th><th class="num">입교(신규)</th><th class="num">교화단원</th></tr></thead>
+        <tbody>
+          <tr><td class="num">95</td><td class="num">4,166</td><td class="num">720</td><td class="num">17.3%</td><td class="num">341</td><td class="num">2,360</td></tr>
+          <tr><td class="num">100</td><td class="num">4,704</td><td class="num">621</td><td class="num">13.2%</td><td class="num">184</td><td class="num">1,945</td></tr>
+          <tr><td class="num">104</td><td class="num">4,967</td><td class="num">531</td><td class="num">10.7%</td><td class="num">101</td><td class="num">1,570</td></tr>
+          <tr><td class="num"><b>108</b></td><td class="num"><b>5,287</b></td><td class="num"><b>352</b></td><td class="num"><b>6.7%</b></td><td class="num"><b>69</b></td><td class="num"><b>1,208</b></td></tr>
+          <tr><td class="num">변화</td><td class="num up">+26.9%</td><td class="num down">−51.1%</td><td class="num down">17%→7%</td><td class="num down">−79.8%</td><td class="num down">−48.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      이 괴리는 교화구조개선 연구가 반복해 경고해 온 <strong>「명부–실질」 문제의 교과서적 사례</strong>다.
+      "우리 교당 교도가 몇 명입니까"라는 물음에는 원래 <strong>두 개의 답</strong>이 있어야 한다. 하나는 저변과 역사를 보여주는 <strong>대외용 등록·누적 교세</strong>(클수록 좋다),
+      다른 하나는 교화와 진급을 관리하는 <strong>대내용 활동교도</strong>(정확할수록 좋다)다. 문제는 큰 숫자가 아니라 두 숫자의 혼용이다.
+      영광교구는 대외용 숫자(명부)만 관리되고 대내용 숫자(출석·편성)가 방치되면서, 겉으로는 규모가 유지되는 듯 보이지만 실제로는 관계가 급속히 얇아지고 있다.
+    </p>
+    <blockquote>
+      "조직은 측정하는 것을 향해 움직인다. 등록교도 수를 보고하면 명부를 정리하지 않는 관행이 생긴다." — 관리교도 +27%는 <em>성장</em>이 아니라, 열반·이명 미정비가 쌓인 <em>명부의 관성</em>일 가능성이 크다.
+    </blockquote>
+    <p>
+      더 심각한 것은 <strong>입교의 붕괴</strong>다. 신규 입교가 341명(원기95)에서 69명(원기108)으로 <strong>−79.8%</strong> 줄었다. 유입 파이프라인이 사실상 멎었다는 뜻이며,
+      남은 성장 동력이 없이 <strong>자연감소만 진행</strong>된다. 여기에 교화단 편성률이 57%에서 23%로 떨어져, 조직(관계망)으로 관리되던 교도의 절반이 <strong>명부에만 남고 관계망 밖으로</strong> 빠져나갔다.
+      한 번 관계망 밖으로 나간 고령 교도는 다시 데려올 연결선(연원)이 함께 사라지기 때문에, 이 이탈은 시차를 두고 더 큰 감소로 돌아온다.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. 전 교당 쇠퇴 — 예외 없음</h2>
+    <p>
+      원기95→108 양끝 관측으로 교당별 성장분류를 하면, <strong>영광교구 15개 교당이 전부 「쇠퇴(0.9배↓)」</strong>로 판정된다.
+      전국의 쇠퇴 비율이 78.9%인데 영광은 <strong>100%</strong> — 성장·정체 교당이 단 하나도 없다. 개별 교당의 사정이 아니라 교구 전체의 환경이 하강하고 있다는 신호다.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>교당</th><th>급지</th><th class="num">출석 95→108</th><th class="num">CAGR</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr><td>홍농교당</td><td>6급</td><td class="num">322 → <b>0</b></td><td class="num">−35.9%</td><td><span class="pill bad">사실상 휴무</span></td></tr>
+          <tr><td>대마교당</td><td>4급</td><td class="num">2,439 → 790</td><td class="num">−8.3%</td><td><span class="pill bad">쇠퇴</span></td></tr>
+          <tr><td>백수교당 <span class="tag">성지권</span></td><td>2급</td><td class="num">4,712 → 1,550</td><td class="num">−8.2%</td><td><span class="pill bad">쇠퇴</span></td></tr>
+          <tr><td>도양교당</td><td>3급</td><td class="num">2,513 → 899</td><td class="num">−7.6%</td><td><span class="pill bad">쇠퇴</span></td></tr>
+          <tr><td>영산교당 <span class="tag">성지권</span></td><td>2급</td><td class="num">4,355 → 1,611</td><td class="num">−7.4%</td><td><span class="pill bad">쇠퇴</span></td></tr>
+          <tr><td colspan="5" style="color:var(--muted)">… (이하 전 교당 음수)</td></tr>
+          <tr><td>영광교당 <span class="tag">대표·특급</span></td><td>특급</td><td class="num">7,227 → 5,042</td><td class="num">−2.7%</td><td><span class="pill warn">상대적 선방</span></td></tr>
+          <tr><td>문장교당</td><td>5급</td><td class="num">997 → 823</td><td class="num">−1.5%</td><td><span class="pill warn">최소 낙폭</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      주목할 것은 <strong>성지권 교당(백수·영산)의 낙폭이 오히려 크다</strong>는 점이다. 발상지의 상징성이 자동으로 현장 활력으로 전환되지는 않았다.
+      성지는 방문객과 순례라는 강력한 접점을 가지고 있으나, 그 접점이 지역 교화·청년과의 관계로 설계되지 않으면 상징은 상징에 머문다.
+      한편 <strong>홍농교당은 출석이 0으로 기능정지 임계</strong>에 도달했다 — 통폐합·순회 검토의 1순위다.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. 규모·재정 구조 — 대표교당 1곳 + 소형 다수</h2>
+    <p>
+      영광교구는 <strong>대표교당 1곳에 극단적으로 집중된 구조</strong>다. 관리교도의 <strong>56%가 영광교당(2,961명) 한 곳</strong>에 몰려 있고, 나머지 14개 교당이 2,326명을 나눠 갖는다.
+      관리교도 150명 미만의 소형교당이 <strong>15곳 중 8곳</strong>으로, 규모의 경제가 작동하기 어려운 임계 아래에 있다.
+    </p>
+    <p>
+      재정은 양극화되어 있다. 소형 농촌교당 다수는 외형이 작아 헌공금만으로 수지가 맞는 자립도 1.0 상태인 반면,
+      <strong>대표 영광교당은 자립도 0.30·보조의존 70%</strong>로, <strong>교구 보조금 6.29억의 96%(6.02억)가 영광교당 한 곳에 투입</strong>된다.
+      이 높은 보조는 성지·교구 중심기관 성격에서 비롯됐을 가능성이 크며(원자료 기관 성격 확인 필요), 따라서 핵심 질문은 <strong>"그 보조가 교화 성과(출석·신입 정착)로 환류되는가"</strong>다.
+    </p>
+    <blockquote>
+      "재정 지표는 액수가 아니라 <em>구조</em>를 봐야 한다." — 농촌·고령 교구일수록 재정 총액이 상장례·천도재 같은 <strong>의례성 수입</strong>으로 버텨지기 쉬운데, 그 원천이 교도들의 열반이라는 점에서 이는 「슬픈 완충」이다.
+      재정 총액이 유지된다고 안심하는 것이야말로 가장 위험한 오독이 될 수 있다. (영광교구 의례 의존도는 본 정량 진단 범위 밖 — 현장·회계 확인 과제.)
+    </blockquote>
+    <p>
+      인력은 부족하지 않다. 교무 23명이 15교당을 맡아 <strong>교당당 1.53명</strong>으로, 전국 기준으로 오히려 여유가 있는 편이다.
+      그럼에도 성과가 전국 최하위라는 것은, <strong>문제가 인력 총량이 아니라 배치·구조·대상인구에 있다</strong>는 결정적 단서다. 인력을 더 넣는 것이 답이 아니라, 인력을 어떻게 묶고 어디에 집중하느냐가 답이다.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. 코로나 회복 실패 — 하강의 고착</h2>
+    <p>
+      원기105년의 코로나 충격은 전국 공통이었다. 그러나 회복의 궤적은 갈렸다. 전국은 코로나 이전(원기104) 대비 <strong>82%까지 회복</strong>했으나, 영광은 <strong>66%에서 정체</strong>했다.
+      코로나로 이탈한 층의 약 3분의 1이 끝내 돌아오지 않았고, 그 낮아진 수준이 <strong>새로운 기준선으로 굳어졌다</strong>.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="num">원기</th><th class="num">104(코로나 전)</th><th class="num">105(충격)</th><th class="num">108(현재)</th></tr></thead>
+        <tbody>
+          <tr><td>영광 주출석</td><td class="num">531</td><td class="num">323</td><td class="num">352</td></tr>
+          <tr><td>영광 회복률(104=100)</td><td class="num">—</td><td class="num">61%</td><td class="num"><b>66%</b></td></tr>
+          <tr><td>전국 회복률</td><td class="num">—</td><td class="num">59%</td><td class="num">82%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>회복 탄력의 차이는 곧 <strong>관계망의 복원력</strong> 차이다. 관계로 묶여 있던 교도는 위기 뒤 돌아오지만, 명부에만 남아 있던 교도는 계기가 사라지면 그대로 이탈로 확정된다.</p>
+  </section>
+
+  <section>
+    <h2>6. 진단 종합 — 발상지의 역설</h2>
+    <p>
+      영광교구는 <strong>상징자본(성지)·인력(교당당 1.53명)·명부(관리교도 증가)</strong>라는 자원을 갖고도 <strong>출석·입교·조직·청년 네 축이 전국 최하위로 동시에 붕괴</strong>했다.
+      원인은 하나가 아니라 겹쳐 있다.
+    </p>
+    <div class="rec">
+      <div class="item"><b>① 초고령 농촌 대상인구</b> — 청년비중 1.7%, 입교 −80%. 새 사람이 들어올 유입원 자체가 고갈됐고, 연원 네트워크의 고령화로 「데려오는 힘」이 세대와 함께 사라지고 있다.</div>
+      <div class="item"><b>② 명부 관리 중심의 교화</b> — 명부(관리교도)는 늘리되 실참(출석)과 조직(편성률)은 놓쳤다. 재는 지표가 잘못되면 행동도 잘못된 곳을 향한다.</div>
+      <div class="item"><b>③ 소형·분산 구조</b> — 150명 미만 8교당이 각자 생존을 도모하며 규모의 경제가 부재하다. 인력·재정이 얇게 흩어져 어느 곳도 임계 활력에 이르지 못한다.</div>
+      <div class="item"><b>④ 상징–성과 괴리</b> — 성지권 교당이 오히려 큰 낙폭. 상징성이 현장 교화 활력으로 전환되는 설계가 없다.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. 개선 제언 (교화구조개선 6+1 영역 대응)</h2>
+    <div class="rec">
+      <div class="item"><b>① 최소형·기능정지 교당 순회·통폐합 로드맵</b> <span class="tag">공간·거점화</span><br>출석 0의 홍농교당과 150명 미만 소형교당을 인접 거점(영광·백수)에 묶는 거점화. 물리적 통합이 어려우면 교무 1인 순회 + 비대면 보조법회 + 재가 단장 자율운영으로.</div>
+      <div class="item"><b>② 성지 자산의 교화 전환</b> <span class="tag">콘텐츠·청년</span><br>발상지 순례·수련 콘텐츠를 지역 교화·청년 접점으로 설계. 성지 방문객을 일회성 참배가 아니라 관계 파이프라인(재방문·소속)으로 이어지게.</div>
+      <div class="item"><b>③ 명부–실질 이중 스코어카드 도입</b> <span class="tag">조사·데이터</span><br>관리교도 대신 <strong>출석률·편성률</strong>을 교구 핵심지표로. 열반·이명 명부 정비를 병행해 대외용(등록)과 대내용(활동) 두 숫자를 분리 정의.</div>
+      <div class="item"><b>④ 영광교당 보조금의 성과 연동</b> <span class="tag">재정·살림</span><br>교구 보조의 96%가 집중되는 곳의 산출(출석·신입 정착)을 점검하고, 보조→교화로 환류되는 구조인지 확인. 의례 의존도도 상설 지표로 편입.</div>
+      <div class="item"><b>⑤ 교화단 재편성 캠페인</b> <span class="tag">인력·직무</span><br>편성률 23%를 끌어올려 명부에만 남은 이탈 교도를 관계망으로 복귀. 조직 복원이 곧 회복 탄력이다.</div>
+      <div class="item"><b>⑥ 인력 재배치 검토</b> <span class="tag">인력·직무</span><br>교당당 1.53명의 인력을 거점 집중·순회 모델로 재설계. 총량이 아니라 배치가 성과를 만든다.</div>
+    </div>
+    <blockquote>
+      ⚠️ <strong>한계</strong> — 본 진단은 wonstat-data 교정통계 패널(원기95~108, 교당–연도)에 근거한 <strong>정량 진단</strong>이다.
+      영광교당 보조금의 성격, 성지사무소·기관의 분리, 지역 인구·통폐합 이력, 의례 의존 실태 등은 <strong>현장 정성조사</strong>로 보완해야 한다.
+    </blockquote>
+  </section>
+
+  <footer class="doc">
+    <div><strong>근거 데이터</strong> — 교화성장 교당–연도 패널(원기95~108) · 교당 성장분류(95→108) · 전국 교당 재정(원기108). 원자료: 원불교 교정원 기획실 『교정통계 원자료(교화·회계, 원기95~108)』. 원자료는 볼트 밖(wonstat-data), 본 페이지는 교구·교당 단위 집계 결과만 담았다.</div>
+    <div style="margin-top:8px"><strong>원출처</strong> 원불교 교화구조개선 · 볼트 중간산출물에서 생성 · 원기111.07</div>
+    <div class="notice">🔒 이 페이지는 교구·교당 <strong>단위 집계</strong> 결과만 담았으며, 개인·가구 식별 데이터는 포함하지 않는다.</div>
+  </footer>
+
+</div>
+</body>
+</html>

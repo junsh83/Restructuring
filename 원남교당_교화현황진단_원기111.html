@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원남교당 교화현황 진단 — 뒷문 열린 성장</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d24; --muted:#5b6472; --line:#e3e7ee;
+    --accent:#2b6cb0; --good:#1f9d57; --warn:#d69a12; --bad:#d34b4b; --maxw:960px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#12151b; --card:#1b1f28; --ink:#e8ebf1; --muted:#9aa3b2; --line:#2a303c; --accent:#6aa6e0; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px 20px 80px}
+  header.doc{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:26px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .badge{font-size:.78rem;font-weight:600;color:#fff;padding:3px 10px;border-radius:999px;background:var(--accent)}
+  .badge.meta{background:var(--muted)}
+  .badge.good{background:var(--good)}
+  .badge.warn{background:var(--warn)}
+  h1{font-size:1.72rem;line-height:1.3;margin:.1em 0 .3em}
+  .sub{color:var(--muted);font-size:.95rem}
+  .lead{font-size:1.06rem;color:var(--ink);background:var(--card);border-left:4px solid var(--accent);
+    padding:16px 18px;border-radius:0 8px 8px 0;margin:22px 0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .label{font-size:.82rem;color:var(--muted);margin-bottom:6px}
+  .kpi .value{font-size:1.7rem;font-weight:700;letter-spacing:-.5px}
+  .kpi .delta{font-size:.82rem;font-weight:600;margin-top:4px}
+  .up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--warn)}
+  section{margin:36px 0}
+  h2{font-size:1.3rem;border-bottom:1px solid var(--line);padding-bottom:8px;margin:0 0 14px}
+  h3{font-size:1.06rem;margin:24px 0 8px;color:var(--accent)}
+  p{margin:12px 0}
+  .bars{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 84px;align-items:center;gap:10px;font-size:.9rem}
+  .bar-track{display:block;background:var(--line);border-radius:6px;height:20px;overflow:hidden}
+  .bar-fill{display:block;height:100%;background:var(--accent);border-radius:6px}
+  .bar-fill.good{background:var(--good)} .bar-fill.warn{background:var(--warn)} .bar-fill.bad{background:var(--bad)}
+  .bar-val{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:560px}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+  th{background:var(--card);position:sticky;top:0;font-weight:600}
+  tbody tr:hover{background:rgba(127,127,127,.06)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px}
+  .pill.good{background:rgba(31,157,87,.15);color:var(--good)}
+  .pill.warn{background:rgba(214,154,18,.15);color:var(--warn)}
+  .pill.bad{background:rgba(211,75,75,.15);color:var(--bad)}
+  blockquote{margin:16px 0;padding:12px 18px;background:var(--card);border-left:4px solid var(--warn);
+    border-radius:0 8px 8px 0;color:var(--ink);font-size:.98rem}
+  .rec{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 0;margin:14px 0}
+  .rec .item{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .rec .item:last-child{border-bottom:0}
+  .rec .item b{color:var(--accent)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .box h4{margin:0 0 8px;font-size:1rem}
+  .box.good h4{color:var(--good)} .box.bad h4{color:var(--bad)}
+  .tag{display:inline-block;font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px}
+  footer.doc{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  .notice{background:rgba(43,108,176,.10);border:1px solid rgba(43,108,176,.35);color:var(--ink);
+    border-radius:8px;padding:10px 14px;font-size:.85rem;margin-top:16px}
+  a{color:var(--accent)}
+  @media print{body{background:#fff}.kpi,.table-scroll{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc">
+    <div class="badges">
+      <span class="badge">단일교당 진단</span>
+      <span class="badge good">상대건전 · 성장·젊음</span>
+      <span class="badge warn">뒷문 열린 성장</span>
+      <span class="badge meta">서울교구 교화구조개선</span>
+      <span class="badge meta">원기 111.06 스냅샷</span>
+    </div>
+    <h1>원남교당 교화현황 진단 <span style="font-weight:400;color:var(--muted)">(코드 308400)</span></h1>
+    <div class="sub">데이터 기준 원기111년 6월 30일 원티스 스냅샷 · 서울교구 전수(교당운영 마스터) · 56개 일반교당 대조</div>
+  </header>
+
+  <p class="lead">
+    원남교당은 <strong>서울교구 최상위권 대형·부유 교당</strong>(총교도 6위, 헌공금 1위)이면서, 교구에서 드물게 <strong>성장과 젊음</strong>을 유지한다(순증 12년 지속, 고령비율 31.1%).
+    그러나 성장의 뒷문으로 사람이 빠져나가는 <strong>경보 57명</strong>(교구 3위), <strong>명부 1,611명 중 실제 관리 561명</strong>이라는 큰 간극, 그리고 <strong>소수 고액 헌공 의존</strong> 구조가 지속가능성의 급소다.
+    영광교구가 「전면 붕괴」라면, 원남교당은 「성장하는데 새는」 정반대 유형이다. 그래서 처방도 개척이 아니라 <strong>뒷문 봉쇄</strong>와 <strong>참여 사다리 두께 키우기</strong>다.
+  </p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="label">총교도 / 관리교도</div><div class="value">1,611</div><div class="delta up">▲ 교구 6위 (관리 561, 6위)</div></div>
+    <div class="kpi"><div class="label">헌공금 누적 / 인당</div><div class="value">262.6억</div><div class="delta flat">교구 1위 · 인당 1,989만(1위)</div></div>
+    <div class="kpi"><div class="label">최근5년 순증감</div><div class="value">+40</div><div class="delta up">▲ 12년 내내 순증 (교구 5위)</div></div>
+    <div class="kpi"><div class="label">이탈 경보</div><div class="value">57</div><div class="delta down">▼ 교구 3위 (강남 98·서울 75 다음)</div></div>
+    <div class="kpi"><div class="label">미관리(휴면·이탈 위험)</div><div class="value">759</div><div class="delta down">▼ 명부의 47% — 최대 재활성화 자원</div></div>
+  </div>
+
+  <section>
+    <h2>1. 교세 위상 — 56개 일반교당 중 어디에 있나</h2>
+    <p>
+      원남교당의 지표는 대부분 <strong>상위 5~7위</strong>에 몰려 있다. 규모(총교도 6위)·재정(헌공금 1위)·조직(교화단 5위)·수행 저변(훈련이수 5위)이 모두 교구 최상위급이다.
+      즉 원남의 문제는 「쇠퇴」가 아니라 <strong>큰 규모 안에서 새는 부분</strong>이다.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>지표</th><th class="num">원남</th><th class="num">56곳 순위</th><th class="num">중앙값</th><th>해석</th></tr></thead>
+        <tbody>
+          <tr><td>총교도(명부)</td><td class="num">1,611</td><td class="num">6위</td><td class="num">812</td><td>대형교당</td></tr>
+          <tr><td>관리교도</td><td class="num">561</td><td class="num">6위</td><td class="num">228</td><td>실질 활동 저변 넓음</td></tr>
+          <tr><td>헌공금총액(누적)</td><td class="num">262.6억</td><td class="num"><b>1위</b></td><td class="num">22.5억</td><td>교구 최고 재정</td></tr>
+          <tr><td>인당헌공금</td><td class="num">1,989만</td><td class="num"><b>1위</b></td><td class="num">313만</td><td><span class="pill warn">소수 집중 신호</span></td></tr>
+          <tr><td>출석총계(누적)</td><td class="num">133,406</td><td class="num">5위</td><td class="num">47,347</td><td>참여 총량 상위</td></tr>
+          <tr><td>인당출석</td><td class="num">237.8</td><td class="num">20위</td><td class="num">214</td><td><span class="pill warn">규모 대비 몰입 중위</span></td></tr>
+          <tr><td>입교(최근5년)</td><td class="num">78</td><td class="num">7위</td><td class="num">20</td><td>유입 활발</td></tr>
+          <tr><td>순증감(최근5년)</td><td class="num">+40</td><td class="num">5위</td><td class="num">+2</td><td><span class="pill good">성장장</span></td></tr>
+          <tr><td>교화단소속</td><td class="num">265</td><td class="num">5위</td><td class="num">90</td><td>조직 두터움</td></tr>
+          <tr><td>고령비율(60대+)</td><td class="num">31.1%</td><td class="num">—</td><td class="num">40.4%</td><td><span class="pill good">교구보다 젊음</span></td></tr>
+          <tr><td>관리율(관리/생존)</td><td class="num">42.5%</td><td class="num">—</td><td class="num">32.0%</td><td>실질 활동 비율 양호</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      유일하게 순위가 처지는 것이 <strong>인당출석(20위)</strong>이다. 출석 총량은 5위인데 1인당으로 나누면 중위권 — 이는 <strong>참여가 넓게 퍼져 있으나 얕다</strong>는 뜻이다.
+      많은 사람이 오지만, 그 한 사람 한 사람이 깊이 몰입하는 정도는 규모에 비해 평범하다. 참여 사다리에서 아래쪽(탐색층)은 두터운데 위쪽(핵심층)으로 올라가는 계단이 얇을 소지가 있다.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. 프로필 판정 교차 — 「뒷문 열린 성장」</h2>
+    <p>
+      서울교구 56곳 프로필(박용은, 『데이터로 읽는 서울교구』 부록2)은 원남교당을 사분면 최선호 유형인 <strong>「상대건전(성장상위·젊음)」</strong>으로 분류하면서도,
+      반복 패턴은 <strong>④ 뒷문 열린 성장 — "성장 중인데 경보가 쌓임"</strong>으로 짚었다.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>항목</th><th class="num">값</th><th>의미</th></tr></thead>
+        <tbody>
+          <tr><td>유형</td><td class="num">상대건전</td><td>성장상위·젊음 — 사분면 최선호</td></tr>
+          <tr><td>활동교도</td><td class="num">404</td><td>활동 스펙트럼 기준</td></tr>
+          <tr><td>5년 증감</td><td class="num">+23.5%</td><td>교구 상위 성장</td></tr>
+          <tr><td>65세+</td><td class="num">31.4%</td><td>교구 젊은 축</td></tr>
+          <tr><td>경보</td><td class="num"><b>57</b> ★교구 3위</td><td>강남 98·서울 75 다음</td></tr>
+          <tr><td>청소년 비중</td><td class="num"><b>18.8%</b> ★교구 3위</td><td>안암·신촌 다음 — 미래세대 강점</td></tr>
+          <tr><td>교무</td><td class="num">3</td><td>인력 배치 상위</td></tr>
+          <tr><td>반복패턴</td><td class="num">④ 뒷문 열린 성장</td><td>새 유입은 잘 되나 이탈이 쌓임</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      원문 처방(패턴④)은 <strong>"명단 기반 순교(개별 접촉) 병행"</strong>이다. 새 유입은 잘 되니, 나가는 뒷문을 막는 것이 우선순위라는 것.
+      본 진단의 독립 분석(미관리 759·인당출석 20위)이 이 판정을 서로 다른 데이터로 뒷받침한다.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. 시계열 — 흐름은 살아 있다</h2>
+    <h3>유입 / 유출 (원기, 순증감)</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="num">원기</th><th class="num">105</th><th class="num">106</th><th class="num">107</th><th class="num">108</th><th class="num">109</th><th class="num">110</th><th class="num">111</th></tr></thead>
+        <tbody>
+          <tr><td>입교</td><td class="num">5</td><td class="num">10</td><td class="num">16</td><td class="num">10</td><td class="num"><b>23</b></td><td class="num">16</td><td class="num">13</td></tr>
+          <tr><td>전출</td><td class="num">3</td><td class="num">4</td><td class="num">6</td><td class="num">2</td><td class="num">8</td><td class="num">14</td><td class="num">8</td></tr>
+          <tr><td>순증감</td><td class="num up">+2</td><td class="num up">+6</td><td class="num up">+10</td><td class="num up">+8</td><td class="num up"><b>+15</b></td><td class="num up">+2</td><td class="num up">+5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>12년 내내 순증(+).</strong> 특히 원기109(2024)의 +15는 교구 최상위급이다. 쇠퇴 교당의 만성 순감과는 정반대의 흐름으로, 유입 파이프라인이 살아 있음을 보여준다.</p>
+    <h3>법회 (서기, 총출석)</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="num">연도</th><th class="num">2019</th><th class="num">2020</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th></tr></thead>
+        <tbody>
+          <tr><td>총출석</td><td class="num">7,706</td><td class="num">4,456</td><td class="num">6,210</td><td class="num">6,230</td><td class="num">8,740</td><td class="num">8,373</td><td class="num"><b>9,025</b></td></tr>
+          <tr><td>정례법회수</td><td class="num">75</td><td class="num">38</td><td class="num">77</td><td class="num">63</td><td class="num">62</td><td class="num">57</td><td class="num">44</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      코로나 저점(2020)에서 총출석이 <strong>완전 회복·역대 최고(2025년 9,025)</strong>로 올라섰다. 영광교구가 회복에 실패한 것과 대조적이다.
+      다만 <strong>정례법회 횟수는 감소 추세</strong>(2018년 109회 → 2024년 57회 → 2025년 44회)다. 총출석은 늘어도 <strong>정례 신앙활동의 밀도는 얇아지는</strong> 신호일 수 있다.
+      §1의 인당출석 20위와 같은 방향을 가리킨다 — 참여의 <strong>양은 회복됐으나 결이 행사성으로 옮겨갔을 가능성</strong>(정례 정의·행사성 비중은 지표 사전 확정 대상).
+    </p>
+  </section>
+
+  <section>
+    <h2>4. 재정 — 강점이자 급소</h2>
+    <p>
+      원남교당의 재정은 교구에서 가장 튼튼하다. <strong>2024년 운영차액 +2.3억 흑자</strong>, 헌공금 수입 연 7.0억이다.
+      그러나 바로 이 재정의 강점이 급소이기도 하다. <strong>인당헌공금이 1,989만 원으로 교구 1위(중앙값의 6배 이상)</strong>라는 것은, 총액이 <strong>소수 고액 후원자에게 집중</strong>돼 있을 가능성을 뜻한다.
+    </p>
+    <blockquote>
+      "재정 지표는 액수가 아니라 <em>구조</em>를 봐야 한다. 그 후원 계층이 몇 살인지가 곧 재정의 수명이 된다." — 고액 헌공 계층이 대체로 고연령·원로 교도라면, 세대가 넘어가는 시점에 재정이 급락할 리스크를 안고 있다.
+    </blockquote>
+    <p>
+      한편 교구회비를 산정액의 50%만 납부(미납 738만/년)하는 것은 <strong>원남 고유 문제가 아니라 서울 특급지 다수의 공통 패턴</strong>(강동·서울·송천·신림·여의도·잠실 등도 정확히 50%)이므로, 이는 교당 진단에서 제외하고 교구 차원 이슈로 넘긴다.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. 진단 종합 — 강점과 급소</h2>
+    <div class="cols">
+      <div class="box good">
+        <h4>강점</h4>
+        <ul>
+          <li>교구 최대급 교세·재정·인력(교무 3)의 <b>거점 잠재력</b> — 규모의 경제 허브(A) 후보.</li>
+          <li>교구에서 드문 <b>젊음+성장</b>(고령 31%, 순증 12년 지속, 청소년 18.8%).</li>
+          <li>두터운 조직 저변(교화단 265·훈련이수 347).</li>
+        </ul>
+      </div>
+      <div class="box bad">
+        <h4>급소</h4>
+        <ul>
+          <li><b>뒷문(경보 57명)</b> — 성장하지만 그만큼 빠진다. 이탈 조기경보 미작동.</li>
+          <li><b>명부–관리 간극</b> — 총 1,611 중 관리 561, <b>미관리 759명</b>이 휴면·이탈 위험군이자 최대 재활성화 자원.</li>
+          <li><b>얕은 참여</b> — 인당출석 20위·정례법회 감소. 핵심층 사다리가 얇을 소지.</li>
+          <li><b>재정 집중</b> — 소수 고액 헌공 의존 → 세대교체 재정 리스크.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. 개선 제언</h2>
+    <div class="rec">
+      <div class="item"><b>① 미관리 759명 세분·재접촉</b> <span class="tag">이탈 조기경보</span><br>열반·전출을 제외한 순수 휴면군을 명단화해 개별 순교(접촉)로 관계망에 복귀시킨다. 가장 크고 즉시 활용 가능한 자원.</div>
+      <div class="item"><b>② 뒷문 봉쇄 우선</b> <span class="tag">서울 교당 프로필 패턴④</span><br>신규 개척보다 이탈 방지에 자원을 먼저 배분. 유입은 이미 잘 되고 있으므로, 나가는 문을 막는 것이 순증을 키우는 가장 빠른 길.</div>
+      <div class="item"><b>③ 참여 사다리 두께 키우기</b> <span class="tag">활동 스펙트럼</span><br>정례법회를 재설계해 탐색→정기→핵심으로의 이동을 촉진. 인당출석·정례법회 감소를 반전시키는 것이 목표.</div>
+      <div class="item"><b>④ 재정 저변 다변화</b> <span class="tag">재정·살림</span><br>소액·다수 헌공과 청·장년 후원 저변을 넓혀, 소수 고액 의존의 세대 이전 리스크에 대비.</div>
+      <div class="item"><b>⑤ 원남을 원남지구 거점으로</b> <span class="tag">규모의 경제·거점화</span><br>교무 3·자산·재정 여력을 인접 소규모·위험교당(면목 등)과 권역으로 공유하는 거점 역할.</div>
+    </div>
+    <blockquote>
+      ⚠️ <strong>자기점검</strong> — 원남은 프로필 원문 취지대로 <strong>"낙인이 아니라 준비"</strong>의 대상이다. 위 제언은 데이터가 가리키는 방향이지 지시가 아니며,
+      개인 헌공 분포·참여 스펙트럼 상세는 교도 마스터 추가 분석으로 확정해야 한다.
+    </blockquote>
+  </section>
+
+  <footer class="doc">
+    <div><strong>근거 데이터</strong> — 서울교구 교당운영 마스터(교세요약·유입유출·법회·재무, 전수 70곳) · 『데이터로 읽는 서울교구 v3』 부록2(박용은, 원기111.07.20). 원자료는 볼트 밖(gyohwa-data), 본 페이지는 교당 단위 집계 결과만 담았다.</div>
+    <div style="margin-top:8px"><strong>원출처</strong> 원불교 서울교구 교화구조개선 · 볼트 중간산출물에서 생성 · 원기111.07</div>
+    <div class="notice">🔒 이 페이지는 교당 <strong>단위 집계</strong> 결과만 담았으며, 개인·가구 식별 데이터(개인별 헌공·명단 등)는 포함하지 않는다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
