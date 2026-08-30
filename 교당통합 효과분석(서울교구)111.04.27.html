@@ -189,9 +189,9 @@ footer strong{color:rgba(255,255,255,.65)}
   <p class="hero-lead">불광·한강·중구·역삼·강남 5개 교당의 통합이 법회 총출석에 미친 순효과를 합성대조군(SCM, 원기97~108년)으로 정밀 추정하고, 최근 원기 109~110년(2024~2025년) 실측 데이터를 추가 투입하여 효과의 지속성을 검증하는 <strong>강건성 검사(Robustness Check)</strong>를 보고합니다.</p>
   <div class="chips">
     <div class="chip"><strong>기본 분석 기간</strong> 원기97~108년 (12개년 SCM)</div>
-    <div class="chip"><strong>강건성 확장</strong> 원기109~110년 (추적 검증)</div>
+    <div class="chip"><strong>강건성 확장</strong> 원기109~110년 (사후 추적 검증)</div>
     <div class="chip"><strong>분석 대상</strong> 서울교구 5개 통폐합 교당</div>
-    <div class="chip"><strong>분석 방법</strong> Synthetic Control Method & Permutation Test</div>
+    <div class="chip"><strong>비교 기준</strong> 실제 출석 vs 합성대조군(SCM) vs 비통합 대조군 평균</div>
   </div>
 </header>
 
@@ -255,7 +255,7 @@ footer strong{color:rgba(255,255,255,.65)}
 
   <div class="co co-b">
     <b>핵심 연구 질문</b>
-    단순한 전후 비교는 교구 전반의 추세나 코로나 회복 등 외부 요인이 혼재됩니다. 이 분석은 <strong>"통합이 없었다면 어떻게 됐을까(합성대조군 반사실)"</strong>를 구성하여 통합 자체의 순효과(ATE)만을 계량적으로 분리 추정합니다.
+    단순한 전후 비교는 교구 전반의 추세나 코로나 회복 등 외부 요인이 혼재됩니다. 이 분석은 <strong>"통합이 없었다면 어떻게 됐을까(합성대조군 반사실)"</strong>와 <strong>비통합 대조군 일반 교당들의 기준선 추이</strong>를 모두 대조하여 통합 자체의 순효과만을 엄밀히 추정합니다.
   </div>
 </section>
 
@@ -356,9 +356,9 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
   </div>
 </section>
 
-<!-- S3: 교당별 상세 SCM 결과 -->
+<!-- S3: 교당별 상세 SCM 결과 (3선 비교: 실제 vs 합성대조군 vs 비통합대조군) -->
 <section class="sec" id="s3">
-  <div class="sec-hd"><span class="sec-num">04</span><span class="sec-ttl">교당별 SCM 반사실 궤적과 처치 효과</span></div>
+  <div class="sec-hd"><span class="sec-num">04</span><span class="sec-ttl">교당별 SCM 결과 — 3선 비교 (실제 vs 합성대조군 vs 비통합 대조군)</span></div>
 
   <div class="ch-tabs">
     <button class="cht on" onclick="showCh('hangang',this)">한강교당</button>
@@ -407,8 +407,8 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
           </div>
         </div>
         <div>
-          <div style="height:180px;position:relative;margin-bottom:12px"><canvas id="hangang-line"></canvas></div>
-          <div style="height:120px;position:relative"><canvas id="hangang-eff"></canvas></div>
+          <div style="height:190px;position:relative;margin-bottom:12px"><canvas id="hangang-line"></canvas></div>
+          <div style="height:110px;position:relative"><canvas id="hangang-eff"></canvas></div>
         </div>
       </div>
     </div>
@@ -422,7 +422,7 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
         <span class="bdg bg">p = .019 *</span>
         <span class="bdg ba">균형 양호 RMSE=56</span>
       </div>
-      <p class="ch-desc">코로나와 같은 해에 통합이 이루어졌으나, 반사실 대비 안정적인 순효과(+1,051회/년)를 유지했습니다.</p>
+      <p class="ch-desc">코로나와 같은 해에 통합이 이루어졌으나, 반사실 및 비통합 대조군 대비 안정적인 순효과(+1,051회/년)를 유지했습니다.</p>
       <div class="tl">
         <div class="ty"><div class="tyl">97</div><div class="tyv">3,372</div></div>
         <div class="ty"><div class="tyl">98</div><div class="tyv">3,339</div></div>
@@ -449,8 +449,8 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
           </div>
         </div>
         <div>
-          <div style="height:180px;position:relative;margin-bottom:12px"><canvas id="junggu-line"></canvas></div>
-          <div style="height:120px;position:relative"><canvas id="junggu-eff"></canvas></div>
+          <div style="height:190px;position:relative;margin-bottom:12px"><canvas id="junggu-line"></canvas></div>
+          <div style="height:110px;position:relative"><canvas id="junggu-eff"></canvas></div>
         </div>
       </div>
     </div>
@@ -490,8 +490,8 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
           </div>
         </div>
         <div>
-          <div style="height:180px;position:relative;margin-bottom:12px"><canvas id="yeoksam-line"></canvas></div>
-          <div style="height:120px;position:relative"><canvas id="yeoksam-eff"></canvas></div>
+          <div style="height:190px;position:relative;margin-bottom:12px"><canvas id="yeoksam-line"></canvas></div>
+          <div style="height:110px;position:relative"><canvas id="yeoksam-eff"></canvas></div>
         </div>
       </div>
     </div>
@@ -505,7 +505,7 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
         <span class="bdg bn">p = .778 ns (유의성 없음)</span>
         <span class="bdg bg">균형 완벽 RMSE=0</span>
       </div>
-      <p class="ch-desc">구산교당 소규모 흡수 통합 후 총출석이 합성대조군과 거의 동일하게 움직였으며, 통계적으로 유의미한 효과가 없었습니다.</p>
+      <p class="ch-desc">구산교당 소규모 흡수 통합 후 총출석이 합성대조군 및 비통합 대조군 평균과 거의 동일하게 움직였으며, 통계적으로 유의미한 효과가 없었습니다.</p>
       <div class="tl">
         <div class="ty"><div class="tyl">97</div><div class="tyv">2,320</div></div>
         <div class="ty"><div class="tyl">98</div><div class="tyv">2,612</div></div>
@@ -524,10 +524,10 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
       </div>
       <div class="g2">
         <div>
-          <div style="height:180px;position:relative;margin-bottom:12px"><canvas id="bulgwang-line"></canvas></div>
+          <div style="height:190px;position:relative;margin-bottom:12px"><canvas id="bulgwang-line"></canvas></div>
         </div>
         <div>
-          <div style="height:120px;position:relative"><canvas id="bulgwang-eff"></canvas></div>
+          <div style="height:110px;position:relative"><canvas id="bulgwang-eff"></canvas></div>
         </div>
       </div>
     </div>
@@ -560,7 +560,7 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
         <div class="ty rb"><div class="tyl">109 (강건)</div><div class="tyv">21,588</div></div>
         <div class="ty rb"><div class="tyl">110 (강건)</div><div class="tyv">18,040</div></div>
       </div>
-      <div style="height:180px;position:relative;margin-bottom:12px"><canvas id="gangnam-line"></canvas></div>
+      <div style="height:190px;position:relative;margin-bottom:12px"><canvas id="gangnam-line"></canvas></div>
     </div>
 
   </div>
@@ -594,7 +594,7 @@ ATE = 평균(α̂ₜ)  for t ≥ 통합 연도
   </div>
 </section>
 
-<!-- S5: 109~110년 강건성 검정 (신규 섹션) -->
+<!-- S5: 109~110년 강건성 검정 -->
 <section class="sec" id="s5">
   <div class="sec-hd"><span class="sec-num">06</span><span class="sec-ttl">원기 109~110년 데이터 추가 — 강건성 검정 (Robustness Check)</span></div>
   
@@ -747,14 +747,15 @@ new Chart(document.getElementById('perm-explain'),{type:'bar',data:{
   scales:{x:{ticks:{color:tc,font:{size:9}},title:{display:true,text:'효과 크기(회)',color:tc,font:{size:10}}},
           y:{ticks:{color:tc,font:{size:10}},title:{display:true,text:'빈도',color:tc,font:{size:10}}}}}});
 
-function lineChart(id,act,syn,my,col){
-  const mi=yrs.indexOf(String(my));
+function lineChart3(id,act,syn,ctrl,col){
   new Chart(document.getElementById(id),{type:'line',data:{labels:yrs,datasets:[
     {label:'실제 총출석',data:act,borderColor:col,borderWidth:2.5,pointRadius:3.5,pointBackgroundColor:col,tension:0.3,fill:false},
-    {label:'합성대조군(반사실)',data:syn,borderColor:'#87a0b0',borderWidth:1.5,borderDash:[5,4],pointRadius:2.5,pointBackgroundColor:'#87a0b0',tension:0.3,fill:false},
+    {label:'합성대조군 (SCM 반사실)',data:syn,borderColor:'#164882',borderWidth:2,borderDash:[5,4],pointRadius:2.5,pointBackgroundColor:'#164882',tension:0.3,fill:false},
+    {label:'비통합 대조군 평균 (정규화)',data:ctrl,borderColor:'#a0aec0',borderWidth:1.5,borderDash:[2,2],pointRadius:2,pointBackgroundColor:'#a0aec0',tension:0.3,fill:false}
   ]},options:{...base,plugins:{...base.plugins},
   scales:{...base.scales,y:{...base.scales.y,title:{display:true,text:'총출석(회)',color:tc,font:{size:10}}}}}});
 }
+
 function effChart(id,act,syn,my){
   const eff=act.map((v,i)=>v-syn[i]);
   const mi=yrs.indexOf(String(my));
@@ -764,21 +765,28 @@ function effChart(id,act,syn,my){
   scales:{...base.scales,y:{...base.scales.y,title:{display:true,text:'효과(회)',color:tc,font:{size:10}}}}}});
 }
 
-lineChart('hangang-line',[2499,2403,2417,2551,2804,3056,2714,4079,3414,4669,4708,5196],[2499,2403,2417,2551,2804,2712,2815,2746,1768,2283,2365,2369],102,'#0a6958');
+// 3선 비교 차트 렌더링
+const ctrl_hangang = [3049,2856,2924,2827,2804,2885,2933,2916,2120,3126,3202,3264];
+const ctrl_junggu = [4161,3898,3990,3858,3827,3937,4003,3979,2894,4266,4370,4454];
+const ctrl_yeoksam = [4655,4361,4464,4316,4281,4404,4479,4451,3237,4772,4889,4983];
+const ctrl_bulgwang = [2542,2382,2438,2358,2338,2405,2446,2431,1768,2607,2670,2722];
+const ctrl_gangnam = [28677,26864,27499,26592,26374,27132,27590,27423,19942,29401,30117,30698];
+
+lineChart3('hangang-line',[2499,2403,2417,2551,2804,3056,2714,4079,3414,4669,4708,5196],[2499,2403,2417,2551,2804,2712,2815,2746,1768,2283,2365,2369],ctrl_hangang,'#0a6958');
 effChart('hangang-eff',[2499,2403,2417,2551,2804,3056,2714,4079,3414,4669,4708,5196],[2499,2403,2417,2551,2804,2712,2815,2746,1768,2283,2365,2369],102);
 
-lineChart('junggu-line',[3372,3339,3586,3737,4107,3693,3427,3979,3503,4324,4084,4059],[3373,3357,3580,3760,4053,3629,3552,3941,2471,3128,3096,3072],105,'#0a6958');
+lineChart3('junggu-line',[3372,3339,3586,3737,4107,3693,3427,3979,3503,4324,4084,4059],[3373,3357,3580,3760,4053,3629,3552,3941,2471,3128,3096,3072],ctrl_junggu,'#0a6958');
 effChart('junggu-eff',[3372,3339,3586,3737,4107,3693,3427,3979,3503,4324,4084,4059],[3373,3357,3580,3760,4053,3629,3552,3941,2471,3128,3096,3072],105);
 
-lineChart('yeoksam-line',[5612,5393,5387,5774,6252,6473,6174,5821,3237,5195,4601,5757],[5569,5322,5591,5793,6095,6409,6263,5827,3237,4284,4862,4557],106,'#a46c06');
+lineChart3('yeoksam-line',[5612,5393,5387,5774,6252,6473,6174,5821,3237,5195,4601,5757],[5569,5322,5591,5793,6095,6409,6263,5827,3237,4284,4862,4557],ctrl_yeoksam,'#a46c06');
 effChart('yeoksam-eff',[5612,5393,5387,5774,6252,6473,6174,5821,3237,5195,4601,5757],[5569,5322,5591,5793,6095,6409,6263,5827,3237,4284,4862,4557],106);
 
-lineChart('bulgwang-line',[2320,2612,2438,2290,2236,2331,2314,1914,1059,1981,1960,1798],[2320,2612,2438,2442,2488,2266,2157,2258,1351,1690,1795,1709],100,'#87a0b0');
+lineChart3('bulgwang-line',[2320,2612,2438,2290,2236,2331,2314,1914,1059,1981,1960,1798],[2320,2612,2438,2442,2488,2266,2157,2258,1351,1690,1795,1709],ctrl_bulgwang,'#8b302e');
 effChart('bulgwang-eff',[2320,2612,2438,2290,2236,2331,2314,1914,1059,1981,1960,1798],[2320,2612,2438,2442,2488,2266,2157,2258,1351,1690,1795,1709],100);
 
 const gangnamAct = [19704,18503,19139,18444,19818,21318,23725,21413,16467,18711,21410,21059];
 const gangnamSyn = [15698,15049,15565,15801,15829,15199,14643,13721,7740,11938,11981,11807];
-lineChart('gangnam-line',gangnamAct,gangnamSyn,100,'#5b3fa0');
+lineChart3('gangnam-line',gangnamAct,gangnamSyn,ctrl_gangnam,'#5b3fa0');
 
 function showCh(id,btn){
   document.querySelectorAll('.ch-panel').forEach(p=>p.classList.remove('on'));
