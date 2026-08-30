@@ -1,0 +1,201 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>무궁화추모공원 봉안 활성화 기획</title>
+<style>
+:root{
+  --accent:#4a7c59; --accent2:#3a6147; --bg:#f7f5f0; --fg:#26302a; --muted:#6b756c;
+  --card:#efece4; --line:#e0ddd2; --amber:#b7791f; --red:#b4472e; --good:#3f7d52;
+  --bar:#e3e0d5; --shadow:rgba(40,50,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15190f; --fg:#e7ece1; --muted:#9aa596; --card:#1d2218; --line:#2c3327;
+    --accent:#82b48f; --accent2:#9ac6a5; --bar:#262c20; --amber:#d6a24a; --red:#e0795f; --good:#82b48f; --shadow:rgba(0,0,0,.3);}
+}
+:root[data-theme="dark"]{--bg:#15190f;--fg:#e7ece1;--muted:#9aa596;--card:#1d2218;--line:#2c3327;--accent:#82b48f;--accent2:#9ac6a5;--bar:#262c20;--amber:#d6a24a;--red:#e0795f;--good:#82b48f;--shadow:rgba(0,0,0,.3);}
+:root[data-theme="light"]{--bg:#f7f5f0;--fg:#26302a;--muted:#6b756c;--card:#efece4;--line:#e0ddd2;--accent:#4a7c59;--accent2:#3a6147;--bar:#e3e0d5;--amber:#b7791f;--red:#b4472e;--good:#3f7d52;--shadow:rgba(40,50,40,.06);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.75;font-size:16px}
+.serif{font-family:"Nanum Myeongjo","Batang",Batang,"AppleMyungjo",serif}
+.wrap{max-width:900px;margin:0 auto;padding:40px 22px 90px}
+header{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:8px}
+.eyebrow{font-size:.8rem;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;font-weight:600}
+h1{font-size:2.25rem;line-height:1.28;margin:12px 0 8px;letter-spacing:-.01em;text-wrap:balance}
+.sub{color:var(--muted);font-size:1.02rem;margin:0}
+h2{font-size:1.32rem;margin:46px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--accent);letter-spacing:-.01em}
+h2 .no{color:var(--accent);font-size:.95rem;margin-right:.5em}
+h3{font-size:1.05rem;margin:24px 0 8px;color:var(--accent2)}
+p{margin:11px 0}
+a{color:var(--accent2);text-underline-offset:2px}
+strong{font-weight:700}
+/* utilization band */
+.band{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:0 1px 3px var(--shadow)}
+.band .row{display:flex;flex-wrap:wrap;gap:26px 40px;align-items:baseline}
+.stat .n{font-size:2rem;font-weight:800;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.stat .n.warn{color:var(--amber)}
+.stat .l{font-size:.82rem;color:var(--muted);margin-top:5px}
+.util{margin-top:20px}
+.utilbar{position:relative;height:26px;background:var(--bar);border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.utilbar>span{position:absolute;left:0;top:0;bottom:0;width:5.3%;background:var(--accent);border-radius:7px 0 0 7px}
+.utilcap{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:6px}
+.lead{font-size:1.06rem;background:var(--card);border-left:4px solid var(--accent);padding:16px 20px;border-radius:0 10px 10px 0;margin:22px 0}
+.callout{border-radius:10px;padding:15px 18px;margin:18px 0;border:1px solid var(--line);background:var(--card)}
+.callout.warn{border-left:4px solid var(--amber)}
+.callout.key{border-left:4px solid var(--accent)}
+.callout b{color:var(--accent)}
+.callout.warn b{color:var(--amber)}
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.82rem;background:var(--card)}
+td.c,th.c{text-align:center;white-space:nowrap}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:6px;background:var(--accent);color:#fff}
+:root[data-theme="dark"] .tag,@media (prefers-color-scheme:dark){.tag{color:#15190f}}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.75rem;font-weight:600}
+.pill.red{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.pill.amber{background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber)}
+/* roadmap */
+.road{display:grid;gap:14px;margin:16px 0}
+.phase{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--card)}
+.phase h4{margin:0 0 8px;font-size:1rem;color:var(--accent2)}
+.phase .when{font-size:.76rem;color:var(--muted);font-weight:600;letter-spacing:.03em}
+ul{padding-left:22px}li{margin:6px 0}
+ul.check{list-style:none;padding-left:4px}
+ul.check li{position:relative;padding-left:28px;margin:9px 0}
+ul.check li::before{content:"☐";position:absolute;left:0;color:var(--accent);font-size:1.1rem;top:-1px}
+ul.check li.pre::before{content:"◉";color:var(--amber)}
+.foot{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);font-size:.83rem;color:var(--muted)}
+.links a{display:inline-block;margin:2px 10px 2px 0}
+</style>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">원불교 봉안시설 · 활용 기획</div>
+  <h1 class="serif">무궁화추모공원 봉안 활성화 기획</h1>
+  <p class="sub">충남 논산 벌곡면 · 실내 봉안당(2020 준공) · 원기111(2026) 기준 · 저이용 타개 전략</p>
+</header>
+
+<div class="band">
+  <div class="row">
+    <div class="stat"><div class="n">19,000<span style="font-size:1rem">기</span></div><div class="l">안치 규모 (지하1~지상3층)</div></div>
+    <div class="stat"><div class="n">약 1,000<span style="font-size:1rem">기</span></div><div class="l">현재 봉안</div></div>
+    <div class="stat"><div class="n warn">5.3%</div><div class="l">이용률</div></div>
+    <div class="stat"><div class="n warn">18,000<span style="font-size:1rem">기</span></div><div class="l">유휴 (95%)</div></div>
+  </div>
+  <div class="util">
+    <div class="utilbar"><span></span></div>
+    <div class="utilcap"><span>봉안 1,000기</span><span>유휴 18,000기</span></div>
+  </div>
+</div>
+
+<div class="lead">
+봉안당은 준공과 동시에 건물·냉난방·관리 <strong>고정비</strong>가 발생하는 시설이다. 이용률 5.3%는 곧 <strong>운영 적자와 자산의 사장(死藏)</strong>을 뜻하며, 채우지 못할수록 재정 부담이 누적된다.
+이 기획은 <strong>“19,000기를 채운다”는 비현실적 목표가 아니라</strong>, 원불교 봉안 수요를 최대한 연결하고 필요 시 외부 개방을 병행해 <strong>재정 손익분기와 유의미한 활용률(예: 10년 내 25~30%)</strong>을 겨냥한다.
+</div>
+
+<div class="callout warn">
+<b>⚠️ 선결 과제</b> — 이 시설과 원불교(교단·재단·교도)의 <strong>소유·운영 관계</strong>(직영 / 재단 운영 / 제휴 / 단순 참고처)에 따라 아래 전략의 실행 권한과 범위가 달라진다. <strong>관계 규명이 1순위</strong>다. (공개자료상 원불교 전용 구역·운영주체는 미확인.)
+</div>
+
+<h2><span class="no">01</span>원인 진단 — 왜 5%에 머무는가</h2>
+<p class="sub" style="margin-top:-4px">가설이며 실측·확인이 필요하다.</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th style="width:22%">축</th><th>병목 가설</th></tr></thead>
+<tbody>
+<tr><td><strong>수요 연결</strong></td><td>원불교 열반 수요가 이 시설로 <strong>연결되는 표준 경로가 없음</strong> — 교당·교구가 안내하지 않는다</td></tr>
+<tr><td><strong>인지도</strong></td><td>교도·교무 다수가 시설의 존재·장점을 모름. 부고 시 기본 안내처가 아님</td></tr>
+<tr><td><strong>접근성</strong></td><td>논산 벌곡면 외진 골짜기 → <strong>서울·수도권 교도</strong>에겐 원거리, 성묘·추모 접근 부담</td></tr>
+<tr><td><strong>상품·요율</strong></td><td>공개 요율 없음(상담 필요) → 진입장벽. <strong>원불교 전용 구역·의례 가능 여부 미정</strong></td></tr>
+<tr><td><strong>제도·연계</strong></td><td><strong>전무출신 봉안</strong>과 미연동, 생전예약·회원제 부재</td></tr>
+<tr><td><strong>시장 추세</strong></td><td>자연장·수목장·산분 선호 증가 → 봉안당 수요 구조적 하락 압력</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="no">02</span>수요 기반 — 누가 채울 수 있나</h2>
+<ul>
+<li><strong>전무출신 열반</strong>: 연 <strong>18명(원기110) → 32명(원기130)</strong>, 20년 누적 <strong>약 520명</strong>. 규모는 크지 않으나 <strong>안정적·상징적</strong> 수요.</li>
+<li><strong>교도 열반</strong>: 관리교도 약 11.5만 중 <strong>60세+ 48.5%</strong>(약 5.6만) — 고령화로 향후 20년 교도 열반이 큰 폭 증가. 연간 봉안 가용 수요는 <span class="pill red">미실측</span> <code>데이터_묘위</code>로 실측 필요.</li>
+<li><strong>가족 단위</strong>: 봉안은 부부·가족 단위로 예약·확장되는 경향 → 1건이 복수 기수로 이어진다.</li>
+<li><strong>비교도 개방</strong>: 원불교 수요만으로 단기간 채우기 어려우면 <strong>일반 개방·지역 제휴</strong>를 병행(명상적 추모공간이라는 시설 강점 활용).</li>
+</ul>
+
+<h2><span class="no">03</span>타개책 — 전략 8안</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th class="c">#</th><th style="width:26%">전략</th><th>내용</th><th style="width:20%">기대효과</th></tr></thead>
+<tbody>
+<tr><td class="c"><span class="tag">A</span></td><td><strong>공식 봉안처 지정</strong></td><td>교정원/재단과 지정·MOU, 교도 우대 요율·전용 구역</td><td>수요의 제도적 유입</td></tr>
+<tr><td class="c"><span class="tag">B</span></td><td><strong>전무출신 봉안 연계</strong></td><td>열반 시 기본 봉안처 지정, 원로 봉안 구역 → <strong>성지·추모 상징화</strong></td><td>안정 수요 + 상징성</td></tr>
+<tr><td class="c"><span class="tag">C</span></td><td><strong>교당·교구 안내 표준화</strong></td><td>부고·장례 매뉴얼에 안내 삽입, 교무 소개, 교구별 담당 지정</td><td>연결 경로 신설</td></tr>
+<tr><td class="c"><span class="tag">D</span></td><td><strong>생전예약·회원제(예수)</strong></td><td>60세+ 교도 대상 생전 봉안 예약·분납, 부부·가족 패키지</td><td>수요 선점·현금흐름</td></tr>
+<tr><td class="c"><span class="tag">E</span></td><td><strong>의례·추모 패키지</strong></td><td>열반·49재·천도재·열반기념제와 봉안을 묶은 원불교 의례 상품, 원내 명상·천도 공간 활용</td><td>차별화 + 유가족 교화</td></tr>
+<tr><td class="c"><span class="tag">F</span></td><td><strong>요율·상품 투명화</strong></td><td>봉안당/자연장/수목장 구분·요율·기간 공개, 교도 우대 명시</td><td>진입장벽 완화</td></tr>
+<tr><td class="c"><span class="tag">G</span></td><td><strong>접근성 보완</strong></td><td>명절·열반기념 성묘 셔틀(수도권 출발), 온라인 추모·비대면 참배</td><td>원거리 약점 상쇄</td></tr>
+<tr><td class="c"><span class="tag">H</span></td><td><strong>홍보·스토리텔링</strong></td><td>원불교신문·교당·온라인, 명상적 건축 공간의 강점 스토리</td><td>인지도</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout key">
+<b>핵심 관점</b> — 봉안 활성화는 단순 분양이 아니라 <strong>교화의 연장</strong>이다. 추모·천도는 유가족과 교당을 잇는 접점이며, 전략 <strong>E·B</strong>가 이 시설을 원불교다운 추모·수행 공간으로 차별화하는 축이다. 산으로 둘러싸인 골짜기, 하늘·숲을 조망하는 명상적 동선은 원불교 수행 정서와 부합한다.
+</div>
+
+<h2><span class="no">04</span>실행 로드맵</h2>
+<div class="road">
+  <div class="phase"><div class="when">단기 · 0~6개월</div><h4>관계 규명 · 수요 실측 · 파일럿</h4>
+    <ul><li>소유·운영 관계 및 원불교 전용 구역·요율 <strong>확인</strong>(전화·현장)</li>
+    <li><code>데이터_묘위</code>로 <strong>연간 봉안 가용 수요 실측</strong></li>
+    <li>교당 부고·장례 매뉴얼에 안내 삽입</li>
+    <li>전무출신 봉안 연계 협의</li>
+    <li>1~2개 교구 <strong>파일럿</strong></li></ul></div>
+  <div class="phase"><div class="when">중기 · 6개월~2년</div><h4>상품화 · 접근성 · 확대</h4>
+    <ul><li>생전예약 회원제, 의례 패키지 상품화</li>
+    <li>성묘 셔틀·온라인 추모 도입</li>
+    <li>전국 교구 확대, 요율 공개</li></ul></div>
+  <div class="phase"><div class="when">장기 · 2년~</div><h4>성지화 · 잔여분 해소</h4>
+    <ul><li>원불교 대표 <strong>추모·명상 성지</strong>로 포지셔닝</li>
+    <li>자연장·수목장 확대</li>
+    <li>비교도 개방·지역 제휴로 잔여 유휴분 해소</li></ul></div>
+</div>
+
+<h2><span class="no">05</span>리스크 · 전제</h2>
+<ul>
+<li><strong>소유·운영 관계 불명</strong> → 전략 실행 권한이 여기서 갈린다(선결).</li>
+<li><strong>과대 설계 가능성</strong> — 19,000기는 원불교 단독 수요로는 장기간도 완충이 어려울 수 있음 → 부분 활용 목표 + 외부 개방 병행이 현실적.</li>
+<li><strong>봉안 트렌드 하락</strong>(자연장·산분 선호) → 봉안당 일변도 위험, 자연장·수목장 병행 필요.</li>
+<li><strong>접근성</strong> — 수도권 원거리는 셔틀·온라인으로 완화하되 근본 약점이므로 목표치에 반영.</li>
+</ul>
+
+<h2><span class="no">06</span>Actions</h2>
+<ul class="check">
+<li class="pre"><strong>(선결)</strong> 시설 소유·운영 주체 및 원불교와의 관계 규명 — 041-734-3844 / 재단·교정원 확인</li>
+<li>원불교 전용 구역·의례 가능 여부·요율·봉안 기간 확인</li>
+<li><code>데이터_묘위</code>로 연간 원불교 봉안 가용 수요 실측 → 현실적 목표 이용률 산정</li>
+<li>전무출신 봉안 연계(원로 봉안 구역) 협의</li>
+<li>교당 부고·장례 매뉴얼에 안내 삽입 + 파일럿 교구 선정</li>
+<li>생전예약·의례 패키지·셔틀 시범 설계</li>
+</ul>
+
+<h2><span class="no">07</span>근거 데이터 · 확인 필요</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th style="width:30%">항목</th><th>값 · 출처</th><th class="c" style="width:16%">상태</th></tr></thead>
+<tbody>
+<tr><td>시설 규모·이용현황</td><td>19,000기 / 현재 약 1,000기</td><td class="c"><span class="pill amber">재확인 권장</span></td></tr>
+<tr><td>전무출신 연간 열반</td><td>18→32명(원기110~130) · 인력 예측</td><td class="c"><span class="pill" style="background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)">확보</span></td></tr>
+<tr><td>교도 고령화</td><td>60세+ 48.5% · 교세 진단</td><td class="c"><span class="pill" style="background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)">확보</span></td></tr>
+<tr><td><strong>원불교 연간 봉안 수요</strong></td><td>데이터_묘위 분석 필요</td><td class="c"><span class="pill red">미실측</span></td></tr>
+<tr><td>소유·운영 관계·요율</td><td>전화·현장 확인</td><td class="c"><span class="pill red">미확인</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="foot">
+<p>근거: 무궁화추모공원 공식 홈페이지(neverend.kr) · 원불교 교정통계(전무출신 인력예측·교세 고령화) · 데이터_묘위(실측 예정). 개인정보는 포함하지 않는다.</p>
+<p style="margin-top:6px;color:var(--muted)">원불교 교정원 기획 · 원기111(2026). 저이용 봉안시설 활용 전략 초안.</p>
+</div>
+
+</div>
