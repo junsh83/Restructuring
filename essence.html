@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교화 본질 인식 — 델파이 R1 vs 일반교도(N=633) 비교분석</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-gold: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-green: #4ade80;
+      --accent-purple: #c084fc;
+      --accent-red: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    nav {
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: -40px -20px 30px -20px;
+    }
+    nav a {
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 12px;
+    }
+    .nav-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.03);
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      color: #fff;
+      border-color: var(--accent-blue);
+      background: rgba(56,189,248,0.1);
+    }
+    header {
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(74, 222, 128, 0.15);
+      color: var(--accent-green);
+      border: 1px solid var(--accent-green);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+    .meta {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .summary-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border-left: 4px solid var(--accent-green);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin: 24px 0 12px;
+    }
+    p { margin-bottom: 16px; font-size: 1rem; color: #cbd5e1; }
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+    @media (max-width: 768px) {
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-title { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; }
+    .stat-value { font-size: 2rem; font-weight: 900; color: var(--accent-green); }
+    .stat-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 30px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+    th {
+      background: rgba(30, 41, 59, 1);
+      color: var(--accent-blue);
+      font-weight: 700;
+    }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    
+    .highlight-row {
+      background: rgba(74, 222, 128, 0.1);
+      font-weight: 700;
+    }
+    .highlight-row td { color: #fff; }
+
+    /* Bar Charts */
+    .bar-group { margin: 16px 0 24px; }
+    .bar-item {
+      display: grid;
+      grid-template-columns: 180px 1fr 60px;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    .bar-label { text-align: right; color: var(--text-muted); white-space: nowrap; }
+    .bar-track { background: rgba(255,255,255,0.05); border-radius: 4px; height: 20px; width: 100%; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; background: var(--accent-blue); }
+    .bar-fill.green { background: var(--accent-green); }
+    .bar-fill.gold { background: var(--accent-gold); }
+    .bar-val { font-weight: 700; color: #fff; }
+
+    .callout {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 0.95rem;
+    }
+    .callout.green {
+      background: rgba(74, 222, 128, 0.08);
+      border-left-color: var(--accent-green);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <a href="https://junsh83.github.io/Restructuring/">
+      <span>📑</span> 서울교구 연구산출물 포털 홈
+    </a>
+    <div class="nav-links">
+      <a href="https://junsh83.github.io/Restructuring/slides.html" class="nav-btn">📽️ 발표 슬라이드</a>
+      <a href="https://junsh83.github.io/Restructuring/consolidation.html" class="nav-btn">📊 SCM 통합분석</a>
+      <a href="https://junsh83.github.io/Restructuring/accounting.html" class="nav-btn">🏛️ 회계제도·공도회복</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="badge">🟢 실증 분석 완료 (원자료 전수 대조)</div>
+    <h1>교화 본질 인식 — 델파이 R1 vs 일반교도(N=633) 비교분석</h1>
+    <div class="meta">
+      <span>✍️ 작성자: 서울교구 교화구조개선 TF</span>
+      <span>📅 기준일: 원기111년 8월 정본</span>
+      <span>🎯 대상: 델파이 광역패널 71명 & 일반교도 633명 전수</span>
+    </div>
+  </header>
+
+  <div class="summary-box">
+    <strong>💡 핵심 실증 결론 (Executive Summary):</strong><br>
+    • <strong>출·재가의 완벽한 일치:</strong> 현장 출가교무·교도회장(현장패널)의 <strong>52.0%</strong>와 서울교구 일반교도(N=633)의 <strong>52.4%</strong>가 교화의 최우선 본질을 <strong>'마음공부와 신앙수행(내면의 영성)'</strong>으로 꼽아 완벽히 일치했습니다.<br>
+    • <strong>교세 확장은 소수 프레임:</strong> 전통적인 '교법 전파 및 교세 확장'은 전문가(24%), 현장 교무(24%), 일반교도(20.3%) 모두에서 20% 초반대의 소수 프레임에 머물렀습니다.<br>
+    • <strong>중심부와 현장의 분업:</strong> 교단 중심부(전문가)는 정신개벽의 <strong>목적(42%)</strong>을, 현장 출·재가는 마음공부라는 <strong>과정(52%)</strong>을 지향하며 동전의 양면과 같은 건강한 분업 구조를 형성하고 있습니다.
+  </div>
+
+  <div class="grid-3">
+    <div class="stat-card">
+      <div class="stat-title">현장 교무·회장 (현장패널 33명)</div>
+      <div class="stat-value">52.0%</div>
+      <div class="stat-sub">마음공부·신앙수행 (1위)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">서울교구 일반교도 (재가 633명)</div>
+      <div class="stat-value">52.4%</div>
+      <div class="stat-sub">마음공부·신앙수행 (1위)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">교단 중심부 (전문가패널 38명)</div>
+      <div class="stat-value" style="color:var(--accent-blue);">42.0%</div>
+      <div class="stat-sub">진급·정신개벽 목적 (1위)</div>
+    </div>
+  </div>
+
+  <h2>1. 교화 본질 정의 전수 비교 (델파이 R1 vs 일반교도 N=633)</h2>
+  <p>델파이 R1 광역패널(71명 = 전문가패널 38명 + 현장패널 33명)의 개방형 다중언급과 일반교도 설문(N=633)의 단일선택 결과를 전수 대조한 실측표입니다.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>코드</th>
+        <th>교화의 정의 (본질 지향점)</th>
+        <th class="num">델파이 광역 (71명)</th>
+        <th class="num">전문가패널 (중심부 38)</th>
+        <th class="num">현장패널 (교무·회장 33)</th>
+        <th class="num">일반교도 (재가 633명)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row">
+        <td><strong>A2</strong></td>
+        <td><strong>마음공부 · 신앙수행 (내면 성장)</strong></td>
+        <td class="num"><strong>38.0%</strong> (1위)</td>
+        <td class="num">26.0% (2위)</td>
+        <td class="num" style="color:var(--accent-green);"><strong>52.0%</strong> (1위)</td>
+        <td class="num" style="color:var(--accent-green);"><strong>52.4%</strong> (1위)</td>
+      </tr>
+      <tr>
+        <td><strong>A1</strong></td>
+        <td><strong>진급 · 인격성숙 · 정신개벽 (목적)</strong></td>
+        <td class="num">28.0% (2위)</td>
+        <td class="num" style="color:var(--accent-blue);"><strong>42.0%</strong> (1위)</td>
+        <td class="num">12.0%</td>
+        <td class="num">3.2% *(법위진급)*</td>
+      </tr>
+      <tr>
+        <td><strong>A4</strong></td>
+        <td><strong>교법 전파 · 교세 확장 (외형 성장)</strong></td>
+        <td class="num">24.0% (3위)</td>
+        <td class="num">24.0% (3위)</td>
+        <td class="num">24.0% (3위)</td>
+        <td class="num">20.3% (2위)</td>
+      </tr>
+      <tr>
+        <td><strong>A5</strong></td>
+        <td><strong>공동체 · 은혜나눔 (사회적 실천)</strong></td>
+        <td class="num">23.0% (4위)</td>
+        <td class="num">13.0%</td>
+        <td class="num">33.0% (2위)</td>
+        <td class="num">14.1%</td>
+      </tr>
+      <tr>
+        <td><strong>A6</strong></td>
+        <td><strong>광대무량 낙원 인도 (낙원 건설)</strong></td>
+        <td class="num">7.0% (5위)</td>
+        <td class="num">8.0%</td>
+        <td class="num">6.0%</td>
+        <td class="num">6.8%</td>
+      </tr>
+      <tr>
+        <td><strong>A3</strong></td>
+        <td><strong>삶의 문제 해결 · 마음의 위로</strong></td>
+        <td class="num">7.0% (5위)</td>
+        <td class="num">11.0%</td>
+        <td class="num">3.0%</td>
+        <td class="num">3.2%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2. 핵심 발견 : 「교세 확장」 vs 「마음공부」의 실증적 격차</h2>
+  
+  <div class="callout green">
+    <strong>🎯 TF 내부 이견의 해소:</strong><br>
+    TF 내에서 "교세 확장(숫자 늘리기)"과 "마음공부(영성 본질)" 사이의 우선순위 논쟁이 있었으나, 데이터는 <strong>현장 교역자와 교도들이 가장 갈망하는 것이 '마음공부 지도와 내면의 성장(52%)'</strong>임을 명확히 보여줍니다. 외형적 교세 확장은 20% 초반대의 소수 프레임이었습니다.
+  </div>
+
+  <div class="bar-group">
+    <h3>📊 집단별 마음공부(영성) vs 교세확장(외형) 지향률 비교</h3>
+    
+    <div style="margin-top:12px; font-weight:700; color:var(--text-muted); font-size:0.85rem;">[현장 출가교무·교도회장 패널 (33명)]</div>
+    <div class="bar-item">
+      <div class="bar-label">마음공부·신앙수행 (A2)</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:52%;"></div></div>
+      <div class="bar-val">52.0%</div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label">교법전파·교세확장 (A4)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:24%;"></div></div>
+      <div class="bar-val">24.0%</div>
+    </div>
+
+    <div style="margin-top:16px; font-weight:700; color:var(--text-muted); font-size:0.85rem;">[서울교구 일반 재가교도 (633명)]</div>
+    <div class="bar-item">
+      <div class="bar-label">마음공부·신앙수행 (A2)</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:52.4%;"></div></div>
+      <div class="bar-val">52.4%</div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label">교법전파·교세확장 (A4)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:20.3%;"></div></div>
+      <div class="bar-val">20.3%</div>
+    </div>
+
+    <div style="margin-top:16px; font-weight:700; color:var(--text-muted); font-size:0.85rem;">[교단 중심부 전문가패널 (38명)]</div>
+    <div class="bar-item">
+      <div class="bar-label">진급·정신개벽 (A1)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:42%;"></div></div>
+      <div class="bar-val">42.0%</div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label">마음공부·신앙수행 (A2)</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:26%;"></div></div>
+      <div class="bar-val">26.0%</div>
+    </div>
+  </div>
+
+  <h2>3. 위기 인식의 긴박감 : 현장이 3배 이상 절박하다</h2>
+  
+  <div class="bar-group">
+    <h3>📊 청년·신규 교도 단절에 대한 위기 체감률</h3>
+    <div class="bar-item">
+      <div class="bar-label">현장패널 (교무·회장)</div>
+      <div class="bar-track"><div class="bar-fill gold" style="width:27%;"></div></div>
+      <div class="bar-val">27.0%</div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label">전문가패널 (중심부)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:8%;"></div></div>
+      <div class="bar-val">8.0%</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>🔍 구조개선의 당위성:</strong><br>
+    미래세대 단절의 위기감은 현장 교역자가 중심부보다 <strong>3.4배 더 절박(27% vs 8%)</strong>하게 느끼고 있습니다. 따라서 TF가 제안하는 '미래세대 연합 교화 및 지원 체계'는 교구의 하향식 간섭이 아니라, <strong>현장의 타는 목마름에 대한 교구의 가장 시급한 응답</strong>입니다.
+  </div>
+
+  <h2>4. 교화구조개선 정책에 주는 결정적 시사점</h2>
+  <ul style="padding-left:24px; color:#cbd5e1; font-size:1rem; line-height:1.9;">
+    <li><strong>제1축 본질 집중의 정당성 확보:</strong> 교역자가 잡무와 행정에서 벗어나 '마음공부 지도'에 전념할 수 있도록 교구 행정지원을 강화하는 것은 출·재가 모두가 바라는 1위 요구입니다.</li>
+    <li><strong>제2축 미래세대 연합 지원의 시급성:</strong> 1인 교당의 고립된 분투를 넘어 권역별 연합 세대교화 생태계를 구축하는 것은 현장의 절박한 위기감을 해소하는 필수 과제입니다.</li>
+    <li><strong>제3축 공간 연계의 교법적 당위성:</strong> 개교당의 닫힌 울타리를 넘어 인근 교당 간 협력과 공간 공유를 실현하는 것은 교세 경쟁이 아닌 '영성 공동체'로의 진화입니다.</li>
+  </ul>
+</div>
+
+</body>
+</html>
