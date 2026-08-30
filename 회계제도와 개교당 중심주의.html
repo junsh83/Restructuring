@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회계제도와 개교당 중심주의 — 대종사 당대 회유재산 원형과 공도 회복</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-gold: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-green: #4ade80;
+      --accent-purple: #c084fc;
+      --accent-red: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+    .meta {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .summary-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      margin: 24px 0 12px;
+    }
+    p { margin-bottom: 16px; font-size: 1rem; color: #cbd5e1; }
+    
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+    @media (max-width: 768px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+    .compare-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .compare-card.ancient {
+      border-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.05);
+    }
+    .compare-card.modern {
+      border-color: var(--accent-red);
+      background: rgba(248, 113, 113, 0.05);
+    }
+    .compare-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--card-border);
+    }
+    .compare-card.ancient .compare-title { color: var(--accent-gold); }
+    .compare-card.modern .compare-title { color: var(--accent-red); }
+
+    .balance-sheet {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+    .bs-col {
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .bs-col:first-child {
+      border-right: 1px solid var(--card-border);
+    }
+    .bs-header {
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 4px;
+    }
+    .bs-item {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .highlight-red { color: #fca5a5; font-weight: 700; }
+    .highlight-gold { color: #fde68a; font-weight: 700; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 0.92rem;
+    }
+    th {
+      background: #0f172a;
+      color: var(--accent-blue);
+      font-weight: 800;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .code-block {
+      background: #0b1120;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--accent-purple);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+
+    .quote-card {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-style: normal;
+    }
+    .quote-card p { margin-bottom: 0; color: #e0f2fe; }
+
+    .impact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .impact-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .impact-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .impact-content h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .impact-content p {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <nav style="background:rgba(15,23,42,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--card-border); padding:12px 24px; position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; margin:-40px -20px 30px -20px;">
+    <a href="https://junsh83.github.io/Restructuring/" style="color:var(--accent-gold); text-decoration:none; font-weight:700; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+      <span>📑</span> 서울교구 연구산출물 포털 홈
+    </a>
+    <div style="display:flex; gap:12px;">
+      <a href="https://junsh83.github.io/Restructuring/slides.html" style="color:var(--text-muted); text-decoration:none; font-size:0.85rem; padding:4px 10px; border-radius:6px; border:1px solid var(--card-border); background:rgba(255,255,255,0.03);">
+        📽️ 발표 슬라이드
+      </a>
+      <a href="https://junsh83.github.io/Restructuring/consolidation.html" style="color:var(--text-muted); text-decoration:none; font-size:0.85rem; padding:4px 10px; border-radius:6px; border:1px solid var(--card-border); background:rgba(255,255,255,0.03);">
+        📊 SCM 통합분석
+      </a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="badge">원불교 1차 사료 전수 실측 & 교차검증 완결본</div>
+    <h1>🏛️ 회계제도와 개교당 중심주의<br><span style="color: var(--accent-gold); font-size: 0.85em;">대종사 당대 회유재산(會有財産) 원형과 공도 회복</span></h1>
+    <div class="meta">
+      <span>✍️ 작성자: 전상현</span>
+      <span>📅 일자: 원기111(2026)년 8월 30일</span>
+      <span>🏛️ 소속: 서울교구 교화구조개선 TF</span>
+    </div>
+  </header>
+
+  <div class="summary-box">
+    <strong>💡 핵심 요약:</strong><br>
+    오늘날 교화구조개선이 마주하는 가장 깊은 정서적 장벽인 <strong>'개교당 중심주의(각자도생)'</strong>는 교당 개척사, 연고주의, 독립채산 관행 등 복합적인 역사·문화적 요인에서 형성된 현상입니다.<br>
+    특히 <strong>실정법상 개별 교당은 독립 법인이 아니며 교구법인(단일 법인) 소속임에도 불구하고, 내부 전산(원티스) 회계가 교구와 교당을 분절하여 개별 교당 대변에 '기타기본금(개교당 자본금)'을 독자 계상하는 제도적 모순</strong>이 이러한 분절 의식을 지속적으로 지탱·강화해 왔습니다.<br>
+    역사적으로도 대종사 당대에는 지부 자산이 총부 대차대조표 차변에 직접 등재되고 대변은 '현금의연 단일 자본'으로 수렴되었으나, 이후 어느 시점부터 총부와 교당이 별도 자산으로 분절되기 시작했고, 이 관행이 오늘날 교구법인 체제하의 교구-교당 관계로 그대로 이어졌습니다.<br>
+    따라서 공간 연계와 행정 협력은 외부의 세속적 경영 기법이 아니라, <strong>법률적 실체에 부합하고 대종사 당대 창립 초기의 거룩한 '공도(公道) 원형'을 100년 만에 회복하는 역사적 과제</strong>입니다.
+  </div>
+
+  <h2>1. 문제의식 : 개교당 중심주의와 제도의 상호작용</h2>
+  <p>교화구조개선의 <strong>권역별 연합 세대교화</strong>와 <strong>공간 연계 모델(공동·거점·통합)</strong>이 현장에서 겪는 가장 큰 정서적 저항은 "우리 교당 것을 왜 넘겨주느냐", "우리 교당 살림부터 챙겨야 한다"는 <strong>'개교당 중심주의'</strong>입니다.</p>
+  <p>이러한 의식은 교당 개척의 역사, 1인 교무의 고립, 신도 연고주의 등 복합적인 요인이 얽혀 있습니다. 회계제도가 이 모든 것의 단일 원인이라고 단정할 수는 없으나, <strong>실정법상 단일 교구법인임에도 내부 회계가 개별 교당 단위로 순자산(기본금)을 분절해 놓은 체계가 이러한 각자도생의 의식을 제도적으로 고착화하고 지탱해 온 강력한 징표이자 장벽</strong>으로 작동해 온 것은 분명합니다.</p>
+
+  <h2>2. 현대 교단의 법인 체계와 원티스(Wontis) 회계의 제도적 모순</h2>
+  <p>교단은 단일 법인이 아니라 <strong>복수의 교구법인(예: 재단법인 원불교 서울교구유지재단 등)</strong>으로 구성되어 있습니다. 실정법상 개별 교당은 독립된 법인이 아니며, <strong>모든 교당의 토지·건물 등 부동산과 기본 재산은 교구법인 소속</strong>입니다.</p>
+  <p>그러나 내부 교단 전산 회계인 <strong>'원티스(Wontis)'</strong>는 이러한 법적 실체를 반영하지 못하고 과거의 분절 관행을 그대로 유지하고 있습니다.</p>
+
+  <div class="compare-grid">
+    <div class="compare-card ancient">
+      <div class="compare-title">⚖️ 실정법적 실체 (교구법인 단일체)</div>
+      <p style="font-size:0.9rem; margin-bottom:8px;">• 교단은 복수의 교구법인 체제<br>• 개별 교당은 독립 법인이 아님<br>• 모든 교당의 부동산·자산은 <strong>【교구법인】</strong> 소속</p>
+      <p style="margin-top:12px; font-size:0.85rem; color:var(--accent-gold);">👉 법률적으로 교구 내 모든 교당 자산은 하나의 법인체</p>
+    </div>
+
+    <div class="compare-card modern">
+      <div class="compare-title">❌ 원티스(Wontis) 내부 회계 실태 (모순)</div>
+      <p style="font-size:0.9rem; margin-bottom:8px;">• 원티스 상에는 교당별로 독립 B/S 생성<br>• 개별 교당 대변에 <strong>【기타기본금(자본금)】</strong> 독자 계상<br>• 서울교구 B/S에는 교당 자산(토지·건물)이 0원</p>
+      <p style="margin-top:12px; font-size:0.85rem; color:var(--accent-red);">👉 "우리 교당 재산"이라는 분절 의식을 제도적으로 재생산</p>
+    </div>
+  </div>
+
+  <h3>📊 원티스 원자료(원기 108~110년) 실측 대조</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">원티스 기관</th>
+        <th style="width: 35%;">차변 (자산 현황)</th>
+        <th style="width: 40%;">대변 (기본금 / 자본금)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>서울교구</strong><br>(교구청 B/S)</td>
+        <td>• 토지: <strong>0원</strong>, 건물: <strong>0원</strong><br>• 자산 총계: 약 <strong>6.3억 원</strong> (유동·기타자산뿐임)</td>
+        <td>교구 대차대조표상 교구 내 50여 개 교당의 부동산 자산이 일체 등록되지 않음</td>
+      </tr>
+      <tr>
+        <td><strong>강남교당</strong><br>(단위 교당 B/S)</td>
+        <td>• 토지: <strong>45억 568만 원</strong><br>• 건물: <strong>119억 8,183만 원</strong><br>• 집기비품/차량: <strong>12억 6,231만 원</strong></td>
+        <td>• <strong>기타기본금(출연기본금) : 177억 4,983만 원</strong><br><span style="color:var(--accent-red); font-weight:700;">(개교당 고유 순자산으로 독자 계상)</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. 역사적 회계 변천 : 단일 공도에서 분절로의 궤적</h2>
+  
+  <div class="timeline-card">
+    <strong>1단계: 창립 초기 (대종사 당대)</strong><br>
+    불법연구회 단일 대차대조표 운용 ➔ 영광·경성·진안 등 전국 지부 자산이 총부 차변에 직결, 대변은 '현금의연 단일 자본' 수렴
+  </div>
+  <div class="timeline-card" style="border-left-color: var(--accent-gold);">
+    <strong>2단계: 해방 후 성장기 (총부-교당 분절)</strong><br>
+    교세 확장과 교당 개척 과정에서 어느 시점부터 총부와 교당이 별도의 자산으로 회계 분리 ➔ 개별 교당 독립채산 관행 형성
+  </div>
+  <div class="timeline-card" style="border-left-color: var(--accent-red);">
+    <strong>3단계: 교구법인 분할 및 전산화 (현재)</strong><br>
+    교단이 복수의 교구법인 체제로 전환되었으나, 과거의 총부-교당 분절 관행이 교구-교당 관계로 계승 ➔ 원티스 전산이 개별 교당 단위로 '기타기본금'을 분절 계상하여 개교당 중심주의를 제도적으로 고착
+  </div>
+
+  <h2>4. 사료로 복원한 대종사 당대 실제 대차대조표 (B/S)</h2>
+
+  <h3>📊 [원기 16년 / 1931년] 불법연구회 서무부 총자산목록 (총부·지부 통합 대차대조표)</h3>
+  <p style="font-size:0.9rem; color:var(--text-muted);">출처: 『원불교교고총간 제5권 사업보고서』 (원기 16년 3월 결산 / 단위: 원)</p>
+  
+  <div class="code-block">
+═══════════════════════════════════════════════════════════════════════════════════════════════
+                      불법연구회 서무부 총자산목록 (대차대조표)
+                           [원기 16년 (1931년) 3월 결산]
+═══════════════════════════════════════════════════════════════════════════════════════════════
+       차 변 : 자 산 (Assets)                   대 변 : 부 채 및 자 본 (Liabilities & Equity)
+───────────────────────────────────────────────────────────────────────────────────────────────
+  과 목 명             금 액 (원)    구성비        과 목 명             금 액 (원)    구성비
+───────────────────────────────────────────────────────────────────────────────────────────────
+ [지부 자산 (전국 지부 귀속)]                 [교단 단일 기본 자본 (공도 자본)]
+  • 영광지부(靈光支部)    15,086.82   31.8%       • 현금의연(現金義捐)   45,681.88   96.2%
+  • 경성지부(京城支部)     1,755.28    3.7%       • 전기순익(前期純益)    1,106.60    2.3%
+  • 진안지부(鎭安支部)     1,204.40    2.5%       • 당기순익(當期純益)      463.92    1.0%
+  • 영광신흥분회(新興)        30.39    0.1%       [소계 : 순자산/자본]   47,252.40  (99.5%)
+  [지부 자산 소계]       18,076.89  (38.1%)   ────────────────────────────────────────
+                                              [유동 부채 및 예수금]
+ [총부 직할 기본 재산]                             • 차입금(借入金)           58.66    0.1%
+  • 토지(土地)            8,363.06   17.6%       • 시봉금(侍奉金)           40.23    0.1%
+  • 건물(建物)            7,110.67   15.0%       • 가불금(假拂金)          140.92    0.3%
+  • 가산집기(家産什器)       764.46    1.6%       [소계 : 부채]             239.81   (0.5%)
+  • 공익부(公益部)         3,563.84    7.5%
+  • 남자인재단(男子)       4,652.63    9.8%
+  • 여자인재단(女子)       3,793.54    8.0%
+  • 농업부(農業部)           700.50    1.5%
+  • 저장·저금·금은·가불    4,466.62    9.4%
+───────────────────────────────────────────────────────────────────────────────────────────────
+  자 산 총 계 (원)       47,492.21  100.0%       부채 및 자본 총계      47,492.21  100.0%
+═══════════════════════════════════════════════════════════════════════════════════════════════
+  </div>
+
+  <h3>📊 [원기 13년 / 1928년] 상조조합부 영광본점 대차대조표 및 과목 성격</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">차변 : 자산 과목</th>
+        <th style="width: 15%;">금액 (원)</th>
+        <th style="width: 25%;">대변 : 부채 및 자본 과목</th>
+        <th style="width: 15%;">금액 (원)</th>
+        <th style="width: 20%;">회계학적 실질 성격</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>토지 (土地)</strong></td>
+        <td>3,881.44</td>
+        <td><strong>의연금 (義捐金)</strong></td>
+        <td style="color:var(--accent-gold); font-weight:700;">8,289.83</td>
+        <td><strong>자본 (기본 순자산)</strong> — 무상 헌공</td>
+      </tr>
+      <tr>
+        <td><strong>곡물대부 (穀物貸付)</strong></td>
+        <td>5,929.44</td>
+        <td><strong>정기예금 (定期預金)</strong></td>
+        <td style="color:var(--accent-red); font-weight:700;">3,097.13</td>
+        <td><strong>부채 (예수 채무)</strong> — 상환 및 이자 의무</td>
+      </tr>
+      <tr>
+        <td><strong>구매품 (購買品)</strong></td>
+        <td>1,309.98</td>
+        <td><strong>출자금 (出資金)</strong></td>
+        <td style="color:var(--accent-green); font-weight:700;">547.00</td>
+        <td><strong>자본(지분) + 환급성</strong> — 탈퇴 시 청구</td>
+      </tr>
+      <tr>
+        <td><strong>대부금 (貸付金)</strong></td>
+        <td>678.49</td>
+        <td><strong>가수금 (假受金)</strong></td>
+        <td>974.73</td>
+        <td>유동 부채</td>
+      </tr>
+      <tr>
+        <td><strong>미수입이식</strong></td>
+        <td>478.83</td>
+        <td><strong>특별적립금</strong></td>
+        <td>162.13</td>
+        <td>잉여금 적립 (자본)</td>
+      </tr>
+      <tr>
+        <td><strong>지점 / 가불금 등</strong></td>
+        <td>4,727.97</td>
+        <td><strong>본회전기적립금 / 당기손금 등</strong></td>
+        <td>2,935.33</td>
+        <td>총부 귀속 및 손익</td>
+      </tr>
+      <tr style="background:rgba(255,255,255,0.05); font-weight:800;">
+        <td>자산 총계</td>
+        <td>17,006.15</td>
+        <td>부채 및 자본 총계</td>
+        <td>17,006.15</td>
+        <td>대차 일치</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>📊 [원기 18년 / 1933년] 총회에서의 지부 가옥대 일괄 감가상각(소각) 결의</h3>
+  <p style="font-size:0.9rem; color:var(--text-muted);">출처: 『원불교교고총간 제6권』 제5회 정기총회 회록 (인쇄면 194쪽)</p>
+  <table>
+    <thead>
+      <tr>
+        <th>대상처 (지부 및 총부 기구)</th>
+        <th>당초 자산 장부가액</th>
+        <th>순이익금 소각(상각)액</th>
+        <th>비고 (총회 결의 안건)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>영광지부 가옥 (靈光支部 家屋)</strong></td>
+        <td>2,338.82원</td>
+        <td style="color:var(--accent-gold); font-weight:700;">896.72원</td>
+        <td>지부 부동산을 총부 순이익금으로 일괄 상각</td>
+      </tr>
+      <tr>
+        <td><strong>부안 산내 가가 (扶安 山內 家家)</strong></td>
+        <td>500.00원</td>
+        <td style="color:var(--accent-gold); font-weight:700;">400.00원</td>
+        <td>부안 지소 가옥대 상각</td>
+      </tr>
+      <tr>
+        <td><strong>송만리 가원 (松萬里 家元)</strong></td>
+        <td>273.80원</td>
+        <td style="color:var(--accent-gold); font-weight:700;">73.80원</td>
+        <td>송만리 자산 상각</td>
+      </tr>
+      <tr>
+        <td><strong>종법원 (宗法院)</strong></td>
+        <td>—</td>
+        <td style="color:var(--accent-gold); font-weight:700;">200.00원</td>
+        <td>종법원 가옥 상각</td>
+      </tr>
+      <tr style="background:rgba(255,255,255,0.05); font-weight:800;">
+        <td>합 계</td>
+        <td>3,112.62원+</td>
+        <td>1,570.52원</td>
+        <td>총부 순이익금으로 전액 일괄 처리</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. 교화구조개선 정책실험에 주는 결정적 함의</h2>
+  <div class="impact-list">
+    <div class="impact-item">
+      <div class="impact-icon">🏢</div>
+      <div class="impact-content">
+        <h4>1. 공간 연계 모델(공동·거점·통합)의 교법적·법률적 정당성</h4>
+        <p>실정법상 교당의 재산은 이미 교구법인 소속이며, 대종사 당대 회규 제223조 제4항이 밝히듯 <strong>지부의 합병과 자산 재배치는 교화와 공도를 위해 발동되는 원형적 제도</strong>입니다. 공간 연계는 교당을 빼앗는 것이 아니라 법적 실체와 교법 원형에 맞게 자원을 재배치하는 일입니다.</p>
+      </div>
+    </div>
+
+    <div class="impact-item">
+      <div class="impact-icon">🏛️</div>
+      <div class="impact-content">
+        <h4>2. 교구 행정지원 강화 및 재정구조 개편 (과제 ⑦-3)</h4>
+        <p>1인 교무가 세무·결산·시설의 짐을 홀로 지는 모순은 원티스 회계의 분절 관행이 낳은 결과입니다. 교구가 전문 행정을 직접 흡수하고 재정을 지원하는 것은 <strong>교구법인의 실체와 대종사 당대 상부상조의 회복</strong>입니다.</p>
+      </div>
+    </div>
+
+    <div class="impact-item">
+      <div class="impact-icon">🌱</div>
+      <div class="impact-content">
+        <h4>3. 권역별 연합 세대교화의 영적 동력 확보 (과제 ④-1)</h4>
+        <p>"내 교당 청소년"이라는 좁은 울타리를 걷어낼 때 비로소 권역 전체의 미래세대를 살리는 연합 생태계가 살아납니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-card">
+    <p>💬 <strong>발표 핵심 멘트 (Q&A 요약):</strong><br>
+    <em>"우리가 제안하는 연합 교화와 공간 연계는 결코 교당을 빼앗는 것이 아닙니다. 개교당의 각자도생 울타리를 헐고, 대종사 당대의 거룩한 한 회상 단일체 의식과 공도(公道) 원형을 회복하자는 근본적인 교법 회복의 결단입니다."</em></p>
+  </div>
+</div>
+
+</body>
+</html>
