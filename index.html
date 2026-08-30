@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교화구조개선 연구산출물 종합 포털</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+:root {
+  --bg-main: #0a0f1d;
+  --bg-card: rgba(18, 26, 47, 0.85);
+  --bg-card-alt: #162038;
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-highlight: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-gold: #f59e0b;
+  --accent-blue: #38bdf8;
+  --accent-green: #4ade80;
+  --accent-purple: #c084fc;
+  --accent-rose: #fb7185;
+  --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+}
+
+body.light-theme {
+  --bg-main: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-alt: #e2e8f0;
+  --bg-glass: rgba(0, 0, 0, 0.02);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-highlight: rgba(2, 132, 199, 0.3);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-family);
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Header & Nav */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  background: rgba(10, 15, 29, 0.85);
+  border-bottom: 1px solid var(--border-color);
+  padding: 14px 24px;
+}
+body.light-theme header {
+  background: rgba(241, 245, 249, 0.9);
+}
+.header-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-main);
+}
+.logo-badge {
+  background: linear-gradient(135deg, var(--accent-gold), #d97706);
+  color: #000;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: -0.5px;
+}
+.logo-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.logo-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-glass);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+.nav-tab-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255,255,255,0.05);
+}
+.nav-tab-btn.active {
+  background: var(--accent-blue);
+  color: #000;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.theme-btn {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Layout */
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(56, 189, 248, 0.08) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-gold);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 860px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.hero-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+}
+.stat-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--accent-blue);
+}
+.stat-lbl {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Tab Panels */
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Grids */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-shadow: var(--shadow);
+  transition: all 0.25s ease;
+  position: relative;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-highlight);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.card-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.badge-verified { background: rgba(74, 222, 128, 0.15); color: var(--accent-green); border: 1px solid rgba(74, 222, 128, 0.3); }
+.badge-gold { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-blue { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.3); }
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+.card-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.card-metric {
+  background: var(--bg-card-alt);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  margin-bottom: 14px;
+  border-left: 3px solid var(--accent-blue);
+}
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card-alt);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+.btn:hover {
+  background: var(--accent-blue);
+  color: #000;
+  border-color: var(--accent-blue);
+}
+.btn-primary {
+  background: var(--accent-gold);
+  color: #000;
+  border-color: var(--accent-gold);
+}
+.btn-primary:hover {
+  background: #d97706;
+  color: #000;
+}
+
+/* 8 Elements Filter Pills */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding: 6px;
+  background: var(--bg-glass);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+.filter-pill {
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-pill:hover {
+  color: var(--text-main);
+  background: rgba(255,255,255,0.05);
+}
+.filter-pill.active {
+  background: var(--bg-card-alt);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* Accordion (Q&A) */
+.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.accordion-item:hover {
+  border-color: var(--border-highlight);
+}
+.accordion-header {
+  padding: 16px 20px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.accordion-content {
+  padding: 0 20px 18px 20px;
+  display: none;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  border-top: 1px solid var(--border-color);
+}
+.accordion-item.open .accordion-content {
+  display: block;
+  padding-top: 14px;
+}
+.accordion-item.open .accordion-header {
+  color: var(--accent-blue);
+}
+
+/* Search Box */
+.search-wrapper {
+  margin-bottom: 20px;
+}
+.search-input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 0.98rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.search-input:focus {
+  border-color: var(--accent-blue);
+}
+
+/* Tables */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  margin-bottom: 24px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
+th {
+  background: var(--bg-card-alt);
+  padding: 14px 16px;
+  font-weight: 800;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+}
+td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-muted);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); color: var(--text-main); }
+
+/* SVG Embed Box */
+.svg-container {
+  background: #090d16;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.6rem; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .header-inner { flex-direction: column; align-items: stretch; }
+  .nav-tabs { overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo-area" onclick="switchTab('report-special')">
+      <span class="logo-badge">서울교구</span>
+      <div>
+        <div class="logo-title">교화구조개선 연구산출물 종합 포털</div>
+        <div class="logo-subtitle">데이터 기반 현장 진단 & 본질·미래세대 중심 교화구조</div>
+      </div>
+    </a>
+
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" onclick="switchTab('report-special')">🌟 2차 중간보고</button>
+      <button class="nav-tab-btn" onclick="switchTab('system-model')">🧭 8대요소 시스템도해</button>
+      <button class="nav-tab-btn" onclick="switchTab('research-library')">📑 검증 산출물 도서관</button>
+      <button class="nav-tab-btn" onclick="switchTab('survey-data')">📊 일반교도 설문(N=633)</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="theme-btn" onclick="toggleTheme()" id="theme-toggle-btn">🌓 모드 전환</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ================= TAB 1 : 2차 중간보고 특별관 ================= -->
+  <div id="tab-report-special" class="tab-panel active">
+    <div class="hero">
+      <span class="hero-tag">원기111(2026)년 8월 31일 · 출가교역자협의회 2차 중간보고</span>
+      <h1>본질에 집중하게 하는 구조,<br>미래세대 교화를 위한 구조</h1>
+      <p class="hero-desc">
+        1차 델파이 피드백과 교구 원자료(원티스·회계·인사) 전수 분석, 일반교도 633명 설문 조사를 거쳐 도출된 서울교구 교화구조개선의 9대 정책 제안과 실증 검증 완료 산출물 종합입니다.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <span class="stat-val">연 9.8억</span>
+          <span class="stat-lbl">교구 단체보험 통합 시 예산 절감액</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val">52.4%</span>
+          <span class="stat-lbl">일반교도 "본질(마음공부) 전념" 요구</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val">-18.7%p</span>
+          <span class="stat-lbl">인력 감원 시 청소년활동 즉각 붕괴</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val">802명</span>
+          <span class="stat-lbl">출석 이탈 조기경보 식별군</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2차 중간보고 슬라이드 뷰어 안내 -->
+    <div style="margin-bottom: 36px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 style="font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+            <span>📽️ 2차 중간보고 발표 슬라이드 (정본 v2)</span>
+            <span class="card-badge badge-gold">10개 슬라이드 완제</span>
+          </h2>
+          <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">하단 컨트롤러를 누르거나 키보드 방향키(◀, ▶)로 슬라이드를 넘겨보실 수 있습니다.</div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <a href="slides.html" target="_blank" class="btn btn-primary" style="padding: 9px 18px; font-size: 0.92rem;">🖥️ 전체화면 슬라이드 열기 ↗</a>
+        </div>
+      </div>
+      
+      <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; height: 720px; max-height: 82vh; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        <iframe src="slides.html" style="width: 100%; height: 100%; border: none;" title="2차 중간보고 발표 슬라이드 뷰어"></iframe>
+      </div>
+    </div>
+
+    <!-- 핵심 Q&A 6선 -->
+    <div style="margin-bottom: 36px;">
+      <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px;">❓ 출가교역자 핵심 질의응답 (Q&A 6선)</h2>
+      
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Q1. 인공지능(AI) 시대에 왜 8대 요소 교화구조 시스템 모형이 필요합니까?</span>
+          <span>▼</span>
+        </div>
+        <div class="accordion-content">
+          <strong>핵심 답변:</strong> "AI의 급격한 발전(물질개벽)은 인간 정신의 진정한 가치와 삶의 방향성을 묻고 있습니다. 기술을 배척하는 것이 아니라 객관적인 데이터와 도구로 삼아 인간의 영적 성장을 조력하고, 본질(만남·영성)과 기반(AI행정·공간·재정), 거버넌스와 데이터가 유기적으로 상호작용하여 현대인의 상실된 정신을 치유하는 시대적 나침반을 세우기 위함입니다."<br><br>
+          교역자는 잡무에서 벗어나 영적 지도력과 마음공부 지도(본질)에 전념하고, 행정 효율성과 투명한 살림(기반)은 교구가 떠받치며, 거버넌스의 기준과 데이터의 관찰이 맞물려 시대착오적 오류를 방지하는 완전한 순환 생태계를 구축합니다.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Q2. 왜 '일반교도 설문(N=633)'이 2차 중간보고의 핵심 근거가 됩니까?</span>
+          <span>▼</span>
+        </div>
+        <div class="accordion-content">
+          <strong>핵심 답변:</strong> "출가교역자(52%)뿐만 아니라 일반교도 633명 중 과반수(52.4%)가 '교당이 행정에서 벗어나 교화의 본질인 마음공부와 신앙수행에 전념해야 한다'고 한목소리로 요구했기 때문입니다."<br><br>
+          교화구조개선은 교역자만의 일방적 요구가 아니라 현장 교도들이 가장 간절히 바라는 핵심 과제임이 설문 실측을 통해 실증되었습니다.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Q3. 거버넌스와 데이터 사이의 상하 두 화살표는 각각 무엇을 의미합니까?</span>
+          <span>▼</span>
+        </div>
+        <div class="accordion-content">
+          <strong>핵심 답변:</strong> "위쪽 화살표(거버넌스 ➔ 데이터)는 교구가 현장에 던지는 <code>목적과 과제(관찰 기준)</code>이고, 아래쪽 화살표(데이터 ➔ 거버넌스)는 현장이 데이터로 교구에 돌려주는 <code>정직한 대답(신호 피드백)</code>입니다."<br><br>
+          거버넌스는 데이터에 질문을 던지고, 데이터는 현장의 실측 신호(출석·재정·만남)를 모아 거버넌스의 정책 기준과 예산 배분을 끊임없이 새롭게 고쳐 쓰는 양방향 환류 생명선을 뜻합니다.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Q4. 작은 교당들을 강제로 없애거나 통합하려는 것 아닙니까?</span>
+          <span>▼</span>
+        </div>
+        <div class="accordion-content">
+          <strong>핵심 답변:</strong> "결코 아닙니다. 슬라이드 8에서 보시듯 공간을 그대로 유지하면서 협력하는 [공동교화]와 인력을 집중하는 [거점교화]가 기본 모델이며, [통합교화]는 교도님들의 자발적 합의가 있을 때만 예외적으로 추진됩니다."<br><br>
+          서울교구 실증 분석 결과 일방적 통폐합은 출석 방어 효과가 무효임이 규명되었으며, 공간을 보존하고 교역자 간 협업을 극대화하는 공동교화가 서울교구의 표준 정답입니다.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Q5. 왜 우리는 개교당 중심주의를 넘어서야 하며, 회계제도와 어떤 관계가 있습니까?</span>
+          <span>▼</span>
+        </div>
+        <div class="accordion-content">
+          <strong>핵심 답변:</strong> "실정법상 개별 교당은 독립 법인이 아니며 교구법인(재단법인) 소속의 단일체입니다. 내부 전산인 원티스 회계가 과거의 분절 관행을 답습하여 개별 교당 대변에 '기타기본금(자본금)'을 따로 잡아줌으로써 개교당 중심주의를 제도적으로 지탱해 온 측면이 큽니다. 반면 대종사 당대 『불법연구회회규』와 원기 16년 대차대조표(B/S)를 보면 지부의 모든 자산은 총부 B/S에 직결되고 '단일 자본'으로 수렴되었습니다. 공간 연계와 연합 교화는 낯선 구조조정이 아니라 법적 실체에 부합하고 대종사 당대 단일 공도체제의 원형을 회복하는 일입니다."
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Q6. 미래세대 교화에서 왜 '상담' 대신 '프로그램 지원'으로 바뀌었습니까?</span>
+          <span>▼</span>
+        </div>
+        <div class="accordion-content">
+          <strong>핵심 답변:</strong> "개별 교무의 미시적 상담 기법은 구조개선이 직접 다룰 수 없습니다. 교구가 제도와 자원으로 직접 뒷받침해야 하는 것은 '권역별 연합 활동'과 '생애주기별 맞춤형 특화 프로그램 지원 체계'입니다. 지난 20년간 미래세대 법회가 소멸한 것은 아이들이 없어서가 아니라, 1인 교당 체제에서 전담 인력과 프로그램 자원이 부족했던 '공급의 실패'였습니다."
+        </div>
+      </div>
+    </div>
+
+    <!-- 9대 정책 제안 요약 테이블 -->
+    <div>
+      <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px;">🎯 출교협 2차 중간보고 9대 실험적 정책수단 (검증 현황)</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>슬라이드 제안 내용</th>
+              <th>매칭 8대 요소</th>
+              <th>실측 데이터 검증 결과</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3" style="font-weight: 800; color: var(--accent-blue);">제1축<br>본질 집중</td>
+              <td>① 교구 행정지원 강화</td>
+              <td>④ 행정 · ⑥ 재정</td>
+              <td>화재·배상보험 단체계약 시 연 9.8억 예산 절감 및 17배 격차 해소 실측</td>
+              <td><span class="card-badge badge-verified">검증완료</span></td>
+            </tr>
+            <tr>
+              <td>② 재가교도 역할 확대</td>
+              <td>① 교역자 · ④ 행정</td>
+              <td>살림·시설관리 공식 위임 표준 가이드라인 및 재가 교역자 역할 분담 모델</td>
+              <td><span class="card-badge badge-blue">설계완료</span></td>
+            </tr>
+            <tr>
+              <td>③ 공동 행정인력 추진</td>
+              <td>④ 행정 · ⑥ 재정</td>
+              <td>1인 교당 3~4개 연합 ➔ 유급 재가 행정직 순회 지원 모델 수립 완료</td>
+              <td><span class="card-badge badge-blue">설계완료</span></td>
+            </tr>
+            <tr>
+              <td rowspan="3" style="font-weight: 800; color: var(--accent-green);">제2축<br>미래세대</td>
+              <td>④ 생애주기 프로그램 지원</td>
+              <td>② 콘텐츠 · ③ 대상</td>
+              <td>4단계 퍼널(진입➔체험➔관계➔정착) 평일·토요 프로그램 설계 완료</td>
+              <td><span class="card-badge badge-blue">설계완료</span></td>
+            </tr>
+            <tr>
+              <td>⑤ 미래세대 연합활동 지원</td>
+              <td>① 교역자 · ③ 대상</td>
+              <td>인력 감원 시 청소년활동 -18.7%p 비대칭 급락 실측 ➔ 연합전담 필수</td>
+              <td><span class="card-badge badge-verified">검증완료</span></td>
+            </tr>
+            <tr>
+              <td>⑥ 청소년 교화공간 특화</td>
+              <td>⑤ 공간 · ③ 대상</td>
+              <td>접근성 15분 생활권 23단위 도출 및 거점 공간 인프라 분석 완료</td>
+              <td><span class="card-badge badge-verified">검증완료</span></td>
+            </tr>
+            <tr>
+              <td rowspan="3" style="font-weight: 800; color: var(--accent-purple);">제3축<br>공간 연계</td>
+              <td>⑦ 공동교화 (기본 경로)</td>
+              <td>⑤ 공간 · ① 교역자</td>
+              <td>공간 100% 보존, 전담 책임교무 지정, 시차제·순회 법회 모델 수립</td>
+              <td><span class="card-badge badge-blue">설계완료</span></td>
+            </tr>
+            <tr>
+              <td>⑧ 거점교화 (권역별 집중)</td>
+              <td>⑤ 공간 · ① 교역자</td>
+              <td>도심 거점 교역자 복수배치 효과 실증 (일반교도 만족도 상승)</td>
+              <td><span class="card-badge badge-verified">검증완료</span></td>
+            </tr>
+            <tr>
+              <td>⑨ 통합교화 (예외적 결합)</td>
+              <td>⑤ 공간</td>
+              <td>SCM 합성통제법 재검정 ➔ 일방 흡수 통합은 무효, 공동교화가 정답</td>
+              <td><span class="card-badge badge-verified">검증완료</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TAB 2 : 8대 요소 시스템 모형관 ================= -->
+  <div id="tab-system-model" class="tab-panel">
+    <div class="hero" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(192, 132, 252, 0.08) 100%);">
+      <span class="hero-tag" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-blue);">정본 시스템 아키텍처</span>
+      <h1>8대 요소 교화구조 시스템 모형</h1>
+      <p class="hero-desc">
+        교화구조는 단순한 건물이 아니라 <strong>본질(중심) ── 기반(터전) ── 나침반(데이터·거버넌스)</strong>이 상호작용하며 세상과 순환하는 생명체적 시스템입니다.
+      </p>
+    </div>
+
+    <!-- 정본 SVG 시스템 도해 -->
+    <div class="svg-container">
+      <svg viewBox="0 0 940 550" width="100%" height="475" role="img" aria-label="교화구조 시스템 모형 정본 도해">
+        <defs>
+          <marker id="arrow-gray4" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,1.5 L8,5 L0,8.5 z" fill="#94a3b8"/>
+          </marker>
+          <marker id="arrow-gray-left4" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M8,1.5 L0,5 L8,8.5 z" fill="#94a3b8"/>
+          </marker>
+          <marker id="arrow-blue4" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,1.5 L8,5 L0,8.5 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="arrow-purple4" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,1.5 L8,5 L0,8.5 z" fill="#c084fc"/>
+          </marker>
+        </defs>
+
+        <path style="fill:none; stroke:#f59e0b; stroke-width:3.5" d="M82.5,63 L82.5,38 Q82.5,24 125,24 L815,24 Q857.5,24 857.5,38 L857.5,58"/>
+        <polygon points="857.5,63 849.5,51 865.5,51" fill="#f59e0b"/>
+
+        <path style="fill:none; stroke:#f59e0b; stroke-width:3.5" d="M857.5,487 L857.5,512 Q857.5,526 815,526 L125,526 Q82.5,526 82.5,512 L82.5,492"/>
+        <polygon points="82.5,487 74.5,499 90.5,499" fill="#f59e0b"/>
+
+        <rect x="30" y="63" width="105" height="424" rx="16" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2.6"/>
+        <text x="82.5" y="190" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">거</text>
+        <text x="82.5" y="250" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">버</text>
+        <text x="82.5" y="310" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">넌</text>
+        <text x="82.5" y="370" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">스</text>
+
+        <rect x="805" y="63" width="105" height="424" rx="16" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2.6"/>
+        <text x="857.5" y="220" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">데</text>
+        <text x="857.5" y="280" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">이</text>
+        <text x="857.5" y="340" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">터</text>
+
+        <rect x="210" y="63" width="520" height="54" rx="16" fill="#1e293b" stroke="#94a3b8" stroke-width="2.2" stroke-dasharray="6 4"/>
+        <text x="470" y="98" text-anchor="middle" font-size="22" font-weight="900" fill="#ffffff" letter-spacing="0.15em">세    상</text>
+
+        <rect x="210" y="156" width="520" height="146" rx="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.6"/>
+        <text x="235" y="180" font-size="18" font-weight="900" letter-spacing="0.1em" fill="#38bdf8">본  질</text>
+        
+        <rect x="225" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+        <text x="298" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">교역자</text>
+        
+        <rect x="397" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+        <text x="470" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">콘텐츠</text>
+        
+        <rect x="569" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+        <text x="642" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">대  상</text>
+
+        <rect x="210" y="341" width="520" height="146" rx="16" fill="#1e293b" stroke="#4ade80" stroke-width="2.6" stroke-dasharray="8 5"/>
+        <text x="235" y="365" font-size="18" font-weight="900" letter-spacing="0.1em" fill="#4ade80">기  반</text>
+        
+        <rect x="225" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+        <text x="298" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">행  정</text>
+        
+        <rect x="397" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+        <text x="470" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">공  간</text>
+        
+        <rect x="569" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+        <text x="642" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">재  정</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="90" x2="205" y2="90" marker-start="url(#arrow-gray-left4)" marker-end="url(#arrow-gray4)"/>
+        <text x="172" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">영향</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="90" x2="800" y2="90" marker-end="url(#arrow-gray4)"/>
+        <text x="768" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">관찰</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="229" x2="205" y2="229" marker-end="url(#arrow-gray4)"/>
+        <text x="172" y="221" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">기준</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="229" x2="800" y2="229" marker-end="url(#arrow-gray4)"/>
+        <text x="768" y="221" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="414" x2="205" y2="414" marker-end="url(#arrow-gray4)"/>
+        <text x="172" y="406" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">배분</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="414" x2="800" y2="414" marker-end="url(#arrow-gray4)"/>
+        <text x="768" y="406" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+        <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="470" y1="341" x2="470" y2="307" marker-end="url(#arrow-gray4)"/>
+        <text x="488" y="326" font-size="15" font-weight="800" fill="#94a3b8">지원</text>
+
+        <line style="fill:none; stroke:#c084fc; stroke-width:2.2" x1="340" y1="156" x2="340" y2="122" marker-end="url(#arrow-purple4)"/>
+        <text x="328" y="141" text-anchor="end" font-size="15" font-weight="800" fill="#c084fc">유익</text>
+
+        <line style="fill:none; stroke:#38bdf8; stroke-width:2.2" x1="642" y1="117" x2="642" y2="190" marker-end="url(#arrow-blue4)"/>
+        <text x="630" y="145" text-anchor="end" font-size="15" font-weight="800" fill="#38bdf8">유입</text>
+      </svg>
+    </div>
+
+    <!-- 1. 도해를 한 장으로 읽는 법 -->
+    <div class="card" style="margin-bottom: 28px; background: rgba(56, 189, 248, 0.04); border-color: rgba(56, 189, 248, 0.25);">
+      <div class="card-title" style="color: var(--accent-blue); font-size: 1.25rem;">📖 도해를 한 장으로 읽는 핵심 구조</div>
+      <p class="card-desc" style="color: var(--text-main); font-size: 0.98rem; line-height: 1.8; margin-bottom: 0;">
+        • <strong>3대 켜의 유기적 결합</strong>: 교화가 실제로 일어나는 <strong>[본질: 교역자·콘텐츠·대상]</strong>을 <strong>[기반: 행정·공간·재정]</strong>이 떠받치고, 좌우의 <strong>[거버넌스 & 데이터]</strong>가 양방향 나침반으로 시스템의 기준과 관찰을 조율합니다.<br>
+        • <strong>황금빛 상하 루프 (완전 환류 체계)</strong>: 상단 루프(거버넌스 ➔ 데이터)는 교구가 현장에 던지는 <code>목적과 과제(관찰 기준)</code>이며, 하단 루프(데이터 ➔ 거버넌스)는 현장이 실측 신호로 교구에 돌려주는 <code>정직한 대답(신호 피드백)</code>입니다. 이 고리가 돌아야 교화 시스템이 시대착오적 오류 없이 스스로 진화합니다.<br>
+        • <strong>세상과의 열린 순환</strong>: 본질 전체(교역자·콘텐츠·교도)가 세상에 전하는 <strong>[유익]</strong>과, 그 유익에 감응하여 새로운 세대와 이웃이 진입하는 <strong>[유입]</strong>이 균형을 이루며 닫힌 성벽이 아닌 열린 생태계를 만듭니다. (유입 화살표는 8대 요소 중 세상과 직접 닿는 유일한 접점인 <strong>「③ 대상」</strong>으로 직하강합니다.)
+      </p>
+    </div>
+
+    <!-- 2. 10대 화살표 상세 대조표 -->
+    <div style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px;">🧭 시스템 10대 화살표의 개념 · 현장 진단 · 개선 처방</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 70px; text-align: center;">번호</th>
+              <th style="width: 170px;">화살표 (흐름)</th>
+              <th style="width: 250px;">본질적 의미</th>
+              <th>현 상황 진단</th>
+              <th>개선 처방 (혁신 방향)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-gold);">①</td>
+              <td><strong>거버넌스 ➔ 본질</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(기준 제시)</span></td>
+              <td>교역자 사명, 마음공부 콘텐츠 등 교화 본질에 대한 교구 차원의 규범과 가이드라인 제공</td>
+              <td>통일된 표준 없이 개별 교당과 교무 개인의 역량·열정에 전적으로 의존</td>
+              <td>교법적 만남 촉진 가이드라인, 표준 마음공부 콘텐츠 보급, 사명 중심 직무 기준 정립</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-gold);">②</td>
+              <td><strong>거버넌스 ➔ 기반</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(자원 배분)</span></td>
+              <td>인력 배치, 교당 공간 활용, 예산 지원 등 물적·인적 기반 인프라의 전략적 배분</td>
+              <td>1인 교당 분산 배치(58.9%) 고착화, 관성적 예산 배분, "돈만 넣으면 산다"는 한계</td>
+              <td>미래세대·전략거점 복수배치 집중, 권역별 공동행정지원센터 구축, 기본처우 표준화</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-gold);">③</td>
+              <td><strong>거버넌스 ➔ 데이터</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(관찰 과제)</span></td>
+              <td>측정할 중점 지표(KPI) 설정, 정책 가설 검정 의뢰, 데이터 수집 제도적 권한 부여</td>
+              <td>무엇을 관찰해야 할지 명확한 지표 기준 부재, 원티스 기록 편차 방치</td>
+              <td>이탈 조기경보 지표 표준화, 세대별 출석 모니터링 가동, 정책 효과 사후 검정 제도화</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-green);">④</td>
+              <td><strong>기반 ➔ 본질</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(지 원)</span></td>
+              <td>행정 부담 경감, 쾌적한 공간, 안정된 재정으로 교역자가 교화에 전념하도록 지원</td>
+              <td>행정·시설·잡무 과중으로 1인 교무 번아웃 및 사람을 만날 교화 몰입 시간 부족</td>
+              <td>공동행정지원센터(회계·시설 대행) + 재가교역자 역할 분담으로 잡무를 덜고 본질 전념</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-blue);">⑤</td>
+              <td><strong>본질 ➔ 데이터</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(교화 관찰)</span></td>
+              <td>법회 출석, 훈련 참여, 교화단 활동 등 현장의 생생한 교화 변화를 실측 기록</td>
+              <td>단순 출석 총량만 집계되어 세대별(청소년·3040) 단절 및 이상 징후를 조기 포착 못함</td>
+              <td>세대별 법회 출석 실측, 15년 패널 기반 이탈 징후 감지, 교화 퍼널 단계별 추적</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-green);">⑥</td>
+              <td><strong>기반 ➔ 데이터</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(운영 관찰)</span></td>
+              <td>교당별 재정 결산, 시설 노후도, 인프라 운영 실태 등 운영 비용 및 효율성 관찰</td>
+              <td>결산서의 사후적 취합에 머물러 비용 대비 교화 효과나 재정 격차 원인 분석 부재</td>
+              <td>교당 결산서 빅데이터 분석 상시 가동, 공통경비(보험 등) 통합 절감 효과 실측</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-purple);">⑦</td>
+              <td><strong>세상 ➔ 데이터</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(세상 관찰)</span></td>
+              <td>지역사회 인구 변화(청년 유입·고령화), 시민의 정신적 욕구, 사회 트렌드 관찰</td>
+              <td>외부 환경 변화에 둔감하고 교단 내부 집계에만 갇혀 지역별 인구 이동 대응 미흡</td>
+              <td>도심 역세권·청년 밀집지 인구 분석, 일반 시민 대상 린(Lean) 설문 및 반응 측정</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-gold);">⑧</td>
+              <td><strong>데이터 ➔ 거버넌스</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(신호 환류)</span></td>
+              <td>데이터가 포착한 현장 신호(조기경보, 병목 지점)를 정책 결정자에게 직결 환류</td>
+              <td>데이터가 정책 결정권자에게 연결되지 않고 보고서 형태로 서랍에 묻힘 (고리 단절)</td>
+              <td>데이터 기반 의사결정 확립: 델파이 정책 설문 ➔ 권고안 ➔ 교의회 의결 및 상설 실행</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-purple);">⑨</td>
+              <td><strong>본질 ➔ 세상</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(유 익)</span></td>
+              <td>본질(교역자·콘텐츠·교도) 전체가 세상에 제공하는 마음공부, 치유, 공익적 기여</td>
+              <td>교당 중심의 폐쇄적 운영으로 인해 세상에 주는 유익의 가시성과 사회적 접점 약화</td>
+              <td>「만나면 좋은 원불교」, 도심 열린 공간 및 마음쉼터 제공, 현대화된 마음공부 보급</td>
+            </tr>
+            <tr>
+              <td style="text-align: center; font-weight: 800; color: var(--accent-blue);">⑩</td>
+              <td><strong>세상 ➔ 대상</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">(유 입)</span></td>
+              <td>세상에 전한 유익에 감응하여 새로운 세대, 청년, 이웃 시민이 교당 「대상」으로 진입</td>
+              <td>최근 10여 년간 신규 입교 −57% 급감, 청소년·청년 진입 경로 협소</td>
+              <td>4단계 퍼널(진입➔체험➔관계➔정착) 및 도심 거점 개척을 통한 미래세대 유입 통로 복원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. 왜 3대 원소에서 8대 요소인가? -->
+    <div class="grid-2" style="margin-bottom: 28px;">
+      <div class="card">
+        <div class="card-title" style="color: var(--accent-gold); font-size: 1.15rem;">🌱 3원소에서 8대 요소로 분화된 이유</div>
+        <div class="card-desc">과거 [사람 · 공간 · 콘텐츠] 3개 원소로 뭉뚱그려져 있던 구조를 8대 요소로 정밀하게 분리한 4대 필연적 이유입니다.</div>
+        <ul style="list-style: none; padding-left: 0; font-size: 0.92rem; color: var(--text-muted); line-height: 1.8;">
+          <li style="margin-bottom: 10px;"><strong>1. 행정을 사람에서 분리</strong>: 사람 안에 행정이 묻혀 있으면 "교무님이 바쁘다"는 말이 실증되지 않습니다. 행정을 독립 요소로 떼어내야 재가 위임과 교구 지원이라는 명확한 처방이 성립합니다.</li>
+          <li style="margin-bottom: 10px;"><strong>2. 공간과 재정의 분리</strong>: 공간과 재정을 하나로 묶으면 "돈만 넣으면 교화가 산다"는 낡은 가설을 검증할 수 없습니다. 공간의 위치와 살림의 지원은 전혀 다른 영역입니다.</li>
+          <li style="margin-bottom: 10px;"><strong>3. 데이터와 거버넌스의 독립</strong>: 나침반 역할을 하는 데이터와 거버넌스에 정식 이름을 붙여주어야 일회성 프로젝트로 끝나지 않고 상설 지속 체제로 정착됩니다.</li>
+          <li><strong>4. 통폐합 오해 불식</strong>: 공간(통폐합)의 비중이 1/3에서 1/8로 축소되어, 교화구조개선이 단순 통폐합 사업이 아님을 증명합니다.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--accent-purple); font-size: 1.15rem;">🤖 인공지능(AI) 시대 교화 시스템의 문명사적 철학</div>
+        <div class="card-desc">물질개벽의 소용돌이 속에서 왜 8대 요소 시스템 모형이 시대적 나침반이 되는가에 대한 심층적 해석입니다.</div>
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 12px;">
+          • <strong>문명적 전환과 정신개벽</strong>: AI의 급격한 발전은 물질적 편리를 넘어 인간 정신의 본질적 가치와 삶의 방향을 묻고 있습니다. 종교는 과거의 관성에 머물지 않고 기술을 배척하는 것이 아니라 도구로 삼아 인간의 영적 성장을 조력해야 합니다.<br>
+          • <strong>역할 분담과 전념</strong>: 교역자는 번잡한 잡무에서 벗어나 영적 지도력과 마음공부 지도(본질)에 전념하고, 행정적 효율성과 안정된 살림(기반)은 AI와 교구 시스템이 떠받칩니다.<br>
+          • <strong>살아있는 나침반</strong>: 거버넌스의 기준과 데이터의 관찰이 맞물릴 때, 교화 시스템은 급변하는 인공지능 시대 속에서도 방향을 잃지 않고 현대인의 상실된 정신을 치유하는 시대적 등대가 됩니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TAB 3 : 검증 산출물 도서관 ================= -->
+  <div id="tab-research-library" class="tab-panel">
+    <div class="hero" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(56, 189, 248, 0.08) 100%);">
+      <span class="hero-tag" style="background: rgba(74, 222, 128, 0.15); color: var(--accent-green);">서울교구 검증 완료 연구 전수</span>
+      <h1>8대 영역별 검증 연구보고서 도서관</h1>
+      <p class="hero-desc">
+        빅데이터 실측 및 계량 분석으로 검증이 완료된 서울교구 연구산출물만 엄선하여 제공합니다. (미확정 개별 교당 시나리오 및 타 교구 자료는 제외되었습니다.)
+      </p>
+    </div>
+
+    <!-- 검색 및 8대 요소 필터 -->
+    <div class="search-wrapper">
+      <input type="text" id="report-search4" class="search-input" placeholder="🔍 보고서 제목, 연구 내용, 핵심 수치를 검색하세요..." onkeyup="filterReports()">
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-pill active" onclick="filterByArea('all')">전체보기</button>
+      <button class="filter-pill" onclick="filterByArea('area-교역자')">① 교역자</button>
+      <button class="filter-pill" onclick="filterByArea('area-콘텐츠')">② 콘텐츠</button>
+      <button class="filter-pill" onclick="filterByArea('area-대상')">③ 대상(미래세대)</button>
+      <button class="filter-pill" onclick="filterByArea('area-행정')">④ 행정</button>
+      <button class="filter-pill" onclick="filterByArea('area-공간')">⑤ 공간</button>
+      <button class="filter-pill" onclick="filterByArea('area-재정')">⑥ 재정</button>
+      <button class="filter-pill" onclick="filterByArea('area-데이터')">⑦ 데이터</button>
+      <button class="filter-pill" onclick="filterByArea('area-거버넌스')">⑧ 거버넌스</button>
+    </div>
+
+    <!-- 산출물 카드 그리드 -->
+    <div class="grid-2" id="reports-grid4">
+
+      <!-- 1. 교화단장 양성정책 효과분석 -->
+      <div class="card" data-area="area-교역자 area-대상">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">①-5 과제</span>
+        </div>
+        <div class="card-title">2만 교화단장 양성정책의 교화성장 효과 분석</div>
+        <div class="card-desc">재가 교화단 조직 및 단장 양성 정책이 실제 교화 성장에 미친 영향을 패널 데이터로 계량 실측.</div>
+        <div class="card-metric">👥 재가 교화단 활성화 및 교역자-재가 간 역할 분담 표준화의 실증적 근거 확보</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EC%A0%84%EC%83%81%ED%98%84_2021_%EA%B5%90%ED%99%94%EB%8B%A8%EC%9E%A5%EC%96%91%EC%84%B1%EC%A0%95%EC%B1%85_1.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 2. 복수배치 비대칭성 -->
+      <div class="card" data-area="area-교역자 area-대상">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">①-4 과제</span>
+        </div>
+        <div class="card-title">교역자 복수배치 인과분석 & 거점화 비대칭성 검정</div>
+        <div class="card-desc">교무 배치 변화와 청소년 교화 활동 패널을 이벤트 스터디로 검정. 늘릴 때의 효과보다 줄일 때의 파괴적 비대칭성 규명.</div>
+        <div class="card-metric">📉 인력 감원 시 청소년활동 즉각 -18.7%p 붕괴 (증원 시 회복은 +9.1%p에 불과)</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EC%84%9C%EC%9A%B8%EA%B5%90%EA%B5%AC_%EB%B3%B5%EC%88%98%EB%B0%B0%EC%B9%98_%EC%9D%B8%EA%B3%BC%EB%B6%84%EC%84%9D_111.07.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 3. 공간통합 실증 (SCM) -->
+      <div class="card" data-area="area-공간">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">②-5 과제</span>
+        </div>
+        <div class="card-title">서울교구 교당통합 효과분석 (합성통제법 SCM)</div>
+        <div class="card-desc">과거 통폐합 사례를 합성통제법(SCM)으로 자연실험 재검정. 대등한 결합만 출석 총량을 방어하며 일방적 흡수 통합은 무효임을 규명.</div>
+        <div class="card-metric">🏛️ 서울 56개 교당 적용 시 일방 통합 적격 교당 0곳 (공동교화가 정답)</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EA%B5%90%EB%8B%B9%ED%86%B5%ED%95%A9%20%ED%9A%A8%EA%B3%BC%EB%B6%84%EC%84%9D(%EC%84%9C%EC%9A%B8%EA%B5%90%EA%B5%AC)111.04.27.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 4. 교당-거주지 거리 분석 -->
+      <div class="card" data-area="area-공간 area-대상">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">②-2 과제</span>
+        </div>
+        <div class="card-title">교당-거주지 거리 분석 (원기108~111년)</div>
+        <div class="card-desc">교도 주소지와 출석 교당 간의 물리적 거리 분석. 교도 68%가 거주지 행정동 밖의 교당에 출석하여 단순 거리 논거 기각.</div>
+        <div class="card-metric">🚗 교도 68% 원거리 출석 ➔ "가까워서 나오는 것이 아니라 만남과 법문 때문에 나온다"</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EA%B5%90%EB%8B%B9-%EA%B1%B0%EC%A3%BC%EC%A7%80%20%EA%B1%B0%EB%A6%AC%EB%B6%84%EC%84%9D_108-111%EB%85%84.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 5. 부모와 아이는 함께 나온다 -->
+      <div class="card" data-area="area-대상">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">④-4 과제</span>
+        </div>
+        <div class="card-title">부모와 아이는 함께 나온다 — 부모자녀 법회출석 분석</div>
+        <div class="card-desc">부모의 법회 출석 빈도와 자녀(어린이·학생)의 법회 출석 간의 상관계수 및 연쇄 출석 효과 실측.</div>
+        <div class="card-metric">👨‍👩‍👧 부모 출석 시 자녀 출석 확률 4.2배 상승 / 3040 부모 세대 교화가 미래세대의 열쇠</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EB%B6%80%EB%AA%A8%EC%9E%90%EB%85%80_%EB%B2%95%ED%9A%8C%EC%B6%9C%EC%84%9D_%EC%89%AC%EC%9A%B4%EB%B3%B4%EA%B3%A0%EC%84%9C%20(2).html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 6. 서울교구 연령 구조 분석 -->
+      <div class="card" data-area="area-대상">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">④-5 과제</span>
+        </div>
+        <div class="card-title">서울교구 연령 구조 분석 (원기97~111년)</div>
+        <div class="card-desc">서울교구 교도 인구 피라미드 및 세대별 출석 추이 15년 패널 분석. 청소년 및 2030 세대 단절 실태 규명.</div>
+        <div class="card-metric">📉 60대 이상 71.4% 집중, 2030 청년층 8.2%로 감소 ➔ 세대 단절 극복 시급</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/seoul-diocese-age-analysis.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 7. 교당 재무상태 및 보험 단체계약 -->
+      <div class="card" data-area="area-재정">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">⑦-1 · ②-7 과제</span>
+        </div>
+        <div class="card-title">서울교구 교당 재무상태 분석 및 단체보험 통합</div>
+        <div class="card-desc">교당 결산서 358만 행 빅데이터 분석. 재정 투입과 교화 성장의 직접 인과 기각 및 공통비용(보험) 단체통합 절감액 실측.</div>
+        <div class="card-metric">💰 교구 화재·배상보험 단체계약 시 연 9.8억 절감 (교당 간 17배 보험료 격차 해소)</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EC%84%9C%EC%9A%B8%EA%B5%90%EA%B5%AC%20%EA%B5%90%EB%8B%B9%20%EC%9E%AC%EB%AC%B4%EC%83%81%ED%83%9C%20%EB%B6%84%EC%84%9D.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+      <!-- 8. 일반교도 1차 설문 (N=633) -->
+      <div class="card" data-area="area-거버넌스 area-데이터">
+        <div class="card-header">
+          <span class="card-badge badge-verified">🟢 분석완료</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">⑤-1 과제</span>
+        </div>
+        <div class="card-title">일반교도 1차 설문 분석 보고서 (N=633)</div>
+        <div class="card-desc">서울교구 일반교도 633명 대상 교화구조개선 설문 전수 분석. 교도들의 가장 절실한 요구와 지향점 실증.</div>
+        <div class="card-metric">🗣️ 52.4% "교당이 행정에서 벗어나 마음공부·신앙수행에 전념해야 한다"</div>
+        <div class="card-actions">
+          <a href="https://junsh83.github.io/Restructuring/%EC%9D%BC%EB%B0%98%EA%B5%90%EB%8F%84%EC%84%A4%EB%AC%B8_%EB%B6%84%EC%84%9D_N633.html" target="_blank" class="btn">웹 리포트 ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= TAB 4 : 설문조사 & 빅데이터 통계관 ================= -->
+  <div id="tab-survey-data" class="tab-panel">
+    <div class="hero" style="background: linear-gradient(135deg, rgba(192, 132, 252, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);">
+      <span class="hero-tag" style="background: rgba(192, 132, 252, 0.15); color: var(--accent-purple);">현장 목소리 & 통계 실측</span>
+      <h1>일반교도 설문(N=633) & 검증 데이터 통계</h1>
+      <p class="hero-desc">
+        교화구조개선의 방향은 추론이 아니라 현장 교도 633명의 설문 응답과 서울교구 15년 패널 빅데이터 분석 결과에 의해 명확히 입증되었습니다.
+      </p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 24px;">
+      <!-- 일반교도 설문 핵심 -->
+      <div class="card">
+        <div class="card-title" style="color: var(--accent-purple); font-size: 1.25rem;">📊 일반교도 633명의 핵심 요구</div>
+        <div class="card-desc">일반교도 1차 설문(N=633)에서 교도들이 응답한 교화구조개선의 최우선 과제</div>
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700; margin-bottom:4px;">
+            <span>1. 교역자의 행정 경감 및 마음공부 전념</span>
+            <span style="color:var(--accent-gold);">52.4%</span>
+          </div>
+          <div style="background:var(--bg-card-alt); height:10px; border-radius:5px; overflow:hidden;">
+            <div style="background:var(--accent-gold); width:52.4%; height:100%;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700; margin-bottom:4px;">
+            <span>2. 미래세대(청소년·청년) 특화 프로그램 지원</span>
+            <span style="color:var(--accent-blue);">48.1%</span>
+          </div>
+          <div style="background:var(--bg-card-alt); height:10px; border-radius:5px; overflow:hidden;">
+            <div style="background:var(--accent-blue); width:48.1%; height:100%;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700; margin-bottom:4px;">
+            <span>3. 권역별 교당 간 교역자·프로그램 협력(공동교화)</span>
+            <span style="color:var(--accent-green);">41.7%</span>
+          </div>
+          <div style="background:var(--bg-card-alt); height:10px; border-radius:5px; overflow:hidden;">
+            <div style="background:var(--accent-green); width:41.7%; height:100%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 교당-거주지 거리 및 출석 특성 실측 -->
+      <div class="card">
+        <div class="card-title" style="color: var(--accent-blue); font-size: 1.25rem;">🚗 교도 출석 이동거리 & 세대 연쇄 실측</div>
+        <div class="card-desc">서울교구 교도 거주지 분석 및 부모-자녀 출석 패널 실측 통계</div>
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700; margin-bottom:4px;">
+            <span>거주 행정동 밖 타 지역 교당 원거리 출석률</span>
+            <span style="color:var(--accent-blue);">68.0%</span>
+          </div>
+          <div style="background:var(--bg-card-alt); height:10px; border-radius:5px; overflow:hidden;">
+            <div style="background:var(--accent-blue); width:68.0%; height:100%;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700; margin-bottom:4px;">
+            <span>부모 법회 출석 시 자녀 출석 상승 배수</span>
+            <span style="color:var(--accent-green);">4.2배</span>
+          </div>
+          <div style="background:var(--bg-card-alt); height:10px; border-radius:5px; overflow:hidden;">
+            <div style="background:var(--accent-green); width:84.0%; height:100%;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700; margin-bottom:4px;">
+            <span>60대 이상 고령 교도 비중 (세대단절 극복 시급)</span>
+            <span style="color:var(--accent-gold);">71.4%</span>
+          </div>
+          <div style="background:var(--bg-card-alt); height:10px; border-radius:5px; overflow:hidden;">
+            <div style="background:var(--accent-gold); width:71.4%; height:100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer style="border-top: 1px solid var(--border-color); padding: 32px 24px; text-align: center; color: var(--text-muted); font-size: 0.88rem; background: var(--bg-card);">
+  <p style="font-weight: 700; margin-bottom: 6px; color: var(--text-main);">원불교 서울교구 교화구조개선 TF</p>
+  <p>본 포털에 수록된 모든 산출물은 교구 원자료와 빅데이터 실측을 기반으로 검증되었습니다.</p>
+</footer>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  
+  const targetPanel = document.getElementById('tab-' + tabId);
+  if (targetPanel) {
+    targetPanel.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  const buttons = document.querySelectorAll('.nav-tab-btn');
+  buttons.forEach(btn => {
+    if (btn.getAttribute('onclick').includes(tabId)) {
+      btn.classList.add('active');
+    }
+  });
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('light-theme');
+  const isLight = document.body.classList.contains('light-theme');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+if (localStorage.getItem('theme') === 'light') {
+  document.body.classList.add('light-theme');
+}
+
+function toggleAccordion(header) {
+  const item = header.parentElement;
+  item.classList.toggle('open');
+}
+
+function filterByArea(areaClass) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('#reports-grid4 .card');
+  cards.forEach(card => {
+    if (areaClass === 'all') {
+      card.style.display = 'block';
+    } else {
+      const cardAreas = card.getAttribute('data-area') || '';
+      if (cardAreas.includes(areaClass)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  });
+}
+
+function filterReports() {
+  const query = document.getElementById('report-search4').value.toLowerCase();
+  const cards = document.querySelectorAll('#reports-grid4 .card');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    if (text.includes(query)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>

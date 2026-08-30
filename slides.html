@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교화구조개선 2차 중간보고 — 발표자료 v2 (키워드 강조판)</title>
+<style>
+:root {
+  --bg-main: #0b0f19;
+  --bg-card: #151d30;
+  --bg-card-alt: #1c2640;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-blue: #38bdf8;
+  --accent-green: #4ade80;
+  --accent-amber: #fbbf24;
+  --accent-purple: #c084fc;
+  --border-color: #24324f;
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#presentation-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 1260px;
+  height: 92%;
+  max-height: 750px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  padding: 44px 56px;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow-y: auto;
+}
+
+.slide.active {
+  display: flex;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.slide-title {
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  letter-spacing: -0.5px;
+}
+
+.slide-tag {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.tag-blue { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+.tag-green { background: rgba(74, 222, 128, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+.tag-amber { background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
+.tag-purple { background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+
+.portal-btn {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: var(--accent-amber);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.portal-btn:hover {
+  background: var(--accent-amber);
+  color: #0b0f19;
+  transform: translateY(-1px);
+}
+
+.slide-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 26px;
+  height: 100%;
+}
+
+.card {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.3px;
+}
+
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 1.32rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+}
+
+.bullet-list li strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.bullet-list li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: var(--accent-blue);
+  font-weight: 900;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.list-green li::before { color: var(--accent-green); }
+.list-amber li::before { color: var(--accent-amber); }
+.list-purple li::before { color: var(--accent-purple); }
+
+/* Slide 1 : Cover */
+.slide-cover {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+}
+
+.cover-badge {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid var(--accent-blue);
+  padding: 9px 24px;
+  border-radius: 30px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.cover-title {
+  font-size: 3.6rem;
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+}
+
+.cover-boxes {
+  display: flex;
+  gap: 28px;
+  max-width: 1040px;
+  margin: 10px 0 40px;
+  width: 100%;
+}
+
+.cover-box {
+  flex: 1;
+  background: var(--bg-card-alt);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+/* Controls */
+#controls {
+  height: 64px;
+  background: #080c14;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+}
+
+.nav-btn {
+  background: var(--bg-card-alt);
+  color: #fff;
+  border: 1px solid var(--border-color);
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: var(--accent-blue);
+  color: #0b0f19;
+  border-color: var(--accent-blue);
+}
+
+.progress-container {
+  flex: 1;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 4px;
+  margin: 0 36px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 11.1%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+  transition: width 0.3s ease;
+}
+
+/* Light Theme Support */
+body.light-theme {
+  --bg-main: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f8fafc;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --accent-blue: #0284c7;
+  --accent-green: #16a34a;
+  --accent-amber: #d97706;
+  --accent-purple: #9333ea;
+  --border-color: #cbd5e1;
+}
+
+body.light-theme .slide {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+body.light-theme .slide-title {
+  color: #0f172a;
+}
+body.light-theme .bullet-list li {
+  color: #334155;
+}
+body.light-theme .bullet-list li strong {
+  color: #0f172a;
+}
+body.light-theme .cover-title {
+  background: linear-gradient(135deg, #0f172a 40%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+body.light-theme #controls {
+  background: #e2e8f0;
+}
+body.light-theme .nav-btn {
+  color: #0f172a;
+  background: #ffffff;
+}
+
+/* Print (인쇄 및 PDF 내보내기) 최적화 - 브라우저 메타정보(URL, 날짜, 헤더/푸터) 원천 차단 */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  
+  body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+    height: auto !important;
+    --bg-main: #ffffff !important;
+    --bg-card: #ffffff !important;
+    --bg-card-alt: #f8fafc !important;
+    --text-main: #0f172a !important;
+    --text-muted: #475569 !important;
+    --accent-blue: #0284c7 !important;
+    --accent-green: #16a34a !important;
+    --accent-amber: #d97706 !important;
+    --accent-purple: #9333ea !important;
+    --border-color: #cbd5e1 !important;
+  }
+
+  #presentation-container {
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .slide {
+    display: flex !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    max-width: none !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 18mm 22mm !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+  }
+
+  .slide-title {
+    color: #0f172a !important;
+  }
+
+  .bullet-list li {
+    color: #1e293b !important;
+  }
+
+  .bullet-list li strong {
+    color: #0f172a !important;
+  }
+
+  .cover-title {
+    background: none !important;
+    -webkit-text-fill-color: #0f172a !important;
+    color: #0f172a !important;
+  }
+
+  .card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  .slide svg rect[fill="#1e293b"] { fill: #f1f5f9 !important; stroke: #94a3b8 !important; }
+  .slide svg rect[fill="#0f172a"] { fill: #ffffff !important; stroke: #cbd5e1 !important; }
+  .slide svg text[fill="#ffffff"] { fill: #0f172a !important; }
+  .slide svg text[fill="#f8fafc"] { fill: #0f172a !important; }
+
+  #controls {
+    display: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="presentation-container">
+
+  <!-- SLIDE 1 : 표지 -->
+  <div class="slide slide-cover active" data-slide="1">
+    <div class="cover-badge">원기111(2026)년 8월 31일 · 출가교역자협의회 2차 중간보고</div>
+    <h1 class="cover-title">서울교구 교화구조개선<br>2차 중간보고</h1>
+    
+    <div class="cover-boxes">
+      <div class="cover-box" style="border-top: 5px solid var(--accent-blue); text-align: center; padding: 26px 20px;">
+        <div style="color: var(--accent-blue); font-weight: 800; font-size: 1.55rem; letter-spacing: -0.5px;">
+          본질에 집중하게 하는 구조
+        </div>
+      </div>
+      <div class="cover-box" style="border-top: 5px solid var(--accent-green); text-align: center; padding: 26px 20px;">
+        <div style="color: var(--accent-green); font-weight: 800; font-size: 1.55rem; letter-spacing: -0.5px;">
+          미래세대 교화를 위한 구조
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 1.15rem; color: var(--text-muted); font-weight: 600;">
+      원불교 서울교구 교화구조개선 TF
+    </div>
+    <div style="margin-top: 24px;">
+      <a href="index.html" target="_blank" class="portal-btn" style="font-size: 1.05rem; padding: 10px 22px;">🌐 연구산출물 종합 포털 열기 ↗</a>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 : 1차 출교협 이후 추진 경과 -->
+  <div class="slide" data-slide="2">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-purple">추진 경과</span>
+        <h2 class="slide-title">1차 출교협 이후 주요 진행 경과</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">1차 델파이 피드백에서 교구 3계열 데이터 분석 및 현장 인터뷰까지</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-purple); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🚀</div>
+          <div class="card-title" style="color: var(--accent-purple); font-size: 1.75rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            1차 델파이-R1 반영 &<br>핵심 과제 도출
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-purple); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">📊</div>
+          <div class="card-title" style="color: var(--accent-purple); font-size: 1.75rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            교구 3계열 데이터<br>(교도·재정·인사) 분석
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-purple); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🗣️</div>
+          <div class="card-title" style="color: var(--accent-purple); font-size: 1.75rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            일반교도 설문 &<br>현장 심층 인터뷰
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 : 보고의 성격과 세 가지 기본 관점 -->
+  <div class="slide" data-slide="3">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-blue">보고 성격</span>
+        <h2 class="slide-title">보고의 성격과 세 가지 기본 관점</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">단순 공간 조정을 넘어선 종합 시스템 설계</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🔄</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            지속가능한<br>시스템 설계
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">📊</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            데이터 기반<br>현장 진단
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🤝</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            현장 참여형<br>의견 수렴
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 : 교화구조 시스템 모형 (도해판 정본 - 와이드 대형 글자판) -->
+  <div class="slide" data-slide="4">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-blue">시스템 도해</span>
+        <h2 class="slide-title">교화구조 시스템 모형</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">본질(중심) ── 기반(터전) ── 환류(나침반) 그리고 세상과의 순환</div>
+      </div>
+    </div>
+    <div class="slide-body" style="justify-content: center; align-items: center; padding: 0;">
+      <div style="background: #090d16; border-radius: 20px; padding: 12px 18px; border: 1px solid var(--border-color); width: 100%; max-width: 1040px; text-align: center;">
+        <svg viewBox="0 0 940 550" width="100%" height="475" role="img" aria-label="교화구조 시스템 모형">
+          <defs>
+            <marker id="arrow-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,1.5 L8,5 L0,8.5 z" fill="#94a3b8"/>
+            </marker>
+            <marker id="arrow-gray-left" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M8,1.5 L0,5 L8,8.5 z" fill="#94a3b8"/>
+            </marker>
+            <marker id="arrow-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,1.5 L8,5 L0,8.5 z" fill="#38bdf8"/>
+            </marker>
+            <marker id="arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,1.5 L8,5 L0,8.5 z" fill="#c084fc"/>
+            </marker>
+          </defs>
+
+          <!-- 상단 굵은 주황색 띠 (거버넌스 ➔ 세상 위 ➔ 데이터, 완전 대칭) -->
+          <path style="fill:none; stroke:#f59e0b; stroke-width:3.5" d="M82.5,63 L82.5,38 Q82.5,24 125,24 L815,24 Q857.5,24 857.5,38 L857.5,58"/>
+          <polygon points="857.5,63 849.5,51 865.5,51" fill="#f59e0b"/>
+
+          <!-- 하단 굵은 주황색 띠 (데이터 ➔ 기반 아래 ➔ 거버넌스, 완전 대칭) -->
+          <path style="fill:none; stroke:#f59e0b; stroke-width:3.5" d="M857.5,487 L857.5,512 Q857.5,526 815,526 L125,526 Q82.5,526 82.5,512 L82.5,492"/>
+          <polygon points="82.5,487 74.5,499 90.5,499" fill="#f59e0b"/>
+
+          <!-- 좌측 거버넌스 상자 (세상 상단 ~ 기반 하단과 완벽 일치) -->
+          <rect x="30" y="63" width="105" height="424" rx="16" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2.6"/>
+          <text x="82.5" y="190" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">거</text>
+          <text x="82.5" y="250" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">버</text>
+          <text x="82.5" y="310" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">넌</text>
+          <text x="82.5" y="370" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">스</text>
+
+          <!-- 우측 데이터 상자 (세상 상단 ~ 기반 하단과 완벽 일치) -->
+          <rect x="805" y="63" width="105" height="424" rx="16" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2.6"/>
+          <text x="857.5" y="220" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">데</text>
+          <text x="857.5" y="280" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">이</text>
+          <text x="857.5" y="340" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">터</text>
+
+          <!-- 세상 상자 (균등 간격 39px 적용, 폭 520px) -->
+          <rect x="210" y="63" width="520" height="54" rx="16" fill="#1e293b" stroke="#94a3b8" stroke-width="2.2" stroke-dasharray="6 4"/>
+          <text x="470" y="98" text-anchor="middle" font-size="22" font-weight="900" fill="#ffffff" letter-spacing="0.15em">세    상</text>
+
+          <!-- 본질 상자 (균등 간격 39px 적용, 폭 520px) -->
+          <rect x="210" y="156" width="520" height="146" rx="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.6"/>
+          <text x="235" y="180" font-size="18" font-weight="900" letter-spacing="0.1em" fill="#38bdf8">본  질</text>
+          
+          <rect x="225" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="298" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">교역자</text>
+          
+          <rect x="397" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="470" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">콘텐츠</text>
+          
+          <rect x="569" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="642" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">대  상</text>
+
+          <!-- 기반 상자 (균등 간격 39px 적용, 폭 520px) -->
+          <rect x="210" y="341" width="520" height="146" rx="16" fill="#1e293b" stroke="#4ade80" stroke-width="2.6" stroke-dasharray="8 5"/>
+          <text x="235" y="365" font-size="18" font-weight="900" letter-spacing="0.1em" fill="#4ade80">기  반</text>
+          
+          <rect x="225" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="298" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">행  정</text>
+          
+          <rect x="397" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="470" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">공  간</text>
+          
+          <rect x="569" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="642" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">재  정</text>
+
+          <!-- 3단 좌우 완벽 수평 화살표들 (길이 65px 완벽 일치) -->
+          <!-- 1단(상단): 거버넌스 ⟷ 세상 (영향, 양방향) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="90" x2="205" y2="90" marker-start="url(#arrow-gray-left)" marker-end="url(#arrow-gray)"/>
+          <text x="172" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">영향</text>
+
+          <!-- 1단(상단): 세상 ➔ 데이터 (관찰, 완벽 수평) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="90" x2="800" y2="90" marker-end="url(#arrow-gray)"/>
+          <text x="768" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 2단(중단): 거버넌스 ➔ 본질 (기준) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="229" x2="205" y2="229" marker-end="url(#arrow-gray)"/>
+          <text x="172" y="221" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">기준</text>
+
+          <!-- 2단(중단): 본질 ➔ 데이터 (관찰) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="229" x2="800" y2="229" marker-end="url(#arrow-gray)"/>
+          <text x="768" y="221" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 3단(하단): 거버넌스 ➔ 기반 (배분) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="414" x2="205" y2="414" marker-end="url(#arrow-gray)"/>
+          <text x="172" y="406" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">배분</text>
+
+          <!-- 3단(하단): 기반 ➔ 데이터 (관찰) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="414" x2="800" y2="414" marker-end="url(#arrow-gray)"/>
+          <text x="768" y="406" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 내부 상하 화살표들 -->
+          <!-- 기반 ➔ 본질 (지원) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="470" y1="341" x2="470" y2="307" marker-end="url(#arrow-gray)"/>
+          <text x="488" y="326" font-size="15" font-weight="800" fill="#94a3b8">지원</text>
+
+          <!-- 본질 ➔ 세상 (유익) -->
+          <line style="fill:none; stroke:#c084fc; stroke-width:2.2" x1="340" y1="156" x2="340" y2="122" marker-end="url(#arrow-purple)"/>
+          <text x="328" y="141" text-anchor="end" font-size="15" font-weight="800" fill="#c084fc">유익</text>
+
+          <!-- 세상 ➔ 대상 (유입) -->
+          <line style="fill:none; stroke:#38bdf8; stroke-width:2.2" x1="642" y1="117" x2="642" y2="190" marker-end="url(#arrow-blue)"/>
+          <text x="630" y="145" text-anchor="end" font-size="15" font-weight="800" fill="#38bdf8">유입</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 : 교화구조 시스템 모형 3대 핵심 원리 -->
+  <div class="slide" data-slide="5">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-blue">시스템 원리</span>
+        <h2 class="slide-title">교화구조 시스템 모형의 3대 핵심 원리</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">단계별 역할 설정과 살아있는 양방향 환류 체계</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 2.8rem; font-weight: 900; color: var(--accent-blue); margin-bottom: 20px;">01</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            단계별<br>역할 설정
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-amber); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 2.8rem; font-weight: 900; color: var(--accent-amber); margin-bottom: 20px;">02</div>
+          <div class="card-title" style="color: var(--accent-amber); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            양방향<br>환류 고리
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-green); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 2.8rem; font-weight: 900; color: var(--accent-green); margin-bottom: 20px;">03</div>
+          <div class="card-title" style="color: var(--accent-green); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            세상과의<br>열린 순환
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 : 제1축 본질에 집중하게 하는 구조 (v2: 타이틀 중심 강조) -->
+  <div class="slide" data-slide="6">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-blue">핵심 전략 1</span>
+        <h2 class="slide-title">제1축 : 본질에 집중하게 하는 교화구조</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">교역자 사명 회복과 행정 부담 경감</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 24px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🏛️</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.8rem; margin-bottom: 0; justify-content: center; text-align: center; white-space: nowrap;">
+            교구 행정지원 강화
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 24px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">👥</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.8rem; margin-bottom: 0; justify-content: center; text-align: center; white-space: nowrap;">
+            재가교도 역할 확대
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 24px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🤝</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 1.8rem; margin-bottom: 0; justify-content: center; text-align: center; white-space: nowrap;">
+            공동 행정인력 추진
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 : 제2축 미래세대 교화를 위한 구조 (v2: 타이틀 중심 강조) -->
+  <div class="slide" data-slide="7">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-green">핵심 전략 2</span>
+        <h2 class="slide-title">제2축 : 미래세대 교화를 위한 교화구조</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">청소년·3040 세대교화 기반 구축</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-green); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🏢</div>
+          <div class="card-title" style="color: var(--accent-green); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            권역별 연합<br>세대교화
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-green); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">🎯</div>
+          <div class="card-title" style="color: var(--accent-green); font-size: 1.85rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            열린 접점과<br>단계적 정착
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-green); justify-content: center; align-items: center; text-align: center; padding: 48px 24px;">
+          <div style="font-size: 3.5rem; margin-bottom: 24px;">❤️</div>
+          <div class="card-title" style="color: var(--accent-green); font-size: 1.8rem; margin-bottom: 0; justify-content: center; text-align: center; line-height: 1.4;">
+            생애주기별<br>맞춤 프로그램 지원
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 : 현장 진단에 따른 공간 연계 모델 (v2: 타이틀+부제목 중심 강조) -->
+  <div class="slide" data-slide="8">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-amber">공간 모델</span>
+        <h2 class="slide-title">현장 진단에 따른 공간 연계 모델</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">교당별 상황에 따른 단계적 모델</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 20px;">🤝</div>
+          <div class="card-title" style="color: var(--accent-blue); font-size: 2.1rem; margin-bottom: 14px; justify-content: center;">
+            공동교화
+          </div>
+          <div style="font-size: 1.35rem; color: #93c5fd; font-weight: 700;">
+            연계 · 협력
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-green); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 20px;">🏢</div>
+          <div class="card-title" style="color: var(--accent-green); font-size: 2.1rem; margin-bottom: 14px; justify-content: center;">
+            거점교화
+          </div>
+          <div style="font-size: 1.35rem; color: #86efac; font-weight: 700;">
+            권역별 집중
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--accent-amber); justify-content: center; align-items: center; text-align: center; padding: 48px 32px;">
+          <div style="font-size: 3.5rem; margin-bottom: 20px;">🏛️</div>
+          <div class="card-title" style="color: var(--accent-amber); font-size: 2.1rem; margin-bottom: 14px; justify-content: center;">
+            통합교화
+          </div>
+          <div style="font-size: 1.35rem; color: #fde047; font-weight: 700;">
+            자발적 결합
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 : 향후 추진 로드맵 -->
+  <div class="slide" data-slide="9">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-purple">추진 로드맵</span>
+        <h2 class="slide-title">향후 추진 일정 (9월 ~ 12월)</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="index.html" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">교구 구성원의 지혜를 모아 상설 실행 체제로 전환</div>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="card" style="border-left: 6px solid var(--accent-blue); justify-content: center; padding: 36px 32px;">
+          <div style="font-size: 1.15rem; color: var(--accent-blue); font-weight: 800; margin-bottom: 8px;">STEP 01 · 9월</div>
+          <div class="card-title" style="color: #ffffff; font-size: 1.75rem; margin-bottom: 0;">
+            델파이-R2 전수 정책 설문
+          </div>
+        </div>
+
+        <div class="card" style="border-left: 6px solid var(--accent-amber); justify-content: center; padding: 36px 32px;">
+          <div style="font-size: 1.15rem; color: var(--accent-amber); font-weight: 800; margin-bottom: 8px;">STEP 02 · 10월</div>
+          <div class="card-title" style="color: #ffffff; font-size: 1.75rem; margin-bottom: 0;">
+            정책 권고안 초안 작성
+          </div>
+        </div>
+
+        <div class="card" style="border-left: 6px solid var(--accent-purple); justify-content: center; padding: 36px 32px;">
+          <div style="font-size: 1.15rem; color: var(--accent-purple); font-weight: 800; margin-bottom: 8px;">STEP 03 · 11월</div>
+          <div class="card-title" style="color: #ffffff; font-size: 1.75rem; margin-bottom: 0;">
+            교구 상임위원회 심의
+          </div>
+        </div>
+
+        <div class="card" style="border-left: 6px solid var(--accent-green); justify-content: center; padding: 36px 32px;">
+          <div style="font-size: 1.15rem; color: var(--accent-green); font-weight: 800; margin-bottom: 8px;">STEP 04 · 12월</div>
+          <div class="card-title" style="color: #ffffff; font-size: 1.75rem; margin-bottom: 0;">
+            교구 교의회 최종 의결
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 : 맺음말 -->
+  <div class="slide slide-cover" data-slide="10">
+    <div class="cover-badge" style="color: var(--accent-green); border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15);">
+      함께 만드는 지속가능한 교화
+    </div>
+    <h1 class="cover-title" style="font-size: 2.5rem;">
+      "본질에 집중하고 미래세대를 살리는<br>살아있는 교화 생태계를 완성하겠습니다"
+    </h1>
+    <p style="font-size: 1.25rem; color: #cbd5e1; max-width: 840px; line-height: 1.8; margin-bottom: 36px;">
+      9월에 진행되는 <strong>델파이-R2 정책 설문</strong>에<br>
+      교구 구성원 여러분의 지혜와 뜻을 모아 주십시오.
+    </p>
+    <div style="font-size: 1.1rem; color: var(--text-muted); font-weight: 700;">
+      원불교 서울교구 교화구조개선 TF
+    </div>
+    <div style="margin-top: 24px;">
+      <a href="index.html" target="_blank" class="portal-btn" style="font-size: 1.05rem; padding: 10px 22px;">🌐 연구산출물 종합 포털 열기 ↗</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- 컨트롤 패널 -->
+<div id="controls">
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <button class="nav-btn" id="prev-btn">◀ 이전</button>
+    <button class="nav-btn" id="theme-btn" title="화면 테마 전환 (라이트/다크)">☀️ 테마</button>
+    <a href="index.html" target="_blank" class="nav-btn" style="text-decoration: none; color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.45);" title="연구산출물 종합 포털 새 탭 열기">🌐 연구포털 ↗</a>
+  </div>
+  
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  
+  <div class="slide-counter" id="slide-counter">1 / 10</div>
+  
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <button class="nav-btn" id="print-btn" title="A4 인쇄 또는 PDF 저장">🖨️ 인쇄·PDF</button>
+    <button class="nav-btn" id="next-btn">다음 ▶</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 10;
+
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progress-bar');
+const slideCounter = document.getElementById('slide-counter');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const themeBtn = document.getElementById('theme-btn');
+const printBtn = document.getElementById('print-btn');
+
+function updateSlide(newSlide) {
+  if (newSlide < 1 || newSlide > totalSlides) return;
+  
+  slides.forEach(function(slide) {
+    slide.classList.remove('active');
+  });
+  
+  const targetSlide = document.querySelector('.slide[data-slide="' + newSlide + '"]');
+  if (targetSlide) {
+    targetSlide.classList.add('active');
+    currentSlide = newSlide;
+  }
+  
+  progressBar.style.width = ((currentSlide / totalSlides) * 100) + '%';
+  slideCounter.textContent = currentSlide + ' / ' + totalSlides;
+  
+  prevBtn.style.opacity = currentSlide === 1 ? '0.5' : '1';
+  nextBtn.style.opacity = currentSlide === totalSlides ? '0.5' : '1';
+}
+
+prevBtn.addEventListener('click', function() {
+  updateSlide(currentSlide - 1);
+});
+
+nextBtn.addEventListener('click', function() {
+  updateSlide(currentSlide + 1);
+});
+
+// 테마 토글 (라이트/다크 모드)
+themeBtn.addEventListener('click', function() {
+  document.body.classList.toggle('light-theme');
+  if (document.body.classList.contains('light-theme')) {
+    themeBtn.textContent = '🌙 다크';
+  } else {
+    themeBtn.textContent = '☀️ 라이트';
+  }
+});
+
+// 인쇄 / PDF 저장
+printBtn.addEventListener('click', function() {
+  window.print();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    updateSlide(currentSlide + 1);
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    updateSlide(currentSlide - 1);
+  } else if (e.key === 'Home') {
+    updateSlide(1);
+  } else if (e.key === 'End') {
+    updateSlide(totalSlides);
+  } else if (e.key === 't' || e.key === 'T') {
+    themeBtn.click();
+  }
+});
+
+updateSlide(1);
+</script>
+</body>
+</html>
