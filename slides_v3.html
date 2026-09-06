@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울교구 교화구조개선 교도회장 2차 설명회 — v3 11슬라이드</title>
+<style>
+:root {
+  --bg-main: #0b0f19;
+  --bg-card: #151d30;
+  --bg-card-alt: #1c2640;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-blue: #38bdf8;
+  --accent-green: #4ade80;
+  --accent-amber: #fbbf24;
+  --accent-purple: #c084fc;
+  --border-color: #24324f;
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#presentation-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 1260px;
+  height: 92%;
+  max-height: 750px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  padding: 44px 56px;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow-y: auto;
+}
+
+.slide.active {
+  display: flex;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.slide-title {
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  letter-spacing: -0.5px;
+}
+
+.slide-tag {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.tag-blue { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+.tag-green { background: rgba(74, 222, 128, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+.tag-amber { background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
+.tag-purple { background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+
+.portal-btn {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: var(--accent-amber);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.portal-btn:hover {
+  background: var(--accent-amber);
+  color: #0b0f19;
+  transform: translateY(-1px);
+}
+
+.slide-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 26px;
+  height: 100%;
+}
+
+.card {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+}
+
+.card p { font-size: 1.1rem; line-height: 1.65; color: var(--text-muted); }
+
+.card-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.3px;
+}
+
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 1.32rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+}
+
+.bullet-list li strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.bullet-list li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: var(--accent-blue);
+  font-weight: 900;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.list-green li::before { color: var(--accent-green); }
+.list-amber li::before { color: var(--accent-amber); }
+.list-purple li::before { color: var(--accent-purple); }
+
+/* Slide 1 : Cover */
+.slide-cover {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+}
+
+.cover-badge {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid var(--accent-blue);
+  padding: 9px 24px;
+  border-radius: 30px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.cover-title {
+  font-size: 3.6rem;
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+}
+
+.cover-boxes {
+  display: flex;
+  gap: 28px;
+  max-width: 1040px;
+  margin: 10px 0 40px;
+  width: 100%;
+}
+
+.cover-box {
+  flex: 1;
+  background: var(--bg-card-alt);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+/* Controls */
+#controls {
+  height: 64px;
+  background: #080c14;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+}
+
+.nav-btn {
+  background: var(--bg-card-alt);
+  color: #fff;
+  border: 1px solid var(--border-color);
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: var(--accent-blue);
+  color: #0b0f19;
+  border-color: var(--accent-blue);
+}
+
+.progress-container {
+  flex: 1;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 4px;
+  margin: 0 36px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 11.1%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+  transition: width 0.3s ease;
+}
+
+/* Light Theme Support */
+body.light-theme {
+  --bg-main: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f8fafc;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --accent-blue: #0284c7;
+  --accent-green: #16a34a;
+  --accent-amber: #d97706;
+  --accent-purple: #9333ea;
+  --border-color: #cbd5e1;
+}
+
+body.light-theme .slide {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+body.light-theme .slide-title {
+  color: #0f172a;
+}
+body.light-theme .bullet-list li {
+  color: #334155;
+}
+body.light-theme .bullet-list li strong {
+  color: #0f172a;
+}
+body.light-theme .cover-title {
+  background: linear-gradient(135deg, #0f172a 40%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+body.light-theme #controls {
+  background: #e2e8f0;
+}
+body.light-theme .nav-btn {
+  color: #0f172a;
+  background: #ffffff;
+}
+
+/* Print (인쇄 및 PDF 내보내기) 최적화 - 브라우저 메타정보(URL, 날짜, 헤더/푸터) 원천 차단 */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  
+  body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+    height: auto !important;
+    --bg-main: #ffffff !important;
+    --bg-card: #ffffff !important;
+    --bg-card-alt: #f8fafc !important;
+    --text-main: #0f172a !important;
+    --text-muted: #475569 !important;
+    --accent-blue: #0284c7 !important;
+    --accent-green: #16a34a !important;
+    --accent-amber: #d97706 !important;
+    --accent-purple: #9333ea !important;
+    --border-color: #cbd5e1 !important;
+  }
+
+  #presentation-container {
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .slide {
+    display: flex !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    max-width: none !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 18mm 22mm !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+  }
+
+  .slide-title {
+    color: #0f172a !important;
+  }
+
+  .bullet-list li {
+    color: #1e293b !important;
+  }
+
+  .bullet-list li strong {
+    color: #0f172a !important;
+  }
+
+  .cover-title {
+    background: none !important;
+    -webkit-text-fill-color: #0f172a !important;
+    color: #0f172a !important;
+  }
+
+  .card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  .slide svg rect[fill="#1e293b"] { fill: #f1f5f9 !important; stroke: #94a3b8 !important; }
+  .slide svg rect[fill="#0f172a"] { fill: #ffffff !important; stroke: #cbd5e1 !important; }
+  .slide svg text[fill="#ffffff"] { fill: #0f172a !important; }
+  .slide svg text[fill="#f8fafc"] { fill: #0f172a !important; }
+
+  #controls {
+    display: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="presentation-container">
+
+  <!-- SLIDE 1 : 표지 -->
+  <div class="slide slide-cover active" data-slide="1">
+    <div class="cover-badge">원기111(2026)년 9월 6일 · 서울교구 교도회장단 2차 설명회</div>
+    <h1 class="cover-title">서울교구 교화구조개선<br>교도회장 2차 설명회</h1>
+    <div style="font-size: 1.28rem; color: #cbd5e1; margin: -6px 0 18px; font-weight: 700;">교구 구성원 의견 수렴과 중간 연구결과를 바탕으로 한 설명·공론화 자료</div>
+    <div class="cover-boxes">
+      <div class="cover-box" style="border-top: 5px solid var(--accent-blue); text-align: center; padding: 26px 20px;">
+        <div style="color: var(--accent-blue); font-weight: 800; font-size: 1.55rem; letter-spacing: -0.5px;">본질에 집중하게 하는 구조</div>
+      </div>
+      <div class="cover-box" style="border-top: 5px solid var(--accent-green); text-align: center; padding: 26px 20px;">
+        <div style="color: var(--accent-green); font-weight: 800; font-size: 1.55rem; letter-spacing: -0.5px;">미래세대 교화를 위한 구조</div>
+      </div>
+    </div>
+    <div style="font-size: 1.15rem; color: var(--text-muted); font-weight: 600;">원불교 서울교구 교화구조개선 TF</div>
+    <div style="font-size:1rem; color:#f59e0b; font-style:italic; margin-top:10px; letter-spacing:0.05em; opacity:0.85;">"일원회상 영겁주인 일원대도 영겁법자" — 대산종사 법문</div>
+    <div style="margin-top: 24px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" style="font-size: 1.05rem; padding: 10px 22px;">🌐 연구산출물 종합 포털 열기 ↗</a></div>
+  </div>
+
+  <!-- SLIDE 2 : 추진 경과와 공통 신호 -->
+  <div class="slide" data-slide="2">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-purple">추진 경과</span><h2 class="slide-title">1차 보고 이후 진행 경과와 확인된 공통 신호</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">한두 사람의 의견이 아니라, 반복된 조사 신호에서 출발</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-purple); justify-content: center; text-align: center; padding: 34px 28px;"><div style="font-size: 3rem; margin-bottom: 18px;">🚀</div><div class="card-title" style="color: var(--accent-purple); font-size: 1.55rem; justify-content:center;">델파이 R1<br>광역패널 71명</div><p style="color:var(--text-muted); line-height:1.55;">개방형 문항에서 교화 본질·위기·역할 분담의 문제의식을 수렴했습니다.<br><b style="color:#fff;">※ 합의율이 아니라 언급률</b></p></div>
+        <div class="card" style="border-top: 5px solid var(--accent-purple); justify-content: center; text-align: center; padding: 34px 28px;"><div style="font-size: 3rem; margin-bottom: 18px;">📊</div><div class="card-title" style="color: var(--accent-purple); font-size: 1.55rem; justify-content:center;">교구 3계열<br>기초자료 분석</div><p style="color:var(--text-muted); line-height:1.55;">교도·재정·인사 자료를 중심으로 출석·재정·배치의 구조적 병목을 확인했습니다.</p></div>
+        <div class="card" style="border-top: 5px solid var(--accent-purple); justify-content: center; text-align: center; padding: 34px 28px;"><div style="font-size: 3rem; margin-bottom: 18px;">🗣️</div><div class="card-title" style="color: var(--accent-purple); font-size: 1.55rem; justify-content:center;">일반교도 설문<br>N=633</div><p style="color:var(--text-muted); line-height:1.55;">“교도님이 생각하는 교화란 무엇입니까?” 문항에서 마음공부·신앙수행이 52.4%로 가장 높았습니다.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 : 위기 신호 -->
+  <div class="slide" data-slide="3">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-amber">위기 진단</span><h2 class="slide-title">현장이 보내는 세 가지 위기 신호</h2></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn">🌐 연구포털 ↗</a><div class="slide-subtitle">위기의식을 느낄 수 있는 데이터를 공유드립니다</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top:5px solid #fb7185; padding:30px; justify-content:flex-start; align-items:flex-start; text-align:left;">
+          <div class="card-title" style="color:#fb7185; justify-content:flex-start;">① 세대 단절</div>
+          <p>교도 60대 이상 <b style="color:#fff;">71.4%</b> 집중. 청년·신규 부재를 위기 원인으로 꼽은 응답이 <b style="color:#fff;">77.1%</b>.</p>
+          <p style="margin-top:10px;">청년층이 들어올 문턱이 좁아지고 있습니다.</p>
+        </div>
+        <div class="card" style="border-top:5px solid #fb7185; padding:30px; justify-content:flex-start; align-items:flex-start; text-align:left;">
+          <div class="card-title" style="color:#fb7185; justify-content:flex-start;">② 미래세대 공동화</div>
+          <p>서울교구 어린이법회 <b style="color:#fff;">44곳 → 23곳</b> (14년간 절반 감소).</p>
+          <p style="margin-top:10px;">1인 교당 체제에서 청년법회 운영 비율은 <b style="color:#fff;">3%</b>에 그칩니다.</p>
+        </div>
+        <div class="card" style="border-top:5px solid #fb7185; padding:30px; justify-content:flex-start; align-items:flex-start; text-align:left;">
+          <div class="card-title" style="color:#fb7185; justify-content:flex-start;">③ 재정·관계망 붕괴</div>
+          <p>일부 교당은 임대 수입이 사라지고 부채가 쌓이면서 교무 1인이 교화와 재정을 동시에 감당하고 있습니다.</p>
+          <p style="margin-top:10px;">법회는 살아 있는데 재정이 교무의 시간을 잠식합니다.</p>
+        </div>
+      </div>
+      <div style="margin-top:18px; border-left:5px solid #fb7185; background:rgba(251,113,133,.08); border-radius:0 14px 14px 0; padding:16px 22px; color:#fecdd3; line-height:1.65; font-weight:700; font-size:1.05rem;">이 위기는 어느 한 교당의 문제가 아닙니다. 구조의 문제입니다.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 : 가능성 -->
+  <div class="slide" data-slide="4">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-green">가능성 근거</span><h2 class="slide-title">그럼에도 희망의 근거가 있습니다</h2></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn">🌐 연구포털 ↗</a><div class="slide-subtitle">성장 동력은 남아 있습니다</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:30px; justify-content:flex-start; align-items:flex-start; text-align:left;">
+          <div class="card-title" style="color:var(--accent-green); justify-content:flex-start;">① 협력이 만든 결과</div>
+          <p>대등한 교당끼리 협력한 사례를 분석한 결과, 코로나 충격 환경에서도 출석 방어가 확인됐습니다.</p>
+          <p style="margin-top:10px; color:#86efac; font-size:.9rem;">(SCM 합성대조군 분석, 조건부 지지)</p>
+        </div>
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:30px; justify-content:flex-start; align-items:flex-start; text-align:left;">
+          <div class="card-title" style="color:var(--accent-green); justify-content:flex-start;">② 청년세대의 관심</div>
+          <p>일반교도 설문에서 청년·MZ를 먼저 만나야 한다는 응답이 <b style="color:#fff;">71.4%</b>.</p>
+          <p style="margin-top:10px;">마음공부·명상에 대한 사회적 관심이 높아지는 흐름 속에서 원불교의 자산이 주목받고 있습니다.</p>
+        </div>
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:30px; justify-content:flex-start; align-items:flex-start; text-align:left;">
+          <div class="card-title" style="color:var(--accent-green); justify-content:flex-start;">③ 출·재가의 합력</div>
+          <p>교도회장님들이 살림과 전문성을 맡아주실 때 교무는 교화 본질에 집중할 수 있습니다.</p>
+          <p style="margin-top:10px;">합력은 이미 각 교당에 존재하는 잠재력입니다.</p>
+        </div>
+      </div>
+      <div style="margin-top:18px; border-left:5px solid var(--accent-green); background:rgba(74,222,128,.08); border-radius:0 14px 14px 0; padding:16px 22px; color:#bbf7d0; line-height:1.65; font-weight:700; font-size:1.05rem;">위기의 조건 안에서도, 함께하면 가능합니다.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 : 보고의 성격과 기본 관점 -->
+  <div class="slide" data-slide="5">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-blue">보고 성격</span><h2 class="slide-title">이 자리의 성격과 세 가지 기본 관점</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">결정 통보가 아니라, 현장과 함께 묻는 공론화 자료</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 40px 28px;"><div style="font-size: 3rem; margin-bottom: 18px;">🔄</div><div class="card-title" style="color: var(--accent-blue); font-size: 1.65rem; justify-content:center;">통폐합이 아닌<br>시스템 설계</div><p style="color:var(--text-muted); line-height:1.55;">공간을 줄이는 사업이 아니라 교화 본질이 작동하게 하는 관계·지원 구조를 묻습니다.</p></div>
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 40px 28px;"><div style="font-size: 3rem; margin-bottom: 18px;">📊</div><div class="card-title" style="color: var(--accent-blue); font-size: 1.65rem; justify-content:center;">데이터 기반<br>현장 진단</div><p style="color:var(--text-muted); line-height:1.55;">막연한 낙관이나 불안이 아니라, 확인된 자료와 아직 검증할 과제를 구분합니다.</p></div>
+        <div class="card" style="border-top: 5px solid var(--accent-blue); justify-content: center; align-items: center; text-align: center; padding: 40px 28px;"><div style="font-size: 3rem; margin-bottom: 18px;">🤝</div><div class="card-title" style="color: var(--accent-blue); font-size: 1.65rem; justify-content:center;">교구 구성원과<br>함께 공론화</div><p style="color:var(--text-muted); line-height:1.55;">현장의 선택과 우려를 듣고, 9월 R2와 이후 권고안에 반영합니다.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 : 제1축 -->
+  <div class="slide" data-slide="6">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-blue">핵심 전략 1</span><h2 class="slide-title">제1축 : 본질에 집중하게 하는 교화구조</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">행정 경감의 목적은 상시훈련과 교도 만남의 회복</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top:5px solid var(--accent-blue); padding:30px;"><div class="card-title" style="color:var(--accent-blue);">교구 행정지원</div><p style="color:var(--text-muted); line-height:1.6;">세무·결산·법무·보험 등 공통 업무를 교구 차원에서 함께 다룹니다. 교당이 개별적으로 감당하던 행정·비용 부담을 교구 차원에서 함께 처리하면 절감 가능한 영역이 여러 분야에서 확인됐습니다.</p></div>
+        <div class="card" style="border-top:5px solid var(--accent-blue); padding:30px;"><div class="card-title" style="color:var(--accent-blue);">재가 역할 분담</div><p style="color:var(--text-muted); line-height:1.6;">살림·시설·전문 행정은 재가 전문성과 함께 나누고, 교무는 교화 본질에 집중합니다. 델파이 R1에서 재가 역할 확대가 가장 많이 언급된 방향이기도 합니다.</p></div>
+        <div class="card" style="border-top:5px solid var(--accent-blue); padding:30px;"><div class="card-title" style="color:var(--accent-blue);">공동 행정인력 추진</div><p style="color:var(--text-muted); line-height:1.6;">인근 교당끼리 행정 실무를 나눠 맡는 모델을 설계했습니다. 3~4개 교당이 연합하면 유급 행정 인력 1인을 함께 감당할 수 있습니다.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 : 제2축 -->
+  <div class="slide" data-slide="7">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-green">핵심 전략 2</span><h2 class="slide-title">제2축 : 미래세대 교화를 위한 교화구조</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">고립된 교당의 노력에서 권역별 공동교화로</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:32px 30px; justify-content:flex-start; align-items:flex-start; text-align:left;"><div class="card-title" style="color:var(--accent-green); justify-content:flex-start;">권역별 연합 세대교화</div><p style="color:var(--text-muted); line-height:1.6; margin-top:14px;">청소년·청년·3040 활동은 인근 교당이 함께 열어야 지속됩니다. 서울교구 어린이법회는 최근 14년간 44곳에서 23곳으로 절반 가까이 줄었습니다.</p></div>
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:32px 30px; justify-content:flex-start; align-items:flex-start; text-align:left;"><div class="card-title" style="color:var(--accent-green); justify-content:flex-start;">열린 접점과 단계적 정착</div><p style="color:var(--text-muted); line-height:1.6; margin-top:14px;">명상·문화·소그룹 만남에서 관계와 정착으로 이어지는 낮은 문턱을 설계합니다. 일반교도 설문에서 청년·MZ를 먼저 만나야 한다는 응답이 71.4%였습니다.</p></div>
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:32px 30px; justify-content:flex-start; align-items:flex-start; text-align:left;"><div class="card-title" style="color:var(--accent-green); justify-content:flex-start;">생애주기 맞춤 프로그램</div><p style="color:var(--text-muted); line-height:1.6; margin-top:14px;">진학·취업·결혼·육아에서 퇴직·노년까지, 삶의 전환점마다 교당이 먼저 다가갈 수 있도록 구조를 설계합니다. 일반교도 설문에서 고령화와 청년 부재를 위기 원인으로 꼽은 응답이 77%를 넘었습니다 — 양쪽의 공백을 모두 메우는 구조입니다.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 : 교화구조 시스템 모형 (도해판 정본 - 와이드 대형 글자판) -->
+  <div class="slide" data-slide="8">
+    <div class="slide-header">
+      <div>
+        <span class="slide-tag tag-blue">시스템 도해</span>
+        <h2 class="slide-title">교화구조 시스템 모형</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a>
+        <div class="slide-subtitle">본질(중심) ── 기반(터전) ── 환류(나침반) 그리고 세상과의 순환</div>
+      </div>
+    </div>
+    <div class="slide-body" style="justify-content: center; align-items: center; padding: 0;">
+      <div style="background: #090d16; border-radius: 20px; padding: 12px 18px; border: 1px solid var(--border-color); width: 100%; max-width: 1040px; text-align: center;">
+        <svg viewBox="0 0 940 550" width="100%" height="475" role="img" aria-label="교화구조 시스템 모형">
+          <defs>
+            <marker id="arrow-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,1.5 L8,5 L0,8.5 z" fill="#94a3b8"/>
+            </marker>
+            <marker id="arrow-gray-left" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M8,1.5 L0,5 L8,8.5 z" fill="#94a3b8"/>
+            </marker>
+            <marker id="arrow-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,1.5 L8,5 L0,8.5 z" fill="#38bdf8"/>
+            </marker>
+            <marker id="arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,1.5 L8,5 L0,8.5 z" fill="#c084fc"/>
+            </marker>
+          </defs>
+
+          <!-- 상단 굵은 주황색 띠 (거버넌스 ➔ 세상 위 ➔ 데이터, 완전 대칭) -->
+          <path style="fill:none; stroke:#f59e0b; stroke-width:3.5" d="M82.5,63 L82.5,38 Q82.5,24 125,24 L815,24 Q857.5,24 857.5,38 L857.5,58"/>
+          <polygon points="857.5,63 849.5,51 865.5,51" fill="#f59e0b"/>
+
+          <!-- 하단 굵은 주황색 띠 (데이터 ➔ 기반 아래 ➔ 거버넌스, 완전 대칭) -->
+          <path style="fill:none; stroke:#f59e0b; stroke-width:3.5" d="M857.5,487 L857.5,512 Q857.5,526 815,526 L125,526 Q82.5,526 82.5,512 L82.5,492"/>
+          <polygon points="82.5,487 74.5,499 90.5,499" fill="#f59e0b"/>
+
+          <!-- 좌측 거버넌스 상자 (세상 상단 ~ 기반 하단과 완벽 일치) -->
+          <rect x="30" y="63" width="105" height="424" rx="16" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2.6"/>
+          <text x="82.5" y="190" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">거</text>
+          <text x="82.5" y="250" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">버</text>
+          <text x="82.5" y="310" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">넌</text>
+          <text x="82.5" y="370" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">스</text>
+
+          <!-- 우측 데이터 상자 (세상 상단 ~ 기반 하단과 완벽 일치) -->
+          <rect x="805" y="63" width="105" height="424" rx="16" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2.6"/>
+          <text x="857.5" y="220" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">데</text>
+          <text x="857.5" y="280" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">이</text>
+          <text x="857.5" y="340" text-anchor="middle" font-size="22" font-weight="900" fill="#f59e0b">터</text>
+
+          <!-- 세상 상자 (균등 간격 39px 적용, 폭 520px) -->
+          <rect x="210" y="63" width="520" height="54" rx="16" fill="#1e293b" stroke="#94a3b8" stroke-width="2.2" stroke-dasharray="6 4"/>
+          <text x="470" y="98" text-anchor="middle" font-size="22" font-weight="900" fill="#ffffff" letter-spacing="0.15em">세    상</text>
+
+          <!-- 본질 상자 (균등 간격 39px 적용, 폭 520px) -->
+          <rect x="210" y="156" width="520" height="146" rx="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.6"/>
+          <text x="235" y="180" font-size="18" font-weight="900" letter-spacing="0.1em" fill="#38bdf8">본  질</text>
+          
+          <rect x="225" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="298" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">교역자</text>
+          
+          <rect x="397" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="470" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">콘텐츠</text>
+          
+          <rect x="569" y="195" width="146" height="88" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="642" y="247" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">대  상</text>
+
+          <!-- 기반 상자 (균등 간격 39px 적용, 폭 520px) -->
+          <rect x="210" y="341" width="520" height="146" rx="16" fill="#1e293b" stroke="#4ade80" stroke-width="2.6" stroke-dasharray="8 5"/>
+          <text x="235" y="365" font-size="18" font-weight="900" letter-spacing="0.1em" fill="#4ade80">기  반</text>
+          
+          <rect x="225" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="298" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">행  정</text>
+          
+          <rect x="397" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="470" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">공  간</text>
+          
+          <rect x="569" y="380" width="146" height="88" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="642" y="432" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">재  정</text>
+
+          <!-- 3단 좌우 완벽 수평 화살표들 (길이 65px 완벽 일치) -->
+          <!-- 1단(상단): 거버넌스 ⟷ 세상 (영향, 양방향) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="90" x2="205" y2="90" marker-start="url(#arrow-gray-left)" marker-end="url(#arrow-gray)"/>
+          <text x="172" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">영향</text>
+
+          <!-- 1단(상단): 세상 ➔ 데이터 (관찰, 완벽 수평) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="90" x2="800" y2="90" marker-end="url(#arrow-gray)"/>
+          <text x="768" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 2단(중단): 거버넌스 ➔ 본질 (기준) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="229" x2="205" y2="229" marker-end="url(#arrow-gray)"/>
+          <text x="172" y="221" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">기준</text>
+
+          <!-- 2단(중단): 본질 ➔ 데이터 (관찰) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="229" x2="800" y2="229" marker-end="url(#arrow-gray)"/>
+          <text x="768" y="221" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 3단(하단): 거버넌스 ➔ 기반 (배분) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="140" y1="414" x2="205" y2="414" marker-end="url(#arrow-gray)"/>
+          <text x="172" y="406" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">배분</text>
+
+          <!-- 3단(하단): 기반 ➔ 데이터 (관찰) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="735" y1="414" x2="800" y2="414" marker-end="url(#arrow-gray)"/>
+          <text x="768" y="406" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 내부 상하 화살표들 -->
+          <!-- 기반 ➔ 본질 (지원) -->
+          <line style="fill:none; stroke:#94a3b8; stroke-width:2.2" x1="470" y1="341" x2="470" y2="307" marker-end="url(#arrow-gray)"/>
+          <text x="488" y="326" font-size="15" font-weight="800" fill="#94a3b8">지원</text>
+
+          <!-- 본질 ➔ 세상 (유익) -->
+          <line style="fill:none; stroke:#c084fc; stroke-width:2.2" x1="340" y1="156" x2="340" y2="122" marker-end="url(#arrow-purple)"/>
+          <text x="328" y="141" text-anchor="end" font-size="15" font-weight="800" fill="#c084fc">유익</text>
+
+          <!-- 세상 ➔ 대상 (유입) -->
+          <line style="fill:none; stroke:#38bdf8; stroke-width:2.2" x1="642" y1="117" x2="642" y2="190" marker-end="url(#arrow-blue)"/>
+          <text x="630" y="145" text-anchor="end" font-size="15" font-weight="800" fill="#38bdf8">유입</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- SLIDE 9 : 화살표 해설 -->
+  <div class="slide" data-slide="9">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-blue">시스템 해설</span><h2 class="slide-title">화살표 10개가 말하는 것</h2></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">제1축·제2축 이야기가 모두 이 순환 안에 있습니다</div></div>
+    </div>
+    <div class="slide-body" style="flex-direction:row;gap:28px;align-items:stretch;">
+      <!-- 좌: SVG 축소 -->
+      <div style="flex:0 0 44%;display:flex;align-items:center;justify-content:center;background:#090d16;border-radius:16px;border:1px solid var(--border-color);padding:10px 14px;">
+        <svg viewBox="0 0 800 500" width="100%" height="100%" role="img" aria-label="교화구조 시스템 모형 — 단순화판">
+          <defs>
+            <marker id="ah-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1.5 L8,5 L0,8.5 z" fill="#94a3b8"/></marker>
+            <marker id="ah-gray-l" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M8,1.5 L0,5 L8,8.5 z" fill="#94a3b8"/></marker>
+            <marker id="ah-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,1.5 L8,5 L0,8.5 z" fill="#38bdf8"/></marker>
+            <marker id="ah-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,1.5 L8,5 L0,8.5 z" fill="#c084fc"/></marker>
+          </defs>
+
+          <!-- 상단 주황 순환 띠 -->
+          <path style="fill:none;stroke:#f59e0b;stroke-width:3.5" d="M75,58 L75,36 Q75,22 112,22 L688,22 Q725,22 725,36 L725,54"/>
+          <polygon points="725,58 717,46 733,46" fill="#f59e0b"/>
+          <path style="fill:none;stroke:#f59e0b;stroke-width:3.5" d="M725,446 L725,466 Q725,480 688,480 L112,480 Q75,480 75,466 L75,448"/>
+          <polygon points="75,444 67,456 83,456" fill="#f59e0b"/>
+
+          <!-- 거버넌스 박스 (좌) -->
+          <rect x="18" y="58" width="100" height="388" rx="14" fill="rgba(245,158,11,.1)" stroke="#f59e0b" stroke-width="2.5"/>
+          <text x="68" y="195" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">거</text>
+          <text x="68" y="235" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">버</text>
+          <text x="68" y="275" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">넌</text>
+          <text x="68" y="315" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">스</text>
+
+          <!-- 데이터 박스 (우) -->
+          <rect x="682" y="58" width="100" height="388" rx="14" fill="rgba(245,158,11,.1)" stroke="#f59e0b" stroke-width="2.5"/>
+          <text x="732" y="225" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">데</text>
+          <text x="732" y="265" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">이</text>
+          <text x="732" y="305" text-anchor="middle" font-size="26" font-weight="900" fill="#f59e0b">터</text>
+
+          <!-- 세상 박스 -->
+          <rect x="178" y="58" width="444" height="66" rx="14" fill="#1e293b" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="400" y="101" text-anchor="middle" font-size="30" font-weight="900" fill="#ffffff" letter-spacing="0.12em">세    상</text>
+
+          <!-- 본질 박스 -->
+          <rect x="178" y="160" width="444" height="128" rx="14" fill="#1e293b" stroke="#38bdf8" stroke-width="2.8"/>
+          <text x="205" y="188" font-size="20" font-weight="900" letter-spacing="0.08em" fill="#38bdf8">본  질</text>
+          <text x="400" y="242" text-anchor="middle" font-size="34" font-weight="900" fill="#ffffff">교역자 · 콘텐츠 · 대상</text>
+
+          <!-- 기반 박스 -->
+          <rect x="178" y="318" width="444" height="128" rx="14" fill="#1e293b" stroke="#4ade80" stroke-width="2.8" stroke-dasharray="8 5"/>
+          <text x="205" y="346" font-size="20" font-weight="900" letter-spacing="0.08em" fill="#4ade80">기  반</text>
+          <text x="400" y="398" text-anchor="middle" font-size="34" font-weight="900" fill="#ffffff">행정 · 공간 · 재정</text>
+
+          <!-- 좌측 화살표 (거버넌스↔세상, 거버넌스→본질, 거버넌스→기반) -->
+          <line style="fill:none;stroke:#94a3b8;stroke-width:2.5" x1="124" y1="91" x2="174" y2="91" marker-start="url(#ah-gray-l)" marker-end="url(#ah-gray)"/>
+          <text x="150" y="84" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">영향</text>
+          <line style="fill:none;stroke:#94a3b8;stroke-width:2.5" x1="124" y1="224" x2="174" y2="224" marker-end="url(#ah-gray)"/>
+          <text x="150" y="217" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">기준</text>
+          <line style="fill:none;stroke:#94a3b8;stroke-width:2.5" x1="124" y1="382" x2="174" y2="382" marker-end="url(#ah-gray)"/>
+          <text x="150" y="375" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">배분</text>
+
+          <!-- 우측 화살표 (→데이터) -->
+          <line style="fill:none;stroke:#94a3b8;stroke-width:2.5" x1="626" y1="91" x2="678" y2="91" marker-end="url(#ah-gray)"/>
+          <text x="652" y="84" text-anchor="middle" font-size="14" font-weight="800" fill="#94a3b8">관찰</text>
+          <line style="fill:none;stroke:#94a3b8;stroke-width:2.5" x1="626" y1="224" x2="678" y2="224" marker-end="url(#ah-gray)"/>
+          <text x="652" y="217" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+          <line style="fill:none;stroke:#94a3b8;stroke-width:2.5" x1="626" y1="382" x2="678" y2="382" marker-end="url(#ah-gray)"/>
+          <text x="652" y="375" text-anchor="middle" font-size="15" font-weight="800" fill="#94a3b8">관찰</text>
+
+          <!-- 내부 수직 화살표 -->
+          <!-- 기반→본질 (지원) -->
+          <line style="fill:none;stroke:#94a3b8;stroke-width:3" x1="400" y1="314" x2="400" y2="292" marker-end="url(#ah-gray)"/>
+          <text x="420" y="306" font-size="16" font-weight="800" fill="#94a3b8">지원</text>
+
+          <!-- 유익: 본질→세상 -->
+          <line style="fill:none;stroke:#c084fc;stroke-width:3" x1="280" y1="158" x2="280" y2="128" marker-end="url(#ah-purple)"/>
+          <text x="260" y="145" text-anchor="end" font-size="16" font-weight="800" fill="#c084fc">유익</text>
+
+          <!-- 유입: 세상→본질 -->
+          <line style="fill:none;stroke:#38bdf8;stroke-width:3" x1="520" y1="124" x2="520" y2="158" marker-end="url(#ah-blue)"/>
+          <text x="500" y="144" text-anchor="end" font-size="16" font-weight="800" fill="#38bdf8">유입</text>
+        </svg>
+      </div>
+      <!-- 우: 5행 압축 표 -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px;">
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--border-color);">
+          <!-- 헤더 -->
+          <div style="background:rgba(56,189,248,.15);color:var(--accent-blue);font-weight:900;padding:12px 16px;font-size:1.05rem;border-bottom:1px solid var(--border-color);">화살표</div>
+          <div style="background:rgba(56,189,248,.15);color:var(--accent-blue);font-weight:900;padding:12px 16px;font-size:1.05rem;border-bottom:1px solid var(--border-color);border-left:1px solid var(--border-color);">의미</div>
+          <!-- 행 1: 제1축 핵심 -->
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);font-size:1.05rem;color:#e2e8f0;font-weight:800;background:rgba(30,41,59,.6);">기반 → 본질</div>
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);border-left:1px solid var(--border-color);color:var(--text-muted);font-size:1.05rem;background:rgba(30,41,59,.6);"><b style="color:#e2e8f0;">지원 —</b> 행정·공간·재정이 교역자 교화 활동을 직접 받칩니다</div>
+          <!-- 행 2: 제2축 핵심 -->
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);font-size:1.05rem;color:#e2e8f0;font-weight:800;">본질 → 세상 → 대상</div>
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);border-left:1px solid var(--border-color);color:var(--text-muted);font-size:1.05rem;"><b style="color:#e2e8f0;">유익·유입 —</b> 교화가 세상에 유익을 주고, 그 유익에 감응한 새 인연이 교당으로 유입됩니다</div>
+          <!-- 행 3: 관찰 고리 -->
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);font-size:1.05rem;color:#e2e8f0;font-weight:800;background:rgba(30,41,59,.6);">본질·기반·세상 → 데이터</div>
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);border-left:1px solid var(--border-color);color:var(--text-muted);font-size:1.05rem;background:rgba(30,41,59,.6);"><b style="color:#e2e8f0;">관찰 —</b> 교화 현장·운영 실태·지역사회 변화를 실시간으로 기록합니다</div>
+          <!-- 행 4: 환류 고리 -->
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);font-size:1.05rem;color:#e2e8f0;font-weight:800;">데이터 → 거버넌스</div>
+          <div style="padding:13px 16px;border-bottom:1px solid var(--border-color);border-left:1px solid var(--border-color);color:var(--text-muted);font-size:1.05rem;"><b style="color:#e2e8f0;">신호 환류 —</b> 현장 신호가 정책 결정자에게 직결 환류됩니다</div>
+          <!-- 행 5: 전체 틀 -->
+          <div style="padding:13px 16px;font-size:1.05rem;color:#e2e8f0;font-weight:800;background:rgba(30,41,59,.6);">거버넌스 → 본질·기반·데이터</div>
+          <div style="padding:13px 16px;border-left:1px solid var(--border-color);color:var(--text-muted);font-size:1.05rem;background:rgba(30,41,59,.6);"><b style="color:#e2e8f0;">기준·배분·과제 —</b> 교구가 기준을 제시하고, 자원을 배분하고, 관찰 과제를 부여합니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 : 시스템 모형의 작동 원리 -->
+  <div class="slide" data-slide="10">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-blue">시스템 원리</span><h2 class="slide-title">시스템 모형의 3대 핵심 원리</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">운영 취약 신호와 공동교화 안전망은 시스템 안의 피드백으로 다룹니다</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top: 5px solid var(--accent-blue); padding:32px;"><div class="card-title" style="color:var(--accent-blue);">① 단계별 역할 설정</div><p style="color:var(--text-muted); line-height:1.6;">교당은 상시훈련과 현장 관계, 교구는 행정지원과 권역 조정, 총부는 제도 보장을 맡습니다.</p></div>
+        <div class="card" style="border-top: 5px solid var(--accent-amber); padding:32px;"><div class="card-title" style="color:var(--accent-amber);">② 양방향 환류 고리</div><p style="color:var(--text-muted); line-height:1.6;">출석·재정·배치 신호를 처벌 기준이 아니라 조기 지원과 공동교화 안전망 가동 신호로 읽습니다.</p></div>
+        <div class="card" style="border-top: 5px solid var(--accent-green); padding:32px;"><div class="card-title" style="color:var(--accent-green);">③ 세상과의 열린 순환</div><p style="color:var(--text-muted); line-height:1.6;">먼저 유익을 주고, 그 유익이 청년·시민·이웃의 새로운 인연으로 유입되는 구조를 만듭니다.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 11 : 교당 샘플링 -->
+  <div class="slide" data-slide="11">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-blue">현장 분석</span><h2 class="slide-title">1차 분석을 마쳤습니다 — 두 교당의 현실</h2></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn">🌐 연구포털 ↗</a><div class="slide-subtitle">56개 교당 법회출석·재정 원티스 자료 중심 · 이후 정성적 현장 변수를 추가해 분석을 마칠 예정입니다</div></div>
+    </div>
+    <div class="slide-body">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; flex:1;">
+        <div class="card" style="border-top:5px solid #fb7185; padding:30px;">
+          <div class="card-title" style="color:#fb7185; justify-content:flex-start; margin-bottom:16px;">⚠️ 지원이 필요한 교당 (사례 A)</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+            <div style="background:rgba(74,222,128,.1); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">법회 출석</div><div style="font-size:1.1rem; font-weight:900; color:#4ade80;">살아 있음</div><div style="font-size:.78rem; color:var(--text-muted);">고출석(월30회+) 76%</div></div>
+            <div style="background:rgba(251,113,133,.12); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">재정</div><div style="font-size:1.1rem; font-weight:900; color:#fb7185;">어려움</div><div style="font-size:.78rem; color:var(--text-muted);">임대수입 급감·부채</div></div>
+            <div style="background:rgba(251,113,133,.12); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">교화단원</div><div style="font-size:1.1rem; font-weight:900; color:#fb7185;">3분의 1로 축소</div></div>
+            <div style="background:rgba(56,189,248,.08); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">처방</div><div style="font-size:.9rem; font-weight:800; color:#38bdf8; line-height:1.35;">재정 지원이<br>관계망 재건의 전제</div></div>
+          </div>
+        </div>
+        <div class="card" style="border-top:5px solid var(--accent-green); padding:30px;">
+          <div class="card-title" style="color:var(--accent-green); justify-content:flex-start; margin-bottom:16px;">✅ 협력이 만든 교당 (사례 B)</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+            <div style="background:rgba(74,222,128,.1); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">협력 방식</div><div style="font-size:1.1rem; font-weight:900; color:#4ade80;">대등한 결합</div><div style="font-size:.78rem; color:var(--text-muted);">공간·명칭 유지</div></div>
+            <div style="background:rgba(74,222,128,.1); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">분석 결과</div><div style="font-size:1.1rem; font-weight:900; color:#4ade80;">출석 방어</div><div style="font-size:.78rem; color:var(--text-muted);">코로나 환경에서도</div></div>
+            <div style="background:rgba(74,222,128,.1); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">근거</div><div style="font-size:.9rem; font-weight:800; color:#86efac; line-height:1.3;">SCM 분석<br>조건부 지지</div></div>
+            <div style="background:rgba(56,189,248,.08); border-radius:10px; padding:11px; text-align:center;"><div style="font-size:.78rem; color:var(--text-muted);">시사점</div><div style="font-size:.9rem; font-weight:800; color:#38bdf8; line-height:1.35;">공동교화의<br>가능성 실증</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px; border-left:5px solid var(--accent-blue); background:rgba(56,189,248,.08); border-radius:0 14px 14px 0; padding:14px 20px; color:#bae6fd; font-weight:700; font-size:1rem;">무너진 것과 살아 있는 것을 구분하고, 살아 있는 것을 기반으로 기능을 나누는 것이 구조개선입니다.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 : 공간 시나리오 -->
+  <div class="slide" data-slide="12">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-amber">현실 시나리오</span><h2 class="slide-title">공간연계 3대시나리오</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">현장 상황에 맞게 선택하는 세 가지 경로</div></div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card" style="border-top:5px solid var(--accent-green); text-align:center; padding:34px 24px;"><div style="font-size:3rem; margin-bottom:12px;">🤝</div><div class="card-title" style="color:var(--accent-green); font-size:1.9rem; justify-content:center;">공동교화</div><p style="color:var(--text-muted); line-height:1.55; margin-top:14px;">명칭·공간·자산을 유지하면서 행정·법회·세대교화를 함께 나누는 경로</p></div>
+        <div class="card" style="border-top:5px solid var(--accent-blue); text-align:center; padding:34px 24px;"><div style="font-size:3rem; margin-bottom:12px;">🏢</div><div class="card-title" style="color:var(--accent-blue); font-size:1.9rem; justify-content:center;">거점교화</div><p style="color:var(--text-muted); line-height:1.55; margin-top:14px;">권역 접근성과 인력 배치를 고려해 세대교화·콘텐츠 기능을 집중하는 경로</p></div>
+        <div class="card" style="border-top:5px solid var(--accent-amber); text-align:center; padding:34px 24px;"><div style="font-size:3rem; margin-bottom:12px;">🏛️</div><div class="card-title" style="color:var(--accent-amber); font-size:1.9rem; justify-content:center;">통합교화</div><p style="color:var(--text-muted); line-height:1.55; margin-top:14px;">자생이 어렵거나 전략적 판단에 따라, 현장의 자발적 결의를 바탕으로 추진하는 경로</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13 : 검증 로드맵 -->
+  <div class="slide" data-slide="13">
+    <div class="slide-header">
+      <div><span class="slide-tag tag-purple">추진 로드맵</span><h2 class="slide-title">향후 검증·공론화 일정 (9월 ~ 12월)</h2></div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;"><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" title="연구산출물 종합 포털">🌐 연구포털 ↗</a><div class="slide-subtitle">R1 언급률에서 R2 합의 측정, 그리고 정책 권고안으로</div></div>
+    </div>
+    <div class="slide-body">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; height:100%;">
+        <div class="card" style="border-left:6px solid var(--accent-blue); padding:36px 32px; justify-content:flex-start;"><div style="font-size:1.05rem; color:var(--accent-blue); font-weight:900; margin-bottom:12px; letter-spacing:.02em;">STEP 01 · 9월</div><div style="font-size:2rem; font-weight:900; color:#fff; margin-bottom:16px; line-height:1.2;">델파이-R2 정책 설문</div><p style="color:var(--text-muted); line-height:1.65; font-size:1rem;">중요도와 실행가능성을 같은 척도로 물어 합의 수준을 처음 측정합니다.</p></div>
+        <div class="card" style="border-left:6px solid var(--accent-amber); padding:36px 32px; justify-content:flex-start;"><div style="font-size:1.05rem; color:var(--accent-amber); font-weight:900; margin-bottom:12px; letter-spacing:.02em;">STEP 02 · 10월</div><div style="font-size:2rem; font-weight:900; color:#fff; margin-bottom:16px; line-height:1.2;">정책 권고안 초안</div><p style="color:var(--text-muted); line-height:1.65; font-size:1rem;">합의·유보·미합의 과제를 구분해 권고안 초안을 마련합니다.</p></div>
+        <div class="card" style="border-left:6px solid var(--accent-purple); padding:36px 32px; justify-content:flex-start;"><div style="font-size:1.05rem; color:var(--accent-purple); font-weight:900; margin-bottom:12px; letter-spacing:.02em;">STEP 03 · 11월</div><div style="font-size:2rem; font-weight:900; color:#fff; margin-bottom:16px; line-height:1.2;">교구 상임위원회 심의</div><p style="color:var(--text-muted); line-height:1.65; font-size:1rem;">현장 의견과 연구결과를 함께 놓고 실행 우선순위를 검토합니다.</p></div>
+        <div class="card" style="border-left:6px solid var(--accent-green); padding:36px 32px; justify-content:flex-start;"><div style="font-size:1.05rem; color:var(--accent-green); font-weight:900; margin-bottom:12px; letter-spacing:.02em;">STEP 04 · 12월</div><div style="font-size:2rem; font-weight:900; color:#fff; margin-bottom:16px; line-height:1.2;">교구 교의회 최종 의결</div><p style="color:var(--text-muted); line-height:1.65; font-size:1rem;">결정 전에 무엇이 합의됐고 무엇이 남았는지 공개적으로 확인합니다.</p></div>
+      </div>
+      <div style="margin-top:16px; border-left:5px solid var(--accent-purple); background:rgba(192,132,252,.08); border-radius:0 14px 14px 0; padding:14px 20px; color:#e9d5ff; font-weight:700; font-size:1rem;">각 교당의 분석 자료에 정성적 현장 변수를 추가해 신뢰성을 높이며, 현장과의 자료 공유를 통해 공감성을 높여 가겠습니다.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14 : 맺음말 -->
+  <div class="slide slide-cover" data-slide="14">
+    <div class="cover-badge" style="color: var(--accent-green); border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15);">함께 만드는 지속가능한 교화</div>
+    <h1 class="cover-title" style="font-size: 2.35rem;">교도회장님들과 함께<br>답해야 할 세 가지 질문</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:980px; margin:6px auto 28px;">
+      <div class="cover-box" style="border-top:4px solid var(--accent-blue);"><b style="color:var(--accent-blue);">무엇을 덜어야 합니까?</b><br><span style="color:var(--text-muted); font-size:.95rem;">교무가 본질에 집중하기 위한 부담 조정</span></div>
+      <div class="cover-box" style="border-top:4px solid var(--accent-green);"><b style="color:var(--accent-green);">어떤 접점을 열어야 합니까?</b><br><span style="color:var(--text-muted); font-size:.95rem;">미래세대와 시민을 만나는 낮은 문턱</span></div>
+      <div class="cover-box" style="border-top:4px solid var(--accent-amber);"><b style="color:var(--accent-amber);">어떻게 함께 살릴 것인가?</b><br><span style="color:var(--text-muted); font-size:.95rem;">공동·거점·통합의 판단 기준</span></div>
+    </div>
+    <p style="font-size:1.2rem; color:#cbd5e1; max-width:900px; line-height:1.7; margin-bottom:24px;">서울교구가 함께 지킬 본질과 함께 바꿀 구조는 무엇일까요?</p>
+    <div><a href="https://junsh83.github.io/Restructuring/" target="_blank" class="portal-btn" style="font-size: 1.05rem; padding: 10px 22px;">🌐 연구산출물 종합 포털 열기 ↗</a></div>
+  </div>
+</div>
+
+<!-- 컨트롤 패널 -->
+<div id="controls">
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <button class="nav-btn" id="prev-btn">◀ 이전</button>
+    <button class="nav-btn" id="theme-btn" title="화면 테마 전환 (라이트/다크)">☀️ 테마</button>
+    <a href="https://junsh83.github.io/Restructuring/" target="_blank" class="nav-btn" style="text-decoration: none; color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.45);" title="연구산출물 종합 포털 새 탭 열기">🌐 연구포털 ↗</a>
+  </div>
+  
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  
+  <div class="slide-counter" id="slide-counter">1 / 14</div>
+  
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <button class="nav-btn" id="print-btn" title="A4 인쇄 또는 PDF 저장">🖨️ 인쇄·PDF</button>
+    <button class="nav-btn" id="next-btn">다음 ▶</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 14;
+
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progress-bar');
+const slideCounter = document.getElementById('slide-counter');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const themeBtn = document.getElementById('theme-btn');
+const printBtn = document.getElementById('print-btn');
+
+function updateSlide(newSlide) {
+  if (newSlide < 1 || newSlide > totalSlides) return;
+  
+  slides.forEach(function(slide) {
+    slide.classList.remove('active');
+  });
+  
+  const targetSlide = document.querySelector('.slide[data-slide="' + newSlide + '"]');
+  if (targetSlide) {
+    targetSlide.classList.add('active');
+    currentSlide = newSlide;
+  }
+  
+  progressBar.style.width = ((currentSlide / totalSlides) * 100) + '%';
+  slideCounter.textContent = currentSlide + ' / ' + totalSlides;
+  
+  prevBtn.style.opacity = currentSlide === 1 ? '0.5' : '1';
+  nextBtn.style.opacity = currentSlide === totalSlides ? '0.5' : '1';
+}
+
+prevBtn.addEventListener('click', function() {
+  updateSlide(currentSlide - 1);
+});
+
+nextBtn.addEventListener('click', function() {
+  updateSlide(currentSlide + 1);
+});
+
+// 테마 토글 (라이트/다크 모드)
+themeBtn.addEventListener('click', function() {
+  document.body.classList.toggle('light-theme');
+  if (document.body.classList.contains('light-theme')) {
+    themeBtn.textContent = '🌙 다크';
+  } else {
+    themeBtn.textContent = '☀️ 라이트';
+  }
+});
+
+// 인쇄 / PDF 저장
+printBtn.addEventListener('click', function() {
+  window.print();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    updateSlide(currentSlide + 1);
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    updateSlide(currentSlide - 1);
+  } else if (e.key === 'Home') {
+    updateSlide(1);
+  } else if (e.key === 'End') {
+    updateSlide(totalSlides);
+  } else if (e.key === 't' || e.key === 'T') {
+    themeBtn.click();
+  }
+});
+
+updateSlide(1);
+</script>
+</body>
+</html>
