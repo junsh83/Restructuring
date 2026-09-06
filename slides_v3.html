@@ -2,9 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>서울교구 교화구조개선 교도회장 2차 설명회 — v3 11슬라이드</title>
 <style>
+  html { font-size: clamp(14px, 1.25vw, 20px); }
+
 :root {
   --bg-main: #0b0f19;
   --bg-card: #151d30;
@@ -47,9 +49,9 @@ body {
 .slide {
   display: none;
   width: 100%;
-  max-width: 1260px;
-  height: 92%;
-  max-height: 750px;
+  max-width: 96vw;
+  height: 92vh;
+  max-height: 96vh;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 20px;
@@ -81,7 +83,7 @@ body {
 }
 
 .slide-title {
-  font-size: 2.35rem;
+  font-size: clamp(1.6rem, 2.2vw, 2.5rem);
   font-weight: 800;
   color: #ffffff;
   display: flex;
@@ -144,7 +146,7 @@ body {
 .grid-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 26px;
+  gap: clamp(14px, 2vw, 26px);
   height: 100%;
 }
 
@@ -152,7 +154,7 @@ body {
   background: var(--bg-card-alt);
   border: 1px solid var(--border-color);
   border-radius: 18px;
-  padding: 32px 28px;
+  padding: clamp(18px, 2vh, 32px) clamp(16px, 2vw, 28px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -167,9 +169,9 @@ body {
 .card p { font-size: 1.1rem; line-height: 1.65; color: var(--text-muted); }
 
 .card-title {
-  font-size: 1.55rem;
+  font-size: clamp(1.2rem, 1.5vw, 1.6rem);
   font-weight: 800;
-  margin-bottom: 22px;
+  margin-bottom: clamp(14px, 1.5vh, 22px);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -942,7 +944,7 @@ body.light-theme .nav-btn {
   <!-- SLIDE 14 : 맺음말 -->
   <div class="slide slide-cover" data-slide="14">
     <div class="cover-badge" style="color: var(--accent-green); border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15);">함께 만드는 지속가능한 교화</div>
-    <h1 class="cover-title" style="font-size: 2.35rem;">교도회장님들과 함께<br>답해야 할 세 가지 질문</h1>
+    <h1 class="cover-title" style="font-size: clamp(1.6rem, 2.2vw, 2.5rem);">교도회장님들과 함께<br>답해야 할 세 가지 질문</h1>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:980px; margin:6px auto 28px;">
       <div class="cover-box" style="border-top:4px solid var(--accent-blue);"><b style="color:var(--accent-blue);">무엇을 덜어야 합니까?</b><br><span style="color:var(--text-muted); font-size:.95rem;">교무가 본질에 집중하기 위한 부담 조정</span></div>
       <div class="cover-box" style="border-top:4px solid var(--accent-green);"><b style="color:var(--accent-green);">어떤 접점을 열어야 합니까?</b><br><span style="color:var(--text-muted); font-size:.95rem;">미래세대와 시민을 만나는 낮은 문턱</span></div>
