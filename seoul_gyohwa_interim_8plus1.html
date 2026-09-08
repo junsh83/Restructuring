@@ -91,6 +91,8 @@ tr:nth-child(even) td { background:#fcfdfc; }
 .toc-list { display:grid; grid-template-columns:1fr 1fr; gap:0 28px; }
 .toc-link { display:block; width:100%; border:0; border-bottom:1px solid #dce7e3; background:transparent; color:var(--ink); text-align:left; font:inherit; font-size:16px; line-height:1.45; padding:9px 4px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .toc-link:hover,.toc-link:focus-visible { color:var(--teal); background:#e7f2ef; outline:none; }
+.report-toc .tab-btn { display:block; width:100%; min-width:0; max-width:none; min-height:0; padding:9px 4px; border:0; border-bottom:1px solid #dce7e3; border-radius:0; background:transparent; color:var(--ink); font-size:16px; line-height:1.45; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.report-toc .tab-btn.active { color:var(--teal); border-bottom-color:#dce7e3; background:#e7f2ef; }
 .toc-no { display:inline-block; width:34px; color:var(--gold); font-size:13px; font-weight:900; }
 @media (max-width:900px) { .summary,.model-grid { grid-template-columns:1fr 1fr; } .hero { padding:35px 28px; } .tab-panel { padding:30px 24px 40px; } .system-model-head { display:block; } .system-model-head p { text-align:left; margin-top:8px; } .evidence-links { grid-template-columns:repeat(2,1fr); } .portal-open { position:static; display:inline-block; margin-top:14px; } .toc-list { grid-template-columns:1fr; } }
 @media (max-width:620px) { body { font-size:17px; } .page { padding:18px 12px 55px; } .summary,.model-grid { grid-template-columns:1fr; } .hero { border-radius:18px; padding:30px 22px; } .hero:after { font-size:130px; } .tab-panel { padding:24px 18px 34px; } table { font-size:14px; display:block; overflow-x:auto; white-space:normal; } .tab-btn { font-size:14px; padding-left:12px; padding-right:12px; } }
@@ -135,31 +137,20 @@ tr:nth-child(even) td { background:#fcfdfc; }
 <section class="report-toc" aria-labelledby="report-toc-title">
   <h2 id="report-toc-title">보고서 목차</h2>
   <div class="toc-list">
-    <button class="toc-link" data-tab="tab-0"><span class="toc-no">01</span>보고서의 목적</button>
-    <button class="toc-link" data-tab="tab-1"><span class="toc-no">02</span>현재까지 확인된 서울교구의 위기</button>
-    <button class="toc-link" data-tab="tab-2"><span class="toc-no">03</span>최종 분석 모델: 8+1 개방형 교화 시스템</button>
-    <button class="toc-link" data-tab="tab-3"><span class="toc-no">04</span>세상의 요구와 교화의 응답 공백</button>
-    <button class="toc-link" data-tab="tab-4"><span class="toc-no">05</span>두 가지 정책 방향</button>
-    <button class="toc-link" data-tab="tab-5"><span class="toc-no">06</span>공간 연계 3대 현실 시나리오</button>
-    <button class="toc-link" data-tab="tab-6"><span class="toc-no">07</span>7대 영역 과제의 시스템 재배치</button>
-    <button class="toc-link" data-tab="tab-7"><span class="toc-no">08</span>현재 확인된 것과 아직 확인되지 않은 것</button>
-    <button class="toc-link" data-tab="tab-8"><span class="toc-no">09</span>다음 연구와 실행 과제</button>
-    <button class="toc-link" data-tab="tab-9"><span class="toc-no">10</span>결론</button>
-    <button class="toc-link" data-tab="tab-10"><span class="toc-no">11</span>참고 연결문서</button>
+    <button class="toc-link tab-btn active" data-tab="tab-0" role="tab" aria-selected="true"><span class="toc-no">01</span>보고서의 목적</button>
+    <button class="toc-link tab-btn" data-tab="tab-1"><span class="toc-no">02</span>현재까지 확인된 서울교구의 위기</button>
+    <button class="toc-link tab-btn" data-tab="tab-2"><span class="toc-no">03</span>최종 분석 모델: 8+1 개방형 교화 시스템</button>
+    <button class="toc-link tab-btn" data-tab="tab-3"><span class="toc-no">04</span>세상의 요구와 교화의 응답 공백</button>
+    <button class="toc-link tab-btn" data-tab="tab-4"><span class="toc-no">05</span>두 가지 정책 방향</button>
+    <button class="toc-link tab-btn" data-tab="tab-5"><span class="toc-no">06</span>공간 연계 3대 현실 시나리오</button>
+    <button class="toc-link tab-btn" data-tab="tab-6"><span class="toc-no">07</span>7대 영역 과제의 시스템 재배치</button>
+    <button class="toc-link tab-btn" data-tab="tab-7"><span class="toc-no">08</span>현재 확인된 것과 아직 확인되지 않은 것</button>
+    <button class="toc-link tab-btn" data-tab="tab-8"><span class="toc-no">09</span>다음 연구와 실행 과제</button>
+    <button class="toc-link tab-btn" data-tab="tab-9"><span class="toc-no">10</span>결론</button>
+    <button class="toc-link tab-btn" data-tab="tab-10"><span class="toc-no">11</span>참고 연결문서</button>
   </div>
 </section>
 <div class="tabs-wrap">
-  <nav class="tab-bar" role="tablist" aria-label="보고서 장 목차"><button class="tab-btn active" data-tab="tab-0" role="tab" aria-selected="true"><span class="tab-no">01</span><span class="tab-title">보고서의 목적</span></button>
-  <button class="tab-btn" data-tab="tab-1" role="tab" aria-selected="false"><span class="tab-no">02</span><span class="tab-title">현재까지 확인된 서울교구의 위기</span></button>
-  <button class="tab-btn" data-tab="tab-2" role="tab" aria-selected="false"><span class="tab-no">03</span><span class="tab-title">최종 분석 모델: 8+1 개방형 교화 시스템</span></button>
-  <button class="tab-btn" data-tab="tab-3" role="tab" aria-selected="false"><span class="tab-no">04</span><span class="tab-title">세상의 요구와 교화의 응답 공백</span></button>
-  <button class="tab-btn" data-tab="tab-4" role="tab" aria-selected="false"><span class="tab-no">05</span><span class="tab-title">두 가지 정책 방향</span></button>
-  <button class="tab-btn" data-tab="tab-5" role="tab" aria-selected="false"><span class="tab-no">06</span><span class="tab-title">공간 연계 3대 현실 시나리오</span></button>
-  <button class="tab-btn" data-tab="tab-6" role="tab" aria-selected="false"><span class="tab-no">07</span><span class="tab-title">7대 영역 과제의 시스템 재배치</span></button>
-  <button class="tab-btn" data-tab="tab-7" role="tab" aria-selected="false"><span class="tab-no">08</span><span class="tab-title">현재 확인된 것과 아직 확인되지 않은 것</span></button>
-  <button class="tab-btn" data-tab="tab-8" role="tab" aria-selected="false"><span class="tab-no">09</span><span class="tab-title">다음 연구와 실행 과제</span></button>
-  <button class="tab-btn" data-tab="tab-9" role="tab" aria-selected="false"><span class="tab-no">10</span><span class="tab-title">결론</span></button>
-  <button class="tab-btn" data-tab="tab-10" role="tab" aria-selected="false"><span class="tab-no">11</span><span class="tab-title">참고 연결문서</span></button></nav>
   <section id="tab-0" class="tab-panel active" role="tabpanel"><h2 id="1">1. 보고서의 목적</h2>
 <p>이번 중간보고서는 다음 네 가지를 공유하기 위해 작성한다.</p>
 <ol>
