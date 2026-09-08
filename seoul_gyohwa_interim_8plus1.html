@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서울교구 교화구조개선 중간보고서 · 8+1 개방형 시스템</title>
+<style>
+:root {
+  --ink:#18232b; --muted:#66737b; --paper:#fbfaf7; --surface:#fff;
+  --line:#dfe5e3; --teal:#176b68; --teal-2:#dff1ed; --gold:#b98637;
+  --blue:#315c83; --rose:#9b4d58; --shadow:0 12px 36px rgba(24,35,43,.08);
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; color:var(--ink); background:linear-gradient(135deg,#f3f7f5 0%,var(--paper) 42%,#f8f4ec 100%); font-family: "Noto Sans KR","Pretendard","Apple SD Gothic Neo",system-ui,sans-serif; font-size:18px; line-height:1.78; }
+a { color:var(--teal); }
+.page { max-width:1420px; margin:0 auto; padding:42px 28px 90px; }
+.hero { background:var(--ink); color:#fff; border-radius:24px; padding:48px 54px 42px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+.hero:after { content:"8+1"; position:absolute; right:35px; bottom:-55px; font-size:190px; line-height:1; font-weight:900; color:rgba(255,255,255,.055); letter-spacing:-.12em; }
+.kicker { color:#a9d8cf; text-transform:uppercase; letter-spacing:.12em; font-size:14px; font-weight:800; }
+h1 { margin:12px 0 4px; font-size:clamp(32px,4vw,58px); line-height:1.18; letter-spacing:-.055em; }
+.subtitle { margin:0; color:#d7e5e2; font-size:clamp(20px,2vw,29px); font-weight:700; }
+.hero-meta { margin-top:28px; display:flex; gap:10px; flex-wrap:wrap; color:#c1cfcc; font-size:15px; }
+.pill { border:1px solid rgba(255,255,255,.2); padding:5px 12px; border-radius:999px; }
+.summary { display:grid; grid-template-columns:1.35fr 1fr 1fr; gap:16px; margin:22px 0 28px; }
+.summary-card { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:22px 23px; box-shadow:0 5px 18px rgba(24,35,43,.035); }
+.summary-card strong { display:block; color:var(--teal); font-size:16px; margin-bottom:4px; }
+.summary-card p { margin:0; font-size:17px; line-height:1.55; }
+.model { background:linear-gradient(100deg,#e1f2ee,#eef5f6); border:1px solid #c4e2dc; border-radius:20px; padding:23px; margin:24px 0 28px; }
+.model-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; }
+.model-box { padding:17px 15px; border-radius:13px; min-height:115px; background:#fff; border:1px solid rgba(23,107,104,.16); }
+.model-box small { display:block; color:var(--muted); font-size:13px; font-weight:800; margin-bottom:4px; }
+.model-box b { font-size:20px; line-height:1.4; }
+.tabs-wrap { background:var(--surface); border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); overflow:hidden; }
+.tab-bar { display:flex; gap:0; overflow-x:auto; border-bottom:1px solid var(--line); background:#f5f8f7; padding:10px 12px 0; scrollbar-width:thin; }
+.tab-btn { border:0; background:transparent; color:var(--muted); font:inherit; font-size:15px; font-weight:800; white-space:normal; text-align:left; line-height:1.25; padding:12px 15px 13px; cursor:pointer; border-bottom:3px solid transparent; min-height:72px; min-width:125px; max-width:205px; display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:5px; }
+.tab-btn:hover,.tab-btn:focus-visible { color:var(--teal); background:#eef5f3; outline:none; }
+.tab-btn.active { color:var(--teal); border-bottom-color:var(--teal); background:#fff; }
+.tab-no { font-size:12px; color:var(--gold); margin-right:7px; letter-spacing:.05em; }
+.tab-panel { display:block; scroll-margin-top:92px; padding:38px 48px 52px; border-bottom:1px solid var(--line); }
+.tab-panel:last-child { border-bottom:0; }
+.tab-panel h2 { margin:0 0 20px; color:var(--ink); font-size:clamp(27px,3vw,39px); line-height:1.25; letter-spacing:-.04em; border-bottom:1px solid var(--line); padding-bottom:16px; }
+.tab-panel h3 { margin:36px 0 12px; color:var(--teal); font-size:25px; line-height:1.35; }
+.tab-panel h4 { color:var(--blue); font-size:21px; margin:28px 0 8px; }
+.tab-panel p { margin:12px 0 18px; }
+.tab-panel ul,.tab-panel ol { padding-left:1.35em; }
+.tab-panel li { margin:5px 0; }
+.tab-panel blockquote { margin:22px 0; padding:18px 22px; border-left:4px solid var(--gold); background:#fbf6e9; color:#4c4233; border-radius:0 12px 12px 0; }
+.tab-panel code { background:#eef2f1; padding:2px 6px; border-radius:5px; font-size:.9em; }
+.tab-panel pre { background:#17252b; color:#e5f1ee; padding:22px; border-radius:14px; overflow:auto; font-size:15px; line-height:1.5; }
+.tab-panel pre code { background:none; padding:0; }
+table { width:100%; border-collapse:collapse; margin:20px 0 26px; font-size:16px; line-height:1.55; }
+th { background:#e6f1ef; color:#174e4d; font-weight:800; text-align:left; }
+th,td { border:1px solid var(--line); padding:12px 13px; vertical-align:top; }
+tr:nth-child(even) td { background:#fcfdfc; }
+.note-link { font-weight:700; text-decoration:none; border-bottom:1px dotted currentColor; }
+.note-link:hover { color:var(--gold); }
+.footer { margin-top:24px; color:var(--muted); font-size:14px; text-align:center; }
+.system-model { margin:24px 0 28px; background:#101823; color:#f8fafc; border-radius:22px; padding:28px; box-shadow:var(--shadow); }
+.system-model-head { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:16px; }
+.system-model-head h2 { margin:6px 0 0; font-size:clamp(26px,3vw,38px); letter-spacing:-.04em; }
+.system-model-head p { margin:0; color:#b9c7d1; text-align:right; font-size:16px; line-height:1.5; }
+.system-tag { color:#7dd3fc; font-size:13px; font-weight:900; letter-spacing:.08em; }
+.svg-frame { background:#090d16; border:1px solid #334155; border-radius:17px; padding:10px 14px; overflow:auto; }
+.svg-frame svg { display:block; width:100%; min-width:720px; height:auto; max-height:620px; }
+.svg-frame .cycle { fill:none; stroke:#f59e0b; stroke-width:3.5; }
+.svg-frame .side { fill:rgba(245,158,11,.1); stroke:#f59e0b; stroke-width:2.6; }
+.svg-frame .side-label { text-anchor:middle; font-size:22px; font-weight:900; fill:#f59e0b; }
+.svg-frame .world { fill:#1e293b; stroke:#94a3b8; stroke-width:2.2; stroke-dasharray:6 4; }
+.svg-frame .world-label { text-anchor:middle; font-size:22px; font-weight:900; fill:#fff; letter-spacing:.15em; }
+.svg-frame .essence { fill:#1e293b; stroke:#38bdf8; stroke-width:2.6; }
+.svg-frame .base { fill:#1e293b; stroke:#4ade80; stroke-width:2.6; stroke-dasharray:8 5; }
+.svg-frame .section-label { font-size:18px; font-weight:900; letter-spacing:.1em; }
+.svg-frame .section-label.blue { fill:#38bdf8; } .svg-frame .section-label.green { fill:#4ade80; }
+.svg-frame .item { fill:#0f172a; stroke-width:1.8; } .svg-frame .blue-item { stroke:#38bdf8; } .svg-frame .green-item { stroke:#4ade80; }
+.svg-frame .item-label { text-anchor:middle; font-size:22px; font-weight:800; fill:#fff; }
+.svg-frame .arrow { fill:none; stroke:#94a3b8; stroke-width:2.2; } .svg-frame .purple-arrow { stroke:#c084fc; } .svg-frame .blue-arrow { stroke:#38bdf8; }
+.svg-frame .arrow-label { text-anchor:middle; font-size:15px; font-weight:800; fill:#94a3b8; } .svg-frame .purple-label { text-anchor:end; font-size:15px; font-weight:800; fill:#c084fc; } .svg-frame .blue-label { text-anchor:end; font-size:15px; font-weight:800; fill:#38bdf8; }
+.model-caption { margin-top:16px; color:#cbd5e1; font-size:16px; line-height:1.7; }
+.evidence-library { margin:24px 0 28px; padding:25px 28px; background:#fffdf7; border:1px solid #eadfca; border-radius:20px; box-shadow:0 6px 22px rgba(24,35,43,.05); position:relative; }
+.evidence-library h2 { margin:6px 0 4px; color:var(--ink); font-size:27px; letter-spacing:-.035em; }
+.evidence-library p { margin:0; color:var(--muted); font-size:16px; }
+.portal-open { position:absolute; top:27px; right:28px; color:#fff; background:var(--teal); padding:8px 14px; border-radius:999px; text-decoration:none; font-weight:800; font-size:14px; }
+.evidence-links { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:20px; }
+.evidence-links a { display:flex; flex-direction:column; gap:4px; padding:14px; border:1px solid #e7e1d5; border-radius:13px; background:#fff; color:var(--ink); text-decoration:none; min-height:102px; }
+.evidence-links a:hover { border-color:var(--teal); transform:translateY(-2px); }
+.evidence-links b { color:var(--teal); font-size:15px; line-height:1.35; }
+.evidence-links span { color:var(--muted); font-size:13px; line-height:1.45; }
+@media (max-width:900px) { .summary,.model-grid { grid-template-columns:1fr 1fr; } .hero { padding:35px 28px; } .tab-panel { padding:30px 24px 40px; } .system-model-head { display:block; } .system-model-head p { text-align:left; margin-top:8px; } .evidence-links { grid-template-columns:repeat(2,1fr); } .portal-open { position:static; display:inline-block; margin-top:14px; } }
+@media (max-width:620px) { body { font-size:17px; } .page { padding:18px 12px 55px; } .summary,.model-grid { grid-template-columns:1fr; } .hero { border-radius:18px; padding:30px 22px; } .hero:after { font-size:130px; } .tab-panel { padding:24px 18px 34px; } table { font-size:14px; display:block; overflow-x:auto; white-space:normal; } .tab-btn { font-size:14px; padding-left:12px; padding-right:12px; } }
+@media print { body { background:#fff; font-size:12pt; } .page { max-width:none; padding:0; } .hero,.summary-card,.model,.tabs-wrap { box-shadow:none; } .tab-bar { display:none; } .tab-panel { display:block !important; padding:20px 0; page-break-before:always; } .tab-panel:first-of-type { page-break-before:auto; } .footer { display:none; } }
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+  <div class="kicker">TF 공유용 중간보고서 · 원기 111년 9월</div>
+  <h1>서울교구 교화구조개선 중간보고서</h1>
+  <p class="subtitle">8+1 개방형 교화 시스템과 공간 연계 3대 현실 시나리오</p>
+  <div class="hero-meta"><span class="pill">최종 분석 모델 중심</span><span class="pill">세상의 요구와 응답 공백</span><span class="pill">공동교화 · 거점교화 · 통합교화</span></div>
+</header>
+<section class="summary">
+  <div class="summary-card"><strong>핵심 질문</strong><p>세상의 요구에 응답할 수 있도록 교화의 본질·기반·환류 체계를 어떻게 다시 설계할 것인가?</p></div>
+  <div class="summary-card"><strong>최종 모델</strong><p><b>8대 내부 요소 + 1대 경계·환경 요소</b><br>본질 · 기반 · 환류 · 세상</p></div>
+  <div class="summary-card"><strong>공간의 원칙</strong><p>독립 운영은 기본 상태이며, 세 가지 공간 시나리오는 순차 단계가 아닌 선택 대안이다.</p></div>
+</section>
+<section class="model">
+  <strong>8+1 개방형 교화 시스템</strong>
+  <div class="model-grid">
+    <div class="model-box"><small>교화의 본질</small><b>교역자 · 콘텐츠 · 대상</b></div>
+    <div class="model-box"><small>교화의 기반</small><b>행정 · 공간 · 재정</b></div>
+    <div class="model-box"><small>교화의 환류</small><b>데이터 · 거버넌스</b></div>
+    <div class="model-box"><small>경계·환경</small><b>세상·사회적 요구</b></div>
+  </div>
+</section>
+
+<section class="system-model" id="system-model">
+  <div class="system-model-head">
+    <div><span class="system-tag">설명회 슬라이드 도해</span><h2>교화구조 시스템 모형</h2></div>
+    <p>본질(중심) ── 기반(터전) ── 환류(나침반)<br>그리고 세상과의 순환</p>
+  </div>
+  <div class="svg-frame">
+    <svg viewBox="0 0 940 550" role="img" aria-label="교화구조 시스템 모형. 좌측 거버넌스와 우측 데이터가 세상, 본질, 기반을 연결한다.">
+      <defs>
+        <marker id="a-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,1.5 L8,5 L0,8.5 z" fill="#94a3b8"/></marker>
+        <marker id="a-gray-l" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M8,1.5 L0,5 L8,8.5 z" fill="#94a3b8"/></marker>
+        <marker id="a-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1.5 L8,5 L0,8.5 z" fill="#38bdf8"/></marker>
+        <marker id="a-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1.5 L8,5 L0,8.5 z" fill="#c084fc"/></marker>
+      </defs>
+      <path class="cycle" d="M82.5,63 L82.5,38 Q82.5,24 125,24 L815,24 Q857.5,24 857.5,38 L857.5,58"/><polygon points="857.5,63 849.5,51 865.5,51" fill="#f59e0b"/>
+      <path class="cycle" d="M857.5,487 L857.5,512 Q857.5,526 815,526 L125,526 Q82.5,526 82.5,512 L82.5,492"/><polygon points="82.5,487 74.5,499 90.5,499" fill="#f59e0b"/>
+      <rect class="side" x="30" y="63" width="105" height="424" rx="16"/><text class="side-label" x="82.5" y="190">거</text><text class="side-label" x="82.5" y="250">버</text><text class="side-label" x="82.5" y="310">넌</text><text class="side-label" x="82.5" y="370">스</text>
+      <rect class="side" x="805" y="63" width="105" height="424" rx="16"/><text class="side-label" x="857.5" y="220">데</text><text class="side-label" x="857.5" y="280">이</text><text class="side-label" x="857.5" y="340">터</text>
+      <rect class="world" x="210" y="63" width="520" height="54" rx="16"/><text class="world-label" x="470" y="98">세    상</text>
+      <rect class="essence" x="210" y="156" width="520" height="146" rx="16"/><text class="section-label blue" x="235" y="180">본  질</text>
+      <rect class="item blue-item" x="225" y="195" width="146" height="88" rx="12"/><text class="item-label" x="298" y="247">교역자</text>
+      <rect class="item blue-item" x="397" y="195" width="146" height="88" rx="12"/><text class="item-label" x="470" y="247">콘텐츠</text>
+      <rect class="item blue-item" x="569" y="195" width="146" height="88" rx="12"/><text class="item-label" x="642" y="247">대  상</text>
+      <rect class="base" x="210" y="341" width="520" height="146" rx="16"/><text class="section-label green" x="235" y="365">기  반</text>
+      <rect class="item green-item" x="225" y="380" width="146" height="88" rx="12"/><text class="item-label" x="298" y="432">행  정</text>
+      <rect class="item green-item" x="397" y="380" width="146" height="88" rx="12"/><text class="item-label" x="470" y="432">공  간</text>
+      <rect class="item green-item" x="569" y="380" width="146" height="88" rx="12"/><text class="item-label" x="642" y="432">재  정</text>
+      <line class="arrow" x1="140" y1="90" x2="205" y2="90" marker-start="url(#a-gray-l)" marker-end="url(#a-gray)"/><text class="arrow-label" x="172" y="82">영향</text>
+      <line class="arrow" x1="735" y1="90" x2="800" y2="90" marker-end="url(#a-gray)"/><text class="arrow-label" x="768" y="82">관찰</text>
+      <line class="arrow" x1="140" y1="229" x2="205" y2="229" marker-end="url(#a-gray)"/><text class="arrow-label" x="172" y="221">기준</text>
+      <line class="arrow" x1="735" y1="229" x2="800" y2="229" marker-end="url(#a-gray)"/><text class="arrow-label" x="768" y="221">관찰</text>
+      <line class="arrow" x1="140" y1="414" x2="205" y2="414" marker-end="url(#a-gray)"/><text class="arrow-label" x="172" y="406">배분</text>
+      <line class="arrow" x1="735" y1="414" x2="800" y2="414" marker-end="url(#a-gray)"/><text class="arrow-label" x="768" y="406">관찰</text>
+      <line class="arrow" x1="470" y1="341" x2="470" y2="307" marker-end="url(#a-gray)"/><text class="arrow-label" x="488" y="326">지원</text>
+      <line class="arrow purple-arrow" x1="340" y1="156" x2="340" y2="122" marker-end="url(#a-purple)"/><text class="purple-label" x="328" y="141">유익</text>
+      <line class="arrow blue-arrow" x1="642" y1="117" x2="642" y2="190" marker-end="url(#a-blue)"/><text class="blue-label" x="630" y="145">유입</text>
+    </svg>
+  </div>
+  <div class="model-caption"><b>읽는 법</b> 거버넌스는 기준·배분·과제를 제시하고, 데이터는 세상·본질·기반에서 일어난 일을 관찰해 다시 거버넌스로 보냅니다. 기반은 본질을 지원하며, 본질은 세상에 유익을 전하고 세상에서 새로운 인연이 유입되는 열린 구조입니다.</div>
+</section>
+<section class="evidence-library" id="evidence-library">
+  <div><span class="system-tag">연구포털 도서관</span><h2>이 보고서의 주요 근거 보고서</h2><p>본문의 수치·판정·정책적 해석을 확인할 때 함께 참조할 수 있는 연구포털의 검증 산출물입니다.</p></div>
+  <a class="portal-open" href="https://junsh83.github.io/Restructuring/" target="_blank" rel="noopener">📚 연구포털 도서관 열기 ↗</a>
+  <div class="evidence-links">
+    <a href="https://junsh83.github.io/Restructuring/%EC%84%9C%EC%9A%B8%EA%B5%90%EA%B5%AC_%EB%B3%B5%EC%88%98%EB%B0%B0%EC%B9%98_%EC%9D%B8%EA%B3%BC%EB%B6%84%EC%84%9D_111.07.html" target="_blank" rel="noopener"><b>교무 배치·청소년 활동</b><span>배치 변화와 청소년 활동의 관계</span></a>
+    <a href="https://junsh83.github.io/Restructuring/consolidation.html" target="_blank" rel="noopener"><b>교당통합 효과분석</b><span>SCM·강건성 검정과 조건부 통합 효과</span></a>
+    <a href="https://junsh83.github.io/Restructuring/seoul-diocese-age-analysis.html" target="_blank" rel="noopener"><b>서울교구 연령 구조</b><span>세대별 출석 추이와 미래세대 단절</span></a>
+    <a href="https://junsh83.github.io/Restructuring/%EC%84%9C%EC%9A%B8%EA%B5%90%EA%B5%AC%20%EA%B5%90%EB%8B%B9%20%EC%9E%AC%EB%AC%B4%EC%83%81%ED%83%9C%20%EB%B6%84%EC%84%9D.html" target="_blank" rel="noopener"><b>교당 재무상태 분석</b><span>재정과 교화의 관계·공통비용 분석</span></a>
+    <a href="https://junsh83.github.io/Restructuring/%EB%B6%80%EB%AA%A8%EC%9E%90%EB%85%80_%EB%B2%95%ED%9A%8C%EC%B6%9C%EC%84%9D_%EC%89%AC%EC%9A%B4%EB%B3%B4%EA%B3%A0%EC%84%9C%20(2).html" target="_blank" rel="noopener"><b>부모와 아이는 함께 나온다</b><span>부모·자녀 법회출석 분석</span></a>
+  </div>
+</section>
+
+<div class="tabs-wrap">
+  <nav class="tab-bar" role="tablist" aria-label="보고서 장 목차"><button class="tab-btn active" data-tab="tab-0" role="tab" aria-selected="true"><span class="tab-no">01</span><span class="tab-title">보고서의 목적</span></button>
+  <button class="tab-btn" data-tab="tab-1" role="tab" aria-selected="false"><span class="tab-no">02</span><span class="tab-title">현재까지 확인된 서울교구의 위기</span></button>
+  <button class="tab-btn" data-tab="tab-2" role="tab" aria-selected="false"><span class="tab-no">03</span><span class="tab-title">최종 분석 모델: 8+1 개방형 교화 시스템</span></button>
+  <button class="tab-btn" data-tab="tab-3" role="tab" aria-selected="false"><span class="tab-no">04</span><span class="tab-title">세상의 요구와 교화의 응답 공백</span></button>
+  <button class="tab-btn" data-tab="tab-4" role="tab" aria-selected="false"><span class="tab-no">05</span><span class="tab-title">두 가지 정책 방향</span></button>
+  <button class="tab-btn" data-tab="tab-5" role="tab" aria-selected="false"><span class="tab-no">06</span><span class="tab-title">공간 연계 3대 현실 시나리오</span></button>
+  <button class="tab-btn" data-tab="tab-6" role="tab" aria-selected="false"><span class="tab-no">07</span><span class="tab-title">7대 영역 과제의 시스템 재배치</span></button>
+  <button class="tab-btn" data-tab="tab-7" role="tab" aria-selected="false"><span class="tab-no">08</span><span class="tab-title">현재 확인된 것과 아직 확인되지 않은 것</span></button>
+  <button class="tab-btn" data-tab="tab-8" role="tab" aria-selected="false"><span class="tab-no">09</span><span class="tab-title">다음 연구와 실행 과제</span></button>
+  <button class="tab-btn" data-tab="tab-9" role="tab" aria-selected="false"><span class="tab-no">10</span><span class="tab-title">결론</span></button>
+  <button class="tab-btn" data-tab="tab-10" role="tab" aria-selected="false"><span class="tab-no">11</span><span class="tab-title">참고 연결문서</span></button></nav>
+  <section id="tab-0" class="tab-panel active" role="tabpanel"><h2 id="1">1. 보고서의 목적</h2>
+<p>이번 중간보고서는 다음 네 가지를 공유하기 위해 작성한다.</p>
+<ol>
+<li>서울교구 교화의 현재 위기와 지금까지 확인된 핵심 근거를 정리한다.</li>
+<li>교화구조를 <strong>8대 내부 요소와 1대 외부 환경으로 이루어진 8+1 개방형 시스템</strong>으로 설명한다.</li>
+<li>세상의 요구와 교화의 응답 사이에 어떤 공백이 있는지 확인한다.</li>
+<li>본질 집중과 미래세대 교화라는 두 정책 방향을 공간 연계 3대 현실 시나리오와 연결한다.</li>
+</ol>
+<p>이 보고서에서 다음 세 가지를 구분한다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>의미</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>확인된 사실</strong></td>
+<td>자료와 분석에서 확인된 결과</td>
+<td>행정·시설 업무 최소 14%, 무교무 상태의 출석 손실, 청소년 활동과 교무 배치의 관계</td>
+</tr>
+<tr>
+<td><strong>정책 가설</strong></td>
+<td>다음 조사·실험으로 확인해야 할 주장</td>
+<td>세상에 제공한 유익이 지속적 유입으로 이어지는가, 거점교화가 미래세대 활동을 높이는가</td>
+</tr>
+<tr>
+<td><strong>정책 제안</strong></td>
+<td>연구 결과를 바탕으로 선택할 방향</td>
+<td>8+1 시스템, 공동교화 우선 검토, 외부 접점 기록체계 구축</td>
+</tr>
+</tbody>
+</table>
+<hr /></section>
+<section id="tab-1" class="tab-panel " role="tabpanel"><h2 id="2">2. 현재까지 확인된 서울교구의 위기</h2>
+<h3 id="21">2.1 위기의 핵심은 공간보다 유입·세대·인력의 단절이다</h3>
+<p>서울교구의 월 1회 이상 출석 교도, 곧 코어는 원기100년 4,482명에서 원기110년 3,541명으로 감소했다. 신규 입교자는 원기97년 1,017명에서 원기108년 434명으로 57% 줄었다. 어린이 법회 참여도 원기90년 대비 73.6% 감소했다.</p>
+<p>따라서 문제를 “교당을 합칠 것인가, 유지할 것인가”로만 좁힐 수 없다. 핵심 질문은 다음이다.</p>
+<blockquote>
+<p>세상과의 접점을 어떻게 회복하고, 다음 세대와의 연결을 어떻게 다시 만들며, 얇아진 인력으로 그 일을 감당할 구조를 어떻게 설계할 것인가?</p>
+</blockquote>
+<h3 id="22">2.2 인력의 문제는 단순한 교무 수 부족이 아니다</h3>
+<p>서울 일반교당 56곳의 원기108년 인사 자료를 기준으로 교당당 평균 근무자는 1.54명이고, 1인 교당은 33곳으로 58.9%다. 한 사람에게 영적 지도와 행정·시설·관리 업무가 동시에 집중되는 구조가 지속되고 있다.</p>
+<p>종합일지 244,145건을 소분류해 분석한 결과, 재가 이관 또는 자동화·공동행정이 가능한 업무는 판정 가능한 시간 기준 최소 14.0%였다. 이 값은 누락된 행정 잡무가 있어 상한이 아니라 하한으로 읽어야 한다.</p>
+<h3 id="23">2.3 배치의 효과는 확인됐지만 범위를 좁혀 읽어야 한다</h3>
+<p>교무 배치와 청소년 활동 사이에는 일관된 관계가 확인됐다. 교무가 줄어든 교당에서 청소년 법회 개최 확률은 15.3~18.7%포인트 낮아졌고, 참석자 수도 감소했다.</p>
+<p>무교무 상태의 성인 출석은 44% 낮았으며, 교구·연도 고정효과를 넣으면 격차가 57%까지 커졌다. 무교무 교당에 교무를 배치한 뒤 2년 후 출석이 증가한 신호도 확인됐다(t+2 +0.81, p=.014).</p>
+<p>다만 다음 주장은 현재 근거로 확정할 수 없다.</p>
+<ul>
+<li>3인 이상 배치하면 청소년 출석이 8배가 된다는 주장</li>
+<li>거점교화가 청소년 총량을 증가시킨다는 주장</li>
+<li>교무 배치의 효과가 모든 연령층과 모든 교당에서 동일하다는 주장</li>
+</ul>
+<p>실태표에는 3인 이상 교당의 청소년 법회 개최율 100%가 있으나, 이는 5곳의 개최 여부를 나타내는 값이며 출석 성과나 인과 효과의 추정값이 아니다.</p>
+<h3 id="24">2.4 재정은 직접 지렛대라기보다 교화의 조건이다</h3>
+<p>재정이 일정 문턱을 넘으면 교무가 한 명씩 증가한다는 계단 가설은 지지되지 않았다. 재정은 교무 배치의 크기를 직접 정한다고 보기 어렵지만, 교당이 감당할 수 있는 선택의 범위와 교무 처우·시설 유지·공동활동의 지속 가능성을 제한한다.</p>
+<p>따라서 재정 개편의 논거는 “돈을 투입하면 교화가 자동으로 증가한다”가 아니라 다음에 둔다.</p>
+<ul>
+<li>교당 간 격차 완화</li>
+<li>교역자 처우 안정</li>
+<li>공동비용의 효율화</li>
+<li>미래세대와 공공적 교화에 대한 목적성 재원 마련</li>
+</ul>
+<hr /></section>
+<section id="tab-2" class="tab-panel " role="tabpanel"><h2 id="3-81">3. 최종 분석 모델: 8+1 개방형 교화 시스템</h2>
+<h3 id="31">3.1 모델의 기본 구조</h3>
+<p>교화구조는 교당 내부에서 닫힌 체계가 아니라, 세상의 요구를 관찰하고 내부 자원을 재배치해 응답하며 그 결과를 다시 관찰하는 열린 시스템으로 본다.</p>
+<pre><code class="language-text">                 ⑨ 세상·사회적 요구
+              요구 · 문제 · 변화 · 접점
+                         ↓
+┌─────────────────────────────────────────────┐
+│              1단계 · 교화의 본질             │
+│       ① 교역자 · ② 콘텐츠 · ③ 대상          │
+└─────────────────────────────────────────────┘
+                         ↑ 지원
+┌─────────────────────────────────────────────┐
+│              2단계 · 교화의 기반             │
+│        ④ 행정 · ⑤ 공간 · ⑥ 재정             │
+└─────────────────────────────────────────────┘
+                         ↕ 관찰·조정
+┌─────────────────────────────────────────────┐
+│              3단계 · 교화의 환류             │
+│        ⑦ 데이터 ↔ ⑧ 거버넌스                │
+└─────────────────────────────────────────────┘
+                         ↓
+              유익 · 만남 · 변화 · 재관찰
+                         ↺
+                 ⑨ 세상·사회적 요구
+</code></pre>
+<p>여기서 ①~⑧은 교구 내부에서 설계·조정할 수 있는 내부 시스템 요소이고, ⑨ 세상·사회적 요구는 내부 요소와 동일한 부품이라기보다 시스템의 경계와 외부 환경이다. 따라서 이 모델은 엄밀하게는 <strong>8대 내부 요소 + 1대 경계·환경 요소</strong>, 곧 <strong>8+1 개방형 시스템</strong>으로 표현한다.</p>
+<h3 id="32-8">3.2 8대 내부 요소</h3>
+<table>
+<thead>
+<tr>
+<th>층위</th>
+<th>요소</th>
+<th>핵심 질문</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>교화의 본질</td>
+<td>① 교역자</td>
+<td>누가 사람을 만나고 무엇에 시간을 쓰는가</td>
+</tr>
+<tr>
+<td>교화의 본질</td>
+<td>② 콘텐츠</td>
+<td>무엇을 통해 마음공부와 관계를 경험하게 하는가</td>
+</tr>
+<tr>
+<td>교화의 본질</td>
+<td>③ 대상</td>
+<td>누구의 삶과 요구에 응답하는가</td>
+</tr>
+<tr>
+<td>교화의 기반</td>
+<td>④ 행정</td>
+<td>교역자가 하지 않아도 되는 일을 어떻게 분리하는가</td>
+</tr>
+<tr>
+<td>교화의 기반</td>
+<td>⑤ 공간</td>
+<td>어디에서 어떤 형태로 만나는가</td>
+</tr>
+<tr>
+<td>교화의 기반</td>
+<td>⑥ 재정</td>
+<td>무엇을 지속하고 누구에게 자원을 배분하는가</td>
+</tr>
+<tr>
+<td>교화의 환류</td>
+<td>⑦ 데이터</td>
+<td>무엇이 일어났고 어디에서 막혔는가</td>
+</tr>
+<tr>
+<td>교화의 환류</td>
+<td>⑧ 거버넌스</td>
+<td>관찰된 신호를 어떻게 기준·배분·실행에 반영하는가</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-9">3.3 ⑨ 세상·사회적 요구</h3>
+<p>세상은 단순한 잠재 교도의 모집단이 아니다. 다음을 포함하는 외부 환경이다.</p>
+<ul>
+<li>사람들이 실제로 겪는 삶의 문제</li>
+<li>지역사회와 세대별 환경 변화</li>
+<li>시민이 공동체와 종교에 기대하는 기능</li>
+<li>원불교가 제공할 수 있는 유익</li>
+<li>교당 밖에서 발생하는 접촉·참여·관계</li>
+</ul>
+<p>현재 서울교구의 내부 자료는 이미 등록된 교도와 교당 활동을 중심으로 구성되어 있다. 따라서 비교도 접촉, 지역사회 유익, 프로그램 참여 전후의 변화는 충분히 측정되지 않는다. ⑨를 모델에 포함하는 것은 새로운 기록체계가 필요하다는 뜻이기도 하다.</p>
+<hr /></section>
+<section id="tab-3" class="tab-panel " role="tabpanel"><h2 id="4">4. 세상의 요구와 교화의 응답 공백</h2>
+<h3 id="41">4.1 세대별 요구는 ‘확정 진단’이 아니라 확인할 가설이다</h3>
+<p>세대별 요구를 다음과 같이 가설로 정리한다. 아래 문장은 각 세대 전체를 단정하는 진술이 아니며, 공공 통계와 당사자 조사를 통해 확인해야 할 연구 질문이다.</p>
+<table>
+<thead>
+<tr>
+<th>생애 단계</th>
+<th>확인할 요구 가설</th>
+<th>교화 응답 후보</th>
+<th>필요한 확인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>청소년</td>
+<td>학업·진로 부담, 관계 갈등, 정서적 고립</td>
+<td>마음공부, 멘토링, 또래공동체, 진로·관계 프로그램</td>
+<td>청소년 당사자 조사·공공 청소년 통계</td>
+</tr>
+<tr>
+<td>청년</td>
+<td>취업·주거·관계·소속감에 대한 불안</td>
+<td>생활수행, 관계망, 진로·생활 멘토링, 열린 공간</td>
+<td>청년 실태조사·청년 당사자 조사</td>
+</tr>
+<tr>
+<td>30~40대</td>
+<td>자녀 양육, 교육, 일·돌봄 병행</td>
+<td>부모·자녀 프로그램, 돌봄 공동체, 주말·평일 접점</td>
+<td>서울시·육아·돌봄 자료와 현장조사</td>
+</tr>
+<tr>
+<td>50대</td>
+<td>부모 돌봄, 자녀 독립, 직업 전환, 중년의 의미</td>
+<td>중년 전환 프로그램, 수행·관계 회복, 역할 재설계</td>
+<td>중년층 별도 조사</td>
+</tr>
+<tr>
+<td>60~70대</td>
+<td>퇴직 이후 역할, 건강, 고립, 관계와 삶의 의미</td>
+<td>봉사·멘토 역할, 수행공동체, 돌봄 네트워크</td>
+<td>노인실태조사·퇴직자 조사</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42">4.2 세상의 요구를 교화 시스템으로 번역하는 방법</h3>
+<p>세대별 문제를 나열하는 것만으로는 교화구조 연구가 되지 않는다. 각 요구를 내부 시스템의 어느 요소가 응답해야 하는지 연결해야 한다.</p>
+<table>
+<thead>
+<tr>
+<th>세상의 요구</th>
+<th>우선 연결할 내부 요소</th>
+<th>구조적 질문</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>청소년의 학업·진로 부담</td>
+<td>콘텐츠·교역자·공간·데이터</td>
+<td>담당자가 있고, 안전하게 만나며, 변화가 측정되는가</td>
+</tr>
+<tr>
+<td>청년의 불안·소속감 부족</td>
+<td>대상·콘텐츠·공간·거버넌스</td>
+<td>일회성 프로그램을 넘어 관계와 역할이 생기는가</td>
+</tr>
+<tr>
+<td>30~40대의 양육 부담</td>
+<td>콘텐츠·공간·재정·행정</td>
+<td>부모와 자녀가 함께 참여할 시간·장소·지원이 있는가</td>
+</tr>
+<tr>
+<td>퇴직 이후 역할 상실</td>
+<td>교역자·대상·거버넌스</td>
+<td>경험 있는 교도에게 새로운 역할과 책임을 부여하는가</td>
+</tr>
+<tr>
+<td>지역사회 돌봄 공백</td>
+<td>행정·공간·콘텐츠·재정</td>
+<td>교당이 지역의 문제에 지속적으로 응답할 수 있는가</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43">4.3 유익과 유입의 관계는 정책 가설이다</h3>
+<p>세상에 유익을 제공하고 그 유익이 새로운 만남과 유입으로 이어지는 구조는 이 모델의 중요한 정책 가설이다. 그러나 현재 자료로는 다음 경로가 검정되지 않았다.</p>
+<pre><code class="language-text">세상의 요구 → 원불교의 유익 → 첫 만남 → 반복 참여 → 관계·정착
+</code></pre>
+<p>현재 확인된 것은 신규 입교 감소와 세상과의 접점을 측정할 기록 공백이다. 따라서 “유익을 제공하면 사람이 들어온다”를 연구 결과로 쓰지 않는다. 향후에는 다음을 기록해야 한다.</p>
+<ul>
+<li>참여자가 교도·비교도·일회 참여자 중 어디에 속하는가</li>
+<li>어떤 요구 때문에 참여했는가</li>
+<li>어떤 프로그램과 유익을 경험했는가</li>
+<li>다시 참여했는가</li>
+<li>관계·정착·교화로 이어졌는가</li>
+<li>프로그램에 투입된 인력·공간·재정은 무엇인가</li>
+</ul>
+<hr /></section>
+<section id="tab-4" class="tab-panel " role="tabpanel"><h2 id="5">5. 두 가지 정책 방향</h2>
+<h3 id="51-1">5.1 제1축: 본질에 집중하게 하는 구조</h3>
+<p>교역자와 재가가 교화의 본질에 집중하도록 기반을 재설계하는 방향이다.</p>
+<p>핵심 내용은 다음과 같다.</p>
+<ul>
+<li>행정·시설·회계·공문 등 이관·자동화 가능 업무의 분리</li>
+<li>공동행정 지원과 재가 전문성 활용</li>
+<li>교역자의 교화·상담·마음공부 지도 시간 확보</li>
+<li>교화단장과 재가 지도자의 역할을 관리 업무에 한정하지 않고 신앙·관계·수행의 리더십으로 확장</li>
+<li>생활 속 상시훈련과 마음공부 콘텐츠의 실험</li>
+</ul>
+<p>이 축의 직접 근거는 행정 업무 실측과 교무 배치·청소년 활동 분석이다. 상시훈련, 재가 전문인력 활용, AI 자동화의 효과는 별도의 실행·평가가 필요하다.</p>
+<h3 id="52-2">5.2 제2축: 미래세대 교화를 위한 구조</h3>
+<p>미래세대는 성인 교화의 하위 항목으로 다루지 않고 별도의 설계 단위로 둔다.</p>
+<p>핵심 내용은 다음과 같다.</p>
+<ul>
+<li>청소년·청년·3040을 하나로 뭉뚱그리지 않고 생애 단계별로 구분</li>
+<li>청소년 법회와 청년 접점을 담당할 인력 확보</li>
+<li>인근 교당 간 공동 프로그램과 권역 단위 활동</li>
+<li>부모가 신뢰할 수 있는 체험형·관계형 프로그램</li>
+<li>멘토링·연합캠프·진로·생활 프로그램의 시범 운영</li>
+<li>청소년 활동을 연인원만이 아니라 실제 참여자·반복 참여·정착으로 측정</li>
+</ul>
+<p>이 축의 근거는 청소년 법회 감소, 1인 교무 체제와 청소년 활동의 관계, 성인·청소년의 층위 차이다. 특정 프로그램이나 거점 배치가 미래세대 활동을 증가시킨다는 효과는 아직 검정되지 않았다.</p>
+<hr /></section>
+<section id="tab-5" class="tab-panel " role="tabpanel"><h2 id="6-3">6. 공간 연계 3대 현실 시나리오</h2>
+<h3 id="61-3">6.1 공간은 제3의 정책 축이 아니다</h3>
+<p>공간 연계는 본질 집중과 미래세대 교화라는 두 정책 방향을 현장에서 구현하는 운영 시나리오다. 모든 교당이 순차적으로 밟아 가는 발전 단계가 아니며, 교당의 조건에 따라 선택하는 대안이다.</p>
+<h3 id="62">6.2 기본 상태와 세 가지 시나리오</h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>성격</th>
+<th>핵심 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>독립 운영 유지</strong></td>
+<td>기본 상태·비교 기준</td>
+<td>교당의 독립 운영을 유지하고 자체 자구·재가역량을 강화</td>
+</tr>
+<tr>
+<td><strong>공동교화</strong></td>
+<td>연계·협력의 기본 대안</td>
+<td>교당 명칭·위치·자산을 유지하며 행정·살림·프로그램을 공동 운영</td>
+</tr>
+<tr>
+<td><strong>거점교화</strong></td>
+<td>권역 집중의 특화 대안</td>
+<td>중심 교당에 복수 교역자와 미래세대 플랫폼을 집중하고 권역을 연계</td>
+</tr>
+<tr>
+<td><strong>통합교화</strong></td>
+<td>자발적 결합의 선택 대안</td>
+<td>조건이 갖춰진 경우 교당 단위를 통합하고 인적·물적 자원을 재배치</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63">6.3 시나리오별 정의</h3>
+<h4 id="_1">공동교화 — 생활권 연계·협력</h4>
+<ul>
+<li>교당의 명칭·위치·자산을 유지한다.</li>
+<li>인접 교당이 행정·시설·회계·교육·청소년 프로그램을 분담한다.</li>
+<li>소수 인원 교당이 단독으로 감당하기 어려운 청소년·3040 활동을 연합해 운영한다.</li>
+<li>공동교화가 통합교화의 전 단계라는 뜻은 아니다.</li>
+</ul>
+<h4 id="_2">거점교화 — 권역 집중·복수인력 배치</h4>
+<ul>
+<li>대중교통 요충지와 프로그램 수용력을 가진 교당을 권역 중심으로 활용한다.</li>
+<li>복수 교역자 배치와 직무 전문화를 검토한다.</li>
+<li>청소년·청년·시민을 위한 열린 플랫폼을 운영한다.</li>
+<li>거점교화의 효과는 아직 독립적으로 측정되지 않았으므로, 시행 시 사전·사후 평가를 설계한다.</li>
+</ul>
+<h4 id="_3">통합교화 — 자발적 결합·선택적 자원 집중</h4>
+<ul>
+<li>통합은 기본 경로가 아니라 조건부·선택적 경로로 둔다.</li>
+<li>통합 전 공동교화·순회·재가 중심 운영·기능 전환 등 완충 방식을 검토한다.</li>
+<li>통합 효과는 성장의 증명이 아니라 특정 조건에서 출석 총량 감소를 완화하는 근거로 읽는다.</li>
+<li>대등한 규모의 균형 결합과 절차적 정당성이 중요하다.</li>
+<li>통합 이후에는 새 교무 배치, 교화단 재편, 관계망 보호 등 ‘합친 뒤 무엇을 할 것인가’를 별도로 설계한다.</li>
+</ul>
+<blockquote>
+<p><strong>정리:</strong> 독립 운영은 기본 상태이고, 공동교화·거점교화·통합교화는 서로 다른 운영 시나리오다. 세 시나리오는 순차적 발전 단계가 아니며, ‘거점·통합’처럼 두 수단을 하나의 용어로 합쳐 쓰지 않는다.</p>
+</blockquote>
+<h3 id="64">6.4 공간 시나리오와 두 정책 축의 연결</h3>
+<table>
+<thead>
+<tr>
+<th>시나리오</th>
+<th>본질 집중 축</th>
+<th>미래세대 축</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>공동교화</td>
+<td>행정·살림·시설관리 분담</td>
+<td>인근 교당 연합 청소년·3040 프로그램</td>
+</tr>
+<tr>
+<td>거점교화</td>
+<td>복수 교역자 배치와 직무분업</td>
+<td>권역 청소년·청년·시민 플랫폼</td>
+</tr>
+<tr>
+<td>통합교화</td>
+<td>중복비용과 인적 자원의 선택적 재배치</td>
+<td>절감·재배치 자원의 미래세대 투자 검토</td>
+</tr>
+</tbody>
+</table>
+<p>위 표는 설계 방향이다. 공동교화의 순증 효과, 거점교화의 효과, 통합 후 재투자의 효과를 이미 확인한 결과로 읽지 않는다.</p>
+<hr /></section>
+<section id="tab-6" class="tab-panel " role="tabpanel"><h2 id="7-7">7. 7대 영역 과제의 시스템 재배치</h2>
+<p>기존 7대 영역과 40개 과제는 실행과제 관리 체계로 유지하되, 중간보고서의 분석 틀은 8+1 시스템으로 통합한다.</p>
+<table>
+<thead>
+<tr>
+<th>기존 과제군</th>
+<th>8+1 시스템의 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>인력·직무</td>
+<td>① 교역자 + ④ 행정</td>
+</tr>
+<tr>
+<td>공간·통합·거점화</td>
+<td>⑤ 공간 + 공간 연계 3대 현실 시나리오</td>
+</tr>
+<tr>
+<td>콘텐츠·프로그램</td>
+<td>② 콘텐츠</td>
+</tr>
+<tr>
+<td>청년·세대·시민</td>
+<td>③ 대상 + ⑨ 세상·사회적 요구</td>
+</tr>
+<tr>
+<td>조사·데이터</td>
+<td>⑦ 데이터</td>
+</tr>
+<tr>
+<td>비전·거버넌스</td>
+<td>⑧ 거버넌스</td>
+</tr>
+<tr>
+<td>재정·살림</td>
+<td>⑥ 재정</td>
+</tr>
+</tbody>
+</table>
+<p>이 재배치는 기존 과제를 폐기하는 것이 아니다. 과제가 어느 시스템 요소를 바꾸며, 다른 요소와 어떤 관계를 맺는지 다시 표시하는 작업이다.</p>
+<p>특히 기존 ① 인력·직무에 들어 있던 행정을 ④ 행정으로 분리한다. 교역자는 “누가 사람을 만나는가”의 요소이고, 행정은 “교역자가 무엇을 하지 않아도 되게 하는가”의 기반 요소다.</p>
+<hr /></section>
+<section id="tab-7" class="tab-panel " role="tabpanel"><h2 id="8">8. 현재 확인된 것과 아직 확인되지 않은 것</h2>
+<h3 id="_1">확인된 것</h3>
+<ul>
+<li>신규 입교와 어린이 교화가 장기적으로 감소했다.</li>
+<li>1인 교무 구조가 서울교구의 과반 교당에 존재한다.</li>
+<li>행정·시설 업무가 최소 14.0% 측정됐다.</li>
+<li>교무 배치는 청소년 활동과 관련된다.</li>
+<li>무교무 상태는 성인 출석의 큰 손실과 관련된다.</li>
+<li>성인·청소년·청년은 같은 방식으로 움직이지 않는다.</li>
+<li>재정은 교무 배치의 단순한 직접 지렛대로 확인되지 않았다.</li>
+<li>통합은 조건부로 출석 총량 감소를 완화할 수 있으나, 성장 보장으로 읽을 수 없다.</li>
+</ul>
+<h3 id="_2">정책 가설로 남은 것</h3>
+<ul>
+<li>세상에 제공한 유익이 지속적인 교화 유입으로 이어지는가</li>
+<li>세대별 요구에 맞춘 콘텐츠가 참여와 정착을 높이는가</li>
+<li>거점교화가 권역의 청소년·청년 활동을 증가시키는가</li>
+<li>공동교화가 행정 부담과 프로그램 공백을 실제로 줄이는가</li>
+<li>통합 이후 교화단 재편과 복수인력 배치가 성과를 만드는가</li>
+<li>재가 전문인력과 AI 행정 지원이 교역자의 교화 시간을 늘리는가</li>
+</ul>
+<h3 id="_3">현재 자료로 알 수 없는 것</h3>
+<ul>
+<li>비교도 접촉 이후의 변화와 정착 경로</li>
+<li>세상에 제공한 유익의 규모와 질</li>
+<li>거점교화의 독립 효과</li>
+<li>공동교화의 순증 효과</li>
+<li>생애주기별 사회적 요구의 서울교구 내 우선순위</li>
+<li>프로그램별 인과 효과와 비용 대비 성과</li>
+</ul>
+<hr /></section>
+<section id="tab-8" class="tab-panel " role="tabpanel"><h2 id="9">9. 다음 연구와 실행 과제</h2>
+<h3 id="91">9.1 외부 접점과 세상의 요구 기록체계</h3>
+<ul>
+<li>비교도·일회 참여자·반복 참여자 구분</li>
+<li>참여 이유와 요구 기록</li>
+<li>프로그램 유형과 제공한 유익 기록</li>
+<li>참여 후 재방문·관계·정착 추적</li>
+<li>지역사회 기관·학교·복지·시민단체와의 접점 기록</li>
+</ul>
+<h3 id="92">9.2 행정 기반 재설계</h3>
+<ul>
+<li>재가 이관·자동화·공동행정 항목 확정</li>
+<li>공동행정 지원의 최소 단위와 비용 산정</li>
+<li>교역자 업무시간 변화 측정</li>
+<li>행정 경감이 실제 교화 접촉 증가로 이어지는지 평가</li>
+</ul>
+<h3 id="93">9.3 미래세대 시범사업</h3>
+<ul>
+<li>청소년·청년·3040을 구분한 프로그램 설계</li>
+<li>공동교화 시나리오에서 연합 프로그램 시범</li>
+<li>부모·자녀가 함께 참여할 수 있는 접점 설계</li>
+<li>실제 참여자·반복 참여·정착률을 공통 지표로 설정</li>
+</ul>
+<h3 id="94">9.4 공간 시나리오 평가</h3>
+<ul>
+<li>독립 운영 유지 교당을 비교 기준으로 설정</li>
+<li>공동교화·거점교화·통합교화의 처치 정의를 분리</li>
+<li>시나리오 적용 전 교화·재정·관계·인력 기준선 확보</li>
+<li>시행 후 성인·청소년·청년·재정·교역자 업무시간을 각각 평가</li>
+<li>거점교화를 통합교화의 대리값으로 사용하지 않음</li>
+</ul>
+<h3 id="95">9.5 데이터에서 결정으로 이어지는 환류</h3>
+<ul>
+<li>지표를 정하는 사람과 판정 주기를 명확히 함</li>
+<li>진단 결과가 어떤 회의·기구의 어떤 결정으로 연결되는지 기록</li>
+<li>결정의 집행 여부와 다음 재측정 시점을 남김</li>
+<li>데이터·거버넌스가 보고서 생산에 그치지 않고 자원 배분을 바꾸도록 설계</li>
+</ul>
+<hr /></section>
+<section id="tab-9" class="tab-panel " role="tabpanel"><h2 id="10">10. 결론</h2>
+<p>서울교구 교화구조개선의 핵심 과제는 교당을 합칠 것인가 유지할 것인가가 아니다. 세상의 요구에 응답할 수 있도록 교화의 본질과 그것을 떠받치는 기반, 그리고 데이터를 통한 환류 체계를 다시 설계하는 일이다.</p>
+<p>이를 위해 교화구조를 다음과 같이 본다.</p>
+<blockquote>
+<p><strong>8+1 개방형 교화 시스템</strong></p>
+<ul>
+<li>내부 본질: 교역자·콘텐츠·대상</li>
+<li>내부 기반: 행정·공간·재정</li>
+<li>내부 환류: 데이터·거버넌스</li>
+<li>외부 경계·환경: 세상·사회적 요구</li>
+</ul>
+</blockquote>
+<p>정책 방향은 두 축이다.</p>
+<ol>
+<li>교역자가 행정·시설·관리의 과도한 부담에서 벗어나 교화의 본질에 집중하게 하는 구조</li>
+<li>청소년·청년·3040 등 미래세대의 요구에 별도로 응답하고 지속적인 만남을 만드는 구조</li>
+</ol>
+<p>공간 운영은 독립 운영을 기본 상태로 두고, 교당의 조건에 따라 다음 세 가지 현실 시나리오 중 하나를 선택한다.</p>
+<ul>
+<li>공동교화: 생활권 연계·협력</li>
+<li>거점교화: 권역 집중·복수인력 배치</li>
+<li>통합교화: 자발적 결합·선택적 자원 집중</li>
+</ul>
+<p>이 세 가지는 모든 교당이 순차적으로 밟아 가는 단계가 아니다. 또한 거점교화와 통합교화를 하나의 ‘거점·통합형’으로 묶지 않는다.</p>
+<p>마지막으로, 세상에 유익을 제공하고 그 유익이 유입·정착으로 이어지는 경로는 중요한 정책 가설이다. 이를 확정된 인과 결과로 선언하기보다, 외부 접점과 유익을 기록하고 다음 단계의 실험으로 확인해야 한다.</p>
+<blockquote>
+<p>교화구조개선은 내부 자원을 재배치하는 사업을 넘어, 세상의 요구를 읽고 그에 응답하며 그 결과를 다시 배우는 열린 시스템을 만드는 일이다.</p>
+</blockquote>
+<hr /></section>
+<section id="tab-10" class="tab-panel " role="tabpanel"><h2 id="_1">참고 연결문서</h2>
+<ul>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=%EC%84%9C%EC%9A%B8%EA%B5%90%EA%B5%AC%20%EA%B5%90%ED%99%94%EA%B5%AC%EC%A1%B0%EA%B0%9C%EC%84%A0%20%EC%97%B0%EA%B5%AC%EB%B3%B4%EA%B3%A0%EC%84%9C%28%EC%98%B5%EC%8B%9C%EB%94%94%EC%96%B8%29" title="Obsidian에서 노트 열기">서울교구 교화구조개선 연구보고서(옵시디언)</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=111.09.06%20%EA%B5%90%EB%8F%84%ED%9A%8C%EC%9E%A5%202%EC%B0%A8%20%EC%84%A4%EB%AA%85%ED%9A%8C_%EB%B0%9C%ED%91%9C_%EB%A9%98%ED%8A%B8_%EB%B0%8F_%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C_%ED%95%B4%EC%84%A4%EB%85%B8%ED%8A%B8" title="Obsidian에서 노트 열기">111.09.06 교도회장 2차 설명회_발표_멘트_및_슬라이드_해설노트</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=111.08.31%20%EC%B6%9C%EA%B5%90%ED%98%91%202%EC%B0%A8%20%EC%A4%91%EA%B0%84%EB%B3%B4%EA%B3%A0_%EC%9E%90%EB%A3%8C%EC%A7%91%EC%88%98%EB%A1%9D%EB%B3%B8" title="Obsidian에서 노트 열기">111.08.31 출교협 2차 중간보고_자료집수록본</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=%EA%B3%B5%EA%B0%84%20%EC%97%B0%EA%B3%84%203%EB%8C%80%20%ED%98%84%EC%8B%A4%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4%20%E2%80%94%202%EB%8C%80%20%EC%B6%95%EC%9D%98%20%ED%98%84%EC%9E%A5%20%EC%9E%91%EB%8F%99%20%EC%B2%B4%EA%B3%84" title="Obsidian에서 노트 열기">공간 연계 3대 현실 시나리오 — 2대 축의 현장 작동 체계</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=8%EB%8C%80%20%EC%9A%94%EC%86%8C%20%E2%80%94%20%EA%B5%90%ED%99%94%EA%B5%AC%EC%A1%B0%EC%9D%98%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%9E%AC%ED%95%B4%EC%84%9D" title="Obsidian에서 노트 열기">8대 요소 — 교화구조의 시스템 재해석</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=8%EB%8C%80%20%EC%9A%94%EC%86%8C%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EB%AA%A8%ED%98%95%20%E2%80%94%20%EB%8F%84%ED%95%B4%ED%8C%90%20%28%EC%9B%90%EA%B8%B0111.08%29" title="Obsidian에서 노트 열기">8대 요소 시스템 모형 — 도해판 (원기111.08)</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=7%EB%8C%80%EC%98%81%EC%97%AD_%EA%B3%BC%EC%A0%9C%EB%A7%A4%ED%8A%B8%EB%A6%AD%EC%8A%A4" title="Obsidian에서 노트 열기">7대영역_과제매트릭스</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=%E2%91%A0-1%20%EA%B5%90%EB%AC%B4%20%EC%A7%81%EB%AC%B4%EB%B6%84%EC%84%9D%EA%B3%BC%20%ED%96%89%EC%A0%95%EC%9D%B4%EA%B4%80%203%EB%B6%84%EB%B2%95%20%EC%84%A4%EA%B3%84%20%E2%80%94%20%EC%A2%85%ED%95%A9%EC%9D%BC%EC%A7%80%2024%EB%A7%8C%20%EA%B1%B4%20%EC%8B%A4%EC%B8%A1%EA%B3%BC%20%ED%95%98%ED%95%9C%2014%25%EC%9D%98%20%EC%9D%98%EB%AF%B8%20%28%EC%9B%90%EA%B8%B0111.08%29" title="Obsidian에서 노트 열기">①-1 교무 직무분석과 행정이관 3분법 설계 — 종합일지 24만 건 실측과 하한 14%의 의미 (원기111.08)</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=%EB%B0%B0%EC%B9%98%EA%B0%80%20%EC%A4%84%EB%A9%B4%20%EC%B2%AD%EC%86%8C%EB%85%84%20%ED%99%9C%EB%8F%99%EC%9D%B4%20%EC%A4%80%EB%8B%A4%20%E2%80%94%20%EB%8A%98%EB%A0%A4%EB%8F%84%20%EC%A0%88%EB%B0%98%EB%A7%8C%20%EB%8F%8C%EC%95%84%EC%98%A8%EB%8B%A4%20%28%EA%B1%B0%EC%A0%90%ED%99%94%20%EB%B9%84%EB%8C%80%EC%B9%AD%20%EA%B2%80%EC%A0%95%29" title="Obsidian에서 노트 열기">배치가 줄면 청소년 활동이 준다 — 늘려도 절반만 돌아온다 (거점화 비대칭 검정)</a></li>
+<li><a class="note-link" href="obsidian://open?vault=gyohwa-structure-vault&file=%EA%B5%90%EA%B5%AC%20%ED%98%91%EB%A0%A5%C2%B7%EA%B3%B5%EB%8F%99%EA%B5%90%ED%99%94%20%EB%91%90%20%EC%82%AC%EB%A1%80%20%E2%80%94%20%EC%A0%84%EB%B6%81%C2%B7%EC%98%81%EA%B4%91%20%28%EC%9B%90%EA%B8%B0110~111%29" title="Obsidian에서 노트 열기">교구 협력·공동교화 두 사례 — 전북·영광 (원기110~111)</a></li>
+</ul></section>
+</div>
+<p class="footer">원문 노트: 서울교구 교화구조개선 중간보고서 — 8+1 개방형 시스템과 공간 연계 3대 현실 시나리오 (원기111.09)</p>
+</main>
+<script>
+const buttons = [...document.querySelectorAll('.tab-btn')];
+const panels = [...document.querySelectorAll('.tab-panel')];
+function activate(id, jump = true) {
+  buttons.forEach(btn => { const on = btn.dataset.tab === id; btn.classList.toggle('active', on); btn.setAttribute('aria-selected', on); });
+  if (jump) document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+  history.replaceState(null, '', '#' + id);
+}
+buttons.forEach(btn => btn.addEventListener('click', () => activate(btn.dataset.tab, true)));
+const initial = location.hash.replace('#','');
+if (initial && document.getElementById(initial)) activate(initial, false);
+</script>
+</body>
+</html>
